@@ -16,6 +16,7 @@ import {
   transformAssetToAssetSelectionDataset
 } from '../assetConverter'
 import addressConfig from '../../../address.config.cjs'
+import { getQueryFilterTerms } from '@hooks/useQueryFilter'
 import { isValidDid } from '@utils/ddo'
 import { Filters } from '@context/Filter'
 import { filterSets } from '@components/Search/Filter'
@@ -185,7 +186,8 @@ export function generateBaseQuery(
                 }
               ]
             : []),
-          ...(dataspaceFilterTerm ? [dataspaceFilterTerm] : [])
+          ...(dataspaceFilterTerm ? [dataspaceFilterTerm] : []),
+          ...getQueryFilterTerms()
         ]
       }
     }
