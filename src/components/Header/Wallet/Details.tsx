@@ -1,7 +1,13 @@
 import { ReactElement } from 'react'
 import Button from '@shared/atoms/Button'
 // import { useOrbis } from '@context/DirectMessages'
-import { useDisconnect, useAccount, useConnect, useConnectors } from 'wagmi'
+import {
+  useDisconnect,
+  useAccount,
+  useConnect,
+  useConnectors,
+  useSwitchChain
+} from 'wagmi'
 import styles from './Details.module.css'
 import Avatar from '@components/@shared/atoms/Avatar'
 import Bookmark from '@images/bookmark.svg'
@@ -12,12 +18,24 @@ import AddTokenList from './AddTokenList'
 import { useSsiWallet } from '@context/SsiWallet'
 import { disconnectFromWallet } from '@utils/wallet/ssiWallet'
 import { LoggerInstance } from '@oceanprotocol/lib'
+import { JSON_WALLET_CONNECTOR_ID } from '@utils/wallet/jsonWalletConnector'
+import { useUserPreferences } from '@context/UserPreferences'
+import { toast } from 'react-toastify'
+import NetworkName from '@shared/NetworkName'
 
 export default function Details(): ReactElement {
-  const { connector: activeConnector, address: accountId } = useAccount()
+  const {
+    connector: activeConnector,
+    address: accountId,
+    chainId: connectedChainId
+  } = useAccount()
   const connectors = useConnectors()
   const { connect } = useConnect()
   const { disconnect } = useDisconnect()
+  const { chains, switchChain } = useSwitchChain()
+  const { setEncryptedWalletJson } = useUserPreferences()
+
+  const isJsonWallet = activeConnector?.id === JSON_WALLET_CONNECTOR_ID
 
   const {
     setSessionToken,
@@ -78,13 +96,39 @@ export default function Details(): ReactElement {
             /> */}
             {activeConnector?.name === 'MetaMask' && <AddTokenList />}
           </div>
-          <div>
-            <div className={styles.walletActionRow}>
-              <SwitchWallet className={styles.walletActionIcon} />
-              <Button style="text" size="small" onClick={handleConnectClick}>
-                Switch Wallet
-              </Button>
+
+          {isJsonWallet && (
+            <div className={styles.chainSwitcher}>
+              <span className={styles.chainSwitcherLabel}>Switch Network</span>
+              <div className={styles.chainList}>
+                {chains.map((chain) => (
+                  <button
+                    key={chain.id}
+                    type="button"
+                    className={`${styles.chainItem} ${
+                      chain.id === connectedChainId
+                        ? styles.chainItemActive
+                        : ''
+                    }`}
+                    disabled={chain.id === connectedChainId}
+                    onClick={() => switchChain({ chainId: chain.id })}
+                  >
+                    <NetworkName networkId={chain.id} minimal />
+                  </button>
+                ))}
+              </div>
             </div>
+          )}
+
+          <div>
+            {!isJsonWallet && (
+              <div className={styles.walletActionRow}>
+                <SwitchWallet className={styles.walletActionIcon} />
+                <Button style="text" size="small" onClick={handleConnectClick}>
+                  Switch Wallet
+                </Button>
+              </div>
+            )}
 
             <div className={styles.walletActionRow}>
               <DisconnectWallet className={styles.walletActionIcon} />
@@ -101,6 +145,23 @@ export default function Details(): ReactElement {
                 Disconnect
               </Button>
             </div>
+
+            {isJsonWallet && (
+              <div className={styles.walletActionRow}>
+                <DisconnectWallet className={styles.walletActionIcon} />
+                <Button
+                  style="text"
+                  size="small"
+                  onClick={() => {
+                    disconnect()
+                    setEncryptedWalletJson('')
+                    toast.info('Wallet removed.')
+                  }}
+                >
+                  Remove Wallet
+                </Button>
+              </div>
+            )}
           </div>
         </li>
       </ul>

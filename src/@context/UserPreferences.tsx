@@ -32,6 +32,8 @@ interface UserPreferencesValue {
   setShowSsiWalletModule: (value: boolean) => void
   onboardingStep: number
   setOnboardingStep: (step: number) => void
+  encryptedWalletJson: string
+  setEncryptedWalletJson: (json: string) => void
 }
 
 const UserPreferencesContext = createContext(null)
@@ -78,6 +80,10 @@ function UserPreferencesProvider({
     localStorage?.onboardingStep || 0
   )
 
+  const [encryptedWalletJson, setEncryptedWalletJson] = useState<string>(
+    localStorage?.encryptedWalletJson || ''
+  )
+
   const [privacyPolicySlug, setPrivacyPolicySlug] = useState<string>(
     localStorage?.privacyPolicySlug || defaultPrivacyPolicySlug
   )
@@ -100,7 +106,8 @@ function UserPreferencesProvider({
       privacyPolicySlug,
       showPPC,
       showOnboardingModule,
-      allowExternalContent
+      allowExternalContent,
+      encryptedWalletJson
     })
   }, [
     chainIds,
@@ -111,7 +118,8 @@ function UserPreferencesProvider({
     showPPC,
     allowExternalContent,
     showOnboardingModule,
-    onboardingStep
+    onboardingStep,
+    encryptedWalletJson
   ])
 
   // Set ocean.js log levels, default: Error
@@ -207,7 +215,9 @@ function UserPreferencesProvider({
           showSsiWalletModule,
           setShowSsiWalletModule,
           onboardingStep,
-          setOnboardingStep
+          setOnboardingStep,
+          encryptedWalletJson,
+          setEncryptedWalletJson
         } as UserPreferencesValue
       }
     >

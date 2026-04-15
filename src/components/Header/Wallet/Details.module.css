@@ -214,3 +214,50 @@
     height: 2rem;
   }
 }
+
+/* Chain switcher for JSON Wallet */
+.chainSwitcher {
+  border-top: 1px solid #e0e0e0;
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.chainSwitcherLabel {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--navy-700);
+}
+
+.chainList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  max-height: 12rem;
+  overflow-y: auto;
+}
+
+.chainItem {
+  display: flex;
+  align-items: center;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid transparent;
+  border-radius: var(--border-radius);
+  background: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--navy-700);
+  text-align: left;
+  font-family: var(--font-family-base);
+}
+
+.chainItem:hover:not(:disabled) {
+  background: var(--background-highlight);
+}
+
+.chainItemActive {
+  background: var(--background-highlight);
+  font-weight: 600;
+  cursor: default;
+}
