@@ -218,6 +218,9 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
       get name() {
         return 'JSON Wallet'
       },
+      get icon() {
+        return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/%3E%3Cpolyline points='7 10 12 15 17 10'/%3E%3Cline x1='12' y1='15' x2='12' y2='3'/%3E%3C/svg%3E"
+      },
       type: jsonWalletConnector.type,
 
       // --- Custom properties ---
