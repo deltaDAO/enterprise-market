@@ -1,24 +1,39 @@
-import { ReactElement, useEffect, useRef, useState } from 'react'
+import { ReactElement, useCallback, useEffect, useRef, useState } from 'react'
 import Account from './Account'
 import Details from './Details'
 import Tooltip from '@shared/atoms/Tooltip'
 import styles from './index.module.css'
-import { useAccount } from 'wagmi'
+import { useAccount, useConnectors } from 'wagmi'
 import Network from './Network'
-import DecryptPrompt from './JsonWallet/DecryptPrompt'
-import { useUserPreferences } from '@context/UserPreferences'
-import { getAddressFromJsonWallet } from '@utils/wallet/jsonWalletUtils'
+import ImportModal from './JsonWallet/ImportModal'
+import {
+  JSON_WALLET_CONNECTOR_ID,
+  setImportRequestHandler
+} from '@utils/wallet/jsonWalletConnector'
 
 export default function Wallet(): ReactElement {
   const { address: accountId } = useAccount()
-  const { encryptedWalletJson } = useUserPreferences()
+  const connectors = useConnectors()
   const [isSsiModalOpen, setIsSsiModalOpen] = useState(false)
-  const tooltipRef = useRef<any>(null)
+  const [isImportModalOpen, setIsImportModalOpen] = useState(false)
+  const tooltipRef = useRef<{ hide?: () => void } | null>(null)
 
-  const storedWalletAddress = encryptedWalletJson
-    ? getAddressFromJsonWallet(encryptedWalletJson)
-    : null
-  const showDecryptPrompt = !accountId && !!storedWalletAddress
+  // Register handler so the connector can request the import modal
+  // (triggered when ConnectKit calls connect() on our connector)
+  const handleImportRequest = useCallback(() => {
+    setIsImportModalOpen(true)
+  }, [])
+
+  useEffect(() => {
+    // Only register when the connector is present
+    const hasConnector = connectors.some(
+      (c) => c.id === JSON_WALLET_CONNECTOR_ID
+    )
+    if (hasConnector) {
+      setImportRequestHandler(handleImportRequest)
+    }
+    return () => setImportRequestHandler(null)
+  }, [connectors, handleImportRequest])
 
   useEffect(() => {
     if (isSsiModalOpen) {
@@ -29,9 +44,7 @@ export default function Wallet(): ReactElement {
   return (
     <div className={styles.wallet}>
       {accountId && <Network />}
-      {showDecryptPrompt ? (
-        <DecryptPrompt walletAddress={storedWalletAddress} />
-      ) : !accountId ? (
+      {!accountId ? (
         <Account onSsiModalOpenChange={setIsSsiModalOpen} />
       ) : (
         <Tooltip
@@ -45,6 +58,10 @@ export default function Wallet(): ReactElement {
           <Account onSsiModalOpenChange={setIsSsiModalOpen} />
         </Tooltip>
       )}
+      <ImportModal
+        isOpen={isImportModalOpen}
+        onClose={() => setIsImportModalOpen(false)}
+      />
     </div>
   )
 }

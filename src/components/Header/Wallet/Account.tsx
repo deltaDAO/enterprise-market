@@ -6,7 +6,6 @@ import Avatar from '@shared/atoms/Avatar'
 import { useAccount } from 'wagmi'
 import { useModal } from 'connectkit'
 import { useUserPreferences } from '@context/UserPreferences'
-import ImportButton from './JsonWallet/ImportButton'
 
 interface AccountProps {
   onSsiModalOpenChange?: (isOpen: boolean) => void
@@ -46,17 +45,14 @@ const Account = forwardRef<HTMLButtonElement, AccountProps>(
               <Caret aria-hidden="true" className={styles.caret} />
             </button>
           ) : (
-            <>
-              <button
-                type="button"
-                className={`${styles.button} ${styles.initial}`}
-                onClick={handleActivation}
-                ref={ref}
-              >
-                <span className={styles.initialLabel}>Connect Wallet</span>
-              </button>
-              <ImportButton />
-            </>
+            <button
+              type="button"
+              className={`${styles.button} ${styles.initial}`}
+              onClick={handleActivation}
+              ref={ref}
+            >
+              <span className={styles.initialLabel}>Connect Wallet</span>
+            </button>
           )}
         </div>
       </>

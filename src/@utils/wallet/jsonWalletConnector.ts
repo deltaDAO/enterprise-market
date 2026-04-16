@@ -24,9 +24,20 @@ type Provider = {
 export type JsonWalletConnectorProperties = {
   loadWallet: (pk: string, chainId?: number) => void
   isWalletLoaded: () => boolean
+  cancelPendingConnect: () => void
 }
 
 type Properties = JsonWalletConnectorProperties
+
+/* -------------------------------------------------------
+   Module-level callback so the UI can react when the
+   connector needs a wallet import / unlock from the user.
+------------------------------------------------------- */
+let onImportRequest: (() => void) | null = null
+
+export function setImportRequestHandler(handler: (() => void) | null) {
+  onImportRequest = handler
+}
 
 export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
   const { persistSession = true } = options
@@ -34,6 +45,14 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
   return createConnector<Provider, Properties>((config) => {
     let privateKey: Hex | undefined
     let currentChainId: number | undefined
+    let connectResolver: {
+      resolve: (result: {
+        accounts: readonly Address[]
+        chainId: number
+      }) => void
+      reject: (error: Error) => void
+      chainId?: number
+    } | null = null
 
     function getChain(chainId?: number): Chain {
       const id = chainId ?? currentChainId ?? config.chains[0].id
@@ -175,6 +194,23 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
       }
     }
 
+    function performConnect(chainId?: number) {
+      const targetChainId = chainId ?? currentChainId ?? config.chains[0].id
+      currentChainId = targetChainId
+
+      const account = privateKeyToAccount(privateKey!)
+      persistState()
+
+      const accounts: readonly Address[] = [account.address]
+
+      config.emitter.emit('connect', {
+        accounts,
+        chainId: targetChainId
+      })
+
+      return { accounts, chainId: targetChainId }
+    }
+
     return {
       get id() {
         return JSON_WALLET_CONNECTOR_ID
@@ -195,43 +231,54 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
             privateKeyToAccount(privateKey).address
           }`
         )
+
+        // If a connect() call is waiting, resolve it now
+        if (connectResolver) {
+          try {
+            const result = performConnect(connectResolver.chainId ?? chainId)
+            connectResolver.resolve(result)
+          } catch (err) {
+            connectResolver.reject(err as Error)
+          }
+          connectResolver = null
+        }
       },
 
       isWalletLoaded(): boolean {
         return !!privateKey
       },
 
+      cancelPendingConnect() {
+        if (connectResolver) {
+          connectResolver.reject(new Error('Import cancelled'))
+          connectResolver = null
+        }
+      },
+
       // --- Standard connector methods ---
 
-      async connect({ chainId, withCapabilities } = {}) {
+      async connect({ chainId } = {}) {
         if (!privateKey) {
           // Try restoring from session
           if (!restoreState()) {
-            throw new Error(
-              'Wallet not loaded. Call loadWallet(privateKey) first.'
-            )
+            // No wallet available — ask the UI to show the import modal
+            // and return a promise that resolves when loadWallet() is called
+            if (connectResolver) {
+              connectResolver.reject(new Error('Superseded by new attempt'))
+              connectResolver = null
+            }
+
+            return new Promise<{
+              accounts: readonly Address[]
+              chainId: number
+            }>((resolve, reject) => {
+              connectResolver = { resolve, reject, chainId }
+              onImportRequest?.()
+            }) as never
           }
         }
 
-        const targetChainId = chainId ?? currentChainId ?? config.chains[0].id
-        currentChainId = targetChainId
-
-        const account = privateKeyToAccount(privateKey)
-        persistState()
-
-        const accounts: readonly Address[] = [account.address]
-
-        config.emitter.emit('connect', {
-          accounts,
-          chainId: targetChainId
-        })
-
-        return {
-          accounts: (withCapabilities
-            ? accounts.map((address) => ({ address, capabilities: {} }))
-            : accounts) as never,
-          chainId: targetChainId
-        }
+        return performConnect(chainId) as never
       },
 
       async disconnect() {
@@ -252,6 +299,12 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
       },
 
       async getProvider({ chainId } = {}) {
+        if (!privateKey) {
+          // Return a no-op provider when wallet is not yet loaded
+          return {
+            request: () => Promise.reject(new Error('Wallet not loaded'))
+          } as Provider
+        }
         const chain = getChain(chainId)
         const request = buildProvider(chain)
         return { request } as Provider
@@ -296,4 +349,4 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
   })
 }
 
-jsonWalletConnector.type = 'jsonWallet' as const
+jsonWalletConnector.type = 'injected' as const

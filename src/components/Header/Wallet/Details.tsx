@@ -95,30 +95,31 @@ export default function Details(): ReactElement {
               networkName={activeConnector?.name}
             /> */}
             {activeConnector?.name === 'MetaMask' && <AddTokenList />}
-          </div>
-
-          {isJsonWallet && (
-            <div className={styles.chainSwitcher}>
-              <span className={styles.chainSwitcherLabel}>Switch Network</span>
-              <div className={styles.chainList}>
-                {chains.map((chain) => (
-                  <button
-                    key={chain.id}
-                    type="button"
-                    className={`${styles.chainItem} ${
-                      chain.id === connectedChainId
-                        ? styles.chainItemActive
-                        : ''
-                    }`}
-                    disabled={chain.id === connectedChainId}
-                    onClick={() => switchChain({ chainId: chain.id })}
-                  >
-                    <NetworkName networkId={chain.id} minimal />
-                  </button>
-                ))}
+            {isJsonWallet && chains.length > 0 && (
+              <div className={styles.chainSwitcher}>
+                <span className={styles.chainSwitcherLabel}>
+                  Switch Network
+                </span>
+                <div className={styles.chainList}>
+                  {chains.map((chain) => (
+                    <button
+                      key={chain.id}
+                      type="button"
+                      className={`${styles.chainItem} ${
+                        chain.id === connectedChainId
+                          ? styles.chainItemActive
+                          : ''
+                      }`}
+                      disabled={chain.id === connectedChainId}
+                      onClick={() => switchChain({ chainId: chain.id })}
+                    >
+                      <NetworkName networkId={chain.id} minimal />
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
 
           <div>
             {!isJsonWallet && (

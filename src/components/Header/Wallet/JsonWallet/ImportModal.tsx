@@ -10,7 +10,7 @@ import {
   JSON_WALLET_CONNECTOR_ID,
   JsonWalletConnectorProperties
 } from '@utils/wallet/jsonWalletConnector'
-import { useConnect, useConnectors } from 'wagmi'
+import { useConnectors } from 'wagmi'
 import { useUserPreferences } from '@context/UserPreferences'
 import { toast } from 'react-toastify'
 import { LoggerInstance } from '@oceanprotocol/lib'
@@ -26,9 +26,8 @@ export default function ImportModal({
   isOpen,
   onClose
 }: ImportModalProps): ReactElement {
-  const { connect } = useConnect()
   const connectors = useConnectors()
-  const { setEncryptedWalletJson } = useUserPreferences()
+  const { encryptedWalletJson, setEncryptedWalletJson } = useUserPreferences()
 
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [rawJson, setRawJson] = useState<string>('')
@@ -38,7 +37,14 @@ export default function ImportModal({
   const [decryptProgress, setDecryptProgress] = useState(0)
   const [error, setError] = useState('')
 
-  const hasFile = !!walletAddress
+  // Determine if we already have a stored wallet to unlock
+  const storedAddress = encryptedWalletJson
+    ? getAddressFromJsonWallet(encryptedWalletJson)
+    : null
+  const isUnlockMode = !!storedAddress && !rawJson
+
+  // Show password step when we have a file OR a stored wallet
+  const showPasswordStep = !!walletAddress || isUnlockMode
 
   const reset = useCallback(() => {
     setRawJson('')
@@ -52,8 +58,17 @@ export default function ImportModal({
 
   const handleClose = useCallback(() => {
     reset()
+
+    // Cancel any pending connect promise in the connector
+    const connector = connectors.find((c) => c.id === JSON_WALLET_CONNECTOR_ID)
+    if (connector) {
+      ;(
+        connector as unknown as JsonWalletConnectorProperties
+      ).cancelPendingConnect()
+    }
+
     onClose()
-  }, [onClose, reset])
+  }, [onClose, reset, connectors])
 
   const handleFileChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,15 +97,18 @@ export default function ImportModal({
   )
 
   const handleDecrypt = useCallback(async () => {
-    if (!rawJson || !password) return
+    const jsonToDecrypt = rawJson || encryptedWalletJson
+    if (!jsonToDecrypt || !password) return
 
     setError('')
     setIsDecrypting(true)
     setDecryptProgress(0)
 
     try {
-      const privateKey = await decryptJsonWallet(rawJson, password, (percent) =>
-        setDecryptProgress(percent)
+      const privateKey = await decryptJsonWallet(
+        jsonToDecrypt,
+        password,
+        (percent) => setDecryptProgress(percent)
       )
 
       const connector = connectors.find(
@@ -100,33 +118,29 @@ export default function ImportModal({
         throw new Error('JSON Wallet connector not found.')
       }
 
-      // Load the private key into the connector
+      // Load the private key into the connector.
+      // This also resolves any pending connect() promise from ConnectKit.
       ;(connector as unknown as JsonWalletConnectorProperties).loadWallet(
         privateKey
       )
 
-      // Save encrypted JSON for future sessions
-      setEncryptedWalletJson(rawJson)
+      // Save encrypted JSON for future sessions (only for new imports)
+      if (rawJson) {
+        setEncryptedWalletJson(rawJson)
+      }
 
-      // Connect via wagmi
-      connect(
-        { connector },
-        {
-          onSuccess: () => {
-            toast.success(`Wallet ${accountTruncate(walletAddress)} connected.`)
-            handleClose()
-          },
-          onError: (err) => {
-            LoggerInstance.error('[ImportModal] Connection failed:', err)
-            setError('Failed to connect wallet.')
-            setIsDecrypting(false)
-          }
-        }
+      const displayAddress = walletAddress || storedAddress
+      toast.success(
+        `Wallet ${accountTruncate(displayAddress || '')} connected.`
       )
-    } catch (e: any) {
+      reset()
+      onClose()
+    } catch (e: unknown) {
+      const message =
+        e instanceof Error ? e.message : 'Failed to decrypt wallet file.'
       LoggerInstance.error('[ImportModal] Decryption failed:', e)
       setError(
-        e?.message?.includes('invalid password')
+        message.includes('invalid password')
           ? 'Incorrect password.'
           : 'Failed to decrypt wallet file.'
       )
@@ -134,23 +148,42 @@ export default function ImportModal({
     }
   }, [
     rawJson,
+    encryptedWalletJson,
     password,
     connectors,
-    connect,
     setEncryptedWalletJson,
     walletAddress,
-    handleClose
+    storedAddress,
+    reset,
+    onClose
   ])
+
+  const handleRemoveStored = useCallback(() => {
+    setEncryptedWalletJson('')
+
+    // Cancel any pending connect promise
+    const connector = connectors.find((c) => c.id === JSON_WALLET_CONNECTOR_ID)
+    if (connector) {
+      ;(
+        connector as unknown as JsonWalletConnectorProperties
+      ).cancelPendingConnect()
+    }
+
+    toast.info('Stored wallet removed.')
+    reset()
+    onClose()
+  }, [setEncryptedWalletJson, connectors, reset, onClose])
 
   return (
     <Modal
-      title="Import JSON Wallet"
+      title={isUnlockMode ? 'Unlock JSON Wallet' : 'Import JSON Wallet'}
       isOpen={isOpen}
       onToggleModal={handleClose}
       className={styles.importModal}
+      overlayClassName={styles.importOverlay}
     >
       <div className={styles.step}>
-        {!hasFile ? (
+        {!showPasswordStep ? (
           <>
             <div
               className={styles.uploadArea}
@@ -172,7 +205,7 @@ export default function ImportModal({
           <>
             <div className={styles.addressPreview}>
               <strong>Wallet Address</strong>
-              {walletAddress}
+              {walletAddress || storedAddress}
             </div>
 
             {isDecrypting ? (
@@ -207,14 +240,25 @@ export default function ImportModal({
                 </div>
 
                 <div className={styles.actions}>
-                  <Button
-                    style="text"
-                    size="small"
-                    onClick={reset}
-                    type="button"
-                  >
-                    Back
-                  </Button>
+                  {isUnlockMode ? (
+                    <Button
+                      style="text"
+                      size="small"
+                      onClick={handleRemoveStored}
+                      type="button"
+                    >
+                      Remove Wallet
+                    </Button>
+                  ) : (
+                    <Button
+                      style="text"
+                      size="small"
+                      onClick={reset}
+                      type="button"
+                    >
+                      Back
+                    </Button>
+                  )}
                   <Button
                     style="primary"
                     size="small"
@@ -222,7 +266,7 @@ export default function ImportModal({
                     disabled={!password}
                     type="button"
                   >
-                    Decrypt &amp; Connect
+                    {isUnlockMode ? 'Unlock' : 'Decrypt & Connect'}
                   </Button>
                 </div>
               </>
