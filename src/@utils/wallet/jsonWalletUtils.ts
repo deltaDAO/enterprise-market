@@ -1,19 +1,33 @@
 import { Wallet } from 'ethers'
 import { getAddress } from 'viem'
 
+export type DecryptResult =
+  | { success: true; privateKey: string }
+  | { success: false; error: string }
+
 /**
  * Decrypt an encrypted JSON wallet (keystore v3) and return the private key.
  * Uses ethers v6 `Wallet.fromEncryptedJson` — viem does not support this.
+ *
+ * Returns a result object instead of throwing to avoid triggering the
+ * Next.js dev error overlay for expected failures (wrong password).
  */
 export async function decryptJsonWallet(
   json: string,
   password: string,
   onProgress?: (percent: number) => void
-): Promise<string> {
-  const wallet = await Wallet.fromEncryptedJson(json, password, (percent) => {
-    onProgress?.(percent)
-  })
-  return wallet.privateKey
+): Promise<DecryptResult> {
+  try {
+    const wallet = await Wallet.fromEncryptedJson(
+      json,
+      password,
+      onProgress ? (percent) => onProgress(percent) : undefined
+    )
+    return { success: true, privateKey: wallet.privateKey }
+  } catch (error: any) {
+    const message = error?.shortMessage || error?.message || 'Decryption failed'
+    return { success: false, error: message }
+  }
 }
 
 /**

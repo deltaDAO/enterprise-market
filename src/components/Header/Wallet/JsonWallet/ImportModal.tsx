@@ -10,7 +10,7 @@ import {
   JSON_WALLET_CONNECTOR_ID,
   JsonWalletConnectorProperties
 } from '@utils/wallet/jsonWalletConnector'
-import { useConnectors } from 'wagmi'
+import { useConnect, useConnectors } from 'wagmi'
 import { useUserPreferences } from '@context/UserPreferences'
 import { toast } from 'react-toastify'
 import { LoggerInstance } from '@oceanprotocol/lib'
@@ -27,6 +27,7 @@ export default function ImportModal({
   onClose
 }: ImportModalProps): ReactElement {
   const connectors = useConnectors()
+  const { connectAsync } = useConnect()
   const { encryptedWalletJson, setEncryptedWalletJson } = useUserPreferences()
 
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -98,19 +99,30 @@ export default function ImportModal({
 
   const handleDecrypt = useCallback(async () => {
     const jsonToDecrypt = rawJson || encryptedWalletJson
-    if (!jsonToDecrypt || !password) return
+    if (!jsonToDecrypt || !password || isDecrypting) return
 
     setError('')
     setIsDecrypting(true)
     setDecryptProgress(0)
 
-    try {
-      const privateKey = await decryptJsonWallet(
-        jsonToDecrypt,
-        password,
-        (percent) => setDecryptProgress(percent)
-      )
+    const result = await decryptJsonWallet(jsonToDecrypt, password, (percent) =>
+      setDecryptProgress(percent)
+    )
 
+    if (!result.success) {
+      LoggerInstance.error('[ImportModal] Decryption failed:', result.error)
+      setError(
+        result.error.includes('incorrect password') ||
+          result.error.includes('invalid password')
+          ? 'Incorrect password.'
+          : 'Failed to decrypt wallet file.'
+      )
+      setDecryptProgress(0)
+      setIsDecrypting(false)
+      return
+    }
+
+    try {
       const connector = connectors.find(
         (c) => c.id === JSON_WALLET_CONNECTOR_ID
       )
@@ -119,10 +131,17 @@ export default function ImportModal({
       }
 
       // Load the private key into the connector.
-      // This also resolves any pending connect() promise from ConnectKit.
       ;(connector as unknown as JsonWalletConnectorProperties).loadWallet(
-        privateKey
+        result.privateKey
       )
+
+      // Explicitly connect through wagmi to ensure all internal state
+      // (including useConnectorClient) is properly initialized.
+      try {
+        await connectAsync({ connector })
+      } catch {
+        // May throw if already connected via pending resolver — that's fine
+      }
 
       // Save encrypted JSON for future sessions (only for new imports)
       if (rawJson) {
@@ -137,20 +156,19 @@ export default function ImportModal({
       onClose()
     } catch (e: unknown) {
       const message =
-        e instanceof Error ? e.message : 'Failed to decrypt wallet file.'
-      LoggerInstance.error('[ImportModal] Decryption failed:', e)
-      setError(
-        message.includes('invalid password')
-          ? 'Incorrect password.'
-          : 'Failed to decrypt wallet file.'
-      )
+        e instanceof Error ? e.message : 'Failed to connect wallet.'
+      LoggerInstance.error('[ImportModal] Connect failed:', e)
+      setError(message)
+      setDecryptProgress(0)
       setIsDecrypting(false)
     }
   }, [
     rawJson,
     encryptedWalletJson,
     password,
+    isDecrypting,
     connectors,
+    connectAsync,
     setEncryptedWalletJson,
     walletAddress,
     storedAddress,

@@ -2,6 +2,7 @@ import { createConnector } from 'wagmi'
 import {
   type Address,
   type Chain,
+  type EIP1193RequestFn,
   type Hex,
   createWalletClient,
   http
@@ -19,7 +20,12 @@ interface JsonWalletConnectorOptions {
 }
 
 type Provider = {
-  request: (args: { method: string; params?: unknown[] }) => Promise<unknown>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  request: EIP1193RequestFn
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  on: (event: string, handler: (...args: any[]) => void) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  removeListener: (event: string, handler: (...args: any[]) => void) => any
 }
 export type JsonWalletConnectorProperties = {
   loadWallet: (pk: string, chainId?: number) => void
@@ -106,7 +112,7 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
       return false
     }
 
-    function buildProvider(chain: Chain) {
+    function buildProvider(chain: Chain): Provider {
       if (!privateKey) throw new Error('Wallet not loaded.')
 
       const account = privateKeyToAccount(privateKey)
@@ -116,28 +122,22 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
         transport: http()
       })
 
-      return async ({
-        method,
-        params
-      }: {
-        method: string
-        params?: unknown[]
-      }): Promise<unknown> => {
+      const request: EIP1193RequestFn = async ({ method, params }) => {
         // Delegate signing/account methods to local wallet
         switch (method) {
           case 'eth_accounts':
           case 'eth_requestAccounts':
-            return [account.address]
+            return [account.address] as any
 
           case 'eth_chainId':
-            return `0x${chain.id.toString(16)}`
+            return `0x${chain.id.toString(16)}` as any
 
           case 'personal_sign': {
             const [message] = params as [Hex, Address]
             return walletClient.signMessage({
               account,
               message: { raw: message }
-            })
+            }) as any
           }
 
           case 'eth_signTypedData_v4': {
@@ -146,7 +146,7 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
             return walletClient.signTypedData({
               account,
               ...typedData
-            })
+            }) as any
           }
 
           case 'eth_sendTransaction': {
@@ -166,7 +166,7 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
                 ? BigInt(tx.maxPriorityFeePerGas)
                 : undefined,
               nonce: tx.nonce ? Number(tx.nonce) : undefined
-            } as unknown as Parameters<typeof walletClient.sendTransaction>[0])
+            } as unknown as Parameters<typeof walletClient.sendTransaction>[0]) as any
           }
 
           case 'wallet_switchEthereumChain': {
@@ -177,7 +177,7 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
             currentChainId = newChainId
             persistState()
             config.emitter.emit('change', { chainId: newChainId })
-            return null
+            return null as any
           }
 
           default: {
@@ -192,10 +192,27 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
           }
         }
       }
+
+      // Return an EIP-1193 compliant provider object.
+      // wagmi's getConnectorClient wraps this with custom() internally.
+      const listeners: Record<string, Array<(...args: any[]) => void>> = {}
+      return {
+        request,
+        on(event: string, handler: (...args: any[]) => void) {
+          if (!listeners[event]) listeners[event] = []
+          listeners[event].push(handler)
+          return this
+        },
+        removeListener(event: string, handler: (...args: any[]) => void) {
+          listeners[event] = listeners[event]?.filter((h) => h !== handler)
+          return this
+        }
+      } as Provider
     }
 
     function performConnect(chainId?: number) {
-      const targetChainId = chainId ?? currentChainId ?? config.chains[0].id
+      const targetChainId =
+        (chainId || undefined) ?? currentChainId ?? config.chains[0].id
       currentChainId = targetChainId
 
       const account = privateKeyToAccount(privateKey!)
@@ -238,12 +255,22 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
         // If a connect() call is waiting, resolve it now
         if (connectResolver) {
           try {
-            const result = performConnect(connectResolver.chainId ?? chainId)
+            const result = performConnect(
+              (connectResolver.chainId || undefined) ?? chainId
+            )
             connectResolver.resolve(result)
           } catch (err) {
             connectResolver.reject(err as Error)
           }
           connectResolver = null
+        } else {
+          // No pending connect — emit change to invalidate wagmi's
+          // connector client cache so useConnectorClient re-fetches
+          const account = privateKeyToAccount(privateKey)
+          config.emitter.emit('change', {
+            accounts: [account.address],
+            chainId: currentChainId
+          })
         }
       },
 
@@ -304,13 +331,21 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
       async getProvider({ chainId } = {}) {
         if (!privateKey) {
           // Return a no-op provider when wallet is not yet loaded
+          const noopRequest: EIP1193RequestFn = async () => {
+            throw new Error('Wallet not loaded')
+          }
           return {
-            request: () => Promise.reject(new Error('Wallet not loaded'))
+            request: noopRequest,
+            on() {
+              return this
+            },
+            removeListener() {
+              return this
+            }
           } as Provider
         }
         const chain = getChain(chainId)
-        const request = buildProvider(chain)
-        return { request } as Provider
+        return buildProvider(chain)
       },
 
       async isAuthorized() {
