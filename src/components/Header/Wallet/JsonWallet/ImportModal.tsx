@@ -110,11 +110,11 @@ export default function ImportModal({
     )
 
     if (!result.success) {
-      const errMsg = result.error
-      LoggerInstance.error('[ImportModal] Decryption failed:', errMsg)
+      const failResult = result as { success: false; error: string }
+      LoggerInstance.error('[ImportModal] Decryption failed:', failResult.error)
       setError(
-        errMsg.includes('incorrect password') ||
-          errMsg.includes('invalid password')
+        failResult.error.includes('incorrect password') ||
+          failResult.error.includes('invalid password')
           ? 'Incorrect password.'
           : 'Failed to decrypt wallet file.'
       )
