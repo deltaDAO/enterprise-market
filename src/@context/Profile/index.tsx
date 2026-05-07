@@ -103,8 +103,8 @@ function ProfileProvider({
           ownAccount,
           ownAccount
         )
-        setAssets(result.results)
-        setAssetsTotal(result.totalResults)
+        setAssets(result?.results)
+        setAssetsTotal(result?.totalResults)
 
         // Hint: this would only make sense if we "search" in all subcomponents
         // against this provider's state, meaning filtering via js rather then sending

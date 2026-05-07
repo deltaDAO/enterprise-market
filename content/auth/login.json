@@ -1,0 +1,22 @@
+{
+  "title": "Ocean Enterprise Marketplace",
+  "description": "Discover, publish and manage data, software and AI services with enterprise-grade governance and trusted access control.",
+  "features": [
+    {
+      "icon": "marketplace",
+      "text": "Publish and discover service offerings"
+    },
+    {
+      "icon": "access",
+      "text": "Control access with verified credentials"
+    },
+    {
+      "icon": "interop",
+      "text": "Standardized, interoperable metadata"
+    },
+    {
+      "icon": "compute",
+      "text": "Private computation with Compute-to-Data"
+    }
+  ]
+}

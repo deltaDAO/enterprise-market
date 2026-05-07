@@ -8,14 +8,45 @@ import Avatar from '@shared/atoms/Avatar'
 import styles from './Account.module.css'
 import { accountTruncate } from '@utils/wallet'
 import { useAddressConfig } from '@hooks/useAddressConfig'
+import { useAuth } from '@hooks/useAuth'
+import { useAccount } from 'wagmi'
 
 export default function Account({
   accountId
 }: {
   accountId: string
 }): ReactElement {
-  const { chainIds } = useUserPreferences()
+  const { chainIds, debug } = useUserPreferences()
   const { verifiedWallets } = useAddressConfig()
+  const { user, isAuthenticated, authEnabled } = useAuth()
+  const { address: connectedAccountId } = useAccount()
+
+  const isOwnAuthenticatedProfile =
+    authEnabled &&
+    isAuthenticated &&
+    Boolean(user?.id) &&
+    Boolean(connectedAccountId) &&
+    connectedAccountId.toLowerCase() === accountId.toLowerCase()
+
+  const displayName = isOwnAuthenticatedProfile
+    ? user.name
+    : verifiedWallets?.[accountId] || accountTruncate(accountId)
+  const displayEmail =
+    isOwnAuthenticatedProfile && user?.email ? user.email : undefined
+  const normalizedDisplayName = displayName?.trim().toLowerCase()
+  const normalizedDisplayEmail = displayEmail?.trim().toLowerCase()
+  const normalizedUsername = user?.username?.trim().toLowerCase()
+  const displayUsername =
+    isOwnAuthenticatedProfile &&
+    user?.username &&
+    normalizedUsername !== normalizedDisplayName &&
+    normalizedUsername !== normalizedDisplayEmail
+      ? user.username
+      : undefined
+  const displayUserId =
+    isOwnAuthenticatedProfile && debug && user?.id && user.id !== displayName
+      ? user.id
+      : undefined
 
   return (
     <div className={styles.account}>
@@ -27,9 +58,12 @@ export default function Account({
         )}
       </figure>
       <div>
-        <h3 className={styles.name}>
-          {verifiedWallets?.[accountId] || accountTruncate(accountId)}{' '}
-        </h3>
+        <h3 className={styles.name}>{displayName}</h3>
+        {displayUsername && (
+          <p className={styles.username}>{displayUsername}</p>
+        )}
+        {displayEmail && <p className={styles.email}>{displayEmail}</p>}
+        {displayUserId && <p className={styles.userId}>{displayUserId}</p>}
 
         {accountId && (
           <code className={styles.accountId}>

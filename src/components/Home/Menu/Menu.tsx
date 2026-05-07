@@ -6,10 +6,14 @@ import Wallet from '../../Header/Wallet'
 import styles from './index.module.css'
 import { useMarketMetadata } from '@context/MarketMetadata'
 import UserPreferences from '../../Header/UserPreferences'
-import { SsiWallet } from './SsiWallet'
+import AuthEntry from '../../Header/AuthEntry'
+import { useAuth } from '@hooks/useAuth'
+import { SsiWallet } from '../../Header/SsiWallet'
 
 export default function Menu(): ReactElement {
   const { validatedSupportedChains } = useMarketMetadata()
+  const { isAuthenticated, authEnabled } = useAuth()
+  const canAccessWalletControls = !authEnabled || isAuthenticated
 
   return (
     <nav className={styles.menu}>
@@ -20,8 +24,15 @@ export default function Menu(): ReactElement {
       <div className={styles.actions}>
         {validatedSupportedChains.length > 1 && <Networks />}
         <UserPreferences />
-        <Wallet />
-        <SsiWallet />
+        {canAccessWalletControls && <Wallet />}
+        <AuthEntry
+          authenticatedContent={
+            <SsiWallet walletRequiredMessage="You need to connect to your wallet first" />
+          }
+          loginClassName={styles.loginButton}
+          buttonContentClassName={styles.buttonContent}
+          buttonTextClassName={styles.buttonText}
+        />
       </div>
     </nav>
   )

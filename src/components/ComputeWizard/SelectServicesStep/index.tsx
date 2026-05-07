@@ -734,25 +734,7 @@ export default function SelectServicesStep({
     ) {
       setFieldValue('algorithms', updatedAlgorithm)
     }
-
-    if (selectedService?.id) {
-      const encodedSelection = JSON.stringify({
-        algoDid: algoAsset.id,
-        serviceId: selectedService.id
-      })
-      const currentSelection =
-        typeof values.algorithm === 'string' ? values.algorithm : ''
-      if (currentSelection !== encodedSelection) {
-        setFieldValue('algorithm', encodedSelection)
-      }
-    }
-  }, [
-    assets,
-    setFieldValue,
-    isDatasetFlow,
-    values.algorithms,
-    values.algorithm
-  ])
+  }, [assets, setFieldValue, isDatasetFlow, values.algorithms])
 
   const handleToggleExpand = (id: string) =>
     setAssets((prev) => toggleExpand(prev, id))

@@ -34,6 +34,7 @@ type InitializeParams = {
   algoIndex: number
   paymentTokenAddress: string
   computeOutput?: ComputeOutput
+  queueMaxWaitTime?: number
   algoParams?: Record<string, any>
   datasetParams?: Record<string, any>
   accountId?: string
@@ -155,6 +156,7 @@ export function useComputeInitialization({
       algoIndex,
       paymentTokenAddress,
       computeOutput,
+      queueMaxWaitTime,
       algoParams,
       datasetParams,
       accountId,
@@ -174,6 +176,7 @@ export function useComputeInitialization({
           algoIndex,
           paymentTokenAddress,
           computeOutput,
+          queueMaxWaitTime,
           algoParams,
           datasetParams
         )

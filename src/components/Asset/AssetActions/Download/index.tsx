@@ -52,7 +52,7 @@ import styles from './index.module.css'
 
 import { getDownloadValidationSchema } from './_validation'
 import { getDefaultValues } from '../ConsumerParameters/FormConsumerParameters'
-import { getTokenInfo } from '@utils/wallet'
+import { getTokenInfo, getTokenBalance } from '@utils/wallet'
 import useBalance from '@hooks/useBalance'
 import { getConsumeMarketFeeWei } from '@utils/consumeMarketFee'
 
@@ -104,6 +104,7 @@ export default function Download({
     null
   )
 
+  const [providerFeeBalance, setProviderFeeBalance] = useState<string>('0')
   const [isFullPriceLoading, setIsFullPriceLoading] = useState(
     accessDetails.type !== 'free'
   )
@@ -159,11 +160,23 @@ export default function Download({
   useEffect(() => {
     const fetchTokenDetailsProviderFee = async () => {
       if (!chainId || !signer?.provider) return
-      const tokenDetails = await getTokenInfo(
-        orderPriceAndFees?.providerFee?.providerFeeToken,
-        signer.provider
-      )
+      // const tokenDetails = await getTokenInfo(
+      //   orderPriceAndFees?.providerFee?.providerFeeToken,
+      //   signer.provider
+      // )
+      const providerFeeToken = orderPriceAndFees?.providerFee?.providerFeeToken
+      const tokenDetails = await getTokenInfo(providerFeeToken, signer.provider)
       setTokenInfoProviderFee(tokenDetails)
+
+      if (accountId && tokenDetails?.decimals != null && providerFeeToken) {
+        const bal = await getTokenBalance(
+          accountId,
+          tokenDetails.decimals,
+          providerFeeToken,
+          signer.provider
+        )
+        setProviderFeeBalance(bal || '0')
+      }
     }
     if (
       orderPriceAndFees?.providerFee?.providerFeeAmount &&
@@ -171,7 +184,7 @@ export default function Download({
     ) {
       fetchTokenDetailsProviderFee()
     }
-  }, [chainId, signer, orderPriceAndFees])
+  }, [chainId, signer, orderPriceAndFees, accountId])
 
   useEffect(() => {
     const licenseMirrors =
@@ -439,9 +452,8 @@ export default function Download({
     const userBaseBalance = new Decimal(
       balance?.approved?.[price.tokenSymbol?.toLowerCase()] || 0
     )
-    const userProviderBalance = new Decimal(
-      balance?.approved?.[tokenInfoProviderFee?.symbol?.toLowerCase()] || 0
-    )
+
+    const userProviderBalance = new Decimal(providerFeeBalance || 0)
 
     const sufficient = areTokensSame
       ? userBaseBalance.greaterThanOrEqualTo(

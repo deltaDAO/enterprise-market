@@ -160,7 +160,7 @@ const InputElement = forwardRef(
                 (option: string, index: number) => (
                   <option key={index} value={option}>
                     <Option
-                      option={option}
+                      option={optionTitles?.[index] ?? option}
                       prefix={prefixes?.[index]}
                       postfix={postfixes?.[index]}
                     />

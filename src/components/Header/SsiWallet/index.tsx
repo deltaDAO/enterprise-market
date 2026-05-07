@@ -2,12 +2,20 @@ import { ReactElement } from 'react'
 import SsiWalletControl from '@components/@shared/SsiWalletControl'
 import styles from './index.module.css'
 
-export function SsiWallet(): ReactElement {
+interface SsiWalletProps {
+  showConnectedToast?: boolean
+  walletRequiredMessage?: string
+}
+
+export function SsiWallet({
+  showConnectedToast = true,
+  walletRequiredMessage = 'You need to connect your EVM wallet first'
+}: SsiWalletProps): ReactElement {
   return (
     <SsiWalletControl
       styles={styles}
-      showConnectedToast
-      walletRequiredMessage="You need to connect your EVM wallet first"
+      showConnectedToast={showConnectedToast}
+      walletRequiredMessage={walletRequiredMessage}
     />
   )
 }

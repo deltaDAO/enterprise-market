@@ -41,6 +41,35 @@
   font-size: 22px;
 }
 
+.loginButton {
+  background: white;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 1px 2px 8px var(--black-alpha-15);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3px 16px;
+  min-width: 118px;
+  height: 40px;
+}
+
+.buttonContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttonText {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 92%;
+  text-align: center;
+  color: #0a4b70;
+}
+
 .navigation {
   white-space: nowrap;
   overflow-y: hidden;
@@ -173,6 +202,14 @@ svg.caret {
     font-size: 18px;
     margin-top: 1rem;
   }
+  .loginButton {
+    min-width: 96px;
+    height: 32px;
+    padding: 3px 12px;
+  }
+  .buttonText {
+    font-size: 16px;
+  }
   .demoText {
     white-space: nowrap;
     color: #fdd655;
@@ -199,6 +236,14 @@ svg.caret {
     align-content: baseline;
     align-self: flex-end;
   }
+  .loginButton {
+    min-width: 96px;
+    height: 32px;
+    padding: 3px 12px;
+  }
+  .buttonText {
+    font-size: 16px;
+  }
 }
 
 @media screen and (min-width: 1026px) and (max-width: 1250px) {
@@ -215,6 +260,14 @@ svg.caret {
     text-transform: uppercase;
     align-content: baseline;
     align-self: flex-end;
+  }
+  .loginButton {
+    min-width: 96px;
+    height: 32px;
+    padding: 3px 12px;
+  }
+  .buttonText {
+    font-size: 16px;
   }
 }
 @media screen and (min-width: 1251px) and (max-width: 1549px) {

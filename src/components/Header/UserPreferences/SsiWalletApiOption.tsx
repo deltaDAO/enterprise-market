@@ -4,12 +4,18 @@ import { useSsiWallet } from '@context/SsiWallet'
 import Input from '@shared/FormInput'
 import Loader from '@shared/atoms/Loader'
 import useSsiChainGuard from '@hooks/useSsiChainGuard'
+import { useAccount } from 'wagmi'
 import styles from './SsiWalletApiOption.module.css'
 
 export default function SsiWalletApiOption(): ReactElement {
+  const { isConnected } = useAccount()
   const { showSsiWalletModule, setShowSsiWalletModule } = useUserPreferences()
   const { isSsiSessionHydrating } = useSsiWallet()
   const { ensureAllowedChainForSsi } = useSsiChainGuard()
+
+  if (!isConnected) {
+    return null
+  }
 
   function handleToggleSsiWalletModal() {
     if (showSsiWalletModule) {

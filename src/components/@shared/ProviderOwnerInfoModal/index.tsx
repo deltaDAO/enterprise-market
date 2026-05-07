@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { ProviderInstance } from '@oceanprotocol/lib'
 import Modal from '@shared/atoms/Modal'
 import styles from './index.module.css'
 
@@ -71,9 +70,14 @@ export default function ProviderOwnerInfoModal({
       }
 
       try {
-        const endpoints = (await ProviderInstance.getEndpoints(
-          providerUrl
-        )) as ProviderEndpointsResponse
+        const response = await fetch(providerUrl)
+        if (!response.ok) {
+          throw new Error(
+            `Failed to fetch provider endpoints: ${response.status}`
+          )
+        }
+
+        const endpoints = (await response.json()) as ProviderEndpointsResponse
         if (!cancelled) {
           setOwnerInfo(endpoints?.ownerInfo || {})
         }

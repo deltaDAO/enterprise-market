@@ -14,6 +14,8 @@ import { SsiWallet } from '@components/Header/SsiWallet'
 import Upload from '@images/publish.svg'
 import BurgerIcon from '@images/burgerIcon.svg' // You'll need to add a burger icon
 import CloseIcon from '@images/closeIcon.svg' // You'll need to add a close icon
+import { useAuth } from '@hooks/useAuth'
+import AuthEntry from './AuthEntry'
 
 const cx = classNames.bind(styles)
 
@@ -52,8 +54,12 @@ export function MenuLink({ name, link, className }: MenuItem) {
 export default function Menu(): ReactElement {
   const { validatedSupportedChains } = useMarketMetadata()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const { isAuthenticated, authEnabled } = useAuth()
 
   const router = useRouter()
+  const path = router.asPath.split('?')[0]
+  const isAuthRoute = authEnabled && path.startsWith('/auth/')
+  const canAccessWalletControls = !authEnabled || isAuthenticated
 
   const isPublishRoute = router.pathname.startsWith('/publish')
   const isCatalogRoute =
@@ -61,8 +67,9 @@ export default function Menu(): ReactElement {
     router.query.sort === 'indexedMetadata.event.block' &&
     router.query.sortOrder === 'desc'
 
-  const showPublishButton = !isPublishRoute
-  const showCatalogButton = !isCatalogRoute
+  const canShowProtectedCtas = isAuthenticated && !isAuthRoute
+  const showPublishButton = canShowProtectedCtas && !isPublishRoute
+  const showCatalogButton = canShowProtectedCtas && !isCatalogRoute
 
   const publishLink = '/publish/1'
   const catalogLink = '/search?sort=indexedMetadata.event.block&sortOrder=desc'
@@ -81,6 +88,11 @@ export default function Menu(): ReactElement {
     setIsMobileMenuOpen(!isMobileMenuOpen)
   }
   const handleWalletClick = () => {
+    setIsMobileMenuOpen(false)
+  }
+  const handleLoginClick = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    router.push('/auth/login')
     setIsMobileMenuOpen(false)
   }
 
@@ -108,10 +120,15 @@ export default function Menu(): ReactElement {
           {/* <SearchButton /> */}
           {validatedSupportedChains.length > 1 && <Networks />}
           <UserPreferences />
-          <Wallet />
+          {canAccessWalletControls && !isAuthRoute && <Wallet />}
           {/* Desktop view - show SSiWallet and buttons normally */}
           <div className={styles.desktopActions}>
-            <SsiWallet />
+            <AuthEntry
+              authenticatedContent={<SsiWallet />}
+              loginClassName={styles.ctaButton}
+              buttonContentClassName={styles.buttonContent}
+              buttonTextClassName={styles.buttonText}
+            />
             <div className={styles.ctaContent}>
               {showPublishButton && (
                 <Link className={styles.ctaButton} href={publishLink}>
@@ -154,9 +171,20 @@ export default function Menu(): ReactElement {
             <CloseIcon className={styles.closeIcon} />
           </button>
           <div className={styles.mobileMenuContent}>
-            <div className={styles.mobileWallet} onClick={handleWalletClick}>
-              <SsiWallet />
-            </div>
+            <AuthEntry
+              authenticatedContent={
+                <div
+                  className={styles.mobileWallet}
+                  onClick={handleWalletClick}
+                >
+                  <SsiWallet />
+                </div>
+              }
+              loginClassName={styles.mobileCtaButton}
+              buttonContentClassName={styles.buttonContent}
+              buttonTextClassName={styles.buttonText}
+              onLoginClick={handleLoginClick}
+            />
             {showPublishButton && (
               <button
                 className={styles.mobileCtaButton}

@@ -423,6 +423,7 @@ export default function ComputeWizardController({
     asset,
     service,
     ownerAddress: address,
+    signer,
     chainIds,
     cancelTokenFactory: newCancelToken
   })
@@ -745,6 +746,12 @@ export default function ComputeWizardController({
         algoIndex: actualSvcIndex,
         paymentTokenAddress,
         computeOutput: output,
+        queueMaxWaitTime: formValues?.queueWaitingEnabled
+          ? convertQueueWaitTimeToSeconds(
+              formValues.queueMaxWaitTime,
+              formValues.queueMaxWaitTimeUnit
+            )
+          : undefined,
         algoParams,
         datasetParams,
         accountId,

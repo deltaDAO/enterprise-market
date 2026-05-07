@@ -24,7 +24,13 @@ const tokenLogos = {
   }
 }
 
-export default function AddTokenList(): ReactElement {
+interface AddTokenListProps {
+  disabled?: boolean
+}
+
+export default function AddTokenList({
+  disabled = false
+}: AddTokenListProps): ReactElement {
   const { approvedBaseTokens } = useMarketMetadata()
 
   return (
@@ -36,6 +42,7 @@ export default function AddTokenList(): ReactElement {
           symbol={token.symbol}
           decimals={token.decimals}
           logo={tokenLogos?.[token.symbol]}
+          disabled={disabled}
         />
       ))}
     </div>

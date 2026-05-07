@@ -58,6 +58,7 @@ export async function initializeProviderForComputeMulti(
   svcIndexAlgo: number,
   paymentTokenAddress: string,
   computeOutput?: ComputeOutput,
+  queueMaxWaitTime?: number,
   algoParams?: Record<string, any>,
   datasetParams?: Record<string, any>
 ) {
@@ -134,10 +135,12 @@ export async function initializeProviderForComputeMulti(
     paymentTokenAddress,
     validUntil,
     providerUrl,
-    accountId,
+    await accountId.getAddress(),
     resources,
     chainId,
     policiesServer,
+    null,
+    queueMaxWaitTime,
     null,
     computeOutput
   )

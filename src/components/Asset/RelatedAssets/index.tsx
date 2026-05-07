@@ -60,7 +60,8 @@ export default function RelatedAssets(): ReactElement {
               }
             }
           }
-          tagResults = (await queryMetadata(tagQuery, newCancelToken())).results
+          tagResults =
+            (await queryMetadata(tagQuery, newCancelToken()))?.results || []
         }
         if (tagResults?.length === 4) {
           setRelatedAssets(tagResults)

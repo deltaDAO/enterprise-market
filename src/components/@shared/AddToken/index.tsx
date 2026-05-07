@@ -18,6 +18,7 @@ interface AddTokenProps {
   text?: string
   className?: string
   minimal?: boolean
+  disabled?: boolean
 }
 
 export default function AddToken({
@@ -27,15 +28,18 @@ export default function AddToken({
   logo,
   text,
   className,
-  minimal
+  minimal,
+  disabled = false
 }: AddTokenProps): ReactElement {
   const styleClasses = cx({
     button: true,
     minimal,
+    disabled,
     [className]: className
   })
 
   async function handleAddToken() {
+    if (disabled) return
     if (!window?.ethereum) return
 
     await addTokenToWallet(address, symbol, decimals, logo?.url)
@@ -48,6 +52,7 @@ export default function AddToken({
       className={styleClasses}
       style="text"
       size="small"
+      disabled={disabled}
       onClick={handleAddToken}
     >
       <span className={styles.logoWrap}>

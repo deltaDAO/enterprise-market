@@ -22,6 +22,38 @@ export function getSsiWalletApi(): string {
   return override || appConfig.ssiWalletApi
 }
 
+function isWalletActionRejected(error: any): boolean {
+  const code = error?.code ?? error?.info?.error?.code
+  const message = String(
+    error?.shortMessage ||
+      error?.message ||
+      error?.info?.error?.message ||
+      error?.reason ||
+      ''
+  ).toLowerCase()
+
+  return (
+    code === 4001 ||
+    code === 'ACTION_REJECTED' ||
+    message.includes('user rejected') ||
+    message.includes('rejected the request') ||
+    message.includes('action_rejected') ||
+    message.includes('ethers-user-denied')
+  )
+}
+
+function getSsiConnectErrorMessage(error: any): string {
+  if (isWalletActionRejected(error)) {
+    return 'SSI connection was cancelled in your wallet.'
+  }
+
+  return (
+    error?.response?.data?.message ||
+    error?.message ||
+    'Failed to connect to SSI wallet'
+  )
+}
+
 export async function connectToWallet(
   owner: JsonRpcSigner
 ): Promise<SsiWalletSession> {
@@ -63,11 +95,7 @@ export async function connectToWallet(
     return authResponse.data as SsiWalletSession
   } catch (error: any) {
     LoggerInstance.error('SSI connectToWallet failed:', error)
-    throw new Error(
-      error?.response?.data?.message ||
-        error?.message ||
-        'Failed to connect to SSI wallet'
-    )
+    throw new Error(getSsiConnectErrorMessage(error))
   }
 }
 

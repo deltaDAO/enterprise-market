@@ -26,7 +26,11 @@ import { useMarketMetadata } from '@context/MarketMetadata'
 import { getAccessDetails } from '@utils/accessDetailsAndPricing'
 import { getFixedBuyPrice } from '@utils/ocean/fixedRateExchange'
 import { getOceanConfig } from '@utils/ocean'
-import { getTokenInfo, getTokenBalanceFromSymbol } from '@utils/wallet'
+import {
+  getTokenInfo,
+  getTokenBalanceFromSymbol,
+  fetchTokenBalancesByAddress
+} from '@utils/wallet'
 import { compareAsBN } from '@utils/numbers'
 import { requiresSsi } from '@utils/credentials'
 import { getFeeTooltip } from '@utils/feeTooltips'
@@ -251,6 +255,11 @@ export default function Review({
   >([])
   const [algorithmProviderFeeEntries, setAlgorithmProviderFeeEntries] =
     useState<TotalPriceEntry[]>([])
+
+  const [providerFeeTokenBalances, setProviderFeeTokenBalances] = useState<
+    Record<string, string>
+  >({})
+
   const [algoLoadError, setAlgoLoadError] = useState<string>()
 
   const handleTermsChange = useCallback(
@@ -1333,6 +1342,27 @@ export default function Review({
       if (cancelled) return
       setDatasetProviderFeeEntries(datasetEntries)
       setAlgorithmProviderFeeEntries(algorithmEntries)
+
+      // Dynamically fetch balances for provider fee tokens
+      if (accountId && provider) {
+        const allFees = [
+          ...(datasetProviderFees || []),
+          ...(algorithmProviderFees ? [algorithmProviderFees] : [])
+        ]
+        const tokenAddresses = allFees
+          .map((f) => f?.providerFeeToken)
+          .filter(Boolean)
+        if (tokenAddresses.length > 0) {
+          const balances = await fetchTokenBalancesByAddress(
+            accountId,
+            tokenAddresses,
+            provider
+          )
+          if (!cancelled) {
+            setProviderFeeTokenBalances(balances)
+          }
+        }
+      }
     }
 
     loadProviderFees()
@@ -1344,7 +1374,8 @@ export default function Review({
     datasetProviderFees,
     algorithmProviderFees,
     signer?.provider,
-    resolveSymbol
+    resolveSymbol,
+    accountId
   ])
 
   useEffect(() => {
@@ -1358,8 +1389,13 @@ export default function Review({
       available: string
     }> = []
     for (const price of filteredPriceChecks) {
-      const baseTokenBalance =
+      const approvedBalance =
         getTokenBalanceFromSymbol(balance, price.symbol) || '0'
+      const dynamicBalance =
+        providerFeeTokenBalances[price.symbol?.toLowerCase()] || '0'
+      const baseTokenBalance = compareAsBN(approvedBalance, dynamicBalance)
+        ? approvedBalance
+        : dynamicBalance
       if (!compareAsBN(baseTokenBalance, price.value)) {
         sufficient = false
         if (!missingBalances.some((entry) => entry.symbol === price.symbol)) {
@@ -1377,7 +1413,12 @@ export default function Review({
     }
     setInsufficientBalances(missingBalances)
     setIsBalanceSufficient(sufficient)
-  }, [balance, totalPriceBreakdown, setIsBalanceSufficient])
+  }, [
+    balance,
+    totalPriceBreakdown,
+    setIsBalanceSufficient,
+    providerFeeTokenBalances
+  ])
 
   useEffect(() => {
     const allVerified =
@@ -2064,16 +2105,19 @@ export default function Review({
   const currentVerificationItem = verificationQueue[currentVerificationIndex]
   const assetRows = verificationQueue
 
-  function getAlgorithmAsset(algo: string): {
+  function getAlgorithmAsset(
+    algo: string,
+    selectedServiceId?: string
+  ): {
     algorithmAsset: AssetExtended | null
     serviceIndexAlgo: number | null
   } {
     let algorithmId = algo
-    let serviceId = ''
+    let serviceId = selectedServiceId || ''
     try {
       const parsed = JSON.parse(algo)
       algorithmId = parsed?.algoDid || algo
-      serviceId = parsed?.serviceId || ''
+      serviceId = selectedServiceId || parsed?.serviceId || ''
     } catch {
       algorithmId = algo
     }
@@ -2103,6 +2147,9 @@ export default function Review({
 
     const algoId = values.algorithm as string | undefined
     const fallbackAlgo = values.algorithms as AssetExtended | undefined
+    const selectedServiceId = values.algorithms?.services?.find(
+      (service) => service.checked
+    )?.id
 
     if (!algoId && fallbackAlgo) {
       if (fallbackAlgo.serviceIndex !== undefined) {
@@ -2118,7 +2165,10 @@ export default function Review({
       return
     }
 
-    const { algorithmAsset, serviceIndexAlgo } = getAlgorithmAsset(algoId)
+    const { algorithmAsset, serviceIndexAlgo } = getAlgorithmAsset(
+      algoId,
+      selectedServiceId
+    )
     if (!algorithmAsset) {
       setAlgoLoadError('Algorithm asset not found for review.')
       return

@@ -55,6 +55,27 @@ See https://github.com/oceanprotocol/market/issues/1143 */
   margin-bottom: calc(var(--spacer) / 8);
 }
 
+.username {
+  font-size: var(--font-size-small);
+  color: var(--color-secondary);
+  margin-bottom: calc(var(--spacer) / 10);
+  word-wrap: break-word;
+}
+
+.email {
+  font-size: var(--font-size-small);
+  color: var(--color-secondary);
+  margin-bottom: calc(var(--spacer) / 10);
+  word-wrap: break-word;
+}
+
+.userId {
+  font-size: var(--font-size-small);
+  color: var(--color-secondary);
+  margin-bottom: calc(var(--spacer) / 10);
+  word-wrap: break-word;
+}
+
 .accountId {
   display: block;
   font-size: var(--font-size-small);

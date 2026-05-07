@@ -19,6 +19,7 @@ import { AssetSelectionAsset } from '@shared/FormInput/InputElement/AssetSelecti
 import { transformAssetToAssetSelectionForComputeWizard } from './assetConverter'
 import { getFileDidInfo } from './provider'
 import { toast } from 'react-toastify'
+import type { Signer } from 'ethers'
 import { Asset } from 'src/@types/Asset'
 import {
   Compute,
@@ -219,18 +220,34 @@ export async function getAlgorithmAssetSelectionListForComputeWizard(
 
 async function getJobs(
   providerUrls: string[],
-  accountId: string,
+  signer: Signer,
   assets?: Asset[],
   _cancelToken?: CancelToken
 ): Promise<ComputeJobMetaData[]> {
   const uniqueProviders = [...new Set(providerUrls)]
   const providersComputeJobsExtended: ComputeJobExtended[] = []
   const computeJobs: ComputeJobMetaData[] = []
+
+  const formatProviderError = (error: unknown): string => {
+    const rawMessage =
+      error instanceof Error
+        ? error.message
+        : typeof error === 'string'
+        ? error
+        : 'Failed to fetch compute jobs.'
+
+    try {
+      return getErrorMessage(rawMessage)
+    } catch {
+      return rawMessage
+    }
+  }
+
   try {
     for (let i = 0; i < uniqueProviders.length; i++) {
       const providerComputeJobs = (await ProviderInstance.computeStatus(
         uniqueProviders[i],
-        accountId
+        signer
       )) as ComputeJob[]
       providerComputeJobs.forEach((job) =>
         providersComputeJobsExtended.push({
@@ -282,8 +299,8 @@ async function getJobs(
         }
       })
     }
-  } catch (err: any) {
-    const message = getErrorMessage(err.message)
+  } catch (err: unknown) {
+    const message = formatProviderError(err)
     LoggerInstance.error('[Compute to Data] Error:', message)
     toast.error(message)
   }
@@ -293,6 +310,7 @@ async function getJobs(
 export async function getComputeJobs(
   chainIds: number[],
   accountId: string,
+  signer: Signer,
   asset: AssetExtended,
   service: Service,
   cancelToken?: CancelToken
@@ -317,7 +335,7 @@ export async function getComputeJobs(
   )
   computeResult.computeJobs = await getJobs(
     providerUrls,
-    accountId,
+    signer,
     assets,
     cancelToken
   )
@@ -328,6 +346,7 @@ export async function getComputeJobs(
 
 export async function getAllComputeJobs(
   accountId: string,
+  signer: Signer,
   cancelToken?: CancelToken
 ): Promise<ComputeResults> {
   if (!accountId) return
@@ -341,7 +360,7 @@ export async function getAllComputeJobs(
     : [customProviderUrl]
   computeResult.computeJobs = await getJobs(
     providerUrls,
-    accountId,
+    signer,
     null,
     cancelToken
   )

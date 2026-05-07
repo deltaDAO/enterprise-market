@@ -61,6 +61,21 @@ const config = {
   NEXT_PUBLIC_DATASPACE: process.env.NEXT_PUBLIC_DATASPACE
 }
 
+const authEnabled = process.env.NEXT_PUBLIC_AUTH_ENABLED === 'true'
+if (authEnabled) {
+  console.log('Auth is enabled, exposing OIDC config to runtime')
+  config.NEXT_PUBLIC_AUTH_ENABLED = process.env.NEXT_PUBLIC_AUTH_ENABLED
+  config.NEXT_PUBLIC_AUTH_PROVIDER = process.env.NEXT_PUBLIC_AUTH_PROVIDER
+  config.NEXT_PUBLIC_OIDC_TOKEN_URL = process.env.NEXT_PUBLIC_OIDC_TOKEN_URL
+  config.NEXT_PUBLIC_OIDC_ISSUER = process.env.NEXT_PUBLIC_OIDC_ISSUER
+  config.NEXT_PUBLIC_OIDC_CLIENT_ID = process.env.NEXT_PUBLIC_OIDC_CLIENT_ID
+  config.NEXT_PUBLIC_OIDC_REDIRECT_URI =
+    process.env.NEXT_PUBLIC_OIDC_REDIRECT_URI
+  config.NEXT_PUBLIC_OIDC_SIGNUP_FLOW = process.env.NEXT_PUBLIC_OIDC_SIGNUP_FLOW
+  config.NEXT_PUBLIC_MAX_LICENSE_FILE_SIZE_KB =
+    process.env.NEXT_PUBLIC_MAX_LICENSE_FILE_SIZE_KB
+}
+
 const outputPath = path.join(process.cwd(), 'public', 'runtime-config.js')
 const contents = `window.__RUNTIME_CONFIG__ = ${JSON.stringify(config)};\n`
 fs.writeFileSync(outputPath, contents)

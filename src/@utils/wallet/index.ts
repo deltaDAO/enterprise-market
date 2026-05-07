@@ -229,3 +229,39 @@ export async function getTokenInfo(
     }
   }
 }
+
+/**
+ * Fetches on-chain token balances for a set of token addresses.
+ * Returns a map of lowercased symbol -> balance string.
+ * Use this for tokens that may not be in the pre-configured approved list.
+ */
+export async function fetchTokenBalancesByAddress(
+  accountId: string,
+  tokenAddresses: string[],
+  web3Provider: Provider
+): Promise<Record<string, string>> {
+  const result: Record<string, string> = {}
+  if (!accountId || !web3Provider || !tokenAddresses?.length) return result
+
+  const uniqueAddresses = [
+    ...new Set(tokenAddresses.map((a) => a.toLowerCase()))
+  ]
+
+  await Promise.allSettled(
+    uniqueAddresses.map(async (address) => {
+      const info = await getTokenInfo(address, web3Provider)
+      if (!info?.symbol || !info?.decimals) return
+      const bal = await getTokenBalance(
+        accountId,
+        info.decimals,
+        address,
+        web3Provider
+      )
+      if (bal) {
+        result[info.symbol.toLowerCase()] = bal
+      }
+    })
+  )
+
+  return result
+}

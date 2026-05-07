@@ -4,11 +4,13 @@ import { Asset } from 'src/@types/Asset'
 import { Service } from 'src/@types/ddo/Service'
 import { AssetExtended } from 'src/@types/AssetExtended'
 import { CancelToken } from 'axios'
+import type { Signer } from 'ethers'
 
 interface UseComputeJobsParams {
   asset: AssetExtended
   service: Service
   ownerAddress?: string
+  signer?: Signer
   chainIds?: number[]
   refreshIntervalMs?: number
   cancelTokenFactory: () => CancelToken
@@ -18,6 +20,7 @@ export function useComputeJobs({
   asset,
   service,
   ownerAddress,
+  signer,
   chainIds,
   refreshIntervalMs = 10000,
   cancelTokenFactory
@@ -28,7 +31,7 @@ export function useComputeJobs({
 
   const fetchJobs = useCallback(
     async (type: 'init' | 'poll' = 'poll') => {
-      if (!chainIds || chainIds.length === 0 || !ownerAddress) return
+      if (!chainIds || chainIds.length === 0 || !ownerAddress || !signer) return
       try {
         if (type === 'init') {
           setIsLoadingJobs(true)
@@ -38,6 +41,7 @@ export function useComputeJobs({
             ? [asset.credentialSubject.chainId]
             : chainIds,
           ownerAddress,
+          signer,
           asset as unknown as Asset,
           service,
           cancelTokenFactory()
@@ -54,7 +58,7 @@ export function useComputeJobs({
         }
       }
     },
-    [asset, service, chainIds, ownerAddress, cancelTokenFactory]
+    [asset, service, chainIds, ownerAddress, cancelTokenFactory, signer]
   )
 
   useEffect(() => {

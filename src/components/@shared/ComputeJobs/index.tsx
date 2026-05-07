@@ -3,6 +3,7 @@ import styles from './index.module.css'
 import { getAllComputeJobs } from '@utils/compute'
 import { useAccount } from 'wagmi'
 import { useCancelToken } from '@hooks/useCancelToken'
+import { useEthersSigner } from '@hooks/useEthersSigner'
 import Time from '@shared/atoms/Time'
 import Details from '@components/Profile/History/ComputeJobs/Details'
 import FinishedIcon from '@images/finished.svg'
@@ -23,11 +24,12 @@ const ComputeJobs = ({
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const { address: accountId } = useAccount()
+  const signer = useEthersSigner()
   const newCancelToken = useCancelToken()
 
   const fetchComputeJobs = useCallback(
     async (type: string = 'init') => {
-      if (!accountId) {
+      if (!accountId || !signer) {
         console.warn('No account ID available')
         setIsLoading(false)
         return
@@ -41,7 +43,11 @@ const ComputeJobs = ({
         }
 
         setError(null)
-        const response = await getAllComputeJobs(accountId, newCancelToken())
+        const response = await getAllComputeJobs(
+          accountId,
+          signer,
+          newCancelToken()
+        )
 
         if (response?.computeJobs) {
           const allJobs = response.computeJobs
@@ -79,7 +85,7 @@ const ComputeJobs = ({
         if (type === 'refresh') setIsRefreshing(false)
       }
     },
-    [accountId, asset?.id, newCancelToken]
+    [accountId, asset?.id, newCancelToken, signer]
   )
 
   useEffect(() => {

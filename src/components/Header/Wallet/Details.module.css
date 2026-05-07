@@ -1,143 +1,290 @@
 .details {
   background: #ffffff;
-  padding: 2rem 1.75rem;
-  min-width: 22rem;
+  padding: 1.75rem;
+  min-width: 23rem;
   font-family: 'Inter', sans-serif;
   color: var(--navy-700);
 }
 
-/* Profile & Bookmark links */
-.profileLink,
-.bookmarksLink {
+.section {
+  border-top: 1px solid #e0e0e0;
+  padding-top: 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.section:first-child,
+.userInfo {
+  border-top: 0;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+.menuRow {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  font-weight: 700;
-  font-size: 1.25rem;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
   margin-bottom: 1rem;
   color: var(--navy-700);
 }
 
-.profileLink img,
-.bookmarksLink svg {
+.menuRow:last-child {
+  margin-bottom: 0;
+}
+
+.menuRowIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.menuRowIcon img,
+.menuRowIcon svg {
   width: 1.75rem;
   height: 1.75rem;
   margin: 0;
 }
-.bookmarksButton {
+
+.menuRowLabel {
+  position: relative;
+  display: inline-block;
   font-family: var(--font-family);
   font-weight: 700;
   font-size: 17px;
   line-height: 80%;
   text-transform: uppercase;
-  text-align: center;
+  text-align: left;
   color: #0a4b70;
-}
-.profileButton {
-  font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 17px;
-  line-height: 80%;
-  text-transform: uppercase;
-  text-align: center;
-  color: #0a4b70;
+  text-decoration: none;
 }
 
-.bookmarksLink svg {
+.menuRowLabel::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.16rem;
+  height: 2px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 0.2s ease-out;
+}
+
+.menuRow:hover .menuRowLabel::after,
+.menuRow:focus .menuRowLabel::after {
+  transform: scaleX(1);
+}
+
+.menuRowDisabled {
+  cursor: not-allowed;
+}
+
+.menuRowDisabled .menuRowLabel {
+  color: #94a3b8;
+}
+
+.menuRowDisabled:hover .menuRowLabel,
+.menuRowDisabled:focus .menuRowLabel {
+  text-decoration: none;
+}
+
+.menuRowDisabled:hover .menuRowLabel::after,
+.menuRowDisabled:focus .menuRowLabel::after {
+  transform: scaleX(0);
+}
+
+.menuRowDisabled .menuRowIcon {
+  opacity: 0.4;
+}
+
+.bookmarksRow svg {
   fill: var(--yellow-400);
 }
 
-/* Divider between sections */
-.actions {
-  border-top: 1px solid #e0e0e0;
-  margin-top: 1.25rem;
-  padding-top: 1.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+.placeholderAvatar {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d8e4f0 0%, #eef4fa 100%);
+  border: 1px solid #c7d7e7;
 }
 
-/* Wallet name section */
 .walletInfo {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.6rem;
   font-size: 1.1rem;
-  border-bottom: 1px solid #e0e0e0;
-  padding-bottom: 1.25rem;
 }
 
-.walletLogoWrap {
+.walletHeading {
   font-weight: 600;
   color: var(--navy-700);
+  font-size: 1.1rem;
 }
 
-/* AddTokenList buttons */
-.walletInfo button {
+.walletDescription {
+  font-size: 0.9rem;
+  color: #64748b;
+  text-transform: none;
+  word-break: break-word;
+}
+
+.walletAddressRow {
   display: flex;
   align-items: center;
-  font-size: 1rem;
-  color: var(--neutral-850);
-  background: none;
-  border: none;
-  padding: 0.35rem 0;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.actionButton {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.15rem 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
   cursor: pointer;
-  gap: 0.5rem;
+  transition: color 0.18s ease, opacity 0.18s ease, transform 0.18s ease;
 }
 
-.walletInfo button:hover {
-  color: var(--navy-700);
+.actionButton + .actionButton {
+  margin-top: 0.95rem;
 }
 
-.walletLogo {
-  width: 1.5rem;
-  height: 1.5rem;
-  margin-right: 0.5rem;
+.actionButtonCompact {
+  align-items: center;
 }
 
-/* Disconnect + Switch Wallet */
-.actions p {
+.actionButton:hover,
+.actionButton:focus-visible {
+  outline: 0;
+}
+
+.actionButton:focus-visible {
+  outline: 2px solid rgba(10, 75, 112, 0.18);
+  outline-offset: 2px;
+  border-radius: 0.4rem;
+}
+
+.actionButtonDanger {
+  color: #d92d20;
+}
+
+.actionIconBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  flex-shrink: 0;
+  color: #0a4b70;
+  transition: transform 0.18s ease, color 0.18s ease, opacity 0.18s ease;
+}
+
+.actionIconBadgeDanger {
+  color: #dc2626;
+}
+
+.actionGlyph {
+  width: 1.55rem;
+  height: 1.55rem;
+}
+
+.actionContent {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  margin: 0;
-}
-.walletActionRow {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
+  gap: 0.15rem;
+  min-width: 0;
+  padding-top: 0.05rem;
 }
 
-.walletActionIcon {
+.actionButtonCompact .actionContent {
+  justify-content: center;
+  padding-top: 0;
+}
+
+.actionTitle {
   position: relative;
   display: inline-block;
-  z-index: 1;
-  width: 1.6rem;
-  height: 100%;
-  flex-shrink: 0;
-  margin: 0;
-}
-
-.walletActionRow button,
-.walletActionRow button:hover {
+  font-family: var(--font-family);
   font-size: 1rem;
   font-weight: 500;
+  line-height: 1.2;
   color: var(--navy-700);
-  background: none;
-  border: none;
-  text-align: left;
-  padding: 0;
-  cursor: pointer;
+  text-decoration: none;
 }
 
-.walletActionRow button:hover {
-  text-decoration: underline;
+.actionTitle::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.14rem;
+  height: 2px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 0.2s ease-out;
 }
 
-/* --- Responsive Enhancements --- */
+.actionButton:hover .actionTitle::after,
+.actionButton:focus-visible .actionTitle::after {
+  transform: scaleX(1);
+}
 
-/* Adjust spacing and text for smaller screens */
+.actionButton:hover .actionTitle,
+.actionButton:focus-visible .actionTitle {
+  text-decoration: none;
+}
+
+.actionButton:hover .actionIconBadge,
+.actionButton:focus-visible .actionIconBadge {
+  transform: translateX(0.16rem);
+}
+
+.actionButtonDanger .actionTitle {
+  color: #ef4444;
+}
+
+.actionDescription {
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: #64748b;
+}
+
+.actionButtonDanger .actionDescription {
+  color: #94a3b8;
+}
+
+.userInfo {
+  border-top: 1px solid #e0e0e0;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  font-size: 0.85rem;
+}
+
+.userEmail {
+  font-weight: 500;
+  color: var(--navy-700);
+  margin-bottom: 0.25rem;
+  word-break: break-all;
+}
+
+.userProvider {
+  font-size: 0.75rem;
+  color: #64748b;
+  text-transform: capitalize;
+}
+
 @media (max-width: 480px) {
   .details {
     padding: 1.25rem 1rem;
@@ -147,20 +294,18 @@
     border-radius: 1rem;
   }
 
-  .profileLink,
-  .bookmarksLink {
-    font-size: 1rem;
+  .menuRow {
     gap: 0.5rem;
   }
 
-  .profileLink img,
-  .bookmarksLink svg {
+  .menuRowIcon img,
+  .menuRowIcon svg,
+  .placeholderAvatar {
     width: 1.25rem;
     height: 1.25rem;
   }
 
-  .bookmarksButton,
-  .profileButton {
+  .menuRowLabel {
     font-size: 0.95rem;
   }
 
@@ -168,50 +313,31 @@
     font-size: 0.95rem;
   }
 
-  .walletActionIcon {
-    width: 1.25rem;
+  .actionButton {
+    gap: 0.65rem;
   }
 
-  .walletActionRow button {
+  .actionGlyph {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+
+  .actionTitle {
     font-size: 0.95rem;
+  }
+
+  .actionDescription {
+    font-size: 0.78rem;
+  }
+
+  .userInfo {
+    font-size: 0.75rem;
   }
 }
 
-/* High-res screens (1440px and above) */
 @media (min-width: 1440px) {
   .details {
     min-width: 24rem;
-  }
-
-  .profileLink,
-  .bookmarksLink {
-    font-size: 1.35rem;
-  }
-
-  .walletInfo {
-    font-size: 1.2rem;
-  }
-
-  .walletActionIcon {
-    width: 1.8rem;
-  }
-}
-
-/* Ultra-wide displays (4K) */
-@media (min-width: 2560px) {
-  .details {
-    padding: 3rem 2.5rem;
-    font-size: 1.25rem;
-  }
-
-  .walletActionIcon {
-    width: 2rem;
-  }
-
-  .profileLink img,
-  .bookmarksLink svg {
-    width: 2rem;
-    height: 2rem;
   }
 }
 

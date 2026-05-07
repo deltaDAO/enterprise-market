@@ -9,6 +9,7 @@ import { useUserPreferences } from '@context/UserPreferences'
 import { useCancelToken } from '@hooks/useCancelToken'
 import { LoggerInstance } from '@oceanprotocol/lib'
 import { useAccount } from 'wagmi'
+import { useEthersSigner } from '@hooks/useEthersSigner'
 import HistoryData from './HistoryData'
 
 interface HistoryTab {
@@ -73,6 +74,7 @@ export default function HistoryPage({
   accountIdentifier: string
 }): ReactElement {
   const { address: accountId } = useAccount()
+  const signer = useEthersSigner()
   const { chainIds } = useUserPreferences()
   const newCancelToken = useCancelToken()
 
@@ -84,7 +86,7 @@ export default function HistoryPage({
 
   const fetchJobs = useCallback(
     async (type: string) => {
-      if (!chainIds || chainIds.length === 0 || !accountId) {
+      if (!chainIds || chainIds.length === 0 || !accountId || !signer) {
         return
       }
       if (isFetchingJobsRef.current) {
@@ -97,7 +99,11 @@ export default function HistoryPage({
           setIsLoadingJobs(true)
         }
 
-        const computeJobs = await getAllComputeJobs(accountId, newCancelToken())
+        const computeJobs = await getAllComputeJobs(
+          accountId,
+          signer,
+          newCancelToken()
+        )
         setJobs(computeJobs?.computeJobs)
         setIsLoadingJobs(!computeJobs.isLoaded)
       } catch (error) {
@@ -107,7 +113,7 @@ export default function HistoryPage({
         isFetchingJobsRef.current = false
       }
     },
-    [accountId, chainIds, newCancelToken]
+    [accountId, chainIds, newCancelToken, signer]
   )
 
   useEffect(() => {

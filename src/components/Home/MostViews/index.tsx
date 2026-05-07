@@ -33,9 +33,10 @@ export default function MostViews(): ReactElement {
       } as BaseQueryParams
       const query = generateBaseQuery(baseParams)
       const result = await queryMetadata(query, newCancelToken())
+      const resultAssets = result?.results || []
 
       if (result?.totalResults > 0) {
-        const sortedAssets = sortAssets(result.results, dids)
+        const sortedAssets = sortAssets(resultAssets, dids)
         const overflow = sortedAssets.length - 6
         sortedAssets.splice(sortedAssets.length - overflow, overflow)
         sortedAssets.forEach((asset) => {

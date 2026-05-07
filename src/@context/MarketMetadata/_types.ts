@@ -13,7 +13,7 @@ export interface OpcFee {
 }
 
 export interface AppConfig {
-  metadataCacheUri: string
+  metadataCacheUri: string[]
   defaultDatatokenTemplateIndex: number
   marketFeeAddress: string
   publisherMarketOrderFee: string

@@ -26,7 +26,12 @@ import {
   getWallets,
   isSessionValid
 } from '@utils/wallet/ssiWallet'
-import { SsiKeyDesc, SsiWalletDesc, SsiWalletDid } from 'src/@types/SsiWallet'
+import {
+  SsiKeyDesc,
+  SsiVerifiableCredential,
+  SsiWalletDesc,
+  SsiWalletDid
+} from 'src/@types/SsiWallet'
 
 interface SsiWalletControlProps {
   styles: Record<string, string>
@@ -41,6 +46,18 @@ function getKeyLabel(key: SsiKeyDesc): string {
   }
 
   return keyWithName?.name || key.keyId.id
+}
+
+function getCredentialListKey(
+  credential: SsiVerifiableCredential,
+  index: number
+): string {
+  const credentialType = getSsiVerifiableCredentialType(credential)
+  return (
+    credential?.id ||
+    credential?.parsedDocument?.id ||
+    `${credentialType}-${index}`
+  )
 }
 
 export default function SsiWalletControl({
@@ -382,8 +399,11 @@ export default function SsiWalletControl({
             <div className={styles.marginBottom2}>
               <label>Cached Credentials:</label>
               <ul className={styles.list}>
-                {safeCachedCredentials.map((credential) => (
-                  <li key={credential.id} className={styles.listItem}>
+                {safeCachedCredentials.map((credential, index) => (
+                  <li
+                    key={getCredentialListKey(credential, index)}
+                    className={styles.listItem}
+                  >
                     {getSsiVerifiableCredentialType(credential)}
                   </li>
                 ))}

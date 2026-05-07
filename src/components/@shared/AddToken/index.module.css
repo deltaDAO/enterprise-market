@@ -119,6 +119,25 @@
   left: 100%;
 }
 
+.disabled .logo {
+  border-color: var(--ink-alpha-15);
+  background-color: var(--ink-alpha-5);
+  box-shadow: none;
+}
+
+.disabled .logoWrap::before {
+  color: var(--ink-alpha-20);
+}
+
+.disabled .text {
+  background-image: linear-gradient(
+    90deg,
+    var(--ink-alpha-40) 0%,
+    var(--ink-alpha-40) 100%
+  );
+  background-size: 100% 100%;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .logo,
   .logoWrap::before,

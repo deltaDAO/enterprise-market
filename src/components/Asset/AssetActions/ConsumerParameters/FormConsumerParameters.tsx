@@ -65,6 +65,23 @@ export default function FormConsumerParameters({
     return updatedOptions
   }
 
+  const getParameterOptionTitles = (
+    parameter: Record<string, string | number | boolean | Option[]>
+  ): string[] | undefined => {
+    if (parameter.type !== 'select' || !Array.isArray(parameter.options)) {
+      return undefined
+    }
+
+    const optionTitles = parameter.options.map((option) => {
+      const key = Object.keys(option)[0]
+      return String(option[key])
+    })
+
+    if (!parameter.required) optionTitles.unshift('')
+
+    return optionTitles
+  }
+
   return (
     <div className={styles.container}>
       <Label htmlFor="Input the consumer parameters">
@@ -88,7 +105,9 @@ export default function FormConsumerParameters({
                 help={param.description}
                 name={`${name}.${param.name}`}
                 options={getParameterOptions(param)}
+                optionTitles={getParameterOptionTitles(param)}
                 size="small"
+                sortOptions={false}
                 type={param.type === 'boolean' ? 'select' : param.type}
                 value={field.value?.[param.name]}
               />
