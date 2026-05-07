@@ -110,10 +110,11 @@ export default function ImportModal({
     )
 
     if (!result.success) {
-      LoggerInstance.error('[ImportModal] Decryption failed:', result.error)
+      const errMsg = result.error
+      LoggerInstance.error('[ImportModal] Decryption failed:', errMsg)
       setError(
-        result.error.includes('incorrect password') ||
-          result.error.includes('invalid password')
+        errMsg.includes('incorrect password') ||
+          errMsg.includes('invalid password')
           ? 'Incorrect password.'
           : 'Failed to decrypt wallet file.'
       )
@@ -176,17 +177,21 @@ export default function ImportModal({
     onClose
   ])
 
-  const handleRemoveStored = useCallback(() => {
-    setEncryptedWalletJson('')
-
-    // Cancel any pending connect promise
+  const handleRemoveStored = useCallback(async () => {
+    // Disconnect the connector to clear any session-resident private key
     const connector = connectors.find((c) => c.id === JSON_WALLET_CONNECTOR_ID)
     if (connector) {
+      try {
+        await (connector as any).disconnect?.()
+      } catch {
+        // ignore
+      }
       ;(
         connector as unknown as JsonWalletConnectorProperties
       ).cancelPendingConnect()
     }
 
+    setEncryptedWalletJson('')
     toast.info('Stored wallet removed.')
     reset()
     onClose()
@@ -203,14 +208,15 @@ export default function ImportModal({
       <div className={styles.step}>
         {!showPasswordStep ? (
           <>
-            <div
+            <button
+              type="button"
               className={styles.uploadArea}
               onClick={() => fileInputRef.current?.click()}
             >
               <span className={styles.uploadLabel}>
                 Click to select an encrypted JSON wallet file
               </span>
-            </div>
+            </button>
             <input
               ref={fileInputRef}
               type="file"

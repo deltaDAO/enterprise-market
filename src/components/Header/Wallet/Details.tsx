@@ -111,7 +111,17 @@ export default function Details(): ReactElement {
                           : ''
                       }`}
                       disabled={chain.id === connectedChainId}
-                      onClick={() => switchChain({ chainId: chain.id })}
+                      onClick={() =>
+                        switchChain(
+                          { chainId: chain.id },
+                          {
+                            onError: (err) =>
+                              toast.error(
+                                `Failed to switch network: ${err.message}`
+                              )
+                          }
+                        )
+                      }
                     >
                       <NetworkName networkId={chain.id} minimal />
                     </button>

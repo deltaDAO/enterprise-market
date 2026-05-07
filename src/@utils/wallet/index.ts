@@ -4,6 +4,7 @@ import { LoggerInstance } from '@oceanprotocol/lib'
 import { cookieStorage, createConfig, createStorage } from 'wagmi'
 import { erc20Abi, http } from 'viem'
 import { jsonWalletConnector } from './jsonWalletConnector'
+import appConfig from '../../../app.config.cjs'
 import { localhost, type Chain } from 'wagmi/chains'
 import {
   ethers,
@@ -56,7 +57,11 @@ export function createWagmiConfig() {
     chains,
     ssr: true,
     storage: createStorage({ storage: cookieStorage }),
-    connectors: [jsonWalletConnector()],
+    connectors: [
+      jsonWalletConnector({
+        persistSession: appConfig.persistJsonWalletSession ?? true
+      })
+    ],
     transports: chains.reduce(
       (acc, chain) => ({
         ...acc,

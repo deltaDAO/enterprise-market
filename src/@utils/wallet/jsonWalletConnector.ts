@@ -116,10 +116,15 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
       if (!privateKey) throw new Error('Wallet not loaded.')
 
       const account = privateKeyToAccount(privateKey)
+
+      // Use the transport configured in wagmi config for this chain,
+      // falling back to http() only if unavailable.
+      const configuredTransport =
+        (config as any).transports?.[chain.id] ?? http()
       const walletClient = createWalletClient({
         account,
         chain,
-        transport: http()
+        transport: configuredTransport
       })
 
       const request: EIP1193RequestFn = async ({ method, params }) => {
@@ -130,7 +135,7 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
             return [account.address] as any
 
           case 'eth_chainId':
-            return `0x${chain.id.toString(16)}` as any
+            return `0x${(currentChainId ?? chain.id).toString(16)}` as any
 
           case 'personal_sign': {
             const [message] = params as [Hex, Address]
@@ -181,10 +186,14 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
           }
 
           default: {
-            // Delegate read-only calls to the chain's RPC
-            const transport = http()({ chain, retryCount: 0 } as Parameters<
-              ReturnType<typeof http>
-            >[0])
+            // Delegate read-only calls to the chain's RPC using the
+            // wagmi-configured transport (respects custom RPC endpoints).
+            const activeChain = getChain(currentChainId)
+            const t = (config as any).transports?.[activeChain.id] ?? http()
+            const transport = t({
+              chain: activeChain,
+              retryCount: 0
+            } as Parameters<ReturnType<typeof http>>[0])
             return transport.request({
               method,
               params
@@ -344,7 +353,8 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
             }
           } as Provider
         }
-        const chain = getChain(chainId)
+        // Always use the current chain so provider reflects chain switches
+        const chain = getChain(chainId ?? currentChainId)
         return buildProvider(chain)
       },
 
