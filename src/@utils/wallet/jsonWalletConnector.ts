@@ -60,6 +60,16 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
       chainId?: number
     } | null = null
 
+    // Provider-level event listeners (persistent across getProvider calls)
+    const providerListeners: Record<
+      string,
+      Array<(...args: any[]) => void>
+    > = {}
+
+    function emitProviderEvent(event: string, ...args: any[]) {
+      providerListeners[event]?.forEach((handler) => handler(...args))
+    }
+
     function getChain(chainId?: number): Chain {
       const id = chainId ?? currentChainId ?? config.chains[0].id
       return config.chains.find((c) => c.id === id) ?? config.chains[0]
@@ -192,6 +202,7 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
             currentChainId = newChainId
             persistState()
             config.emitter.emit('change', { chainId: newChainId })
+            emitProviderEvent('chainChanged', `0x${newChainId.toString(16)}`)
             return null as any
           }
 
@@ -213,16 +224,17 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
 
       // Return an EIP-1193 compliant provider object.
       // wagmi's getConnectorClient wraps this with custom() internally.
-      const listeners: Record<string, Array<(...args: any[]) => void>> = {}
       return {
         request,
         on(event: string, handler: (...args: any[]) => void) {
-          if (!listeners[event]) listeners[event] = []
-          listeners[event].push(handler)
+          if (!providerListeners[event]) providerListeners[event] = []
+          providerListeners[event].push(handler)
           return this
         },
         removeListener(event: string, handler: (...args: any[]) => void) {
-          listeners[event] = listeners[event]?.filter((h) => h !== handler)
+          providerListeners[event] = providerListeners[event]?.filter(
+            (h) => h !== handler
+          )
           return this
         }
       } as Provider
@@ -346,7 +358,7 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
         return currentChainId ?? config.chains[0].id
       },
 
-      async getProvider({ chainId } = {}) {
+      async getProvider({ chainId: _chainId } = {}) {
         if (!privateKey) {
           // Return a no-op provider when wallet is not yet loaded
           const noopRequest: EIP1193RequestFn = async () => {
@@ -377,16 +389,18 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
         currentChainId = chainId
         persistState()
 
-        config.emitter.emit('change', { chainId })
-
-        // Emit chainChanged so wagmi refreshes its connector client
-        // and downstream hooks see the new chain without a page reload.
+        // Emit on wagmi's emitter so wagmi state updates
         config.emitter.emit('change', {
           chainId,
           accounts: privateKey
             ? [privateKeyToAccount(privateKey).address]
             : undefined
         })
+
+        // Emit on the EIP-1193 provider so hooks listening to the
+        // provider's 'chainChanged' event (e.g. useActiveWalletChainId)
+        // pick up the change without requiring a page reload.
+        emitProviderEvent('chainChanged', `0x${chainId.toString(16)}`)
 
         LoggerInstance.log(
           `[jsonWalletConnector] Switched to chain ${chain.name} (${chainId})`

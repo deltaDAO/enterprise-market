@@ -10,7 +10,7 @@ import {
   JSON_WALLET_CONNECTOR_ID,
   JsonWalletConnectorProperties
 } from '@utils/wallet/jsonWalletConnector'
-import { useConnect, useConnectors } from 'wagmi'
+import { useAccount, useChains, useConnect, useConnectors } from 'wagmi'
 import { useUserPreferences } from '@context/UserPreferences'
 import { toast } from 'react-toastify'
 import { LoggerInstance } from '@oceanprotocol/lib'
@@ -28,6 +28,8 @@ export default function ImportModal({
 }: ImportModalProps): ReactElement {
   const connectors = useConnectors()
   const { connectAsync } = useConnect()
+  const { chain } = useAccount()
+  const chains = useChains()
   const { encryptedWalletJson, setEncryptedWalletJson } = useUserPreferences()
 
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -138,8 +140,10 @@ export default function ImportModal({
 
       // Explicitly connect through wagmi to ensure all internal state
       // (including useConnectorClient) is properly initialized.
+      let connectedChainId: number | undefined
       try {
-        await connectAsync({ connector })
+        const result = await connectAsync({ connector })
+        connectedChainId = result.chainId
       } catch {
         // May throw if already connected via pending resolver — that's fine
       }
@@ -150,9 +154,12 @@ export default function ImportModal({
       }
 
       const displayAddress = walletAddress || storedAddress
-      toast.success(
-        `Wallet ${accountTruncate(displayAddress || '')} connected.`
+      const connectedChain = chains.find(
+        (c) => c.id === (connectedChainId ?? chain?.id)
       )
+      const chainLabel = connectedChain ? ` on ${connectedChain.name}` : ''
+      const truncated = accountTruncate(displayAddress || '')
+      toast.success(`Wallet ${truncated} connected${chainLabel}.`)
       reset()
       onClose()
     } catch (e: unknown) {
@@ -174,7 +181,9 @@ export default function ImportModal({
     walletAddress,
     storedAddress,
     reset,
-    onClose
+    onClose,
+    chain?.id,
+    chains
   ])
 
   const handleRemoveStored = useCallback(async () => {
