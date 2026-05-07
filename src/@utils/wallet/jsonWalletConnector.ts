@@ -112,22 +112,17 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
       return false
     }
 
-    function buildProvider(chain: Chain): Provider {
+    function buildProvider(): Provider {
       if (!privateKey) throw new Error('Wallet not loaded.')
 
-      const account = privateKeyToAccount(privateKey)
-
-      // Use the transport configured in wagmi config for this chain,
-      // falling back to http() only if unavailable.
-      const configuredTransport =
-        (config as any).transports?.[chain.id] ?? http()
-      const walletClient = createWalletClient({
-        account,
-        chain,
-        transport: configuredTransport
-      })
-
       const request: EIP1193RequestFn = async ({ method, params }) => {
+        // Resolve the active chain and account on each request so
+        // chain switches are reflected immediately without page reload.
+        const activeChain = getChain(currentChainId)
+        const account = privateKeyToAccount(privateKey!)
+        const configuredTransport =
+          (config as any).transports?.[activeChain.id] ?? http()
+
         // Delegate signing/account methods to local wallet
         switch (method) {
           case 'eth_accounts':
@@ -135,11 +130,16 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
             return [account.address] as any
 
           case 'eth_chainId':
-            return `0x${(currentChainId ?? chain.id).toString(16)}` as any
+            return `0x${activeChain.id.toString(16)}` as any
 
           case 'personal_sign': {
             const [message] = params as [Hex, Address]
-            return walletClient.signMessage({
+            const wc = createWalletClient({
+              account,
+              chain: activeChain,
+              transport: configuredTransport
+            })
+            return wc.signMessage({
               account,
               message: { raw: message }
             }) as any
@@ -148,7 +148,12 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
           case 'eth_signTypedData_v4': {
             const [, typedDataJson] = params as [Address, string]
             const typedData = JSON.parse(typedDataJson)
-            return walletClient.signTypedData({
+            const wc = createWalletClient({
+              account,
+              chain: activeChain,
+              transport: configuredTransport
+            })
+            return wc.signTypedData({
               account,
               ...typedData
             }) as any
@@ -156,9 +161,14 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
 
           case 'eth_sendTransaction': {
             const [tx] = params as [Record<string, string | undefined>]
-            return walletClient.sendTransaction({
+            const wc = createWalletClient({
               account,
-              chain,
+              chain: activeChain,
+              transport: configuredTransport
+            })
+            return wc.sendTransaction({
+              account,
+              chain: activeChain,
               to: tx.to as Address | undefined,
               data: tx.data as Hex | undefined,
               value: tx.value ? BigInt(tx.value) : undefined,
@@ -171,7 +181,7 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
                 ? BigInt(tx.maxPriorityFeePerGas)
                 : undefined,
               nonce: tx.nonce ? Number(tx.nonce) : undefined
-            } as unknown as Parameters<typeof walletClient.sendTransaction>[0]) as any
+            } as unknown as Parameters<typeof wc.sendTransaction>[0]) as any
           }
 
           case 'wallet_switchEthereumChain': {
@@ -188,7 +198,6 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
           default: {
             // Delegate read-only calls to the chain's RPC using the
             // wagmi-configured transport (respects custom RPC endpoints).
-            const activeChain = getChain(currentChainId)
             const t = (config as any).transports?.[activeChain.id] ?? http()
             const transport = t({
               chain: activeChain,
@@ -353,9 +362,7 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
             }
           } as Provider
         }
-        // Always use the current chain so provider reflects chain switches
-        const chain = getChain(chainId ?? currentChainId)
-        return buildProvider(chain)
+        return buildProvider()
       },
 
       async isAuthorized() {
@@ -371,6 +378,16 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
         persistState()
 
         config.emitter.emit('change', { chainId })
+
+        // Emit chainChanged so wagmi refreshes its connector client
+        // and downstream hooks see the new chain without a page reload.
+        config.emitter.emit('change', {
+          chainId,
+          accounts: privateKey
+            ? [privateKeyToAccount(privateKey).address]
+            : undefined
+        })
+
         LoggerInstance.log(
           `[jsonWalletConnector] Switched to chain ${chain.name} (${chainId})`
         )

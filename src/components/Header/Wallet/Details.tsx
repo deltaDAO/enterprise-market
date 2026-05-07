@@ -282,6 +282,8 @@ export default function Details({
                     switchChain(
                       { chainId: chain.id },
                       {
+                        onSuccess: (data) =>
+                          toast.success(`Switched to ${data.name}`),
                         onError: (err) =>
                           toast.error(
                             `Failed to switch network: ${err.message}`
