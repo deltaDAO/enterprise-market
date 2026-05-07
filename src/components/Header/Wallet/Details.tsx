@@ -275,9 +275,7 @@ export default function Details({
                   key={chain.id}
                   type="button"
                   className={`${styles.chainItem} ${
-                    chain.id === connectedChainId
-                      ? styles.chainItemActive
-                      : ''
+                    chain.id === connectedChainId ? styles.chainItemActive : ''
                   }`}
                   disabled={chain.id === connectedChainId}
                   onClick={() =>
