@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 export default function Links(): ReactElement {
   const { appConfig, siteContent } = useMarketMetadata()
-  const { setShowPPC, privacyPolicySlug } = useUserPreferences()
+  const { setShowPPC } = useUserPreferences()
 
   const { content, privacyTitle } = siteContent.footer
 
@@ -27,7 +27,7 @@ export default function Links(): ReactElement {
                       <Link
                         key={i}
                         className={styles.link}
-                        href="/cookie-settings"
+                        href="/privacy/cookie-policy"
                         onClick={() => {
                           setShowPPC(true)
                         }}
@@ -36,9 +36,24 @@ export default function Links(): ReactElement {
                       </Link>
                     )
                   }
-                  if (e.name === 'Imprint' || e.name === 'Privacy') {
+                  if (e.name === 'Privacy') {
                     return (
-                      <Link key={i} className={styles.link} href={e.link}>
+                      <Link
+                        key={i}
+                        className={styles.link}
+                        href="/privacy/privacy-policy"
+                      >
+                        {e.name}
+                      </Link>
+                    )
+                  }
+                  if (e.name === 'Imprint') {
+                    return (
+                      <Link
+                        key={i}
+                        className={styles.link}
+                        href="/privacy/imprint"
+                      >
                         {e.name}
                       </Link>
                     )
@@ -81,24 +96,18 @@ export default function Links(): ReactElement {
       <div className={styles.section}>
         <p className={styles.title}>{privacyTitle}</p>
         <div className={styles.links}>
-          <Link className={styles.link} href="/imprint">
+          <Link className={styles.link} href="/privacy/imprint">
             Imprint
           </Link>
-          <Link
-            className={styles.link}
-            href={`${privacyPolicySlug}#terms-and-conditions`}
-          >
+          <Link className={styles.link} href="/privacy/terms">
             Terms & Conditions
           </Link>
-          <Link
-            className={styles.link}
-            href={`${privacyPolicySlug}#privacy-policy`}
-          >
+          <Link className={styles.link} href="/privacy/privacy-policy">
             Privacy Policy
           </Link>
           <Link
             className={styles.link}
-            href={`${privacyPolicySlug}#data-portal-usage-agreement`}
+            href="/privacy/data-portal-usage-agreement"
           >
             Data Portal Usage Agreement
           </Link>
@@ -106,7 +115,7 @@ export default function Links(): ReactElement {
           {appConfig.privacyPreferenceCenter === 'true' && (
             <Link
               className={styles.link}
-              href="/cookie-settings"
+              href="/privacy/cookie-policy"
               onClick={() => {
                 setShowPPC(true)
               }}

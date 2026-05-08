@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { getPageBySlug, getAllPages, PageData } from '@utils/markdownPages'
+import { getPageBySlug, PageData } from '@utils/markdownPages'
 import Page from '@shared/Page'
 import styles from '@shared/Page/PageMarkdown.module.css'
 import Container from '@shared/atoms/Container'
@@ -46,35 +46,15 @@ export default function PageMarkdown(page: PageData): ReactElement {
   )
 }
 
-export async function getStaticProps({
+export async function getServerSideProps({
   params
 }: {
   params: { slug: string }
-}): Promise<{ props: PageData }> {
-  const page = getPageBySlug(params.slug)
+}) {
+  const page = await getPageBySlug(params.slug)
   const content = markdownToHtmlWithToc(page?.content || '')
 
   return {
     props: { ...page, content }
-  }
-}
-
-export async function getStaticPaths(): Promise<{
-  paths: {
-    params: {
-      slug: string
-    }
-  }[]
-  fallback: boolean
-}> {
-  const pages = getAllPages()
-
-  return {
-    paths: pages.map((page) => {
-      return {
-        params: { slug: page.slug }
-      }
-    }),
-    fallback: false
   }
 }

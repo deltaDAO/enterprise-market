@@ -1,12 +1,12 @@
 {
   "policies": [
     {
-      "policy": "en",
+      "policy": "privacy-policy",
       "language": "English",
-      "date": "2025-11-17",
+      "date": "2026-05-04",
       "params": {
         "languageLabel": "Language",
-        "languageHelp": "Language of the privacy policy",
+        "languageHelp": "Language of the policy",
         "updated": "Last updated on",
         "dateFormat": "MMMM dd, yyyy."
       }

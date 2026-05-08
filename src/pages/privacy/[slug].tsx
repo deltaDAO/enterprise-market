@@ -1,6 +1,6 @@
 import { ReactElement } from 'react'
 import { markdownToHtmlWithToc } from '@utils/markdown'
-import { getPageBySlug, getAllPages, PageData } from '@utils/markdownPages'
+import { getPageBySlug, PageData } from '@utils/markdownPages'
 import { extractHeadingsFromMarkdown, Heading } from '@utils/extractHeadings'
 import Page from '@shared/Page'
 import styles from '@shared/Page/PageMarkdown.module.css'
@@ -31,10 +31,7 @@ export default function PageMarkdown(page: PrivacyPageData): ReactElement {
     >
       <Container>
         <HashScrollHandler />
-        <PrivacyPolicyHeader
-          policy={slug.replace('/privacy/', '')}
-          lastUpdatedDate={fileLastUpdated}
-        />
+        <PrivacyPolicyHeader lastUpdatedDate={fileLastUpdated} />
         {headings.length > 0 ? (
           <StickySidebarLayout
             sidebar={<TableOfContents headings={headings} />}
@@ -59,36 +56,16 @@ export default function PageMarkdown(page: PrivacyPageData): ReactElement {
   )
 }
 
-export async function getStaticProps({
+export async function getServerSideProps({
   params
 }: {
   params: { slug: string }
-}): Promise<{ props: PrivacyPageData }> {
-  const page = getPageBySlug(params.slug, 'privacy')
+}) {
+  const page = await getPageBySlug(params.slug, 'privacy')
   const content = markdownToHtmlWithToc(page?.content || '')
   const headings = extractHeadingsFromMarkdown(page?.content || '')
 
   return {
     props: { ...page, content, headings }
-  }
-}
-
-export async function getStaticPaths(): Promise<{
-  paths: {
-    params: {
-      slug: string
-    }
-  }[]
-  fallback: boolean
-}> {
-  const pages = getAllPages('privacy')
-
-  return {
-    paths: pages.map((page) => {
-      return {
-        params: { slug: page.slug }
-      }
-    }),
-    fallback: false
   }
 }

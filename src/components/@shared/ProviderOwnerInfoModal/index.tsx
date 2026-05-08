@@ -62,7 +62,7 @@ export default function ProviderOwnerInfoModal({
       setIsOwnerInfoLoading(true)
 
       if (!providerUrl) {
-        console.log(
+        console.warn(
           '[ProviderOwnerInfoModal] Missing providerUrl. Skipping ProviderInstance.getEndpoints call.'
         )
         if (!cancelled) setIsOwnerInfoLoading(false)

@@ -5,36 +5,54 @@ import PrivacyLanguages from './PrivacyLanguages'
 import AnchorNavigation from '@shared/AnchorNavigation'
 
 export default function PrivacyPolicyHeader({
-  policy,
   lastUpdatedDate
 }: {
-  policy: string
   lastUpdatedDate?: string
 }): ReactElement {
   const { policies } = usePrivacyMetadata()
-  const policyMetadata = policies.find((p) => p.policy === policy)
+  const policyMetadata = policies && policies.length > 0 ? policies[0] : null
+  const resolvedDate =
+    lastUpdatedDate ||
+    policyMetadata?.date ||
+    new Date().toISOString().split('T')[0]
+  const params = policyMetadata?.params || {
+    languageLabel: 'Language',
+    updated: 'Last updated on',
+    dateFormat: 'MMMM dd, yyyy.'
+  }
 
-  if (!policyMetadata) return null
-
-  const { date, params } = policyMetadata
-  const resolvedDate = lastUpdatedDate || date
+  const navItems = [
+    {
+      label: 'Imprint',
+      anchor: 'imprint',
+      href: '/privacy/imprint'
+    },
+    {
+      label: 'Terms and Conditions',
+      anchor: 'terms-and-conditions',
+      href: '/privacy/terms'
+    },
+    {
+      label: 'Privacy Policy',
+      anchor: 'privacy-policy',
+      href: '/privacy/privacy-policy'
+    },
+    {
+      label: 'Data Portal Usage Agreement',
+      anchor: 'data-portal-usage-agreement',
+      href: '/privacy/data-portal-usage-agreement'
+    },
+    {
+      label: 'Cookie Policy',
+      anchor: 'cookie-policy',
+      href: '/privacy/cookie-policy'
+    }
+  ]
 
   return (
     <div>
       <PrivacyLanguages label={params.languageLabel} />
-      <AnchorNavigation
-        items={[
-          {
-            label: 'Terms and Conditions',
-            anchor: 'terms-and-conditions'
-          },
-          { label: 'Privacy Policy', anchor: 'privacy-policy' },
-          {
-            label: 'Data Portal Usage Agreement',
-            anchor: 'data-portal-usage-agreement'
-          }
-        ]}
-      />
+      <AnchorNavigation items={navItems} />
       <p>
         <em>
           {params?.updated || 'Last updated on'}{' '}
