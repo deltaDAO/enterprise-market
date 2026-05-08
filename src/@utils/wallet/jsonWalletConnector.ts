@@ -4,8 +4,8 @@ import {
   type Chain,
   type EIP1193RequestFn,
   type Hex,
-  createWalletClient,
-  http
+  type HttpTransport,
+  createWalletClient
 } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
 import { LoggerInstance } from '@oceanprotocol/lib'
@@ -131,7 +131,14 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
         const activeChain = getChain(currentChainId)
         const account = privateKeyToAccount(privateKey!)
         const configuredTransport =
-          (config as any).transports?.[activeChain.id] ?? http()
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (config as any).transports?.[activeChain.id]
+        if (!configuredTransport) {
+          throw new Error(
+            `No transport configured for chain ${activeChain.id}. ` +
+              `Ensure NEXT_PUBLIC_NODE_URI_MAP is set.`
+          )
+        }
 
         // Delegate signing/account methods to local wallet
         switch (method) {
@@ -209,11 +216,18 @@ export function jsonWalletConnector(options: JsonWalletConnectorOptions = {}) {
           default: {
             // Delegate read-only calls to the chain's RPC using the
             // wagmi-configured transport (respects custom RPC endpoints).
-            const t = (config as any).transports?.[activeChain.id] ?? http()
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const t = (config as any).transports?.[activeChain.id]
+            if (!t) {
+              throw new Error(
+                `No transport configured for chain ${activeChain.id}. ` +
+                  `Ensure NEXT_PUBLIC_NODE_URI_MAP is set.`
+              )
+            }
             const transport = t({
               chain: activeChain,
               retryCount: 0
-            } as Parameters<ReturnType<typeof http>>[0])
+            } as Parameters<HttpTransport>[0])
             return transport.request({
               method,
               params
