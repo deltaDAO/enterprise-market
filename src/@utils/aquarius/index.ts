@@ -190,9 +190,14 @@ export function generateBaseQuery(
           ...(shouldApplyDefaultNodeFilter
             ? [
                 {
-                  terms: {
-                    'credentialSubject.services.serviceEndpoint.keyword':
-                      nodeUriIndex
+                  nested: {
+                    path: 'credentialSubject.services',
+                    query: {
+                      terms: {
+                        'credentialSubject.services.serviceEndpoint':
+                          nodeUriIndex
+                      }
+                    }
                   }
                 }
               ]
@@ -346,7 +351,7 @@ function getMergedQueryFetchSize(query: SearchQuery): number {
 function prepareMergedCacheQuery(query: SearchQuery): SearchQuery {
   return {
     ...query,
-    from: 1,
+    from: 0,
     size: getMergedQueryFetchSize(query)
   }
 }
