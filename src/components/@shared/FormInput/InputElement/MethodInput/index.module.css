@@ -43,8 +43,8 @@
 
 body .inputMethod.accentSelect,
 body select.inputMethod {
-  background: #fdd655;
-  color: var(--clr-navy);
+  background: var(--clr-amber);
+  color: var(--brand-white);
   border: 0;
   width: 100%;
   min-height: 40px;
@@ -72,8 +72,8 @@ body .methodDisplay {
   align-items: center;
   justify-content: center;
   gap: 4px;
-  background: #fdd655;
-  color: var(--clr-navy);
+  background: var(--clr-amber);
+  color: var(--brand-white);
   border-radius: var(--radius-xl);
   width: fit-content;
   min-width: 82px;

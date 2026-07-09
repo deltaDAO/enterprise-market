@@ -103,7 +103,6 @@ export default function Download({
   const [insufficientSymbol, setInsufficientSymbol] = useState<string | null>(
     null
   )
-
   const [providerFeeBalance, setProviderFeeBalance] = useState<string>('0')
   const [isFullPriceLoading, setIsFullPriceLoading] = useState(
     accessDetails.type !== 'free'
@@ -452,7 +451,6 @@ export default function Download({
     const userBaseBalance = new Decimal(
       balance?.approved?.[price.tokenSymbol?.toLowerCase()] || 0
     )
-
     const userProviderBalance = new Decimal(providerFeeBalance || 0)
 
     const sufficient = areTokensSame

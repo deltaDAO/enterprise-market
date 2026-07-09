@@ -59,6 +59,21 @@
   font-size: 17px;
   line-height: 80%;
   text-transform: uppercase;
+  text-align: center;
+  color: var(--color-primary);
+}
+.profileButton {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 80%;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--color-primary);
+}
+
+.bookmarksLink svg {
+  fill: var(--brand-blue-light);
   text-align: left;
   color: #0a4b70;
   text-decoration: none;

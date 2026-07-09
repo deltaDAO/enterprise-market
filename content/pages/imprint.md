@@ -2,7 +2,7 @@
 title: Imprint
 ---
 
-Thanks for your interest in the OEC
+Thanks for your interest in the Accurate Marketplace
 
 **Ocean Enterprise Collective e.V**
 Carmerstrasse 18

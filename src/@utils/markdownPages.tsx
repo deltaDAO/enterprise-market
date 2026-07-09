@@ -10,7 +10,7 @@ import {
   termsUrl
 } from 'app.config.cjs'
 
-const pagesDirectory = './content/pages'
+const pagesDirectory = join(process.cwd(), 'content', 'pages')
 export interface PageData {
   slug: string
   frontmatter: { [key: string]: any }
@@ -74,7 +74,12 @@ function getExternalUrl(slug: string): string | null {
   }
 
   const url = urlMap[cleanSlug]
-  return url && url.trim() !== '' ? url : null
+  if (!url || url.trim() === '') return null
+
+  const normalizedUrl = url.trim()
+  const isAbsoluteHttpUrl = /^https?:\/\//i.test(normalizedUrl)
+
+  return isAbsoluteHttpUrl ? normalizedUrl : null
 }
 
 async function fetchExternalContent(url: string): Promise<string | null> {

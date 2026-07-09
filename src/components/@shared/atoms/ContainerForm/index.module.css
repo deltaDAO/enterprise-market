@@ -61,7 +61,7 @@
   font-family: var(--font-family);
   font-weight: 400;
   font-size: 14px;
-  color: #303031;
+  color: var(--text-ink);
 }
 
 .container.accent input[type='checkbox']:checked {

@@ -36,8 +36,13 @@
 }
 
 .link:hover {
-  color: #fdd655;
+  color: var(--accent-on-dark);
   text-decoration: underline;
+}
+
+.externalIcon {
+  font-size: var(--font-size-small);
+  opacity: 0.7;
 }
 
 .arrow {

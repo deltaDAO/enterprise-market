@@ -28,7 +28,7 @@
 }
 
 .previewContainer::-webkit-scrollbar-thumb:hover {
-  background: var(--yellow-600);
+  background: var(--brand-blue-light);
 }
 
 .selectionCard {

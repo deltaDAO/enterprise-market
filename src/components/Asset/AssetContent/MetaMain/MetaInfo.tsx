@@ -8,12 +8,10 @@ import { AssetExtended } from 'src/@types/AssetExtended'
 
 export default function MetaInfo({
   asset,
-  nftPublisher,
-  verifiedServiceProviderName
+  nftPublisher
 }: {
   asset: AssetExtended
   nftPublisher: string
-  verifiedServiceProviderName?: string
 }): ReactElement {
   const isCompute = Boolean(getServiceByName(asset, 'compute'))
   const accessType = isCompute ? 'compute' : 'access'
@@ -30,14 +28,9 @@ export default function MetaInfo({
         <div>
           Published{' '}
           <Time date={asset?.credentialSubject?.metadata.created} relative />
-          {(verifiedServiceProviderName ||
-            (nftPublisher && nftPublisher !== nftOwner)) && (
+          {nftPublisher && nftPublisher !== nftOwner && (
             <span>
-              {' by '}{' '}
-              <Publisher
-                account={nftPublisher}
-                verifiedServiceProviderName={verifiedServiceProviderName}
-              />
+              {' by '} <Publisher account={nftPublisher} />
             </span>
           )}
           {asset?.credentialSubject?.metadata.created !==

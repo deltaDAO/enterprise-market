@@ -1,4 +1,3 @@
-import Logo from '@images/logo.svg'
 import { authBrandDefaults, type AuthPanelContent } from '../constants'
 import { BrandPanelIcon, BrandPanelWaves } from './BrandPanelArtwork'
 import styles from './BrandPanel.module.css'
@@ -21,7 +20,11 @@ export default function BrandPanel({ content }: BrandPanelProps) {
       <div className={styles.content}>
         <div className={styles.top}>
           <div className={styles.logoWrapper}>
-            <Logo />
+            <img
+              src="/images/accurate-logo.webp"
+              alt="Accurate Marketplace"
+              style={{ width: 140, height: 'auto' }}
+            />
           </div>
         </div>
 

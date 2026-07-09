@@ -1,0 +1,73 @@
+.section {
+  padding: calc(var(--spacer) * 3) 0;
+  background: var(--background-body);
+}
+
+.heading {
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-bold);
+  color: var(--font-color-heading);
+  text-align: center;
+  letter-spacing: 1px;
+  margin: 0 0 calc(var(--spacer) * 2) 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: calc(var(--spacer) * 1.5);
+  align-items: center;
+  justify-items: center;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--spacer) / 2);
+}
+
+.logo {
+  max-width: 160px;
+  max-height: 80px;
+  object-fit: contain;
+}
+
+.allPartners {
+  text-align: center;
+  margin-top: calc(var(--spacer) * 2);
+}
+
+.link {
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-bold);
+  color: var(--brand-blue-light);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.link:hover {
+  color: var(--brand-blue-lighter);
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacer);
+  }
+
+  .section {
+    padding: calc(var(--spacer) * 2) 0;
+  }
+
+  .logo {
+    max-width: 130px;
+    max-height: 65px;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

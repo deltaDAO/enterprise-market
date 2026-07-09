@@ -1,4 +1,6 @@
 {
+  "name": "Accurate Marketplace",
+  "short_name": "Accurate",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",

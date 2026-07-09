@@ -2,7 +2,7 @@ import { ReactElement, ReactNode } from 'react'
 import classNames from 'classnames/bind'
 import { addTokenToWallet } from '@utils/wallet'
 import Button from '@shared/atoms/Button'
-import OceanLogo from '@images/logo.svg'
+import OceanLogo from '@images/ocean-token-logo.svg'
 import styles from './index.module.css'
 
 const cx = classNames.bind(styles)

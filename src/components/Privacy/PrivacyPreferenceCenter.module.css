@@ -27,8 +27,8 @@
   border-bottom: 1px solid var(--brand-grey-lighter);
 }
 .banner button {
-  background: var(--yellow-500);
-  color: var(--brand-blue);
+  background: var(--brand-blue-light);
+  color: var(--brand-white);
 }
 
 .configureButton {

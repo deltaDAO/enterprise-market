@@ -99,9 +99,9 @@
 .addButton .addIcon {
   width: 16px;
   height: 16px;
-  fill: #0a4b70;
+  fill: var(--color-primary);
 }
 
 .addButton .addIcon path {
-  fill: #0a4b70;
+  fill: var(--color-primary);
 }

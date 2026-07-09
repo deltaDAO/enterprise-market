@@ -9,7 +9,7 @@
   font-family: var(--font-family);
   font-weight: 700;
   font-size: 22px;
-  color: #303031;
+  color: var(--text-ink);
 }
 
 .boxModel {
@@ -35,12 +35,12 @@
 }
 
 .boxModel::-webkit-scrollbar-thumb {
-  background: #fdd655;
+  background: var(--clr-amber);
   border-radius: 20px;
 }
 
 .boxModel::-webkit-scrollbar-thumb:hover {
-  background: var(--yellow-600);
+  background: var(--brand-blue-light);
 }
 
 .headerWrapper {
@@ -60,7 +60,7 @@
   font-size: 14px;
   line-height: 114%;
   text-transform: uppercase;
-  color: #303031;
+  color: var(--text-ink);
 }
 
 .dataset,
@@ -81,7 +81,7 @@
   font-weight: 700;
   font-size: 12px;
   line-height: 117%;
-  color: #303031;
+  color: var(--text-ink);
 }
 
 .servicesContainer {
@@ -97,7 +97,7 @@
   font-weight: 400;
   font-size: 12px;
   line-height: 117%;
-  color: #303031;
+  color: var(--text-ink);
 }
 
 .service:last-child {
@@ -169,7 +169,7 @@
 }
 
 .didButton:hover {
-  color: #303031;
+  color: var(--text-ink);
   text-decoration: underline;
 }
 
@@ -195,8 +195,8 @@
 }
 
 .checkboxInput:checked {
-  background-color: #fdd655;
-  border-color: #fdd655;
+  background-color: var(--clr-amber);
+  border-color: var(--clr-amber);
 }
 
 .checkboxInput:checked::after {

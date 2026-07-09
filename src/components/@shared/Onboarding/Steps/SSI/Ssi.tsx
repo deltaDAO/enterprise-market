@@ -45,8 +45,7 @@ export default function SSIWallet(): ReactElement {
 
           <div className={styles.infoBox}>
             <h4 className={styles.heading}>
-              To set up the SSI Wallet provided by Ocean Enterprise follow these
-              steps:
+              To set up the SSI Wallet provided by deltaDAO follow these steps:
             </h4>
 
             <div className={styles.stepsList}>

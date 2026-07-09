@@ -4,29 +4,96 @@ import styles from './features.module.css'
 interface FeatureItem {
   title: string
   description: string
+  icon: ReactElement
+}
+
+const icons = {
+  digitalTwin: (
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  ),
+  dataExchange: (
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M9 12l2 2 4-4"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  ),
+  ecosystem: (
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
+      <path
+        d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+    </svg>
+  ),
+  computeToData: (
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+      <rect
+        x="2"
+        y="3"
+        width="20"
+        height="14"
+        rx="2"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+      <path
+        d="M8 21h8M12 17v4M7 10l3 2-3 2M12 12h4"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
 }
 
 export default function Features(): ReactElement {
   const features: FeatureItem[] = [
     {
-      title: 'Self Sovereign Identity (SSI)',
+      title: 'Manufacturing as a Service',
       description:
-        'To access a service offering, users will be required to identify themselves through a SSI verification process. Access to the service offering will only be granted if the user identity is validated and approved by the provider of the service offering.'
+        'A federated MAAS framework and data space enabling flexible production lines and resilient supply chains across the manufacturing value network.',
+      icon: icons.digitalTwin
     },
     {
-      title: 'Semantic Interoperability and Extensibility',
+      title: 'Sovereign Data Exchange',
       description:
-        'The description of the service offering conforms with generally accepted industry standards for exchanging data and data services (for example Gaia-X Self-Descriptions), allowing for semantic interoperability and extensibility.'
+        'Self-Sovereign Identity and verifiable credentials ensure data providers keep full control over their assets with trusted, compliant sharing.',
+      icon: icons.dataExchange
     },
     {
-      title: 'Data Regulation Compliance',
+      title: 'Federated European Ecosystem',
       description:
-        'Ocean Enterprise is compliant to the most recent EU regulations related to data exchange, AI and privacy regulation (Data Act, AI Act, GDPR, ...).'
+        'Cross-border data exchange across European partners via Pontus-X and Gaia-X — fully compliant with the Data Act, AI Act and GDPR.',
+      icon: icons.ecosystem
     },
     {
-      title: 'Cloud Agnostic Design',
+      title: 'Compute-to-Data',
       description:
-        'Ability to select preferred cloud providers for computation & storage.'
+        'Privacy-preserving computation where algorithms travel to the data. Run AI and analytics on sensitive manufacturing datasets without exposure.',
+      icon: icons.computeToData
     }
   ]
 
@@ -36,26 +103,8 @@ export default function Features(): ReactElement {
         <div className={styles.grid}>
           {features.map((feature, index) => (
             <div key={index} className={styles.featureCard}>
-              <div className={styles.featureHeader}>
-                <div className={styles.iconContainer}>
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M20 6L9 17L4 12"
-                      stroke="black"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </div>
-                <h3 className={styles.featureTitle}>{feature.title}</h3>
-              </div>
+              <div className={styles.iconContainer}>{feature.icon}</div>
+              <h3 className={styles.featureTitle}>{feature.title}</h3>
               <p className={styles.featureDescription}>{feature.description}</p>
             </div>
           ))}

@@ -12,7 +12,7 @@
   font-weight: 700;
   font-size: 24px;
   line-height: 28px;
-  color: #303031;
+  color: var(--text-ink);
 }
 
 .intoText {
@@ -21,7 +21,7 @@
   font-weight: 700;
   font-size: 24px;
   line-height: 28px;
-  color: #303031;
+  color: var(--text-ink);
 }
 
 .networkContainer {
@@ -37,7 +37,7 @@
   font-weight: 700;
   font-size: 24px;
   line-height: 28px;
-  color: #303031;
+  color: var(--text-ink);
   margin-left: 0;
   display: flex;
   align-items: flex-end;

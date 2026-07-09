@@ -1,16 +1,18 @@
 :root {
   /* Base palette */
   --brand-white: #ffffff;
-  --brand-black: #012037;
-  --brand-blue: #014f86;
-  --brand-blue-light: #2a6f97;
-  --brand-blue-lighter: #61a5c2;
-  --brand-red: #ff360d;
+  --brand-black: #000000;
+  --brand-black-light: #111111;
+  --brand-blue: #bf1e2e;
+  --brand-blue-light: #000000;
+  --brand-blue-lighter: #8b0815;
+  --brand-red: #bf1e2e;
+  --brand-red-dark: #8b0815;
 
   --brand-gradient: linear-gradient(
     to right bottom,
-    var(--brand-blue),
-    var(--brand-blue-lighter)
+    var(--brand-black),
+    var(--brand-red)
   );
 
   --brand-grey: #3d3d3d;
@@ -27,10 +29,13 @@
   --ocean-pink: #ff4092;
   --ocean-violet: #e000cf;
   --ocean-blue: #4ca3d3;
-  --ocean-orange-color: #fdd655;
+  --ocean-orange-color: #bf1e2e;
 
-  --clr-navy: #0a4b70;
-  --clr-amber: #fdd655;
+  --clr-navy: #8b0815;
+  --clr-amber: #bf1e2e;
+
+  /* Accent for text/elements on dark backgrounds */
+  --accent-on-dark: var(--brand-white);
   --clr-teal: #00adb2;
   --clr-slate-70: rgba(48, 48, 49, 0.7);
   --clr-slate-50: rgba(48, 48, 49, 0.5);
@@ -59,34 +64,34 @@
   --background-detail-box: var(--surface-highlight);
 
   --border-color: var(--brand-grey-lighter);
-  --border-navy-soft: rgba(10, 75, 112, 0.5);
+  --border-navy-soft: rgba(0, 0, 0, 0.5);
   --box-shadow-color: rgba(0, 0, 0, 0.05);
-  --modal-overlay-background: rgba(1, 32, 55, 0.45);
+  --modal-overlay-background: rgba(0, 0, 0, 0.45);
 
   --primary-hover: var(--clr-navy);
   --surface-highlight: var(--surface-warning);
-  --surface-warning: rgba(253, 214, 85, 0.15);
+  --surface-warning: rgba(191, 30, 46, 0.12);
   --surface-neutral: rgba(48, 48, 49, 0.02);
-  --surface-hover: rgba(10, 75, 112, 0.04);
+  --surface-hover: rgba(0, 0, 0, 0.04);
 
   --gradient-primary: linear-gradient(
       115.97deg,
-      #1f2c50 0%,
-      rgba(10, 75, 112, 0.8) 27.47%,
-      rgba(10, 75, 112, 0.7) 43.49%,
-      rgba(10, 75, 112, 0.8) 55.43%,
-      #1e2e52 100%
+      #000000 0%,
+      rgba(17, 17, 17, 0.9) 27.47%,
+      rgba(17, 17, 17, 0.8) 43.49%,
+      rgba(17, 17, 17, 0.9) 55.43%,
+      #000000 100%
     ),
-    #64ace0;
+    #8b0815;
   --gradient-accent: linear-gradient(
       115.97deg,
-      #fdd655 0%,
-      rgba(253, 214, 85, 0.8) 27.47%,
-      rgba(253, 214, 85, 0.7) 43.49%,
-      rgba(253, 214, 85, 0.8) 55.43%,
-      #fdd655 100%
+      #bf1e2e 0%,
+      rgba(191, 30, 46, 0.8) 27.47%,
+      rgba(191, 30, 46, 0.7) 43.49%,
+      rgba(191, 30, 46, 0.8) 55.43%,
+      #bf1e2e 100%
     ),
-    linear-gradient(0deg, #fdd655, #fdd655), #ffffff;
+    linear-gradient(0deg, #bf1e2e, #bf1e2e), #ffffff;
 
   /* Component tokens */
   --checkbox-selected-background: var(--ocean-orange-color);
@@ -96,7 +101,7 @@
   --nft-refresh-icon-fill: var(--brand-white);
   --badge-background-color: var(--color-primary);
 
-  --menu-logo-color-hover: var(--brand-blue);
+  --menu-logo-color-hover: var(--brand-red);
   --menu-font-color: var(--color-primary);
   --menu-font-color-active: var(--color-secondary);
   --menu-font-color-hover: var(--color-secondary);
@@ -130,7 +135,7 @@
 
   --loader-message-color: var(--color-secondary);
   --loader-ordering-spinner-border-color: rgba(48, 48, 49, 0.5);
-  --loader-ordering-spinner-border-top-color: #0a4b70;
+  --loader-ordering-spinner-border-top-color: var(--clr-navy);
 
   --box-template-background: var(--background-content);
   --box-template-border-color: var(--border-color);
@@ -246,12 +251,12 @@
   --ink-alpha-30: rgba(48, 48, 49, 0.3);
   --ink-alpha-40: rgba(48, 48, 49, 0.4);
   --ink-alpha-80: rgba(48, 48, 49, 0.8);
-  --navy-alpha-5: rgba(10, 75, 112, 0.05);
-  --navy-alpha-10: rgba(10, 75, 112, 0.1);
-  --navy-alpha-20: rgba(10, 75, 112, 0.2);
-  --navy-alpha-30: rgba(10, 75, 112, 0.3);
-  --navy-alpha-40: rgba(10, 75, 112, 0.4);
-  --navy-alpha-94: rgb(6 68 103 / 94%);
+  --navy-alpha-5: rgba(8, 49, 99, 0.05);
+  --navy-alpha-10: rgba(8, 49, 99, 0.1);
+  --navy-alpha-20: rgba(8, 49, 99, 0.2);
+  --navy-alpha-30: rgba(8, 49, 99, 0.3);
+  --navy-alpha-40: rgba(8, 49, 99, 0.4);
+  --navy-alpha-94: rgb(8 49 99 / 94%);
   --ocean-alpha-10: rgba(75, 163, 211, 0.1);
   --ocean-alpha-30: rgba(75, 163, 211, 0.3);
   --ocean-bright-alpha-10: rgba(76, 163, 211, 0.1);
@@ -260,8 +265,8 @@
   --cyan-alpha-1: rgba(0, 173, 178, 0.01);
   --green-alpha-1: rgba(69, 192, 31, 0.01);
   --green-bright-alpha-15: rgba(93, 253, 85, 0.15);
-  --yellow-alpha-10: rgba(253, 214, 85, 0.1);
-  --yellow-alpha-30: rgba(253, 214, 85, 0.3);
+  --yellow-alpha-10: rgba(0, 83, 255, 0.1);
+  --yellow-alpha-30: rgba(0, 83, 255, 0.3);
   --red-alpha-15: rgba(255, 0, 0, 0.15);
   --white-alpha-15: rgba(255, 255, 255, 0.15);
   --white-alpha-20: rgba(255, 255, 255, 0.2);

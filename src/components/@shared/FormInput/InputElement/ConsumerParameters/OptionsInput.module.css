@@ -51,7 +51,7 @@
   font-weight: 400 !important;
   font-size: 14px !important;
   line-height: 16px !important;
-  color: #303031 !important;
+  color: var(--text-ink) !important;
   background: #ffffff !important;
 }
 

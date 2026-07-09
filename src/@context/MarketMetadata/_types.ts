@@ -38,6 +38,7 @@ export interface AppConfig {
   ssiEnabled: boolean
   showOnboardingModuleByDefault: boolean
   dataspace: string | null
+  assetDescriptionExpandedByDefault: boolean
   persistJsonWalletSession: boolean
 }
 export interface SiteContent {
@@ -74,7 +75,6 @@ export interface SiteContent {
   footer: {
     subtitle: string
     copyright: string
-    privacyTitle: string
     content: {
       title: string
       links: {

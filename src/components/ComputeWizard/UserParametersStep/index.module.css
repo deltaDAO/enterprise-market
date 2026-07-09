@@ -194,8 +194,8 @@ select.paramInput {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background-image: linear-gradient(45deg, transparent 50%, #303031 50%),
-    linear-gradient(135deg, #303031 50%, transparent 50%);
+  background-image: linear-gradient(45deg, transparent 50%, var(--text-ink) 50%),
+    linear-gradient(135deg, var(--text-ink) 50%, transparent 50%);
   background-position: calc(100% - 30px) calc(1rem + 5px),
     calc(100% - 25px) calc(1rem + 5px);
   background-size: 5px 5px, 5px 5px;

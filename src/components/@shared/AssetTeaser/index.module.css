@@ -52,7 +52,7 @@ a.link:focus {
   font-family: var(--font-family);
   font-weight: 700;
   font-size: 18px;
-  color: #303031;
+  color: var(--text-ink);
   margin: 0;
   padding-bottom: calc(var(--spacer) / 6);
   overflow-wrap: break-word;

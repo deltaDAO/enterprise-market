@@ -11,7 +11,7 @@
   font-family: var(--font-family);
   font-weight: 700;
   font-size: 22px;
-  color: #303031;
+  color: var(--text-ink);
   margin-bottom: 20px;
 }
 
@@ -30,7 +30,7 @@
   font-size: 14px;
   line-height: 114%;
   text-transform: uppercase;
-  color: #303031;
+  color: var(--text-ink);
 }
 
 .statusColumn {
@@ -81,7 +81,7 @@
   font-weight: 400;
   font-size: 12px;
   line-height: 117%;
-  color: #303031;
+  color: var(--text-ink);
 }
 
 .loading,
@@ -119,7 +119,7 @@
   font-weight: 400;
   font-size: 12px;
   line-height: 117%;
-  color: #303031;
+  color: var(--text-ink);
 }
 .sales {
   margin-top: 1rem;
@@ -129,7 +129,7 @@
   font-weight: 700;
   font-size: 12px;
   text-transform: uppercase;
-  color: #303031;
+  color: var(--text-ink);
   text-align: center; /* Center text horizontally */
   padding-top: 1rem;
 }

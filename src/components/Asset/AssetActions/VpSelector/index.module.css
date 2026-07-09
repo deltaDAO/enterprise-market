@@ -136,7 +136,7 @@ body .selectAllButton {
   font-family: var(--font-family);
   font-weight: 700;
   font-size: 14px;
-  color: #303031;
+  color: var(--text-ink);
   font-family: var(--font-family-base);
   display: flex;
   justify-content: flex-start;

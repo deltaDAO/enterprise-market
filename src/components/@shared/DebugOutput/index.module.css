@@ -9,7 +9,7 @@
   font-weight: 700;
   font-size: 14px;
   text-transform: uppercase;
-  color: #303031;
+  color: var(--text-ink);
 }
 
 .debugOutput pre {
@@ -81,7 +81,7 @@
   position: absolute;
   top: -28px;
   right: 0;
-  background-color: #303031;
+  background-color: var(--text-ink);
   color: #ffffff;
   font-size: 11px;
   padding: 4px 8px;

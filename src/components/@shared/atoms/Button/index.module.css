@@ -88,7 +88,7 @@
 body .accent {
   min-width: auto;
   background: var(--clr-amber);
-  color: var(--clr-navy);
+  color: var(--brand-white);
   border-radius: var(--radius-xl) !important;
   font-family: var(--font-family-base);
   font-weight: var(--text-weight-bold);
@@ -104,7 +104,7 @@ body .accent:focus {
   transform: translate3d(0, -0.05rem, 0);
   box-shadow: var(--shadow-lg);
   background: var(--yellow-450);
-  color: #0a4b70;
+  color: var(--color-primary);
   transition: all 0.3s ease;
 }
 
@@ -252,7 +252,7 @@ body .accent:focus {
 .slim {
   min-width: auto;
   background: var(--clr-amber);
-  color: var(--clr-navy);
+  color: var(--brand-white);
   border-radius: var(--radius-xl);
   padding: 2px 8px;
   font-family: var(--font-family-base);
@@ -269,7 +269,7 @@ body .accent:focus {
   transform: none;
   box-shadow: none;
   background: var(--clr-amber);
-  color: var(--clr-navy);
+  color: var(--brand-white);
 }
 
 .secondary,
@@ -277,7 +277,7 @@ body .accent:focus {
 .secondary:focus,
 .secondary:active {
   background: var(--clr-slate-12);
-  color: #0a4b70;
+  color: var(--color-primary);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-sm);
   border: none;

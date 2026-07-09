@@ -12,8 +12,8 @@ export default function PrivacyPolicyHeader({
   const { policies } = usePrivacyMetadata()
   const policyMetadata = policies && policies.length > 0 ? policies[0] : null
   const resolvedDate =
-    lastUpdatedDate ||
     policyMetadata?.date ||
+    lastUpdatedDate ||
     new Date().toISOString().split('T')[0]
   const params = policyMetadata?.params || {
     languageLabel: 'Language',
@@ -25,7 +25,7 @@ export default function PrivacyPolicyHeader({
     {
       label: 'Imprint',
       anchor: 'imprint',
-      href: '/privacy/imprint'
+      href: 'https://www.delta-dao.com/imprint'
     },
     {
       label: 'Terms and Conditions',
@@ -36,11 +36,6 @@ export default function PrivacyPolicyHeader({
       label: 'Privacy Policy',
       anchor: 'privacy-policy',
       href: '/privacy/privacy-policy'
-    },
-    {
-      label: 'Data Portal Usage Agreement',
-      anchor: 'data-portal-usage-agreement',
-      href: '/privacy/data-portal-usage-agreement'
     },
     {
       label: 'Cookie Policy',

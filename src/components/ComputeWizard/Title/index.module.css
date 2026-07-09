@@ -11,7 +11,7 @@
   font-family: var(--font-family);
   font-weight: 700;
   font-size: 24px;
-  color: #303031;
+  color: var(--text-ink);
   line-height: 28px;
   padding-left: 0.5rem;
 }

@@ -133,7 +133,7 @@ body .infoButton {
 
 .selectedTag {
   background: var(--clr-amber);
-  color: var(--clr-navy);
+  color: var(--brand-white);
   border-radius: var(--radius-xl);
   padding: 2px 8px;
   font-family: var(--font-family-base);

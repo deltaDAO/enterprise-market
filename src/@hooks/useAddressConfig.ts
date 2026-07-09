@@ -2,12 +2,10 @@ import { AssetExtended } from 'src/@types/AssetExtended'
 import addressConfig from '../../address.config.cjs'
 const {
   whitelists,
-  featured,
-  verifiedWallets
+  featured
 }: {
   whitelists: UseAddressConfig['whitelists']
   featured: UseAddressConfig['featured']
-  verifiedWallets: UseAddressConfig['verifiedWallets']
 } = addressConfig
 
 export interface UseAddressConfig {
@@ -16,9 +14,6 @@ export interface UseAddressConfig {
     'indexedMetadata.stats.datatokenAddress': string[]
   }
   featured: { assets: string[]; title: string }[]
-  verifiedWallets: {
-    [key: string]: string
-  }
   isAddressWhitelisted: (address: string) => boolean
   isDDOWhitelisted: (ddo: AssetExtended) => boolean
   hasFeaturedAssets: () => boolean
@@ -77,7 +72,6 @@ export function useAddressConfig(): UseAddressConfig {
   return {
     whitelists,
     featured,
-    verifiedWallets,
     isAddressWhitelisted,
     isDDOWhitelisted,
     hasFeaturedAssets,

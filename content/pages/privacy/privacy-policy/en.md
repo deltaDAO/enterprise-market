@@ -1,107 +1,223 @@
-## Privacy Policy
+---
+title: Privacy Policy
+description: This privacy policy informs you about how deltaDAO AG (in the following deltaDAO, we, us, our) processes your personal data when you visit our portal demonstrator, when you use one of our portal demonstrator functionalities and when you contact us. Moreover, this privacy policy informs you about your rights.
+---
 
-This privacy policy informs you about how **Ocean Enterprise Collective e.V. (in the following OEC, we, us, our)** processes your personal data. Moreover, this privacy policy informs you about your rights.
+### Table of contents
 
-### 1. Contact details of the controller
+## 1. Contact details of the controller and Data Protection Officer
 
 The controller pursuant to the EU General Data Protection Regulation ("GDPR") for the processing of your personal data is:
 
-**Ocean Enterprise Collective e.V.**  
-Carmerstrasse 18  
-10623 Berlin  
-Germany
+deltaDAO AG  
+Katharinenstraße 30a  
+20457 Hamburg  
+Germany  
+E-mail: contact@delta-dao.com
 
-E-mail: **info@oceanenterprise.io**
+If you have any questions about the protection of your personal data at deltaDAO, please contact our Data Protection Officer:
 
-### 2. What's personal data?
+Data Protection Officer  
+deltaDAO AG  
+Katharinenstraße 30a  
+20457 Hamburg  
+Germany  
+E-mail: <privacy@delta-dao.com>
 
-Personal data is any information that can be directly or indirectly associated with you. OEC processes the following personal data.
+## 2. What's personal data?
 
-- **Log file data including IP addresses:** Logfile data including IP addresses are processed when visiting our website.
-- **E-mail:** If you contact OEC via e-mail, we process your e-mail address and any personal data you decide to provide in your message (such as your name).
+Personal data is any information that can be (directly or indirectly) associated with you. We process the following personal data.
 
-You can find further information about the processing of your personal data in the chapter "Processing operations according to Article 13 GDPR".
+- **Usage Data (including IP addresses):** Usage Data including your IP address and the address of the content accessed (URL) are processed when visiting and using our portal demonstrator. In addition, depending on the configuration, your browser transmits further data (browser type, browser version, operating system used, referrer URL).
+- **E-mail:** If you contact deltaDAO via e-mail, we process your e-mail address and any personal data you decide to provide in your message (such as your name).
 
-### 3. Processing operations according to Article 13 GDPR
+For detailed information about the processing operations, lawfulness, purposes, and how your personal data serves to reach these purposes, please take a look at the chapter "Processing operations according to Article 13 GDPR".
 
-#### 3.1 Providing our website and creating log files
+## 3. Recipients and cross-border data transfer
 
-We host our website with Webflow (Webflow, Inc. located at 398 11th Street, 2nd Floor, San Francisco, CA 94103, USA). When you visit our website, Webflow collects and uses your IP address and creates logfiles including your IP address.
+**Vercel**  
+When visiting and using our portal demonstrator, your Usage Data is processed by Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789, **USA**. Vercel is a service provider that hosts our portal demonstrator. Our portal demonstrator is served by Vercel using a Content Delivery Network, a geographically distributed network, with servers within and outside of the European Economic Area (EEA). This means, if you are located within the EEA, your Usage Data will most likely (but not guaranteed) be processed on a Vercel server within the EEA.
 
-**Purpose:** Collecting and using your IP address is necessary for providing our website because it is a technical requirement for ensuring communication between your device and our website. Logfiles including your IP address are created for security, fraud-prevention, abuse-prevention, and troubleshooting purposes.
+There is no adequacy decision for the USA from the European Commission. Our cooperation with Vercel is based on a Data Processing Agreement (DPA) including Standard Contractual Clauses (SCC). You have the right to receive a copy of these SCC. To exercise your right, please contact us at <privacy@delta-dao.com>.
 
-**Legal basis:** The legal basis for this processing is our legitimate interest, pursuant to Art. 6(1)(f) GDPR.
+- Here you can find Vercel&#39;s current [**DPA including SCC** &#8599;](https://vercel.com/legal/dpa).
+- Here you can find Vercel&#39;s [**privacy policy** &#8599;](https://vercel.com/legal/privacy-policy).
 
-**Legitimate interests:** Our legitimate interest is to provide our website to you and to enable security, a technically error-free presentation, and the optimization of the website.
+Further information about the **purpose, legal basis, and retention period** can be found in chapter 4.
 
-**Retention period:** Webflow stores your personal data for 15 days.
+**Exoscale**  
+When using our portal demonstrator functionalities, your Usage Data is processed by our portal demonstrator backend. Portal demonstrator backend components are managed by deltaDAO and hosted hosted on Exoscale servers located in Frankfurt, **Germany** by our hosting provider Akenes SAE. Akenes SAE is headquartered in Boulevard de Grancy 19A, 1006 – Lausanne, **Switzerland**. There is an adequacy decision for Switzerland from the European Commission. Our cooperation with Akenes SAE is based on a Data Processing Agreement (DPA). Here you can find Akenes SAE&#39;s current [**DPA** &#8599;](https://www.exoscale.com/dpa/).
 
-#### 3.2 Contact via e-mail
+Further information about the **purpose, legal basis, and retention period** can be found in chapter 4.
 
-If you contact us via e-mail, OEC collects, uses, and stores your e-mail address, and any other information you provide us in your message, such as your name. When you send us an e-mail, our (mail) service provider supports us in processing your personal data so we can communicate with you.
+**Microsoft Corporation**  
+When you contact us via e-mail, our (mail) service provider Microsoft Corporation (located at 1 Microsoft Way, Redmond, Washington 98052-8300, **USA**) supports us in processing your personal data so we can communicate with you. There is no adequacy decision for the USA from the European Commission. We have **restricted storage on the EEA** and signed SCC with our provider. You have the right to receive a copy of these SCC. To exercise your right, please contact us at privacy@delta-dao.com.
 
-**Purpose:** We collect, use and store this personal data to respond to your inquiries.
+- Here you can find Microsoft&#39;s current [**DPA including SCC** &#8599;](https://www.microsoft.com/licensing/docs/view/Microsoft-Products-and-Services-Data-Protection-Addendum-DPA).
+- Here you can find Microsoft&#39;s [**privacy policy** &#8599;](https://privacy.microsoft.com/de-de/privacystatement).
 
-**Legal basis:** The legal basis for this processing is our legitimate interest, according to Art. 6(1)(f) GDPR.
+Further information about the **purpose, legal basis, and retention period** can be found in chapter 4.
 
-**Legitimate interests:** Our legitimate interest is to answer your inquiries.
+**Plausible**  
+deltaDAO uses [**Plausible Analytics** &#8599;](https://plausible.io/) (by Plausible Insights OÜ, Västriku tn 2, 50403, Tartu, **Estonia**, Registration number 14709274), a privacy-friendly web analytics tool for tracking overall trends in our website traffic. deltaDAO signed a DPA with Plausible Analytics.
 
-**Retention period:** We store your personal data as long as we need it to process your inquires. We store your personal data beyond this period if we are obliged to do so due to retention obligations under tax and commercial law or in the event of legal disputes. If the latter is the case, your personal data will be erased after the retention period has expired.
+- Here you can find Plausible Analytic&#39;s current [**DPA** &#8599;](https://plausible.io/dpa).
+- Here you can find Plausible Analytic&#39;s [**privacy policy** &#8599;](https://plausible.io/privacy).
+- Here you can find more information about Plausible Analytic&#39;s [**privacy practices** &#8599;](https://plausible.io/data-policy), [**security practices** &#8599;](https://plausible.io/security) and a [**legal assessment on GDPR compliance** &#8599;](https://plausible.io/blog/legal-assessment-gdpr-eprivacy).
 
-### 4. Cookies
+Further information about the **purpose, legal basis, and retention period** can be found in chapter 4.
 
-Our website uses cookies. You can manage cookies via your browser settings, including disabling or deleting cookies. If you want to change your cookie consent, use the Cookie Settings link in the footer when available.
+## 4. Processing operations according to Article 13 GDPR
 
-### 5. Automated decision making including profiling according to Article 13(2)(f) GDPR
+We process your personal data for the following purposes.
+
+**4.1 Providing our portal demonstrator and ensuring its security**  
+Your Usage Data (including IP addresses) is collected, used, and stored when visiting our portal demonstrator. Our portal demonstrator (frontend) is hosted externally by our service provider Vercel (see also chapter 3).
+
+**Purpose:**  
+Collecting and using your Usage Data is necessary for providing our portal demonstrator because it is a technical requirement for ensuring communication between your device and our portal demonstrator. Your IP address and other log file data are also processed for security, fraud-prevention, abuse-prevention, and troubleshooting purposes.
+
+**Legal basis:**  
+The legal basis for this processing is our legitimate interest, according to Art. 6(1)(f) GDPR.
+
+**Legitimate interests:**  
+Our legitimate interest is to provide the portal demonstrator and to enable security, a technically error-free presentation, and the optimization of the portal demonstrator.
+
+**Retention period:**  
+Vercel retains your personal data for as long as needed to provide their services. Additionally, Vercel does not delete the data when it is needed for the establishment, exercise, or defense of legal claims. In this case, the information is retained as long as needed for exercising respective potential legal claims.
+
+**Right to object:**  
+You have the right to object to the processing of your personal data (see also chapter 9.6).
+
+**4.2 Providing portal demonstrator functionalities**  
+When using our portal demonstrator functionalities, your Usage Data is collected, used, and stored by our portal demonstrator backend. Backend components are managed by deltaDAO and hosted on Exoscale servers (see also chapter 3).
+
+Portal demonstrator functionalities consist of:
+
+- Viewing, publishing, editing and consuming services
+- Connecting and using your (SSI) wallet
+- Displaying registered Pontus-X participants
+- Visualization and verification of Gaia-X Credentials using deltaDAO's GXDCH (Gaia-X Digital Clearing House) services
+
+**Purpose:**  
+Processing your Usage Data is necessary for providing our portal demonstrator functionalities, because it is a technical requirement for ensuring communication between your device and our portal demonstrator backend, and for enabling secure processing and system stability.
+
+**Legal basis:**
+The legal basis for this processing is our legitimate interest, according to Art. 6(1)(f) GDPR.
+
+**Legitimate interest:**
+Our legitimate interest is to provide our portal demonstrator functionalities to you and to make sure the portal demonstrator works properly and is secure.
+
+**Retention period:**  
+Usage Data (except your IP address) received by the backend components are retained for up to seven days.
+The stored data does not allow anyone to identify you and is automatically and permanently erased after this period. We do not store your IP address.
+
+**Right to object:**  
+You have the right to object to the processing of your personal data where we based the processing on legitimate interests (see also chapter 9.6).
+
+**4.3 Contact via e-mail**  
+If you contact us via e-mail, deltaDAO collects, uses, and stores your e-mail address, and any other information you provide us in your message, such as your name. When you send us an e-mail, our (mail) service provider Microsoft Corporation (see also chapter 3) supports us in processing your personal data so we can communicate with you.
+
+**Purpose:**  
+We collect, use and store this personal data to respond to your inquiries.
+
+**Legal basis:**  
+The legal basis for this processing is our legitimate interest, according to Art. 6(1)(f) GDPR.
+
+**Legitimate interests:**  
+Our legitimate interest is to answer your inquiries.
+
+**Retention period:**  
+We store your personal data as long as we need it to process your inquires. We store your personal data beyond this period if we are obliged to do so due to retention obligations under tax and commercial law or in the event of legal disputes. If the latter is the case, your personal data will be erased after the retention period has expired.
+
+**Right to object:** You have the right to object to the processing of your personal data (see also chapter 9.6).
+
+**4.4 Aggregated statistics**
+
+deltaDAO uses [**Plausible Analytics** &#8599;](https://plausible.io/) (see also chapter 3), a privacy-friendly web analytics tool for tracking overall trends in our website traffic. Plausible Analytics **does not use cookies or similar technologies** that require information to be stored on your device. Instead, the tool focuses on analyzing **aggregated data without the need to access your end device or store information there**. Plausible Analytics **does not track individual visitors** and **does not create persistent identifiers**. It **does not use cross-platform or cross-device tracking** and **does not pass on data** to third parties. Plausible Analytics primarily uses data that is recorded by default in server logs, such as requested URLs, access times, HTTP status codes and transferred data volumes. This information is used to analyze website traffic. Data processing at Plausible Analytics takes place in two steps:
+
+- **Pseudonymization**: When the data is received, it is pseudonymized using a hash function and a regularly changing key (“salt”). This process aims to change personal data in such a way that data subjects are no longer directly identifiable, but a distinction between sessions is made possible.
+
+  hash(daily_salt + website_domain + ip_address + user_agent)
+
+  Plausible Analytics never stores the raw data IP address and User-Agent in logs, databases or anywhere on disk at all.
+
+- **Anonymization after 24 hours**: Within 24 hours of pseudonymization, the data is completely anonymized by removing the “salt” so that it can no longer be traced back to the original user data. The remaining data does not allow any direct or indirect identification of data subjects.
+
+Plausible Analytics only uses **EU-based service providers** for hosting and additional services such as CDN and DDoS protection. The servers are located in Germany (operated by Hetzner) and additional services are provided by Bunny (based in Slovenia).
+
+**Purpose:**
+We process your personal data to reach measurement and website optimization.
+
+**Legal basis:**
+The legal basis for this processing is our legitimate interest, according to Art. 6(1)(f) GDPR.
+
+**Legitimate interests:**
+Our legitimate interest is to gain insights to improve existing and future features and services, and to evaluate user engagement.
+
+**Retention period:**
+As described above, your personal data is anonymized after 24 hours.
+
+**Right to object:** You have the right to object to the processing of your personal data (see also chapter 9.6).
+
+## 5. Interaction with third-party wallet tools
+
+To use the features of the portal demonstrator, you have the option to connect your self-managed organizational wallet using MetaMask. MetaMask is a third-party tool operated by the independent controller Consensys Software Inc., 5049 Edwards Ranch Rd, Fort Worth, TX 76109, United States (in the following Consensys). The operations of Consensys are separate from our portal demonstrator.
+When you connect your organizational wallet via MetaMask and use our portal demonstrator functionalities, we process your personal data as described in chapter 4.2. Any data processed directly inside the MetaMask extension or app remains the sole responsibility of Consensys. You can find more details about the processing of personal data in their [**Privacy Policy** &#8599;](https://consensys.io/privacy-notice).
+
+## 6. Automated decision making including profiling according to Article 13(2)(f) GDPR
 
 Automated decision making including profiling does not take place.
 
-### 6. External links
+## 7. Cookies and Analytics
 
-Our website contains links to websites owned by third parties. These websites are beyond our control and responsibility.
+**7.1 Cookies**
 
-### 7. Your rights
+A cookie is a small file that stores information on your device. Your web browser downloads it on the first visit to a website. The next time you open this website with the same device, the cookie and the information stored in it are either sent back to the website that created it (first-party cookie) or sent to another website it belongs to (third-party cookie). This enables the website to detect that you have opened it previously with this browser and, in some cases, to vary the displayed content. Web storage (local storage and session storage) has similar functionality to cookies.
 
-#### 7.1 Right to withdraw consent (Art. 7(3) GDPR)
+On our portal demonstrator we are using cookies and web storage. You can find more information about our use of cookie and web storage in our [**Cookie Policy**](/privacy/cookie-policy).
 
-You have the right to withdraw your consent at any time. The withdrawal of consent does not affect the lawfulness of processing based on consent before its withdrawal.
+**7.2 Analytics**
 
-#### 7.2 Right of access (Art. 15 GDPR)
+deltaDAO uses [**Plausible Analytics** &#8599;](https://plausible.io/), a privacy-friendly web analytics tool for tracking overall trends in our website traffic. Plausible Analytics **does not use cookies or similar technologies** that require information to be stored on your device. Plausible Analytics **does not track individual visitors** and **does not create persistent identifiers**. It does not use cross-platform or cross-device tracking and does not pass on data to third parties. You can find further information in chapter 3 and 4.
 
-You have the right to obtain confirmation as to whether OEC processes personal data about you. If we are processing personal data about you, you have the right to access these personal data and to gain the information defined in Art. 15 GDPR.
+## 8. External links
 
-#### 7.3 Right to rectification (Art. 16 GDPR)
+Our portal demonstrator contains links to external websites that are beyond the control and responsibility of deltaDAO. External links are marked with this symbol: &#8599;.
 
+## 9. Your rights
+
+If you want to make use of your rights described below, do not hesitate to contact us.
+
+**9.1 Right of access (Art. 15 GDPR)**  
+You have the right to obtain confirmation as to whether deltaDAO processes personal data about you. If we are processing personal data about you, you have the right to access these personal data and to gain the information defined in Art. 15 GDPR.
+
+**9.2 Right to rectification (Art. 16 GDPR)**  
 You have the right to obtain without undue delay the rectification of inaccurate personal data about you. Additionally, you have the right that incomplete personal data about you are completed.
 
-#### 7.4 Right to erasure (Art. 17 GDPR)
-
+**9.3 Right to erasure (Art. 17 GDPR)**  
 You have the right to obtain without undue delay the erasure of personal data about you, where the defined legal grounds in Art. 17 GDPR apply.
 
-#### 7.5 Right to restriction of processing (Art. 18 GDPR)
-
+**9.4 Right to restriction (Art. 18 GDPR)**  
 Moreover, you have the right to obtain the restriction of processing your personal data where the defined legal grounds in Art. 18 GDPR apply.
 
-#### 7.6 Right to data portability (Art. 20 GDPR)
-
+**9.5 Right to data portability (Art. 20 GDPR)**  
 You have the right to receive your personal data in a structured, commonly used, and machine-readable format. Additionally, you have the right to transmit those data to another controller without hindrance, where the defined legal grounds in Art. 20 GDPR apply. You can make use of your right to data portability by contacting us.
 
-#### 7.7 Right to object (Art. 21 GDPR)
+**9.6 Right to object (Art. 21 GDPR)**  
+On grounds relating to your particular situation, you have the right to object to the processing of your personal data where we based the processing on legitimate interests (Art. 6(1)(f) GDPR). If you object, deltaDAO will no longer process your personal data unless we can demonstrate compelling legitimate grounds for the processing, overriding your rights, freedoms, and interests, or if the processing is required to establish, exercise, or defend legal claims.
 
-On grounds relating to your particular situation, you have the right to object to the processing of your personal data where we based the processing on legitimate interests (Art. 6(1)(f) GDPR). If you object, OEC will no longer process your personal data unless we can demonstrate compelling legitimate grounds for the processing, overriding your rights, freedoms, and interests, or if the processing is required to establish, exercise, or defend legal claims.
-
-#### 7.8 Right to lodge a complaint (Art. 77 GDPR)
-
-You have the right to lodge a complaint with a supervisory authority if you consider the processing of your personal data by OEC to infringe the GDPR. You can lodge a complaint in particular
+**9.7 Right to lodge a complaint (Art. 77 GDPR)**  
+You have the right to lodge a complaint with a supervisory authority if you consider the processing of your personal data by deltaDAO to infringe the GDPR. You can lodge a complaint in particular
 
 - in the Member State of your habitual residence,
 - in the Member State of your place of work, and
 - in the place of the alleged infringement.
 
-### 8. Questions
+## 10. Questions
 
-If you have any questions about our privacy policy, please send us an e-mail at **info@oceanenterprise.io**.
+For any requests regarding our privacy policy, please send us an e-mail to <privacy@delta-dao.com>.
 
-### 9. Changes to the Privacy Policy
+## 11. Changes to the Privacy Policy
 
-This privacy policy will be amended from time to time. You can see the date of the last alteration at the top of the privacy policy.
+We adjust this policy from time to time, by publishing a new version on our portal demonstrator. You can find the date of the current version at the beginning of this policy. The latest version of this policy applies to the processing of your personal data.

@@ -90,7 +90,7 @@
 }
 
 .didButton:hover {
-  color: #303031;
+  color: var(--text-ink);
   text-decoration: underline;
 }
 
@@ -107,7 +107,7 @@
   font-family: var(--font-family);
   font-weight: 700;
   font-size: 14px;
-  color: #303031;
+  color: var(--text-ink);
   margin: 0;
   min-width: 0;
 }

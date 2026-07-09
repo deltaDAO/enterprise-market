@@ -12,6 +12,11 @@ import styles from './index.module.css'
 import InputElement from '@shared/FormInput/InputElement'
 
 import Features from './Features/Features'
+import VisionMission from './VisionMission'
+import KeyData from './KeyData'
+import Partners from './Partners'
+import EuFunding from './EuFunding'
+import Image from 'next/image'
 import Upload from '@images/publish.svg'
 import SearchLogo from '@images/search.svg'
 import Menu from './Menu/Menu'
@@ -104,18 +109,24 @@ function HeroSection({
 
   return (
     <section className={styles.hero}>
+      <Image
+        src="/images/accurate-bg.jpg"
+        alt=""
+        fill
+        priority
+        className={styles.heroBackground}
+      />
+      <div className={styles.heroOverlay} />
       <div className={styles.contentContainer}>
         <header>
           <Menu />
         </header>
         <div className={styles.textContent}>
-          <h1 className={styles.title}>
-            Ocean Enterprise Demonstration Marketplace
-          </h1>
+          <h1 className={styles.title}>Accurate Marketplace</h1>
           <div className={styles.subtitle}>
             <p>
-              Publish, find, compare, manage and monetize proprietary data & AI
-              products in a secure, trusted and compliant environment
+              Data spaces for flexible production lines &amp; supply chains for
+              resilient manufacturing
             </p>
           </div>
           <div className={styles.ctaContainer}>
@@ -135,7 +146,9 @@ function HeroSection({
               className={styles.searchBlock}
               autoComplete={!value ? 'off' : 'on'}
             >
-              <h3 className={styles.ctaTitle}>Search for data</h3>
+              <h3 className={styles.ctaTitle}>
+                Search for datasets and services
+              </h3>
               <div className={styles.searchContainer}>
                 <InputElement
                   ref={searchBarRef}
@@ -189,6 +202,10 @@ export default function HomePage(): ReactElement {
         </>
       )}
       <Features />
+      <VisionMission />
+      <KeyData />
+      <Partners />
+      <EuFunding />
     </>
   )
 }

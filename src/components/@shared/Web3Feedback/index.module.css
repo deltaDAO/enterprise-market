@@ -24,7 +24,7 @@
   margin-top: 14px;
   font-weight: 400;
   font-size: 14px;
-  color: #303031;
+  color: var(--text-ink);
 }
 
 .error {

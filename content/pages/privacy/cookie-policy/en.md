@@ -1,105 +1,59 @@
 ---
 title: Cookie Policy
-description: This cookie policy explains how the Ocean Enterprise Demonstration Market uses cookies and similar technologies.
-showLastUpdated: true
 ---
 
-This Cookie Policy explains how the Ocean Enterprise Demonstration Market uses cookies and similar technologies. This policy should be read alongside our Privacy Policy.
+### Table of contents
 
 ## 1. What are cookies?
 
-A cookie is a small file that stores information on your device. Your web browser downloads it on your first visit to a website. When you return using the same device, the cookie is either sent back to the site that created it (first-party) or to another website it belongs to (third-party).
+A cookie is a small file that stores information on your device. Your web browser downloads it on the first visit to a website. The next time you open this website with the same device, the cookie and the information stored in it are either:
 
-In this policy, the term "cookies" refers to standard browser cookies, as well as web storage (`localStorage` and `sessionStorage`) and `IndexedDB`, which serve similar functions.
+- sent back to the website that created it (**first-party cookie**), or
+- sent to another website it belongs to (**third-party cookie**).
 
-### Cookie Categories
+This enables the website to detect that you have opened it previously with this browser and, in some cases, to vary the displayed content.
 
-- Essential cookies: Strictly necessary for you to browse the website and use features like wallet connections.
-- Preference cookies: Used to remember your settings (e.g., currency or selected chains) to improve user-friendliness.
-- Statistics cookies: Collect information about how you use the website to improve functions.
-- Marketing cookies: Track activity to deliver relevant content or advertising.
+**Web storage** (local storage and session storage) has similar functionality to cookies. In the following, the term “cookies” refers to **both**, web storage and regular cookies.
 
-## 2. How do we use cookies?
+**Cookie categories**
 
-We use essential and preference-based first-party storage to ensure the portal functions correctly. Currently, optional cookie categories (statistics/marketing) are not active in the user interface.
+There are several categories of cookies including the following cookie categories.
 
-| Name / Key                  | Service          | Purpose                                                             | Type and Duration                    |
-| --------------------------- | ---------------- | ------------------------------------------------------------------- | ------------------------------------ |
-| `wagmi.store`               | wagmi/connectkit | Stores wallet connection state (chain, connector, account mapping). | Cookie; session-based.               |
-| `ocean-user-preferences-v4` | Ocean App        | Stores currency, selected chains, bookmarks, and onboarding flags.  | `localStorage`; persistent.          |
-| `sessionToken`              | SSI Auth         | Stores SSI session token (session ID, bearer token, expiration).    | `localStorage`; persistent.          |
-| `cachedCredentials`         | SSI Flow         | Caches verifiable credentials per DID to speed up access.           | `localStorage`; persistent.          |
-| `credential_<assetId>`      | Access Control   | Stores timestamp of successful credential checks.                   | `localStorage`; persistent.          |
-| `compute-rerun:<jobId>`     | Compute          | Stores rerun payloads for compute history.                          | `localStorage`; persistent.          |
-| `ssiWalletApiOverride`      | SSI Auth         | Stores user-entered SSI API base URL overrides.                     | `sessionStorage`; ends with session. |
-| `wc@2:*`                    | WalletConnect    | Persistence for WalletConnect client sessions.                      | `localStorage` and `IndexedDB`.      |
-
-## 3. External Data Transfers
-
-While not all are "cookies," the following services receive data during your use of the market:
-
-- SSI Wallet API: Processes wallet addresses and credential IDs during verification.
-- Ocean Node: Receives DIDs and consumer addresses for asset downloads or compute jobs, processes search and filter queries.
-- IPFS (Pinata/Gateways): Used for pinning and retrieving decentralized content.
-
-## 4. How to block or delete cookies
-
-- Removing cookies: You can delete all cookies or site-specific cookies via your browser settings at any time.
-- Blocking cookies: Most browsers allow you to prevent cookies from being placed. Please note that blocking essential cookies will prevent wallet connections and asset access from functioning.
-
-## 5. Changes to this cookie policy
-
-## This policy may be amended from time to time. The "Last updated" date at the top indicates the most recent changes. Material changes will be notified via a prominent notice on the demonstration market.
-
-title: Cookie Policy
-description: This cookie policy explains how the Ocean Enterprise Demonstration Market uses cookies and similar technologies.
-showLastUpdated: true
-
----
-
-This Cookie Policy explains how the Ocean Enterprise Demonstration Market uses cookies and similar technologies. This policy should be read alongside our Privacy Policy.
-
-## 1. What are cookies?
-
-A cookie is a small file that stores information on your device. Your web browser downloads it on your first visit to a website. When you return using the same device, the cookie is either sent back to the site that created it (first-party) or to another website it belongs to (third-party).
-
-In this policy, the term "cookies" refers to standard browser cookies, as well as web storage (`localStorage` and `sessionStorage`) and `IndexedDB`, which serve similar functions.
-
-### Cookie Categories
-
-- Essential cookies: Strictly necessary for you to browse the website and use features like wallet connections.
-- Preference cookies: Used to remember your settings (e.g., currency or selected chains) to improve user-friendliness.
-- Statistics cookies: Collect information about how you use the website to improve functions.
-- Marketing cookies: Track activity to deliver relevant content or advertising.
+- **Essential cookies**: These cookies are strictly necessary for you to browse a website and use its features.
+- **Preference cookies**: Preference cookies are not absolutely necessary for the technical operation of a website but increase user-friendliness.
+- **Statistics cookies**: Statistics cookies or performance cookies collect information about how you use a website, e.g., which pages you visited, to improve website functions. The information is aggregated and not used to identify you.
+- **Marketing cookies**: Marketing cookies track your activity to deliver relevant advertising or to limit the number of times you see an ad. That information can be shared with other organizations or advertisers.
 
 ## 2. How do we use cookies?
 
-We use essential and preference-based first-party storage to ensure the portal functions correctly. Currently, optional cookie categories (statistics/marketing) are not active in the user interface.
+On our portal demonstrator we use essential first party cookies because they are strictly necessary for you to use our portal demonstrator features. You can find further information about each cookie in the table below.
 
-| Name / Key                  | Service          | Purpose                                                             | Type and Duration                    |
-| --------------------------- | ---------------- | ------------------------------------------------------------------- | ------------------------------------ |
-| `wagmi.store`               | wagmi/connectkit | Stores wallet connection state (chain, connector, account mapping). | Cookie; session-based.               |
-| `ocean-user-preferences-v4` | Ocean App        | Stores currency, selected chains, bookmarks, and onboarding flags.  | `localStorage`; persistent.          |
-| `sessionToken`              | SSI Auth         | Stores SSI session token (session ID, bearer token, expiration).    | `localStorage`; persistent.          |
-| `cachedCredentials`         | SSI Flow         | Caches verifiable credentials per DID to speed up access.           | `localStorage`; persistent.          |
-| `credential_<assetId>`      | Access Control   | Stores timestamp of successful credential checks.                   | `localStorage`; persistent.          |
-| `compute-rerun:<jobId>`     | Compute          | Stores rerun payloads for compute history.                          | `localStorage`; persistent.          |
-| `ssiWalletApiOverride`      | SSI Auth         | Stores user-entered SSI API base URL overrides.                     | `sessionStorage`; ends with session. |
-| `wc@2:*`                    | WalletConnect    | Persistence for WalletConnect client sessions.                      | `localStorage` and `IndexedDB`.      |
+| Name                             | Service              | Purpose                                                                                                             | Type and duration                                                                                 |
+| -------------------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `cachedCredentials`              | accurate.pontus-x.eu | Caches your verifiable credentials.                                                                                 | **First party local storage**. Saved during selection and deleted after buying an asset.          |
+| `compute-rerun:<jobId>`          | accurate.pontus-x.eu | Stores information about your compute-job, so you can rerun the exact same compute-job.                             | **First party local storage**. Saved for a vew seconds after selecting rerun compute job.         |
+| `credential_<assetId>`           | accurate.pontus-x.eu | Stores for how long you have the permission to consume an asset.                                                    | **First party local storage**. Saved during selection and deleted after buying an asset.          |
+| `ocean-user-preferences-v4`      | accurate.pontus-x.eu | Saves UI and user settings such as selected chains, bookmarks, and whether you allowed displaying external content. | **First party local storage**. Persistent storage.                                                |
+| `sessionToken`                   | accurate.pontus-x.eu | Stores the wallet/session token used to keep you authenticated.                                                     | **First party local storage**. Stored until the respective token expires.                         |
+| `ssiWalletApiOverride`           | accurate.pontus-x.eu | Stored to tell the portal which SSI Wallet backend to use.                                                          | **First party session storage** stored until the end of your session.                             |
+| `verifierSessionId`              | accurate.pontus-x.eu | Stores a session token, so you can download or run a job without verifying again.                                   | **First party local storage**. Persistent storage. Created after you passed the credential check. |
+| `wagmi.io.metamask.disconnected` | wagmi.sh             | Remembers that you disconnected your MetaMask wallet and prevents auto-reconnecting.                                | **First party session cookie** stored until the end of your session.                              |
+| `wagmi.recentConnectorId`        | wagmi.sh             | Contains information about the last connected wallet (MetaMask or jsonWallet).                                      | **First party cookie**. Persistent storage.                                                       |
+| `wagmi.store`                    | wagmi.sh             | Keeps your MetaMask wallet actively connected while using the portal demonstrator.                                  | **First party local storage**. Persistent storage.                                                |
 
-## 3. External Data Transfers
+&nbsp;
+For reach analysis we use an **aggregated statistics** tool which does not use cookies, does not track individual visitors and does not create persistent identifiers. Further information about the **aggregated statistics** can be found in our [**privacy policy**](/privacy/privacy-policy).
 
-While not all are "cookies," the following services receive data during your use of the market:
+## 3. How to block or delete cookies
 
-- SSI Wallet API: Processes wallet addresses and credential IDs during verification.
-- Ocean Node: Receives DIDs and consumer addresses for asset downloads or compute jobs, processes search and filter queries.
-- IPFS (Pinata/Gateways): Used for pinning and retrieving decentralized content.
+**Removing cookies from your device**
 
-## 4. How to block or delete cookies
+You can delete all cookies or site-specific cookies from your computer's hard disk at any time in your browser settings. For more details, please check the privacy or cookie settings in your preferred browser.
 
-- Removing cookies: You can delete all cookies or site-specific cookies via your browser settings at any time.
-- Blocking cookies: Most browsers allow you to prevent cookies from being placed. Please note that blocking essential cookies will prevent wallet connections and asset access from functioning.
+**Blocking cookies**
 
-## 5. Changes to this cookie policy
+Most browsers have settings you can use to prevent cookies from being placed on your device. For more details, please check the privacy or cookie settings in your preferred browser. These settings may result in some websites not displaying content or functioning correctly.
 
-This policy may be amended from time to time. The "Last updated" date at the top indicates the most recent changes. Material changes will be notified via a prominent notice on the demonstration market.
+## 4. Changes to this cookie policy
+
+This cookie policy will be amended from time to time. You can see the date of the last alteration at the top of this cookie policy. If we make any material changes to our use of cookies, we will notify you by prominently posting a notice on the portal demonstrator.

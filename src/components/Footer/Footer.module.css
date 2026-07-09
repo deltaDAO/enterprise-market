@@ -3,7 +3,7 @@
   /* padding-bottom: calc(var(--spacer) / 2); */
   text-align: center;
   color: #fff;
-  background-color: #303031;
+  background-color: var(--brand-blue);
   font-size: var(--font-size-small);
 }
 

@@ -47,9 +47,9 @@ function encodeSvg(svgString: string): string {
 
 const nftMetadataTemplate = {
   name: 'Data NFT',
-  symbol: 'OEC-NFT',
-  description: `This NFT represents an asset in Ocean Enterprise ecosystems.`,
-  external_url: 'https://enterprise.oceanprotocol.com'
+  symbol: 'ACCURATE-NFT',
+  description: `This NFT represents an asset in the Accurate ecosystem.`,
+  external_url: 'https://accurate.pontus-x.eu'
 }
 
 export function generateNftMetadata(): NftMetadata {
@@ -185,7 +185,7 @@ export async function setNFTMetadataAndTokenURI(
         : {
             name: (asset as Asset).indexedMetadata.nft.name,
             symbol: (asset as Asset).indexedMetadata.nft.symbol,
-            description: `${nftMetadataTemplate.description}\n\nView on Ocean Enterprise: ${externalUrl}`,
+            description: `${nftMetadataTemplate.description}\n\nView on Accurate Marketplace: ${externalUrl}`,
             external_url: externalUrl
           }
     )

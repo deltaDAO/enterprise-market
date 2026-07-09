@@ -49,11 +49,11 @@
   background: #64ace0;
   background: linear-gradient(
     135deg,
-    #1f2c50 0%,
+    var(--brand-blue) 0%,
     rgba(10, 75, 112, 0.8) 27.47%,
     rgba(10, 75, 112, 0.7) 43.49%,
     rgba(10, 75, 112, 0.8) 55.43%,
-    #1e2e52 100%
+    var(--brand-blue) 100%
   );
   box-shadow: 1px 4px 8px 0 var(--black-alpha-15);
 }

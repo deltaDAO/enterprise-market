@@ -1,15 +1,15 @@
 {
   "links": [
     {
-      "name": "Docs",
-      "url": "https://docs.oceanprotocol.com"
+      "name": "Accurate Project",
+      "url": "https://accurateproject.eu"
     },
     {
       "name": "GitHub",
-      "url": "https://github.com/OceanProtocolEnterprise"
+      "url": "https://github.com/deltaDAO"
     }
   ],
   "stats": {
-    "note": "Counted on-chain from our NFT factories. Includes assets in all Ocean Market forks and [purgatory](https://github.com/oceanprotocol/list-purgatory)."
+    "note": "Counted on-chain from our NFT factories. Includes assets across the Pontus-X ecosystem."
   }
 }

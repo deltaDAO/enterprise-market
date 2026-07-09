@@ -8,123 +8,67 @@ export default function Links(): ReactElement {
   const { appConfig, siteContent } = useMarketMetadata()
   const { setShowPPC } = useUserPreferences()
 
-  const { content, privacyTitle } = siteContent.footer
+  const { content } = siteContent.footer
 
   return (
     <div className={styles.container}>
-      {content?.map(
-        (section, i) =>
-          section.title !== 'Privacy' && (
-            <div key={i} className={styles.section}>
-              <p className={styles.title}>{section.title}</p>
-              <div className={styles.links}>
-                {section.links.map((e, i) => {
-                  if (
-                    e.name === 'Cookie Settings' ||
-                    e.name === 'Cookie Policy'
-                  ) {
-                    return (
-                      <Link
-                        key={i}
-                        className={styles.link}
-                        href="/privacy/cookie-policy"
-                        onClick={() => {
-                          setShowPPC(true)
-                        }}
-                      >
-                        Cookie Policy
-                      </Link>
-                    )
-                  }
-                  if (e.name === 'Privacy') {
-                    return (
-                      <Link
-                        key={i}
-                        className={styles.link}
-                        href="/privacy/privacy-policy"
-                      >
-                        {e.name}
-                      </Link>
-                    )
-                  }
-                  if (e.name === 'Imprint') {
-                    return (
-                      <Link
-                        key={i}
-                        className={styles.link}
-                        href="/privacy/imprint"
-                      >
-                        {e.name}
-                      </Link>
-                    )
-                  }
-                  const isInternalLink = e.link.startsWith('/')
-                  return isInternalLink ? (
-                    <Link key={i} className={styles.link} href={e.link}>
-                      {e.name === 'Log' ? (
-                        <>
-                          <span>Log</span>
-                          <span className={styles.logIcon}>&nbsp;↗</span>{' '}
-                        </>
-                      ) : (
-                        e.name
-                      )}
-                    </Link>
-                  ) : (
-                    <a
-                      key={i}
-                      className={styles.link}
-                      href={e.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {e.name === 'Log' ? (
-                        <>
-                          <span>Log</span>
-                          <span className={styles.logIcon}>&nbsp;↗</span>{' '}
-                        </>
-                      ) : (
-                        e.name
-                      )}
-                    </a>
-                  )
-                })}
-              </div>
-            </div>
-          )
-      )}
-      <div className={styles.section}>
-        <p className={styles.title}>{privacyTitle}</p>
-        <div className={styles.links}>
-          <Link className={styles.link} href="/privacy/imprint">
-            Imprint
-          </Link>
-          <Link className={styles.link} href="/privacy/terms">
-            Terms & Conditions
-          </Link>
-          <Link className={styles.link} href="/privacy/privacy-policy">
-            Privacy Policy
-          </Link>
-          <Link
-            className={styles.link}
-            href="/privacy/data-portal-usage-agreement"
-          >
-            Data Portal Usage Agreement
-          </Link>
+      {content?.map((section, i) => (
+        <div key={i} className={styles.section}>
+          <p className={styles.title}>{section.title}</p>
+          <div className={styles.links}>
+            {section.links.map((e, i) => {
+              const isCookiePolicyLink = e.link === '/privacy/cookie-policy'
+              const hideCookiePolicyLink =
+                isCookiePolicyLink &&
+                appConfig.privacyPreferenceCenter !== 'true'
 
-          {appConfig.privacyPreferenceCenter === 'true' && (
-            <Link
-              className={styles.link}
-              href="/privacy/cookie-policy"
-              onClick={() => {
-                setShowPPC(true)
-              }}
-            >
-              Cookie Policy
-            </Link>
-          )}
+              if (hideCookiePolicyLink) return null
+
+              const linkLabel =
+                e.name === 'Log' ? (
+                  <>
+                    <span>Log</span>
+                    <span className={styles.logIcon}>&nbsp;↗</span>{' '}
+                  </>
+                ) : (
+                  e.name
+                )
+
+              const isInternalLink = e.link.startsWith('/')
+              if (isInternalLink) {
+                return (
+                  <Link
+                    key={i}
+                    className={styles.link}
+                    href={e.link}
+                    onClick={
+                      isCookiePolicyLink
+                        ? () => {
+                            setShowPPC(true)
+                          }
+                        : undefined
+                    }
+                  >
+                    {linkLabel}
+                  </Link>
+                )
+              }
+
+              return (
+                <a
+                  key={i}
+                  className={styles.link}
+                  href={e.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {linkLabel}
+                </a>
+              )
+            })}
+          </div>
         </div>
-      </div>
+      ))}
     </div>
   )
 }

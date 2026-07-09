@@ -197,6 +197,15 @@ module.exports = {
     process.env.NEXT_PUBLIC_DATASPACE ||
     null,
 
+  // Controls whether asset descriptions are expanded by default on the detail page
+  assetDescriptionExpandedByDefault:
+    getEnv('NEXT_PUBLIC_ASSET_DESCRIPTION_EXPANDED_BY_DEFAULT') ||
+    process.env.NEXT_PUBLIC_ASSET_DESCRIPTION_EXPANDED_BY_DEFAULT
+      ? (getEnv('NEXT_PUBLIC_ASSET_DESCRIPTION_EXPANDED_BY_DEFAULT') ||
+          process.env.NEXT_PUBLIC_ASSET_DESCRIPTION_EXPANDED_BY_DEFAULT) ===
+        'true'
+      : true,
+
   // Controls whether the decrypted private key from a JSON wallet import
   // is stored in sessionStorage for the duration of the browser tab session.
   // Set to 'false' to require the user to re-enter the password on every page reload.

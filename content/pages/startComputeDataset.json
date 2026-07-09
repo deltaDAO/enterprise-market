@@ -24,7 +24,7 @@
       "type": "checkbox",
       "options": ["Terms and Conditions"],
       "prefixes": ["I agree to the"],
-      "actions": ["/terms"]
+      "actions": ["https://portal.pontus-x.eu/terms"]
     },
     "acceptPublishingLicense": {
       "name": "acceptPublishingLicense",

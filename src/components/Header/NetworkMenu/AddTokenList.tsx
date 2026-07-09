@@ -1,5 +1,5 @@
 import EUROeLogo from '@images/EUROe_Symbol_Black.svg'
-import OceanLogo from '@images/logo.svg'
+import OceanLogo from '@images/ocean-token-logo.svg'
 
 export const tokenLogos = {
   EUROe: {

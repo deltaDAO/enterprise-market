@@ -7,7 +7,7 @@
   margin-bottom: 0;
   font-weight: 700;
   /* font-size: 22px; */
-  color: #303031;
+  color: var(--text-ink);
 }
 
 .compactTitle {

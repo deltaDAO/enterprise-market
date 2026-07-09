@@ -4,11 +4,11 @@ title: Privacy Policy
 
 ## Terms and Conditions
 
-Welcome to Ocean Enterprise! By accessing our website ("the Site") and using any of our services, you agree to the following terms and conditions ("Terms").
+Welcome to Accurate! By accessing our website ("the Site") and using any of our services, you agree to the following terms and conditions ("Terms").
 
 ### Copyright and Trademarks
 
-The content on the Site, including but not limited to text, graphics, logos, images, and software, is the property of **Ocean Enterprise Collective e.V. (in the following OEC, we, us, our)** and is protected by copyright laws. You may download and print content for non-commercial purposes only, provided that you retain all copyright and other proprietary notices. The Ocean Enterprise logo, brand, and product names are trademarks of OEC.
+The content on the Site, including but not limited to text, graphics, logos, images, and software, is the property of **deltaDAO (in the following OEC, we, us, our)** and is protected by copyright laws. You may download and print content for non-commercial purposes only, provided that you retain all copyright and other proprietary notices. The Accurate logo, brand, and product names are trademarks of OEC.
 
 ### Usage Agreement
 
@@ -40,24 +40,24 @@ OEC reserves the right, at its sole discretion, to change, modify, add, or remov
 
 ### Contact Us
 
-For any questions or concerns regarding these Terms, please contact us at **info@oceanenterprise.io**.
+For any questions or concerns regarding these Terms, please contact us at **info@delta-dao.com**.
 
 ---
 
 ## Privacy Policy
 
-This privacy policy informs you about how **Ocean Enterprise Collective e.V. (in the following OEC, we, us, our)** processes your personal data. Moreover, this privacy policy informs you about your rights.
+This privacy policy informs you about how **deltaDAO (in the following OEC, we, us, our)** processes your personal data. Moreover, this privacy policy informs you about your rights.
 
 ### 1. Contact details of the controller
 
 The controller pursuant to the EU General Data Protection Regulation ("GDPR") for the processing of your personal data is:
 
-**Ocean Enterprise Collective e.V.**  
+**deltaDAO**  
 Carmerstrasse 18  
 10623 Berlin  
 Germany
 
-E-mail: **info@oceanenterprise.io**
+E-mail: **info@delta-dao.com**
 
 ### 2. What's personal data?
 
@@ -146,7 +146,7 @@ You have the right to lodge a complaint with a supervisory authority if you cons
 
 ### 8. Questions
 
-If you have any questions about our privacy policy, please send us an e-mail at **info@oceanenterprise.io**.
+If you have any questions about our privacy policy, please send us an e-mail at **info@delta-dao.com**.
 
 ### 9. Changes to the Privacy Policy
 
@@ -156,21 +156,21 @@ This privacy policy will be amended from time to time. You can see the date of t
 
 ## Data Portal Usage Agreement
 
-**Ocean Enterprise Collective e.V.**
+**deltaDAO**
 
 _Last updated: December 15, 2025_
 
-This Ocean Enterprise Collective e.V. Data Portal Usage Agreement ("**Agreement**") constitutes a legally binding contract between you ("**Portal User**") and the Ocean Enterprise Collective e.V. seated at Carmerstrasse18, 10623 Berlin, Germany ("**Portal Operator**"), each a "**Party**", both jointly referred to as the "**Parties**". The Agreement applies to and governs Portal User's access to and use of the Portal Operator's Data Portal (as defined below).
+This deltaDAO Data Portal Usage Agreement ("**Agreement**") constitutes a legally binding contract between you ("**Portal User**") and the deltaDAO seated at Carmerstrasse18, 10623 Berlin, Germany ("**Portal Operator**"), each a "**Party**", both jointly referred to as the "**Parties**". The Agreement applies to and governs Portal User's access to and use of the Portal Operator's Data Portal (as defined below).
 
 ### Definitions
 
-> **1.1 "Access Controllers"** means an infrastructure component of the Ocean Enterprise ecosystem managing access to Data.
+> **1.1 "Access Controllers"** means an infrastructure component of the Accurate ecosystem managing access to Data.
 >
 > **1.2 "Access Token"** means an ERC20 utility token enabling the use of the Data Publishers' Service Offering and creating the respective Data audit trail via the selected EVM Compatible Blockchain (i.e., documentation of activities relating to the access to the Data).
 >
 > **1.3 "Data"** means any data, software, content or service based on which a Service Offering is created by a Data Publisher on the Data Portal.
 >
-> **1.4 "Data Portal"** means an internet portal that is operated by Portal Operator, includes an API connector establishing links to metadata caches which query the underlying EVM Compatible Blockchain and hereby enables (a) the Publishing of Service Offerings and (b) the Utilization of Service Offerings, available under the domain name [https://market.demo.oceanenterprise.io/](https://market.demo.oceanenterprise.io/), as may be updated by Portal Operator from time to time.
+> **1.4 "Data Portal"** means an internet portal that is operated by Portal Operator, includes an API connector establishing links to metadata caches which query the underlying EVM Compatible Blockchain and hereby enables (a) the Publishing of Service Offerings and (b) the Utilization of Service Offerings, available under the domain name [https://accurate.pontus-x.eu/](https://accurate.pontus-x.eu/), as may be updated by Portal Operator from time to time.
 >
 > **1.5 "Data Publisher"** means a user of the Data Portal when placing or having placed one or several Service Offerings on the Data Portal.
 >
@@ -252,7 +252,7 @@ This Ocean Enterprise Collective e.V. Data Portal Usage Agreement ("**Agreement*
 >
 > **4.2** EVM Compatible Blockchains may require the payment of a Gas Fee for every transaction occurring. The Gas Fee typically funds the network of computers that run the EVM Compatible Blockchains. This means that the Portal User will need to pay a Gas Fee for each transaction that occurs via the Data Portal and transacting via the Data Portal will require an accordingly funded wallet.
 >
-> **4.3** In addition to the Gas Fee which may be required by the EVM Compatible Blockchain, the Portal User owes Portal Operator a Portal Fee of 0.10 EURO for Utilization. The Portal User acknowledges and agrees that the user fee will be transferred directly to Portal Operator upon the Utilization. Depending on the Data utilized by the Portal User via the Data Portal, further third-party fees may apply, e.g., a Community Fee may be transferred to the Ocean Enterprise Collective Fee Collector and a Provider Fee may have to be transferred to the access control service provider.
+> **4.3** In addition to the Gas Fee which may be required by the EVM Compatible Blockchain, the Portal User owes Portal Operator a Portal Fee of 0.10 EURO for Utilization. The Portal User acknowledges and agrees that the user fee will be transferred directly to Portal Operator upon the Utilization. Depending on the Data utilized by the Portal User via the Data Portal, further third-party fees may apply, e.g., a Community Fee may be transferred to the Accurate Collective Fee Collector and a Provider Fee may have to be transferred to the access control service provider.
 >
 > **4.4** Each Party will be responsible, as required under applicable law, for identifying and paying all taxes and other governmental fees and charges (and any penalties, interest, and other additions thereto) that are imposed on that Party upon or with respect to the transactions and payments under this Agreement.
 
@@ -440,7 +440,7 @@ Capitalized terms shall have the meaning given to them in this agreement; and:
 >
 > **2.2 "Data"** means any data, software, content or service based on which a Service Offering is created by a Data Publisher on the Data Portal.
 >
-> **2.3 "Data Portal"** means an internet portal that is operated by Portal Operator, includes an API connector establishing links to metadata caches which query the underlying EVM Compatible Blockchain and hereby enables (a) the Publishing of Service Offerings and (b) the Utilization of Service Offerings, available under the domain name [https://market.demo.oceanenterprise.io/](https://market.demo.oceanenterprise.io/), as may be updated by Portal Operator from time to time.
+> **2.3 "Data Portal"** means an internet portal that is operated by Portal Operator, includes an API connector establishing links to metadata caches which query the underlying EVM Compatible Blockchain and hereby enables (a) the Publishing of Service Offerings and (b) the Utilization of Service Offerings, available under the domain name [https://accurate.pontus-x.eu/](https://accurate.pontus-x.eu/), as may be updated by Portal Operator from time to time.
 >
 > **2.4 "Data Portal Usage Agreement"** means an agreement concluded between a Portal User and a Portal Operator governing Portal User's access to and use of Portal Operator's Data Portal.
 >

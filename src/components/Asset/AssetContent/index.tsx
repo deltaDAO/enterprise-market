@@ -33,6 +33,7 @@ import ComputeJobs from '@components/@shared/ComputeJobs'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'
+import { useMarketMetadata } from '@context/MarketMetadata'
 
 export default function AssetContent({
   asset
@@ -43,6 +44,7 @@ export default function AssetContent({
   const { isInPurgatory, purgatoryData, isOwner, isAssetNetwork } = useAsset()
   const { address: accountId, isConnected } = useAccount()
   const { allowExternalContent, debug } = useUserPreferences()
+  const { appConfig } = useMarketMetadata()
   const [receipts] = useState([])
   const [nftPublisher, setNftPublisher] = useState<string>()
   const [selectedService, setSelectedService] = useState<number | undefined>()
@@ -54,7 +56,9 @@ export default function AssetContent({
   // const [jsonInvoice, setJsonInvoice] = useState(null)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [computeJobsRefetchTrigger, setComputeJobsRefetchTrigger] = useState(0)
-  const [expanded, setExpanded] = useState(false)
+  const [expanded, setExpanded] = useState(
+    appConfig.assetDescriptionExpandedByDefault
+  )
   const [showDdo, setShowDdo] = useState(false)
   const availableServices =
     asset.credentialSubject?.services?.filter(

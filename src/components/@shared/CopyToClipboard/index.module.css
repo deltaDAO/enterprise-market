@@ -16,7 +16,7 @@
 }
 
 .textButton:hover {
-  color: #303031;
+  color: var(--text-ink);
   text-decoration: underline;
 }
 
@@ -31,7 +31,7 @@
 .copyButton {
   border: 1px solid var(--border-color);
   background: #f7f7f7;
-  color: #303031;
+  color: var(--text-ink);
   font-size: 0.8rem;
   padding: 4px 8px;
   border-radius: 4px;

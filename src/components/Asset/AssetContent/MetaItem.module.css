@@ -7,7 +7,7 @@
   font-weight: 700;
   font-size: 14px;
   text-transform: uppercase;
-  color: #303031;
+  color: var(--text-ink);
   margin-bottom: calc(var(--spacer) / 4);
 }
 
