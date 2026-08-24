@@ -16,9 +16,11 @@ import { ConnectKitProvider } from 'connectkit'
 import { connectKitTheme, createWagmiConfig } from '@utils/wallet'
 import { FilterProvider } from '@context/Filter'
 import { SsiWalletProvider } from '@context/SsiWallet'
+import { PontusXIdentityProvider } from '@context/PontusXIdentity'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { AuthProvider } from '@utils/authProvider'
 import AuthGuard from '@components/Auth/AuthGuard/AuthGuard'
+import { initAnalytics } from '@utils/analytics'
 
 const queryClient = new QueryClient()
 function MyApp({ Component, pageProps }: AppProps): ReactElement {
@@ -27,6 +29,7 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement {
 
   useEffect(() => {
     setMounted(true)
+    initAnalytics()
   }, [])
 
   if (!mounted) return null
@@ -49,11 +52,13 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement {
                     <FilterProvider>
                       <SsiWalletProvider>
                         <AuthProvider>
-                          <App>
-                            <AuthGuard>
-                              <Component {...pageProps} />
-                            </AuthGuard>
-                          </App>
+                          <PontusXIdentityProvider>
+                            <App>
+                              <AuthGuard>
+                                <Component {...pageProps} />
+                              </AuthGuard>
+                            </App>
+                          </PontusXIdentityProvider>
                         </AuthProvider>
                       </SsiWalletProvider>
                     </FilterProvider>

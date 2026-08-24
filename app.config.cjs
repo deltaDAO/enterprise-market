@@ -160,7 +160,6 @@ module.exports = {
     getEnv('NEXT_PUBLIC_SSI_DEFAULT_POLICIES_URL') ||
     process.env.NEXT_PUBLIC_SSI_DEFAULT_POLICIES_URL ||
     'https://raw.githubusercontent.com/OceanProtocolEnterprise/policy-server/refs/heads/main/default-verification-policies',
-
   ipfsGateway:
     getEnv('NEXT_PUBLIC_IPFS_GATEWAY') || process.env.NEXT_PUBLIC_IPFS_GATEWAY,
   ipfsUploadUrl:
@@ -195,6 +194,22 @@ module.exports = {
   dataspace:
     getEnv('NEXT_PUBLIC_DATASPACE') ||
     process.env.NEXT_PUBLIC_DATASPACE ||
+    null,
+
+  // Controls whether asset descriptions are expanded by default on the detail page
+  assetDescriptionExpandedByDefault:
+    getEnv('NEXT_PUBLIC_ASSET_DESCRIPTION_EXPANDED_BY_DEFAULT') ||
+    process.env.NEXT_PUBLIC_ASSET_DESCRIPTION_EXPANDED_BY_DEFAULT
+      ? (getEnv('NEXT_PUBLIC_ASSET_DESCRIPTION_EXPANDED_BY_DEFAULT') ||
+          process.env.NEXT_PUBLIC_ASSET_DESCRIPTION_EXPANDED_BY_DEFAULT) ===
+        'true'
+      : true,
+
+  // Base URL of the Pontus-X registry used to resolve wallet addresses to legal
+  // names. Leave unset to never query the registry.
+  pontusXRegistryUrl:
+    getEnv('NEXT_PUBLIC_PONTUSX_REGISTRY_URL') ||
+    process.env.NEXT_PUBLIC_PONTUSX_REGISTRY_URL ||
     null,
 
   // Controls whether the decrypted private key from a JSON wallet import
@@ -245,6 +260,10 @@ module.exports = {
   oidcTokenUrl:
     getEnv('NEXT_PUBLIC_OIDC_TOKEN_URL') ||
     process.env.NEXT_PUBLIC_OIDC_TOKEN_URL ||
+    null,
+  federatedOidcEndSessionUrl:
+    getEnv('NEXT_PUBLIC_FEDERATED_OIDC_END_SESSION_URL') ||
+    process.env.NEXT_PUBLIC_FEDERATED_OIDC_END_SESSION_URL ||
     null,
   federatedOidcIssuers: parseEnvArray(
     getEnv('NEXT_PUBLIC_FEDERATED_OIDC_ISSUERS') ||

@@ -13,7 +13,7 @@
         "name": "type",
         "label": "Asset Type",
         "type": "boxSelection",
-        "options": ["Dataset", "Algorithm"],
+        "options": ["Dataset", "Algorithm", "SaaS"],
         "required": true
       },
       {
@@ -57,6 +57,29 @@
         "label": "Author",
         "type": "author",
         "placeholder": "e.g. John SRL"
+      },
+      {
+        "name": "copyrightHolder",
+        "label": "Copyright Holder",
+        "placeholder": "e.g. Ocean Enterprise",
+        "help": "The entity holding the legal copyright for this asset."
+      },
+      {
+        "name": "providedBy",
+        "label": "Provided By",
+        "placeholder": "e.g. https://oceanenterprise.io/vc.json",
+        "help": "URL where the Verifiable Credential of the entity offering this asset resides."
+      },
+      {
+        "name": "links",
+        "label": "Links",
+        "type": "keyValue",
+        "keyLabel": "Title",
+        "valueLabel": "URL",
+        "keyPlaceholder": "e.g. Website",
+        "valuePlaceholder": "e.g. https://oceanenterprise.io",
+        "validateValueAsUrl": true,
+        "help": "Related links for this asset as a mapping of titles to URLs. Enter a Title and its URL, then click Add. Repeat to add more (e.g. website, demo)."
       },
       {
         "name": "license",
@@ -206,6 +229,14 @@
         "type": "providerUrl",
         "help": "Enter the URL for your custom [provider](https://github.com/oceanprotocol/provider/) or leave as is to use the default one. If you change your provider URL after adding your file, please add & validate your file again.",
         "placeholder": "e.g. https://provider.oceanprotocol.com/",
+        "required": true
+      },
+      {
+        "name": "redirectUrl",
+        "label": "Redirect URL",
+        "placeholder": "e.g. https://my-saas.example.com",
+        "help": "The url the user will be redirected to after buying access to the Software as a Service offering.",
+        "type": "url",
         "required": true
       },
       {

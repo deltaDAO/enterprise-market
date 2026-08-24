@@ -2,7 +2,7 @@ import { FileInfo } from '@oceanprotocol/lib'
 import { MAX_DECIMALS } from '@utils/constants'
 import { getMaxDecimalsValidation } from '@utils/numbers'
 import * as Yup from 'yup'
-import { getOriginalValue, testLinks } from '@utils/yup'
+import { getOriginalValue, testLinks, testOptionalUrl } from '@utils/yup'
 import { validationConsumerParameters } from '@components/@shared/FormInput/InputElement/ConsumerParameters/_validation'
 import { FormUrlFileInfo } from './_types'
 import { additionalLicenseSourceOptions } from './_license'
@@ -82,6 +82,10 @@ const urlFileSchema = Yup.object().shape({
   url: testLinks(),
   valid: Yup.boolean().required().oneOf([true], 'File must be valid.')
 })
+const saasFileSchema = Yup.object().shape({
+  type: Yup.string().oneOf(['saas']).required(),
+  url: testLinks()
+})
 const ftpFileSchema = Yup.object().shape({
   type: Yup.string().oneOf(['ftp']).required(),
   url: Yup.string()
@@ -104,6 +108,21 @@ const fileSchema = Yup.mixed().test(
     }
     if (value.type === 'ftp') {
       return ftpFileSchema.isValidSync(value)
+    }
+    if (value.type === 'saas') {
+      try {
+        saasFileSchema.validateSync(value)
+        return true
+      } catch (error) {
+        // re-throw at the url path so the message renders under the input
+        return this.createError({
+          path: `${this.path}.url`,
+          message:
+            error instanceof Yup.ValidationError
+              ? error.message
+              : 'Must be a valid url.'
+        })
+      }
     }
     return urlFileSchema.isValidSync(value)
   }
@@ -159,6 +178,16 @@ const validationMetadata = {
     .required('Required'),
   descriptionLanguage: Yup.string(),
   descriptionDirection: Yup.string(),
+  copyrightHolder: Yup.string().nullable(),
+  providedBy: testOptionalUrl('Provided By must be a valid URL.'),
+  links: Yup.array()
+    .of(
+      Yup.object().shape({
+        key: Yup.string(),
+        value: testOptionalUrl('Each link must be a valid URL.')
+      })
+    )
+    .nullable(),
   tags: Yup.array<string[]>().nullable(),
   dockerImage: Yup.string().when('type', {
     is: 'algorithm',

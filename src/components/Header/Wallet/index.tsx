@@ -5,35 +5,50 @@ import Tooltip from '@shared/atoms/Tooltip'
 import styles from './index.module.css'
 import { useAccount, useConnectors } from 'wagmi'
 import Network from './Network'
+import { useDfnsConnect } from '@hooks/useDfnsConnect'
+import { useAuth } from '@hooks/useAuth'
+import { useSignerServerConnect } from '@hooks/useSignerServerConnect'
+import { useMetaMaskConnect } from '@hooks/useMetaMaskConnect'
+import WalletChoiceModal from '@shared/WalletChoiceModal'
+import DfnsRegistrationModal from '@shared/DfnsRegistrationModal'
 import ImportModal from './JsonWallet/ImportModal'
 import {
   JSON_WALLET_CONNECTOR_ID,
   setImportRequestHandler
 } from '@utils/wallet/jsonWalletConnector'
 
+type TooltipHandle = {
+  hide?: () => void
+}
+
 export default function Wallet(): ReactElement {
   const { address: accountId } = useAccount()
   const connectors = useConnectors()
+  const metaMask = useMetaMaskConnect()
+  const dfns = useDfnsConnect()
+  const signerServer = useSignerServerConnect()
+  const { authEnabled } = useAuth()
   const [isSsiModalOpen, setIsSsiModalOpen] = useState(false)
+  const [isWalletChoiceOpen, setIsWalletChoiceOpen] = useState(false)
   const [isImportModalOpen, setIsImportModalOpen] = useState(false)
-  const tooltipRef = useRef<{ hide?: () => void } | null>(null)
+  const tooltipRef = useRef<TooltipHandle | null>(null)
+
+  const hasJsonWalletConnector = connectors.some(
+    (c) => c.id === JSON_WALLET_CONNECTOR_ID
+  )
 
   // Register handler so the connector can request the import modal
-  // (triggered when ConnectKit calls connect() on our connector)
+  // (triggered when something calls connect() on our connector)
   const handleImportRequest = useCallback(() => {
     setIsImportModalOpen(true)
   }, [])
 
   useEffect(() => {
-    // Only register when the connector is present
-    const hasConnector = connectors.some(
-      (c) => c.id === JSON_WALLET_CONNECTOR_ID
-    )
-    if (hasConnector) {
+    if (hasJsonWalletConnector) {
       setImportRequestHandler(handleImportRequest)
     }
     return () => setImportRequestHandler(null)
-  }, [connectors, handleImportRequest])
+  }, [hasJsonWalletConnector, handleImportRequest])
 
   useEffect(() => {
     if (isSsiModalOpen) {
@@ -46,16 +61,54 @@ export default function Wallet(): ReactElement {
       {accountId && <Network />}
       <Tooltip
         content={
-          <Details onRequestClose={() => tooltipRef.current?.hide?.()} />
+          <Details
+            onRequestClose={() => tooltipRef.current?.hide?.()}
+            onRequestWalletChoice={() => setIsWalletChoiceOpen(true)}
+          />
         }
         trigger="click focus mouseenter"
-        disabled={isSsiModalOpen}
+        disabled={isSsiModalOpen || isWalletChoiceOpen}
         onCreate={(instance) => {
           tooltipRef.current = instance
         }}
       >
         <Account onSsiModalOpenChange={setIsSsiModalOpen} />
       </Tooltip>
+      <WalletChoiceModal
+        isOpen={isWalletChoiceOpen}
+        isDfnsConnecting={dfns.isConnecting}
+        isSignerServerConnecting={signerServer.isConnecting}
+        showDfns={authEnabled}
+        showSignerServer={signerServer.isConfigured}
+        showJsonWallet={hasJsonWalletConnector}
+        onClose={() => setIsWalletChoiceOpen(false)}
+        onSelectMetaMask={() => {
+          setIsWalletChoiceOpen(false)
+          metaMask.openConnect()
+        }}
+        onSelectDfns={() => {
+          setIsWalletChoiceOpen(false)
+          dfns.openConnect()
+        }}
+        onSelectSignerServer={() => {
+          setIsWalletChoiceOpen(false)
+          signerServer.openConnect()
+        }}
+        onSelectJsonWallet={() => {
+          setIsWalletChoiceOpen(false)
+          setIsImportModalOpen(true)
+        }}
+      />
+
+      <DfnsRegistrationModal
+        isOpen={dfns.isRegistrationModalOpen}
+        registrationCode={dfns.registrationCode}
+        isConnecting={dfns.isConnecting}
+        onChange={dfns.setRegistrationCode}
+        onSubmit={dfns.submitRegistrationCode}
+        onClose={() => dfns.setIsRegistrationModalOpen(false)}
+      />
+
       <ImportModal
         isOpen={isImportModalOpen}
         onClose={() => setIsImportModalOpen(false)}

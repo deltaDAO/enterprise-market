@@ -1,6 +1,6 @@
 import Input from '@shared/FormInput'
 import { Field, useFormikContext } from 'formik'
-import { ReactElement, useEffect, useMemo, useState } from 'react'
+import { ReactElement, useEffect, useMemo } from 'react'
 import IconDownload from '@images/download2.svg'
 import IconCompute from '@images/compute.svg'
 import content from '../../../../content/publish/form.json'
@@ -25,6 +25,7 @@ export default function ServicesFields(): ReactElement {
   const { values, setFieldValue } = useFormikContext<FormPublishData>()
 
   const currentFileType = values.services?.[0]?.files?.[0]?.type || 'url'
+  const isSaas = currentFileType === 'saas'
   const isConsumerParametersCompatible =
     isFileTypeCompatibleWithConsumerParameters(currentFileType)
 
@@ -166,21 +167,23 @@ export default function ServicesFields(): ReactElement {
           name="services[0].algorithmPrivacy"
         />
       ) : (
-        <>
-          <Field
-            {...getFieldContent('access', content.services.fields)}
-            component={Input}
-            name="services[0].access"
-            options={accessTypeOptions}
-          />
-          {values.services[0]?.access === 'compute' && (
-            <FormEditComputeService
-              chainId={values?.user?.chainId}
-              serviceEndpoint={values.services[0].providerUrl.url}
-              serviceCompute={values.services[0]?.computeOptions}
+        !isSaas && (
+          <>
+            <Field
+              {...getFieldContent('access', content.services.fields)}
+              component={Input}
+              name="services[0].access"
+              options={accessTypeOptions}
             />
-          )}
-        </>
+            {values.services[0]?.access === 'compute' && (
+              <FormEditComputeService
+                chainId={values?.user?.chainId}
+                serviceEndpoint={values.services[0].providerUrl.url}
+                serviceCompute={values.services[0]?.computeOptions}
+              />
+            )}
+          </>
+        )
       )}
 
       <SectionContainer
@@ -198,21 +201,33 @@ export default function ServicesFields(): ReactElement {
         </SectionContainer>
 
         {/* Card 2: File Upload Card */}
-        <SectionContainer border padding="16px">
-          {' '}
-          <Field
-            {...getFieldContent('files', content.services.fields)}
-            component={Input}
-            name="services[0].files"
-          />
-        </SectionContainer>
-        <SectionContainer border padding="16px">
-          <Field
-            {...getFieldContent('links', content.services.fields)}
-            component={Input}
-            name="services[0].links"
-          />
-        </SectionContainer>
+        {isSaas ? (
+          <SectionContainer border padding="16px">
+            <Field
+              {...getFieldContent('redirectUrl', content.services.fields)}
+              component={Input}
+              name="services[0].files[0].url"
+            />
+          </SectionContainer>
+        ) : (
+          <>
+            <SectionContainer border padding="16px">
+              {' '}
+              <Field
+                {...getFieldContent('files', content.services.fields)}
+                component={Input}
+                name="services[0].files"
+              />
+            </SectionContainer>
+            <SectionContainer border padding="16px">
+              <Field
+                {...getFieldContent('links', content.services.fields)}
+                component={Input}
+                name="services[0].links"
+              />
+            </SectionContainer>
+          </>
+        )}
         <SectionContainer border padding="16px">
           <Field
             {...getFieldContent('timeout', content.services.fields)}

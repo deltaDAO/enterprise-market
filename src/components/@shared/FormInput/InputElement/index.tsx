@@ -22,6 +22,8 @@ import ComputeEnvSelection from './ComputeEnvSelection'
 import Credentials from './Credential'
 import Option from './Radio/Option'
 import { ConsumerParametersBuilder } from './ConsumerParameters/ConsumerParametersBuilder'
+import InputKeyValue from './KeyValueInput'
+import type { KeyValuePair } from 'src/@types/KeyValuePair'
 
 const cx = classNames.bind(styles)
 
@@ -131,7 +133,8 @@ const InputElement = forwardRef(
       accentSelect: selectStyle === 'accent',
       customSelect: selectStyle === 'custom',
       serviceLanguageSelect: selectStyle === 'serviceLanguage',
-      [size]: size
+      [size]: size,
+      [props.className]: props.className
     })
 
     switch (props.type) {
@@ -304,6 +307,16 @@ const InputElement = forwardRef(
         )
       case 'tags':
         return <TagsAutoComplete {...field} {...props} />
+      case 'keyValue':
+        return (
+          <InputKeyValue
+            {...props}
+            form={form}
+            field={field}
+            value={(field?.value as unknown as KeyValuePair[]) || []}
+            uniqueKeys={props.uniqueKeys ?? true}
+          />
+        )
       case 'credentials':
         return <Credentials {...field} {...props} />
       default:

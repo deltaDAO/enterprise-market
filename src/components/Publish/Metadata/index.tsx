@@ -1,5 +1,5 @@
 import Input from '@shared/FormInput'
-import { Field } from 'formik'
+import { Field, useFormikContext } from 'formik'
 import { ReactElement } from 'react'
 import content from '../../../../content/publish/form.json'
 import { getFieldContent } from '@utils/form'
@@ -36,6 +36,8 @@ export default function MetadataFields(): ReactElement {
   } = useMetadata()
   const primaryUploadedLicenseDocument =
     values.metadata.uploadedLicense?.licenseDocuments?.[0]
+  const linksFieldContent = getFieldContent('links', content.metadata.fields)
+  const { setFieldValue } = useFormikContext()
 
   return (
     <>
@@ -81,12 +83,45 @@ export default function MetadataFields(): ReactElement {
         component={Input}
         name="metadata.author"
       />
+      <Field
+        {...getFieldContent('copyrightHolder', content.metadata.fields)}
+        component={Input}
+        name="metadata.copyrightHolder"
+      />
+      <Field
+        {...getFieldContent('providedBy', content.metadata.fields)}
+        component={Input}
+        name="metadata.providedBy"
+      />
+      <SectionContainer
+        title={linksFieldContent.label}
+        help={linksFieldContent.help}
+      >
+        <Field
+          {...linksFieldContent}
+          component={Input}
+          name="metadata.links"
+          hideLabel
+        />
+      </SectionContainer>
 
       <Field
         {...getFieldContent('type', content.metadata.fields)}
         component={Input}
         name="metadata.type"
         options={assetTypeOptions}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          if (event.target.value === 'saas') {
+            setFieldValue('metadata.type', 'dataset')
+            setFieldValue('services[0].files[0].type', 'saas')
+            // prevent stale compute settings from a previous type selection
+            setFieldValue('services[0].access', 'access')
+            setFieldValue('services[0].algorithmPrivacy', false)
+          } else {
+            setFieldValue('services[0].files[0].type', 'url')
+            setFieldValue('metadata.type', event.target.value)
+          }
+        }}
       />
       {values.metadata.type === 'dataset' && (
         <div className={styles.consentContainer}>

@@ -52,6 +52,7 @@ function getConsumeHelpText(
   priceType: string,
   insufficientSymbol: string
 ) {
+  const assetTypeName = assetType === 'saas' ? 'service' : assetType
   const text =
     isConsumable === false
       ? consumableFeedback
@@ -63,7 +64,7 @@ function getConsumeHelpText(
       ? `You do not have enough ${insufficientSymbol} token in your wallet to purchase this asset.`
       : priceType === 'free'
       ? ''
-      : `To use this ${assetType}, you will buy 1 ${dtSymbol} and immediately send it back to the publisher.`
+      : `To use this ${assetTypeName}, you will buy 1 ${dtSymbol} and immediately send it back to the publisher.`
   return text
 }
 
@@ -199,7 +200,11 @@ export default function ButtonBuy({
     ? 'Retry'
     : action === 'download'
     ? hasPreviousOrder
-      ? 'Download'
+      ? assetType === 'saas'
+        ? 'Go to service'
+        : 'Download'
+      : assetType === 'saas'
+      ? `Subscribe${assetTimeout === 'Forever' ? '' : ` for ${assetTimeout}`}`
       : priceType === 'free'
       ? 'Get'
       : `Buy ${assetTimeout === 'Forever' ? '' : ` for ${assetTimeout}`}`

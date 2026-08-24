@@ -83,6 +83,9 @@ export const initialValues: FormPublishData = {
     descriptionLanguage: 'en',
     descriptionDirection: 'ltr',
     author: '',
+    providedBy: '',
+    copyrightHolder: '',
+    links: [],
     termsAndConditions: false,
     dockerImage: '',
     dockerImageCustom: '',
@@ -97,7 +100,8 @@ export const initialValues: FormPublishData = {
     licenseTypeSelection: '',
     licenseUrl: [createEmptyUrlFileInfo()],
     uploadedLicense: undefined,
-    additionalLicenseFiles: []
+    additionalLicenseFiles: [],
+    saas: { paymentMode: 'Subscription' }
   },
   services: [
     {

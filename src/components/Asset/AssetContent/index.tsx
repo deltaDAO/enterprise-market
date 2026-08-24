@@ -11,6 +11,7 @@ import MetaFull from './MetaFull'
 import MetaSecondary from './MetaSecondary'
 import AssetActions from '../AssetActions'
 import { useUserPreferences } from '@context/UserPreferences'
+import { useMarketMetadata } from '@context/MarketMetadata'
 import Bookmark from './Bookmark'
 import { useAsset } from '@context/Asset'
 import Alert from '@shared/atoms/Alert'
@@ -43,6 +44,7 @@ export default function AssetContent({
   const { isInPurgatory, purgatoryData, isOwner, isAssetNetwork } = useAsset()
   const { address: accountId, isConnected } = useAccount()
   const { allowExternalContent, debug } = useUserPreferences()
+  const { appConfig } = useMarketMetadata()
   const [receipts] = useState([])
   const [nftPublisher, setNftPublisher] = useState<string>()
   const [selectedService, setSelectedService] = useState<number | undefined>()
@@ -54,7 +56,9 @@ export default function AssetContent({
   // const [jsonInvoice, setJsonInvoice] = useState(null)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [computeJobsRefetchTrigger, setComputeJobsRefetchTrigger] = useState(0)
-  const [expanded, setExpanded] = useState(false)
+  const [expanded, setExpanded] = useState(
+    appConfig.assetDescriptionExpandedByDefault
+  )
   const [showDdo, setShowDdo] = useState(false)
   const availableServices =
     asset.credentialSubject?.services?.filter(
