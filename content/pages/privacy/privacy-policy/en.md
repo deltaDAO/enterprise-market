@@ -1,3 +1,7 @@
+---
+lastUpdated: '2026-08-04'
+---
+
 ## Privacy Policy
 
 This privacy policy informs you about how **Ocean Enterprise Collective e.V. (in the following OEC, we, us, our)** processes your personal data. Moreover, this privacy policy informs you about your rights.

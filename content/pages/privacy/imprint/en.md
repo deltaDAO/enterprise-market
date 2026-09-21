@@ -1,5 +1,6 @@
 ---
 title: Imprint
+lastUpdated: '2026-05-04'
 ---
 
 Thanks for your interest in the OEC

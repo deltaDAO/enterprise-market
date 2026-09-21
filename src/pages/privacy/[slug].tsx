@@ -17,7 +17,7 @@ interface PrivacyPageData extends PageData {
 
 export default function PageMarkdown(page: PrivacyPageData): ReactElement {
   const router = useRouter()
-  const { title, description } = page.frontmatter
+  const { title, description, lastUpdated } = page.frontmatter
   const { content, headings, fileLastUpdated } = page
 
   if (!page || page.content === '') return null
@@ -31,7 +31,10 @@ export default function PageMarkdown(page: PrivacyPageData): ReactElement {
     >
       <Container>
         <HashScrollHandler />
-        <PrivacyPolicyHeader lastUpdatedDate={fileLastUpdated} />
+        <PrivacyPolicyHeader
+          documentDate={lastUpdated}
+          fileLastUpdated={fileLastUpdated}
+        />
         {headings.length > 0 ? (
           <StickySidebarLayout
             sidebar={<TableOfContents headings={headings} />}

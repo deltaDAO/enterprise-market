@@ -45,6 +45,24 @@ function getGitLastUpdated(fullPath: string): string | null {
   }
 }
 
+/**
+ * YAML turns an unquoted `lastUpdated: 2026-09-21` into a Date, which
+ * getServerSideProps cannot serialise -- the legal page would fail to render
+ * rather than show a wrong date. Normalise any date-valued front matter back
+ * to a plain ISO day so either spelling works.
+ */
+function normalizeFrontmatter(data: { [key: string]: any }): {
+  [key: string]: any
+} {
+  const normalized = { ...data }
+  for (const [key, value] of Object.entries(normalized)) {
+    if (value instanceof Date) {
+      normalized[key] = value.toISOString().split('T')[0]
+    }
+  }
+  return normalized
+}
+
 function escapeRegex(str: string): string {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
@@ -175,7 +193,7 @@ export async function getPageBySlug(
 
       return {
         slug: realSlug,
-        frontmatter: data || { title },
+        frontmatter: data ? normalizeFrontmatter(data) : { title },
         content: contentWithTitle,
         fileLastUpdated: new Date().toISOString().split('T')[0]
       }
@@ -215,7 +233,7 @@ export async function getPageBySlug(
 
   return {
     slug: realSlug,
-    frontmatter: { ...data, title },
+    frontmatter: { ...normalizeFrontmatter(data), title },
     content: contentWithTitle,
     fileLastUpdated:
       gitLastUpdated || fileStats.mtime.toISOString().split('T')[0]
@@ -251,7 +269,7 @@ export function getAllPages(subDir?: string): PageData[] {
 
         pages.push({
           slug: item,
-          frontmatter: { ...data, title },
+          frontmatter: { ...normalizeFrontmatter(data), title },
           content,
           fileLastUpdated:
             gitLastUpdated || fileStats.mtime.toISOString().split('T')[0]
