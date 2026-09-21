@@ -181,7 +181,14 @@ function UserPreferencesProvider({
     persistPreference(
       preferenceCookies.chainIds,
       chainIds,
-      haveSameMembers(chainIds, validatedSupportedChains)
+      // An empty selection counts as "no preference expressed". Without this,
+      // the cookie is written on first load: when chain validation resolves,
+      // this effect runs before the one below that seeds chainIds, so the
+      // comparison is [] against the supported chains and fails. The seeding
+      // effect then removes the cookie again -- but it has already been placed
+      // on the device without any user action.
+      chainIds.length === 0 ||
+        haveSameMembers(chainIds, validatedSupportedChains)
     )
   }, [chainIds, isValidatingSupportedChains, validatedSupportedChains])
 
