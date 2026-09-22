@@ -13,6 +13,7 @@ import { toast } from 'react-toastify'
 import { BoxSelectionOption } from '@shared/FormInput/InputElement/BoxSelection'
 import IconDataset from '@images/dataset.svg'
 import IconAlgorithm from '@images/algorithm.svg'
+import IconSaas from '@images/saas.svg'
 import { algorithmContainerPresets } from '../_constants'
 import {
   additionalLicenseSourceOptions,
@@ -101,7 +102,8 @@ export default function useMetadata() {
         name: assetTypeOptionsTitles[0].toLowerCase(),
         title: assetTypeOptionsTitles[0],
         checked:
-          values.metadata.type === assetTypeOptionsTitles[0].toLowerCase(),
+          values.metadata.type === assetTypeOptionsTitles[0].toLowerCase() &&
+          values.services[0]?.files[0]?.type !== 'saas',
         icon: createElement(IconDataset)
       },
       {
@@ -110,9 +112,17 @@ export default function useMetadata() {
         checked:
           values.metadata.type === assetTypeOptionsTitles[1].toLowerCase(),
         icon: createElement(IconAlgorithm)
+      },
+      {
+        name: assetTypeOptionsTitles[2].toLowerCase(),
+        title: assetTypeOptionsTitles[2],
+        checked:
+          values.metadata.type === assetTypeOptionsTitles[0].toLowerCase() &&
+          values.services[0]?.files[0]?.type === 'saas',
+        icon: createElement(IconSaas)
       }
     ],
-    [values.metadata.type]
+    [values.metadata.type, values.services]
   )
 
   const dockerImageOptions: BoxSelectionOption[] = useMemo(

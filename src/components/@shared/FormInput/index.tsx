@@ -36,6 +36,7 @@ export interface InputProps {
   prominentHelp?: boolean
   tag?: string
   type?: string
+  autoComplete?: string
   options?:
     | string[]
     | AssetSelectionAsset[]
@@ -109,6 +110,7 @@ export interface InputProps {
   onReset?: () => void
   showResetButton?: boolean
   additionalAction?: ReactNode
+  assetSelectionFooterAction?: ReactNode
   showDeleteButton?: boolean
   onDelete?: () => void
   activeFileType?: string
@@ -118,6 +120,13 @@ export interface InputProps {
   onAddFile?: (fileInfo: FileInfo) => void
   isAdditionalLicense?: boolean
   onValidationLoadingChange?: (isLoading: boolean) => void
+  // KeyValueInput (type: 'keyValue')
+  uniqueKeys?: boolean
+  keyPlaceholder?: string
+  valuePlaceholder?: string
+  keyLabel?: string
+  valueLabel?: string
+  validateValueAsUrl?: boolean
 }
 
 function checkError(form: any, field: FieldInputProps<any>) {

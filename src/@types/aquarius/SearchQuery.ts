@@ -23,12 +23,18 @@ export enum FilterOptions {
 
 export enum FilterByTypeOptions {
   Data = 'dataset',
-  Algorithm = 'algorithm'
+  Algorithm = 'algorithm',
+  Saas = 'saas'
 }
 
 export enum FilterByAccessOptions {
   Download = 'access',
   Compute = 'compute'
+}
+
+export enum FilterByPriceOptions {
+  Free = 'dispenser',
+  Paid = 'fixedrate'
 }
 
 export enum FilterByTimeOptions {

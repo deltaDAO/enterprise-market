@@ -32,6 +32,7 @@ export async function initializeProvider(
   asset: AssetExtended,
   service: Service,
   accountId: string,
+  signer: Signer,
   providerFees?: ProviderFees
 ): Promise<ProviderInitialize> {
   if (providerFees) return
@@ -54,6 +55,7 @@ export async function initializeProvider(
 
       const initializePs = await ProviderInstance.initializePSVerification(
         service.serviceEndpoint || customProviderUrl,
+        signer,
         command
       )
 
@@ -261,6 +263,7 @@ export async function order(
           parseUnits(totalBaseTokenApprove.toString(), decimals)
         )
         let currentAllowance = BigInt(0)
+        const allowanceDeadline = Date.now() + 120_000
         while (currentAllowance < parsedApproveAmount) {
           const val = await allowance(
             signer as any,
@@ -269,8 +272,12 @@ export async function order(
             accessDetails.datatoken.address
           )
           currentAllowance = BigInt(parseUnits(val, decimals))
-          if (currentAllowance < parsedApproveAmount)
+          if (currentAllowance < parsedApproveAmount) {
+            if (Date.now() >= allowanceDeadline) {
+              throw new Error('Timed out waiting for token allowance update.')
+            }
             await new Promise((resolve) => setTimeout(resolve, 1000))
+          }
         }
 
         // Adjust freParams to only include cost items paid via the exchange

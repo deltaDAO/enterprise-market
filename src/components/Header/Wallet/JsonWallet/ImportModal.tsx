@@ -11,7 +11,7 @@ import {
   JsonWalletConnectorProperties
 } from '@utils/wallet/jsonWalletConnector'
 import { useAccount, useChains, useConnect, useConnectors } from 'wagmi'
-import { useUserPreferences } from '@context/UserPreferences'
+import { useEncryptedWalletJson } from '@utils/wallet/jsonWalletStorage'
 import { toast } from 'react-toastify'
 import { LoggerInstance } from '@oceanprotocol/lib'
 import { accountTruncate } from '@utils/wallet'
@@ -30,7 +30,7 @@ export default function ImportModal({
   const { connectAsync } = useConnect()
   const { chain } = useAccount()
   const chains = useChains()
-  const { encryptedWalletJson, setEncryptedWalletJson } = useUserPreferences()
+  const [encryptedWalletJson, setEncryptedWalletJson] = useEncryptedWalletJson()
 
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [rawJson, setRawJson] = useState<string>('')

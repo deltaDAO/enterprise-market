@@ -4,6 +4,7 @@ import { addExistingParamsToUrl } from './utils'
 import Button from '@shared/atoms/Button'
 import {
   FilterByAccessOptions,
+  FilterByPriceOptions,
   FilterByTimeOptions,
   FilterByTypeOptions
 } from '../../@types/aquarius/SearchQuery'
@@ -21,7 +22,7 @@ import {
   getNetworkDataById,
   getNetworkDisplayName
 } from '@hooks/useNetworkMetadata'
-import { useMarketMetadata } from '@context/MarketMetadata'
+import { useConnectorSupportedChains } from '@hooks/useDfnsWalletsByChain'
 
 const cx = classNames.bind(styles)
 
@@ -73,20 +74,19 @@ export default function Filter({
   showPurgatoryOption,
   expanded,
   className,
-  showTime
+  showTime,
+  showPrice
 }: {
   addFiltersToUrl?: boolean
   showPurgatoryOption?: boolean
   expanded?: boolean
   className?: string
   showTime?: boolean
+  showPrice?: boolean
 }): ReactElement {
   const { filters, setFilters, ignorePurgatory, setIgnorePurgatory } =
     useFilter()
-  const { validatedSupportedChains } = useMarketMetadata()
-  const supportedBlockchainValues = validatedSupportedChains.map((chainId) =>
-    String(chainId)
-  )
+  const connectorSupportedChains = useConnectorSupportedChains()
 
   const router = useRouter()
 
@@ -159,7 +159,8 @@ export default function Filter({
       type: 'filterList',
       options: [
         { label: 'datasets', value: FilterByTypeOptions.Data },
-        { label: 'algorithms', value: FilterByTypeOptions.Algorithm }
+        { label: 'algorithms', value: FilterByTypeOptions.Algorithm },
+        { label: 'saas', value: FilterByTypeOptions.Saas }
       ]
     },
     {
@@ -171,6 +172,19 @@ export default function Filter({
         { label: 'compute', value: FilterByAccessOptions.Compute }
       ]
     },
+    ...(showPrice
+      ? [
+          {
+            id: 'priceType',
+            label: 'Price',
+            type: 'filterList',
+            options: [
+              { label: 'free', value: FilterByPriceOptions.Free },
+              { label: 'paid', value: FilterByPriceOptions.Paid }
+            ]
+          }
+        ]
+      : []),
     {
       id: 'assetState',
       label: 'Asset State',
@@ -187,13 +201,13 @@ export default function Filter({
         { label: 'Unlisted', value: State.Unlisted }
       ]
     },
-    ...(validatedSupportedChains.length > 1
+    ...(connectorSupportedChains.length > 1
       ? [
           {
             id: 'supportedBlockchain',
             label: 'Blockchain',
             type: 'filterList',
-            options: validatedSupportedChains.map((chainId: number) => {
+            options: connectorSupportedChains.map((chainId: number) => {
               const network = getNetworkDataById(networkdata, chainId)
 
               return {

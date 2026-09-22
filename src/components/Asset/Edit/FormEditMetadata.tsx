@@ -3,9 +3,7 @@ import { Field, Form, useFormikContext } from 'formik'
 import Input from '@shared/FormInput'
 import FormActions from './FormActions'
 import { useAsset } from '@context/Asset'
-import { getFileInfo } from '@utils/provider'
 import { getFieldContent } from '@utils/form'
-import { isGoogleUrl } from '@utils/url'
 import { MetadataEditForm } from './_types'
 import content from '../../../../content/pages/editMetadata.json'
 import consumerParametersContent from '../../../../content/publish/consumerParameters.json'
@@ -30,15 +28,27 @@ import AccessRulesSection from '@components/Publish/AccessPolicies/AccessRulesSe
 import useEditMetadata from './useEditMetadata'
 import styles from './index.module.css'
 import { FILE_UPLOAD_CONFIG } from '@components/@shared/FileUpload/helper'
+import { createLanguageValueObject } from '@utils/jsonLd'
+import ContainerUpdateCheckButton from './ContainerUpdateCheckButton'
+import {
+  getContainerChecksum,
+  normalizeDockerImageReference
+} from '@utils/docker'
+import DockerRegistryChecksum from '@shared/DockerRegistryChecksum'
 
 const { data } = content.form
 const assetTypeOptionsTitles = getFieldContent('type', data).options
 
 export default function FormEditMetadata(): ReactElement {
   const { asset } = useAsset()
-  const { values, setFieldValue } = useFormikContext<MetadataEditForm>()
+  const { values, setFieldTouched, setFieldValue } =
+    useFormikContext<MetadataEditForm>()
   const firstPageLoad = useRef<boolean>(true)
-
+  const previousContainerReference = useRef({
+    image: values.containerImage,
+    tag: values.containerTag
+  })
+  const automaticChecksumRequest = useRef(0)
   const {
     additionalFiles,
     additionalFilesUploading,
@@ -75,34 +85,51 @@ export default function FormEditMetadata(): ReactElement {
   ]
 
   useEffect(() => {
-    const providerUrl = asset.credentialSubject?.services[0].serviceEndpoint
-    let links = []
-    if (asset?.credentialSubject?.metadata?.links) {
-      links = Object.values(asset?.credentialSubject?.metadata?.links)
+    const image = values.containerImage?.trim() || ''
+    const tag = values.containerTag?.trim() || ''
+    const previousReference = previousContainerReference.current
+
+    if (
+      image === previousReference.image?.trim() &&
+      tag === previousReference.tag?.trim()
+    ) {
+      return
     }
 
-    links[0] &&
-      getFileInfo(links[0], providerUrl, 'url').then((checkedFile) => {
-        if (isGoogleUrl(links[0])) {
-          setFieldValue('links', [
-            {
-              url: links[0],
-              valid: false
-            }
-          ])
-          return
-        }
-        setFieldValue('links', [
-          {
-            url: links[0],
-            type: 'url',
-            ...checkedFile[0]
-          }
-        ])
-      })
+    previousContainerReference.current = { image, tag }
+    const requestId = ++automaticChecksumRequest.current
+    setFieldValue('containerChecksum', '', true)
+    setFieldTouched('containerChecksum', false, false)
+
+    if (!image || !tag || tag === 'latest') return
+
+    try {
+      const normalizedReference = normalizeDockerImageReference(image, tag)
+      if (normalizedReference.image !== image) return
+    } catch {
+      return
+    }
+
+    const timeout = window.setTimeout(async () => {
+      const containerInfo = await getContainerChecksum(image, tag)
+
+      if (requestId !== automaticChecksumRequest.current) return
+      if (!containerInfo.checksum) return
+
+      await setFieldValue('containerChecksum', containerInfo.checksum, true)
+      await setFieldTouched('containerChecksum', false, false)
+    }, 600)
+
+    return () => {
+      window.clearTimeout(timeout)
+      if (requestId === automaticChecksumRequest.current) {
+        automaticChecksumRequest.current += 1
+      }
+    }
   }, [
-    asset.credentialSubject?.metadata?.links,
-    asset.credentialSubject?.services,
+    values.containerImage,
+    values.containerTag,
+    setFieldTouched,
     setFieldValue
   ])
 
@@ -117,16 +144,16 @@ export default function FormEditMetadata(): ReactElement {
         fileType: fileItem.name.split('.').pop(),
         sha256: fileItem.checksum,
         additionalInformation: {},
-        description: {
-          '@value': '',
-          '@direction': '',
-          '@language': ''
-        },
-        displayName: {
-          '@value': fileItem.name,
-          '@language': '',
-          '@direction': ''
-        },
+        description: createLanguageValueObject(
+          '',
+          values.descriptionLanguage,
+          values.descriptionDirection
+        ),
+        displayName: createLanguageValueObject(
+          fileItem.name,
+          values.descriptionLanguage,
+          values.descriptionDirection
+        ),
         mirrors: [remoteSource]
       }
 
@@ -174,6 +201,7 @@ export default function FormEditMetadata(): ReactElement {
 
   const primaryUploadedLicenseDocument =
     values.uploadedLicense?.licenseDocuments?.[0]
+  const linksFieldContent = getFieldContent('links', data)
 
   return (
     <Form>
@@ -211,12 +239,6 @@ export default function FormEditMetadata(): ReactElement {
           name="descriptionDirection"
           readOnly
         />
-        {/* <Field
-          {...getFieldContent('links', data)}
-          component={Input}
-          name="links"
-        /> */}
-
         <Field
           {...getFieldContent('tags', data)}
           component={Input}
@@ -228,8 +250,86 @@ export default function FormEditMetadata(): ReactElement {
           component={Input}
           name="author"
         />
+        <Field
+          {...getFieldContent('copyrightHolder', data)}
+          component={Input}
+          name="copyrightHolder"
+        />
+        <Field
+          {...getFieldContent('providedBy', data)}
+          component={Input}
+          name="providedBy"
+        />
+        {Boolean(
+          asset?.credentialSubject?.metadata?.additionalInformation?.saas
+        ) && (
+          <Field
+            {...getFieldContent('redirectUrl', data)}
+            component={Input}
+            name="saas.redirectUrl"
+          />
+        )}
+        <SectionContainer
+          title={linksFieldContent.label}
+          help={linksFieldContent.help}
+        >
+          <Field
+            {...linksFieldContent}
+            component={Input}
+            name="links"
+            hideLabel
+          />
+        </SectionContainer>
         {asset.credentialSubject?.metadata?.type === 'algorithm' && (
           <>
+            <SectionContainer title="Docker configuration" required>
+              <Field
+                {...getFieldContent('containerImage', data)}
+                component={Input}
+                name="containerImage"
+              />
+              <Field
+                {...getFieldContent('containerTag', data)}
+                component={Input}
+                name="containerTag"
+              />
+              <div className={styles.containerChecksumRow}>
+                <div className={styles.containerChecksumField}>
+                  <Field
+                    {...getFieldContent('containerChecksum', data)}
+                    component={Input}
+                    name="containerChecksum"
+                  />
+                </div>
+                <ContainerUpdateCheckButton
+                  image={values.containerImage || ''}
+                  tag={values.containerTag || ''}
+                  checksum={values.containerChecksum || ''}
+                  className={styles.containerUpdateCheckButton}
+                  onChecksumChange={async (checksum) => {
+                    await setFieldValue('containerChecksum', checksum, true)
+                    await setFieldTouched('containerChecksum', false, false)
+                  }}
+                />
+              </div>
+              {values.containerImage &&
+                values.containerTag &&
+                !values.containerChecksum && (
+                  <DockerRegistryChecksum
+                    image={values.containerImage}
+                    tag={values.containerTag}
+                    onChecksumResolved={async (checksum) => {
+                      await setFieldValue('containerChecksum', checksum, true)
+                      await setFieldTouched('containerChecksum', false, false)
+                    }}
+                  />
+                )}
+              <Field
+                {...getFieldContent('containerEntrypoint', data)}
+                component={Input}
+                name="containerEntrypoint"
+              />
+            </SectionContainer>
             <Field
               {...getFieldContent('usesConsumerParameters', data)}
               component={Input}

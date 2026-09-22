@@ -7,15 +7,9 @@ import normalizeUrl from 'normalize-url'
 import { Asset } from 'src/@types/Asset'
 import { Service } from 'src/@types/ddo/Service'
 import { getBaseTokenSymbol } from './getBaseTokenSymbol'
+import { resolveServiceTokenSymbol } from './priceToken'
 
 type TokenSymbolMap = Record<string, string>
-
-type StatsEntry = {
-  serviceId?: string
-  prices?: Array<{
-    token?: string | { symbol?: string; address?: string }
-  }>
-}
 
 function safeNormalizeUrl(url?: string): string | null {
   if (!url?.trim()) return null
@@ -25,36 +19,6 @@ function safeNormalizeUrl(url?: string): string | null {
   } catch {
     return null
   }
-}
-
-const resolveBaseTokenSymbolFromStats = (
-  asset: Asset,
-  serviceIndex: number,
-  serviceId?: string,
-  tokenSymbolMap?: TokenSymbolMap
-): string | undefined => {
-  const stats = (asset.indexedMetadata?.stats || []) as StatsEntry[]
-  const matched =
-    serviceId != null
-      ? stats.find((stat) => stat?.serviceId === serviceId)
-      : undefined
-  const stat = matched || stats[serviceIndex]
-  const priceToken = stat?.prices?.[0]?.token
-  if (!priceToken) return undefined
-
-  if (typeof priceToken === 'string') {
-    return tokenSymbolMap?.[priceToken.toLowerCase()]
-  }
-
-  if (typeof priceToken === 'object') {
-    const tokenInfo = priceToken as { symbol?: string; address?: string }
-    if (tokenInfo.symbol) return tokenInfo.symbol
-    if (tokenInfo.address) {
-      return tokenSymbolMap?.[tokenInfo.address.toLowerCase()]
-    }
-  }
-
-  return undefined
 }
 
 export async function transformAssetToAssetSelection(
@@ -108,12 +72,7 @@ export async function transformAssetToAssetSelection(
           return // <-- skip any service that wasn't in selectedAlgorithms
 
         const baseTokenSymbol =
-          resolveBaseTokenSymbolFromStats(
-            asset,
-            idx,
-            service.id,
-            tokenSymbolMap
-          ) ||
+          resolveServiceTokenSymbol(asset, idx, service.id, tokenSymbolMap) ||
           getBaseTokenSymbol(asset, idx) ||
           ''
 
@@ -232,12 +191,7 @@ export async function transformAssetToAssetSelectionDataset(
           return // <-- skip any service that wasn't in selectedAlgorithms
 
         const baseTokenSymbol =
-          resolveBaseTokenSymbolFromStats(
-            asset,
-            idx,
-            service.id,
-            tokenSymbolMap
-          ) ||
+          resolveServiceTokenSymbol(asset, idx, service.id, tokenSymbolMap) ||
           getBaseTokenSymbol(asset, idx) ||
           ''
         const assetEntry: any = {
@@ -348,11 +302,23 @@ export async function transformAssetToAssetSelectionForComputeWizard(
   accountId: string,
   selectedAlgorithms?: PublisherTrustedAlgorithmService[],
   allow?: boolean,
-  tokenSymbolMap?: TokenSymbolMap
+  tokenSymbolMap?: TokenSymbolMap,
+  trustedAlgorithmPublishers?: string[]
 ): Promise<AssetSelectionAsset[]> {
   if (!assets) return []
   const algorithmList: AssetSelectionAsset[] = []
   const seen = new Set<string>()
+  const trustedPublishers = new Set(
+    trustedAlgorithmPublishers
+      ?.filter((publisher) => publisher !== '*')
+      .map((publisher) => publisher.toLowerCase())
+  )
+  const areAllPublishersTrusted =
+    trustedAlgorithmPublishers?.includes('*') ?? false
+  const hasAlgorithmAllowlist =
+    Boolean(selectedAlgorithms?.length) ||
+    Boolean(trustedAlgorithmPublishers?.length)
+
   for (const asset of assets) {
     const algoService =
       getServiceByName(asset, 'compute') || getServiceByName(asset, 'access')
@@ -373,6 +339,9 @@ export async function transformAssetToAssetSelectionForComputeWizard(
       const matches = new Set(
         selectedAlgorithms?.map((a) => `${a.did}|${a.serviceId}`)
       )
+      const isPublisherTrusted =
+        areAllPublishersTrusted ||
+        trustedPublishers.has(asset.indexedMetadata.nft.owner.toLowerCase())
 
       const { services } = asset.credentialSubject
 
@@ -382,21 +351,18 @@ export async function transformAssetToAssetSelectionForComputeWizard(
       const tokenSymbols = new Set<string>()
       services.forEach((service, idx) => {
         const key = `${asset.id}|${service.id}`
+        const isExplicitlyTrusted =
+          matches.has(key) || matches.has(`${asset.id}|*`)
         if (
-          selectedAlgorithms &&
-          selectedAlgorithms.length > 0 &&
+          hasAlgorithmAllowlist &&
           !isAllAlgorithmsAllowed &&
-          !matches.has(key)
+          !isExplicitlyTrusted &&
+          !isPublisherTrusted
         )
           return
         if (service.type === 'compute') {
           const symbol =
-            resolveBaseTokenSymbolFromStats(
-              asset,
-              idx,
-              service.id,
-              tokenSymbolMap
-            ) ||
+            resolveServiceTokenSymbol(asset, idx, service.id, tokenSymbolMap) ||
             getBaseTokenSymbol(asset, idx) ||
             ''
           if (symbol) tokenSymbols.add(symbol)
@@ -412,12 +378,7 @@ export async function transformAssetToAssetSelectionForComputeWizard(
       if (preferred) {
         const { service, idx } = preferred
         const baseTokenSymbol =
-          resolveBaseTokenSymbolFromStats(
-            asset,
-            idx,
-            service.id,
-            tokenSymbolMap
-          ) ||
+          resolveServiceTokenSymbol(asset, idx, service.id, tokenSymbolMap) ||
           getBaseTokenSymbol(asset, idx) ||
           ''
         const aggregatedTokenSymbol =

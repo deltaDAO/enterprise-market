@@ -18,9 +18,9 @@ import { useIsMounted } from '@hooks/useIsMounted'
 import styles from './index.module.css'
 import { FormikContext, FormikContextType } from 'formik'
 import { FormPublishData } from '@components/Publish/_types'
-import { getTokenBalanceFromSymbol } from '@utils/wallet'
-import { isAddressWhitelisted } from '@utils/ddo'
-import { useAccount, useChainId, usePublicClient } from 'wagmi'
+import { getTokenBalanceFromSymbol, getOrCreateProvider } from '@utils/wallet'
+import { isAddressWhitelisted, isSaasAsset } from '@utils/ddo'
+import { useAccount, useChainId } from 'wagmi'
 import useBalance from '@hooks/useBalance'
 import Button from '@components/@shared/atoms/Button'
 import { Service } from 'src/@types/ddo/Service'
@@ -32,7 +32,7 @@ import { AssetActionCheckCredentials } from './CheckCredentials'
 import { useSsiWallet } from '@context/SsiWallet'
 import appConfig from 'app.config.cjs'
 import ComputeWizard from '@components/ComputeWizard'
-import { JsonRpcProvider } from 'ethers'
+// import { JsonRpcProvider } from 'ethers'
 import { useEthersSigner } from '@hooks/useEthersSigner'
 import { useRouter } from 'next/router'
 import {
@@ -42,6 +42,16 @@ import {
 } from '@utils/computeRerun'
 import { getAsset } from '@utils/aquarius'
 import { toast } from 'react-toastify'
+import { getIsPolicyServerConfigured } from '@utils/wallet/policyServer'
+import Loader from '@shared/atoms/Loader'
+import {
+  isPolicyServerConsumptionDisabled,
+  requiresPolicyServerCredentialCheck,
+  isSsiPolicyConsumptionDisabled,
+  SSI_NODE_UNSUPPORTED_MESSAGE,
+  SSI_POLICY_UNSUPPORTED_MESSAGE
+} from '@utils/credentials'
+import Alert from '@shared/atoms/Alert'
 
 function isNftActive(state: unknown): boolean {
   return Number(state) === 0
@@ -69,11 +79,17 @@ export default function AssetActions({
   const signer = useEthersSigner()
   const { balance } = useBalance()
   const chainId = useChainId()
-  const publicClient = usePublicClient()
+  // const publicClient = usePublicClient()
   const rpcUrl = getOceanConfig(chainId)?.nodeUri
 
-  const ethersProvider =
-    publicClient && rpcUrl ? new JsonRpcProvider(rpcUrl) : undefined
+  const ethersProvider = useMemo(() => {
+    if (!rpcUrl) return undefined
+    try {
+      return getOrCreateProvider(chainId)
+    } catch {
+      return undefined
+    }
+  }, [chainId, rpcUrl])
   const { isAssetNetwork, isOwner } = useAsset()
   const newCancelToken = useCancelToken()
   const isMounted = useIsMounted()
@@ -88,6 +104,44 @@ export default function AssetActions({
   const [isComputePopupOpen, setIsComputePopupOpen] = useState<boolean>(false)
   const [rerunConfig, setRerunConfig] = useState<ComputeRerunConfig>()
   const processedRerunJobRef = useRef<string | null>(null)
+  const [isPSConfigured, setIsPSConfigured] = useState<boolean | undefined>()
+  const isSsiConsumptionDisabled = isSsiPolicyConsumptionDisabled(
+    asset,
+    appConfig.ssiEnabled,
+    service
+  )
+
+  useEffect(() => {
+    const controller = new AbortController()
+    setIsPSConfigured(undefined)
+
+    getIsPolicyServerConfigured(service.serviceEndpoint, controller.signal)
+      .then((configured) => {
+        if (!controller.signal.aborted) setIsPSConfigured(configured)
+      })
+      .catch((error) => {
+        if (controller.signal.aborted) return
+        LoggerInstance.warn(
+          '[Policy Server Status] Treating policy server as configured:',
+          error
+        )
+        setIsPSConfigured(true)
+      })
+
+    return () => controller.abort()
+  }, [service.serviceEndpoint])
+
+  const isPolicyServerStatusLoading = isPSConfigured === undefined
+  const isPolicyServerUnsupported = isPolicyServerConsumptionDisabled(
+    appConfig.ssiEnabled,
+    isPSConfigured === true
+  )
+  const requiresCredentialCheck = requiresPolicyServerCredentialCheck(
+    appConfig.ssiEnabled,
+    isPSConfigured === true
+  )
+  const isConsumptionDisabled =
+    isSsiConsumptionDisabled || isPolicyServerUnsupported
 
   // TODO: using this for the publish preview works fine, but produces a console warning
   // on asset details page as there is no formik context there:
@@ -105,6 +159,11 @@ export default function AssetActions({
     useState<boolean>()
 
   const isCompute = service.type === 'compute'
+  const isSaas = isSaasAsset(asset)
+  // An already-purchased SaaS offering is just a redirect to the provider's
+  // own URL: it needs no credential check and never reaches a policy server,
+  // so it stays available even where policy-server gating blocks consumption.
+  const isOwnedSaas = isSaas && accessDetails?.isOwned
   const rerunJobId = useMemo(() => {
     if (!router.isReady) return null
     const value = router.query.rerunJob ?? router.query.rerun
@@ -128,6 +187,12 @@ export default function AssetActions({
         ? (formikState?.values?.services[serviceIndex].files[0]
             .type as StorageType)
         : null
+
+      // saas is no real storage type, the provider cannot check it
+      if (storageType === 'saas' || isSaas) {
+        setFileIsLoading(false)
+        return
+      }
 
       // TODO: replace 'any' with correct typing
       const file = formikState?.values?.services[serviceIndex].files[0] as any
@@ -167,7 +232,10 @@ export default function AssetActions({
         setFileIsLoading(false)
       } catch (error) {
         setFileIsLoading(false)
-        LoggerInstance.error(error.message)
+        LoggerInstance.warn(
+          '[Asset File Info] Optional metadata unavailable:',
+          error instanceof Error ? error.message : String(error)
+        )
       }
     }
     initFileInfo()
@@ -252,6 +320,7 @@ export default function AssetActions({
   const salesCount = asset.indexedMetadata?.stats?.[0]?.orders || 0
 
   const handleComputeClick = () => {
+    if (isConsumptionDisabled) return
     setIsComputePopupOpen(true)
   }
 
@@ -284,7 +353,13 @@ export default function AssetActions({
 
   useEffect(() => {
     if (!router.isReady || !isCompute || !rerunJobId) return
+    if (isPolicyServerStatusLoading) return
     if (processedRerunJobRef.current === rerunJobId) return
+
+    if (isConsumptionDisabled) {
+      clearRerunQueryFromUrl()
+      return
+    }
 
     processedRerunJobRef.current = rerunJobId
     let cancelled = false
@@ -362,7 +437,9 @@ export default function AssetActions({
     isCompute,
     asset.id,
     clearRerunQueryFromUrl,
-    newCancelToken
+    newCancelToken,
+    isConsumptionDisabled,
+    isPolicyServerStatusLoading
   ])
 
   function resetCacheWallet() {
@@ -410,18 +487,32 @@ export default function AssetActions({
           <div className={styles.fileInfoSection}>
             <FileSVG width={48} height={60} />
             <div className={styles.fileDetails}>
-              <div className={styles.fileDetailItem}>
-                <span className={styles.fileDetailLabel}>Type:</span>{' '}
-                {fileMetadata?.type || 'Plain Text'}
-              </div>
-              <div className={styles.fileDetailItem}>
-                <span className={styles.fileDetailLabel}>Size:</span>{' '}
-                {fileMetadata?.contentLength || '5.31 kB'}
-              </div>
-              <div className={styles.fileDetailItem}>
-                <span className={styles.fileDetailLabel}>Access via:</span>{' '}
-                {accessDetails.type === 'free' ? 'URL' : accessDetails.type}
-              </div>
+              {isSaas ? (
+                <>
+                  <div className={styles.fileDetailItem}>
+                    <span className={styles.fileDetailLabel}>Type:</span> SaaS
+                  </div>
+                  <div className={styles.fileDetailItem}>
+                    <span className={styles.fileDetailLabel}>Access via:</span>{' '}
+                    Redirect URL
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className={styles.fileDetailItem}>
+                    <span className={styles.fileDetailLabel}>Type:</span>{' '}
+                    {fileMetadata?.type || 'Plain Text'}
+                  </div>
+                  <div className={styles.fileDetailItem}>
+                    <span className={styles.fileDetailLabel}>Size:</span>{' '}
+                    {fileMetadata?.contentLength || '5.31 kB'}
+                  </div>
+                  <div className={styles.fileDetailItem}>
+                    <span className={styles.fileDetailLabel}>Access via:</span>{' '}
+                    {accessDetails.type === 'free' ? 'URL' : accessDetails.type}
+                  </div>
+                </>
+              )}
             </div>
           </div>
 
@@ -438,13 +529,32 @@ export default function AssetActions({
             <span className={styles.ownerMessage}>
               You are the asset owner.
             </span>
-          ) : appConfig.ssiEnabled ? (
+          ) : isOwnedSaas ? (
+            <Download
+              accountId={accountId}
+              signer={signer as any}
+              asset={asset}
+              service={service}
+              accessDetails={accessDetails}
+              serviceIndex={serviceIndex}
+              dtBalance={dtBalance}
+              isBalanceSufficient={isBalanceSufficient}
+              setIsBalanceSufficient={setIsBalanceSufficient}
+              isAccountIdWhitelisted={isAccountIdWhitelisted}
+              file={fileMetadata}
+              fileIsLoading={fileIsLoading}
+              consumableFeedback={consumableFeedback}
+              isPSConfigured={isPSConfigured === true}
+            />
+          ) : isPolicyServerStatusLoading ? (
+            <Loader message="Checking credential requirements..." />
+          ) : requiresCredentialCheck ? (
             isCompute ? (
               <Button
                 style="primary"
                 onClick={handleComputeClick}
                 className={styles.computeButton}
-                disabled={!isAccountIdWhitelisted}
+                disabled={isConsumptionDisabled || !isAccountIdWhitelisted}
               >
                 Start Compute
               </Button>
@@ -463,6 +573,7 @@ export default function AssetActions({
                 file={fileMetadata}
                 fileIsLoading={fileIsLoading}
                 consumableFeedback={consumableFeedback}
+                isPSConfigured={isPSConfigured === true}
               />
             ) : (
               <AssetActionCheckCredentials asset={asset} service={service} />
@@ -472,7 +583,7 @@ export default function AssetActions({
               style="primary"
               onClick={handleComputeClick}
               className={styles.computeButton}
-              disabled={!isAccountIdWhitelisted}
+              disabled={isConsumptionDisabled || !isAccountIdWhitelisted}
             >
               Start Compute
             </Button>
@@ -491,12 +602,18 @@ export default function AssetActions({
               file={fileMetadata}
               fileIsLoading={fileIsLoading}
               consumableFeedback={consumableFeedback}
+              isPSConfigured={isPSConfigured === true}
             />
           )}
         </div>
+        {isOwnedSaas ? null : isPolicyServerUnsupported ? (
+          <Alert state="warning" text={SSI_NODE_UNSUPPORTED_MESSAGE} />
+        ) : isSsiConsumptionDisabled ? (
+          <Alert state="warning" text={SSI_POLICY_UNSUPPORTED_MESSAGE} />
+        ) : null}
       </div>
 
-      {isCompute && isComputePopupOpen && (
+      {!isConsumptionDisabled && isCompute && isComputePopupOpen && (
         <div className={styles.computePopup}>
           <div className={styles.computePopupContent}>
             <button

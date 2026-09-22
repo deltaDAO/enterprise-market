@@ -3,6 +3,7 @@ import styles from './index.module.css'
 import Link from 'next/link'
 import { accountTruncate } from '@utils/wallet'
 import { useIsMounted } from '@hooks/useIsMounted'
+import { usePontusXLegalName } from '@context/PontusXIdentity'
 
 interface PublisherProps {
   account: string
@@ -18,19 +19,19 @@ export default function Publisher({
   className
 }: PublisherProps): ReactElement {
   const isMounted = useIsMounted()
-  const [name, setName] = useState(
-    verifiedServiceProviderName || accountTruncate(account)
-  )
+  const legalName = usePontusXLegalName(account)
+  const resolvedName = verifiedServiceProviderName || legalName
+  const [name, setName] = useState(resolvedName || accountTruncate(account))
 
   useEffect(() => {
     if (!account) return
 
-    if (verifiedServiceProviderName && isMounted()) {
-      setName(verifiedServiceProviderName)
+    if (resolvedName && isMounted()) {
+      setName(resolvedName)
     } else {
       setName(accountTruncate(account))
     }
-  }, [account, isMounted, verifiedServiceProviderName])
+  }, [account, isMounted, resolvedName])
 
   if (minimal) {
     return <span className={styles.publisher}>{name}</span>

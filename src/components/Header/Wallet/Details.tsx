@@ -11,16 +11,17 @@ import { useSsiWallet } from '@context/SsiWallet'
 import { disconnectFromWallet } from '@utils/wallet/ssiWallet'
 import { LoggerInstance } from '@oceanprotocol/lib'
 import { useAuth } from '@hooks/useAuth'
-import { useModal } from 'connectkit'
 import { useRouter } from 'next/router'
 import { useUserPreferences } from '@context/UserPreferences'
 import { clearFederatedStorage } from '@utils/logoutRouter'
 import { JSON_WALLET_CONNECTOR_ID } from '@utils/wallet/jsonWalletConnector'
+import { clearEncryptedWalletJson } from '@utils/wallet/jsonWalletStorage'
 import { toast } from 'react-toastify'
 import NetworkName from '@shared/NetworkName'
 
 interface DetailsProps {
   onRequestClose?: () => void
+  onRequestWalletChoice?: () => void
 }
 
 function formatWalletAddress(address: string): string {
@@ -109,7 +110,8 @@ function ActionButton({
 }
 
 export default function Details({
-  onRequestClose
+  onRequestClose,
+  onRequestWalletChoice
 }: DetailsProps): ReactElement {
   const {
     connector: activeConnector,
@@ -119,9 +121,8 @@ export default function Details({
   const { disconnect } = useDisconnect()
   const { logout, markLogoutPending, isAuthenticated, user, authEnabled } =
     useAuth()
-  const { setOpen } = useModal()
   const router = useRouter()
-  const { showOnboardingModule, setEncryptedWalletJson } = useUserPreferences()
+  const { showOnboardingModule } = useUserPreferences()
   const [isLoggingOut, setIsLoggingOut] = useState(false)
   const { chains, switchChain } = useSwitchChain()
 
@@ -163,7 +164,7 @@ export default function Details({
 
   const handleConnectWallet = () => {
     onRequestClose?.()
-    setOpen(true)
+    onRequestWalletChoice?.()
   }
 
   const handleDisconnectWallet = async () => {
@@ -297,7 +298,7 @@ export default function Details({
             }
             onClick={() => {
               disconnect()
-              setEncryptedWalletJson('')
+              clearEncryptedWalletJson()
               toast.info('Wallet removed.')
             }}
             tone="danger"

@@ -5,15 +5,22 @@ import PrivacyLanguages from './PrivacyLanguages'
 import AnchorNavigation from '@shared/AnchorNavigation'
 
 export default function PrivacyPolicyHeader({
-  lastUpdatedDate
+  documentDate,
+  fileLastUpdated
 }: {
-  lastUpdatedDate?: string
+  documentDate?: string
+  fileLastUpdated?: string
 }): ReactElement {
   const { policies } = usePrivacyMetadata()
   const policyMetadata = policies && policies.length > 0 ? policies[0] : null
+  // The document's own `lastUpdated` front matter wins: it is the only source
+  // that records when this particular text changed. policies.json describes a
+  // single policy and carries one shared date, and fileLastUpdated degrades to
+  // the image build date in the container, which ships neither git nor .git.
   const resolvedDate =
-    lastUpdatedDate ||
+    documentDate ||
     policyMetadata?.date ||
+    fileLastUpdated ||
     new Date().toISOString().split('T')[0]
   const params = policyMetadata?.params || {
     languageLabel: 'Language',

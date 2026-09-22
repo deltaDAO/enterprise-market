@@ -1,11 +1,14 @@
-import { FileInfo } from '@oceanprotocol/lib'
 import * as Yup from 'yup'
 import { isAddress } from 'ethers'
 import { MAX_DECIMALS } from '@utils/constants'
 import { getMaxDecimalsValidation } from '@utils/numbers'
-import { getOriginalValue, testLinks } from '@utils/yup'
+import { getOriginalValue, testOptionalUrl } from '@utils/yup'
 import { validationConsumerParameters } from '@shared/FormInput/InputElement/ConsumerParameters/_validation'
 import { isS3File } from 'src/@types/S3File'
+import {
+  normalizeDockerImageReference,
+  parseDockerImageReference
+} from '@utils/docker'
 
 const validationRequestCredentials = {
   format: Yup.string().required('Required'),
@@ -166,19 +169,61 @@ export const metadataValidationSchema = Yup.object().shape({
     .min(4, (param) => `Title must be at least ${param.min} characters`)
     .required('Required'),
   description: Yup.string().required('Required').min(10),
-  links: Yup.array<FileInfo[]>().of(
-    Yup.object().shape({
-      url: testLinks(true),
-      valid: Yup.boolean().test((value, context) => {
-        const { valid, url } = context.parent
-
-        if (!url) return true
-        return valid
+  copyrightHolder: Yup.string().nullable(),
+  providedBy: testOptionalUrl('Provided By must be a valid URL.'),
+  links: Yup.array()
+    .of(
+      Yup.object().shape({
+        key: Yup.string(),
+        value: testOptionalUrl('Each link must be a valid URL.')
       })
-    })
-  ),
+    )
+    .nullable(),
   tags: Yup.array<string[]>().nullable(),
+  containerImage: Yup.string().when('type', {
+    is: 'algorithm',
+    then: Yup.string()
+      .required('Required')
+      .test('docker-image', function (value) {
+        try {
+          const parsedReference = parseDockerImageReference(value)
+          return parsedReference.tag
+            ? this.createError({
+                message: 'Enter the Docker tag in the separate tag field'
+              })
+            : true
+        } catch (error) {
+          return this.createError({ message: error.message })
+        }
+      })
+  }),
+  containerTag: Yup.string().when('type', {
+    is: 'algorithm',
+    then: Yup.string()
+      .required('Required')
+      .test('docker-tag', function (value) {
+        try {
+          normalizeDockerImageReference(this.parent.containerImage, value)
+          return true
+        } catch (error) {
+          return this.createError({ message: error.message })
+        }
+      })
+  }),
+  containerChecksum: Yup.string().when('type', {
+    is: 'algorithm',
+    then: Yup.string().trim().required('Required')
+  }),
+  containerEntrypoint: Yup.string().when('type', {
+    is: 'algorithm',
+    then: Yup.string().trim().required('Required')
+  }),
   usesConsumerParameters: Yup.boolean(),
+  saas: Yup.object({
+    redirectUrl: Yup.string()
+      .url('Must be a valid URL.')
+      .required('Redirect URL is required')
+  }).default(undefined),
   consumerParameters: Yup.array().when('usesConsumerParameters', {
     is: true,
     then: Yup.array()

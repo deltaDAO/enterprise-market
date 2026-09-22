@@ -4,10 +4,12 @@ import {
   AdditionalLicenseSourceType,
   FormUrlFileInfo
 } from '@components/Publish/_types'
+import type { KeyValuePair } from 'src/@types/KeyValuePair'
 import { FileInfo } from '@oceanprotocol/lib'
 import { License } from '../../../@types/ddo/License'
 import { CredentialForm } from '@components/@shared/PolicyEditor/types'
 import { RemoteObject } from '@oceanprotocol/ddo-js'
+import { PublisherTrustedAlgorithms } from 'src/@types/ddo/Service'
 
 export interface FormAdditionalLicenseFile {
   id: string
@@ -23,9 +25,15 @@ export interface MetadataEditForm {
   descriptionLanguage?: string
   descriptionDirection?: string
   type: string
-  links?: FileInfo[]
+  links?: KeyValuePair[]
   author?: string
+  providedBy?: string
+  copyrightHolder?: string
   tags?: string[]
+  containerImage?: string
+  containerTag?: string
+  containerChecksum?: string
+  containerEntrypoint?: string
   usesConsumerParameters?: boolean
   consumerParameters?: FormConsumerParameter[]
   credentials: CredentialForm
@@ -36,6 +44,7 @@ export interface MetadataEditForm {
   uploadedLicense: License
   additionalLicenseFiles?: FormAdditionalLicenseFile[]
   additionalDdos: FormAdditionalDdo[]
+  saas?: { redirectUrl: string; paymentMode: 'Subscription' }
 }
 
 export interface ServiceEditForm {
@@ -60,6 +69,10 @@ export interface ServiceEditForm {
   publisherTrustedAlgorithms: string[]
   publisherTrustedAlgorithmPublishers: string
   publisherTrustedAlgorithmPublishersAddresses?: string
+  refreshedTrustedAlgorithms?: {
+    selectedAlgorithms: string[]
+    trustedAlgorithms: PublisherTrustedAlgorithms[]
+  }
 }
 
 // TODO delete

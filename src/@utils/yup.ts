@@ -2,7 +2,7 @@ import { isCID } from '@utils/ipfs'
 import isUrl from 'is-url-superb'
 import * as Yup from 'yup'
 import { isAddress } from 'ethers'
-import { isGoogleUrl } from './url/index'
+import { isGoogleUrl, isValidWebUrl } from './url/index'
 
 export type YupTestContext = Yup.TestContext<Record<string, unknown>>
 
@@ -17,6 +17,14 @@ export function getOriginalValue(
   return fallback
 }
 
+// Optional URL field validation, reused by the metadata `providedBy` and
+// `links` value fields. Empty passes; scheme-less hosts are accepted.
+export function testOptionalUrl(message = 'Must be a valid URL.') {
+  return Yup.string().test('optional-url', message, (value) =>
+    isValidWebUrl(value)
+  )
+}
+
 export function testLinks(_isEdit?: boolean) {
   return Yup.string().test((value, context) => {
     const { type } = context.parent
@@ -29,6 +37,7 @@ export function testLinks(_isEdit?: boolean) {
         validField = true
         break
       case 'url':
+      case 'saas':
       case 'graphql':
         validField = isUrl(value?.toString() || '')
         // if we're in publish, the field must be valid

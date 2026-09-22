@@ -10,7 +10,8 @@ import queryString from 'query-string'
 import { CancelToken } from 'axios'
 import {
   SortDirectionOptions,
-  SortTermOptions
+  SortTermOptions,
+  FilterByTypeOptions
 } from '../../@types/aquarius/SearchQuery'
 import { filterSets, getInitialFilters } from './Filter'
 import { State } from 'src/@types/ddo/State'
@@ -67,6 +68,7 @@ function getSearchQuery(
   sortDirection?: string,
   serviceType?: string | string[],
   accessType?: string | string[],
+  priceType?: string | string[],
   supportedBlockchain?: string | string[],
   filterSet?: string | string[],
   assetState?: string | string[],
@@ -193,9 +195,31 @@ function getSearchQuery(
       ? chainIds.filter((chainId) => selectedBlockchainIds.includes(chainId))
       : chainIds
 
+  const showSaas =
+    serviceType === undefined
+      ? undefined
+      : serviceType === FilterByTypeOptions.Saas ||
+        (Array.isArray(serviceType) &&
+          serviceType.includes(FilterByTypeOptions.Saas))
+
+  // Aquarius only knows "dataset"/"algorithm" types, so we strip the pseudo
+  // "saas" type from the serviceType filter and handle it via showSaas.
+  const sanitizedServiceType =
+    serviceType !== undefined && Array.isArray(serviceType)
+      ? serviceType.filter((type) => type !== FilterByTypeOptions.Saas)
+      : serviceType === FilterByTypeOptions.Saas
+      ? undefined
+      : serviceType
+
   const filtersList = getInitialFilters(
-    { accessType, serviceType, filterSet, nodeUriIndex },
-    ['accessType', 'serviceType', 'filterSet', 'nodeUriIndex']
+    {
+      accessType,
+      serviceType: sanitizedServiceType,
+      priceType,
+      filterSet,
+      nodeUriIndex
+    },
+    ['accessType', 'serviceType', 'priceType', 'filterSet', 'nodeUriIndex']
   )
   parseFilters(filtersList, filterSets).forEach((term) => filters.push(term))
   const normalizedPage = normalizeSearchPage(page)
@@ -208,7 +232,8 @@ function getSearchQuery(
       size: Number(offset) || 21
     },
     sortOptions: { sortBy: sort, sortDirection },
-    filters
+    filters,
+    showSaas
   } as BaseQueryParams
 
   const query = generateBaseQuery(baseQueryParams)
@@ -227,6 +252,7 @@ export async function getResults(
     sortOrder?: string
     serviceType?: string | string[]
     accessType?: string | string[]
+    priceType?: string | string[]
     supportedBlockchain?: string | string[]
     filterSet?: string[]
     assetState?: string | string[]
@@ -245,6 +271,7 @@ export async function getResults(
     sortOrder,
     serviceType,
     accessType,
+    priceType,
     supportedBlockchain,
     filterSet,
     assetState,
@@ -263,6 +290,7 @@ export async function getResults(
     sortOrder,
     serviceType,
     accessType,
+    priceType,
     supportedBlockchain,
     filterSet,
     assetState,

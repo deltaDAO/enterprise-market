@@ -1,3 +1,7 @@
+---
+lastUpdated: '2026-05-04'
+---
+
 ## Data Portal Usage Agreement
 
 **Ocean Enterprise Collective e.V.**

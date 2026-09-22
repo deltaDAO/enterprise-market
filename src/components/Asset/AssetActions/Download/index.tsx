@@ -25,9 +25,10 @@ import {
   getAvailablePrice,
   getOrderPriceAndFees
 } from '@utils/accessDetailsAndPricing'
-import { secondsToString } from '@utils/ddo'
+import { getSaasMetadata, secondsToString } from '@utils/ddo'
 import { MAX_DECIMALS } from '@utils/constants'
 import { checkVerifierSessionId } from '@utils/wallet/policyServer'
+import { getStoredVerifierSessionId } from '@utils/verifierSession'
 
 import Input from '@shared/FormInput'
 import Button from '@shared/atoms/Button'
@@ -55,6 +56,11 @@ import { getDefaultValues } from '../ConsumerParameters/FormConsumerParameters'
 import { getTokenInfo, getTokenBalance } from '@utils/wallet'
 import useBalance from '@hooks/useBalance'
 import { getConsumeMarketFeeWei } from '@utils/consumeMarketFee'
+import {
+  isPolicyServerConsumptionDisabled,
+  requiresPolicyServerCredentialCheck,
+  isSsiPolicyConsumptionDisabled
+} from '@utils/credentials'
 
 export default function Download({
   accountId,
@@ -67,7 +73,8 @@ export default function Download({
   setIsBalanceSufficient,
   dtBalance,
   isAccountIdWhitelisted,
-  consumableFeedback
+  consumableFeedback,
+  isPSConfigured
 }: {
   accountId: string
   signer: Signer
@@ -82,7 +89,23 @@ export default function Download({
   isAccountIdWhitelisted: boolean
   fileIsLoading?: boolean
   consumableFeedback?: string
+  isPSConfigured: boolean
 }): ReactElement {
+  const isSsiConsumptionDisabled = isSsiPolicyConsumptionDisabled(
+    asset,
+    appConfig.ssiEnabled,
+    service
+  )
+  const requiresCredentialCheck = requiresPolicyServerCredentialCheck(
+    appConfig.ssiEnabled,
+    isPSConfigured
+  )
+  const isPolicyServerUnsupported = isPolicyServerConsumptionDisabled(
+    appConfig.ssiEnabled,
+    isPSConfigured
+  )
+  const isConsumptionDisabled =
+    isSsiConsumptionDisabled || isPolicyServerUnsupported
   const { isConnected } = useAccount()
   const { isSupportedOceanNetwork } = useNetworkMetadata()
   const { isInPurgatory, isAssetNetwork } = useAsset()
@@ -90,12 +113,15 @@ export default function Download({
   const isMounted = useIsMounted()
   const { balance } = useBalance()
   const chainId = useChainId()
+  const saas = getSaasMetadata(asset)
   const [licenseLink, setLicenseLink] = useState('')
   const [, setIsDisabled] = useState(true)
   const [hasDatatoken, setHasDatatoken] = useState(false)
   const [statusText, setStatusText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [isPriceLoading, setIsPriceLoading] = useState(false)
+  const [initializationError, setInitializationError] = useState<string>()
+  const [initializationRetry, setInitializationRetry] = useState(0)
   const [tokenInfo, setTokenInfo] = useState<TokenInfo | undefined>(undefined)
   const [tokenInfoProviderFee, setTokenInfoProviderFee] = useState<
     TokenInfo | undefined
@@ -112,6 +138,11 @@ export default function Download({
   const [isOwner, setIsOwner] = useState(false)
   const [validOrderTx, setValidOrderTx] = useState('')
   const [justBought, setJustBought] = useState(false)
+
+  // A purchased SaaS offering only redirects to the provider's own URL, so it
+  // needs no credential session and never reaches a policy server. It stays
+  // consumable even where policy-server gating disables consumption.
+  const isOwnedSaas = Boolean(saas) && isOwned
 
   const [orderPriceAndFees, setOrderPriceAndFees] =
     useState<OrderPriceAndFees>()
@@ -223,6 +254,7 @@ export default function Download({
       if (accessDetails.addressOrId === ZERO_ADDRESS) return
 
       try {
+        setInitializationError(undefined)
         !orderPriceAndFees && setIsPriceLoading(true)
         const _orderPriceAndFees = await getOrderPriceAndFees(
           asset,
@@ -233,7 +265,12 @@ export default function Download({
         setOrderPriceAndFees(_orderPriceAndFees)
         !orderPriceAndFees && setIsPriceLoading(false)
       } catch (error) {
-        LoggerInstance.error('getOrderPriceAndFees', error)
+        const message =
+          error instanceof Error
+            ? error.message
+            : 'Provider initialization failed.'
+        LoggerInstance.error('[getOrderPriceAndFees] Error:', message)
+        setInitializationError(message)
         setIsPriceLoading(false)
       }
     }
@@ -245,7 +282,8 @@ export default function Download({
     asset,
     isUnsupportedPricing,
     orderPriceAndFees,
-    service
+    service,
+    initializationRetry
   ])
 
   useEffect(() => {
@@ -287,6 +325,15 @@ export default function Download({
     setRetry(false)
     try {
       if (isOwned) {
+        // SaaS assets are consumed via redirect only, never a file download
+        if (saas) {
+          if (saas.redirectUrl) {
+            window.open(saas.redirectUrl, '_blank')
+          }
+          setIsLoading(false)
+          return
+        }
+
         setStatusText(
           getOrderFeedback(
             accessDetails.baseToken?.symbol,
@@ -345,14 +392,18 @@ export default function Download({
         ? 'Failed to download file!'
         : 'An error occurred, please retry. Check console for more information.'
       toast.error(message)
+    } finally {
+      setIsLoading(false)
     }
-    setIsLoading(false)
   }
 
   async function handleFormSubmit(values: any) {
     try {
+      if (isConsumptionDisabled && !isOwnedSaas) return
+
       const skip = lookupVerifierSessionIdSkip(asset.id, service.id)
-      if (appConfig.ssiEnabled && !skip) {
+      // owned SaaS assets redirect to the service, so no credential session is required
+      if (requiresCredentialCheck && !skip && !isOwnedSaas) {
         const result = await checkVerifierSessionId(
           lookupVerifierSessionId(asset.id, service.id)
         )
@@ -382,6 +433,7 @@ export default function Download({
       onClick={handleFullPrice}
       stepText={statusText}
       isLoading={isLoading}
+      disabled={isConsumptionDisabled}
     />
   )
 
@@ -390,7 +442,10 @@ export default function Download({
       <ButtonBuy
         action="download"
         disabled={
-          !isValid || !isBalanceSufficient || (isOwned ? !isValid : false)
+          (isConsumptionDisabled && !isOwnedSaas) ||
+          !isValid ||
+          !isBalanceSufficient ||
+          (isOwned ? !isValid : false)
         }
         hasPreviousOrder={isOwned}
         hasDatatoken={hasDatatoken}
@@ -399,7 +454,7 @@ export default function Download({
         dtBalance={dtBalance}
         type="submit"
         assetTimeout={secondsToString(service.timeout)}
-        assetType={asset.credentialSubject?.metadata?.type}
+        assetType={saas ? 'saas' : asset.credentialSubject?.metadata?.type}
         stepText={statusText}
         isLoading={isLoading}
         priceType={accessDetails.type}
@@ -622,12 +677,16 @@ export default function Download({
       validateOnMount
       validationSchema={getDownloadValidationSchema(service.consumerParameters)}
       onSubmit={(values) => {
+        if (isConsumptionDisabled && !isOwnedSaas) return
+
+        // owned SaaS assets redirect to the service, so no credential session is required
         if (
           !(
             lookupVerifierSessionId(asset.id, service.id) ||
             lookupVerifierSessionIdSkip(asset.id, service.id)
           ) &&
-          appConfig.ssiEnabled
+          requiresCredentialCheck &&
+          !isOwnedSaas
         ) {
           return
         }
@@ -636,31 +695,15 @@ export default function Download({
     >
       <Form>
         {(() => {
-          function getLocalSessionImmediate(
-            did: string,
-            svcId: string
-          ): string {
-            try {
-              if (typeof window === 'undefined') return ''
-              const storage = localStorage.getItem('verifierSessionId')
-              const sessions = storage ? JSON.parse(storage) : {}
-              return (
-                sessions?.[`${did}_${svcId}`] ||
-                sessions?.[`${did}_${svcId}_skip`] ||
-                ''
-              )
-            } catch {
-              return ''
-            }
-          }
           const sessionId =
             lookupVerifierSessionId(asset.id, service.id) ||
             lookupVerifierSessionIdSkip(asset.id, service.id)
-          const localSession = getLocalSessionImmediate(asset.id, service.id)
+          const localSession = getStoredVerifierSessionId(asset.id, service.id)
           const hasSession = Boolean(
             sessionId || localSession || credentialCheckComplete
           )
-          const canRenderConsume = !appConfig.ssiEnabled || hasSession
+          const canRenderConsume =
+            !requiresCredentialCheck || hasSession || isOwnedSaas
 
           if (!canRenderConsume) {
             return (
@@ -685,18 +728,37 @@ export default function Download({
           return (
             <aside
               className={`${styles.consume} ${
-                appConfig.ssiEnabled && hasSession ? styles.tighterStack : ''
+                requiresCredentialCheck && hasSession ? styles.tighterStack : ''
               }`}
             >
+              {initializationError && (
+                <div className={styles.noMarginAlert}>
+                  <Alert
+                    state="error"
+                    action={{
+                      name: 'Retry',
+                      handleAction: (event) => {
+                        event.preventDefault()
+                        setInitializationRetry((value) => value + 1)
+                      }
+                    }}
+                  >
+                    <span>{initializationError}</span>
+                  </Alert>
+                </div>
+              )}
               {!isOwner &&
+                !initializationError &&
                 (isFullPriceLoading ? (
                   <>
-                    <div className={styles.noMarginAlert}>
-                      <Alert
-                        state="success"
-                        text="SSI credential verification passed"
-                      />
-                    </div>
+                    {requiresCredentialCheck && (
+                      <div className={styles.noMarginAlert}>
+                        <Alert
+                          state="success"
+                          text="SSI credential verification passed"
+                        />
+                      </div>
+                    )}
                     <CalculateButton />
                   </>
                 ) : (
@@ -721,22 +783,42 @@ export default function Download({
                                 tokenInfo?.decimals
                               )
                             ) > 0
-                              ? `This dataset is free to use. Please note that a provider fee of ${formatUnits(
+                              ? `This ${
+                                  saas ? 'service' : 'dataset'
+                                } is free to use. Please note that a provider fee of ${formatUnits(
                                   orderPriceAndFees?.providerFee
                                     ?.providerFeeAmount || '0',
                                   tokenInfoProviderFee?.decimals
                                 )} ${
                                   tokenInfoProviderFee?.symbol
                                 } applies, as well as possible network gas fees.`
-                              : `This dataset is free to use. Please note that network gas fees still apply, even when using free assets.`
+                              : `This ${
+                                  saas ? 'service' : 'dataset'
+                                } is free to use. Please note that network gas fees still apply, even when using free ${
+                                  saas ? 'services' : 'assets'
+                                }.`
                           }
+                        />
+                      </div>
+                    )}
+                    {saas && isOwned && !justBought && (
+                      <div className={styles.noMarginAlert}>
+                        <Alert
+                          state="success"
+                          text="You already have access to this service. Click 'Go to service' to open it."
                         />
                       </div>
                     )}
                     {justBought && (
                       <div>
                         <SuccessConfetti
-                          success={`You successfully bought this ${asset.credentialSubject?.metadata?.type} and are now able to download it.`}
+                          success={`You successfully bought this ${
+                            saas
+                              ? 'service'
+                              : asset.credentialSubject?.metadata?.type
+                          } and are now able to ${
+                            saas ? 'access' : 'download'
+                          } it.`}
                         />
                       </div>
                     )}

@@ -39,6 +39,8 @@ export interface AppConfig {
   showOnboardingModuleByDefault: boolean
   dataspace: string | null
   persistJsonWalletSession: boolean
+  assetDescriptionExpandedByDefault: boolean
+  pontusXRegistryUrl: string | null
 }
 export interface SiteContent {
   siteTitle: string
@@ -74,7 +76,9 @@ export interface SiteContent {
   footer: {
     subtitle: string
     copyright: string
-    privacyTitle: string
+    // optional so a fork can drop or add footer sections without editing this type
+    privacyTitle?: string
+    notice?: string
     content: {
       title: string
       links: {

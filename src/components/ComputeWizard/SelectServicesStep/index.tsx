@@ -12,6 +12,9 @@ import { CopyToClipboard } from '@shared/CopyToClipboard'
 import Link from 'next/link'
 import { getBaseTokenSymbol } from '@utils/getBaseTokenSymbol'
 import { useMarketMetadata } from '@context/MarketMetadata'
+import { resolveServiceTokenSymbol } from '@utils/priceToken'
+import Tooltip from '@shared/atoms/Tooltip'
+import InfoIcon from '@images/info.svg'
 
 type DatasetService = {
   id?: string
@@ -24,6 +27,8 @@ type DatasetService = {
   tokenSymbol?: string
   checked?: boolean
   userParameters?: any[]
+  selectionDisabled?: boolean
+  selectionDisabledReason?: string
 }
 
 type DatasetItem = {
@@ -47,6 +52,8 @@ type NormalizedService = {
   symbol: string
   checked: boolean
   userParameters?: unknown[]
+  selectionDisabled?: boolean
+  selectionDisabledReason?: string
 }
 
 type NormalizedAsset = {
@@ -157,9 +164,16 @@ function normalizeDatasets(raw: DatasetItem[] = []): NormalizedAsset[] {
       duration: Number(s.serviceDuration ?? 0),
       price: Number(s.price ?? d.datasetPrice ?? 0),
       symbol: s.tokenSymbol || '',
-      checked: !!s.checked
+      checked: s.selectionDisabled ? false : !!s.checked,
+      selectionDisabled: s.selectionDisabled,
+      selectionDisabledReason: s.selectionDisabledReason
     }))
-    if (onlyOneDataset && services.length === 1 && !services[0].checked) {
+    if (
+      onlyOneDataset &&
+      services.length === 1 &&
+      !services[0].checked &&
+      !services[0].selectionDisabled
+    ) {
       services[0].checked = true
     }
     const all = services.every((s) => s.checked)
@@ -183,50 +197,13 @@ const extractString = (
   return ''
 }
 
-type StatsEntry = {
-  serviceId?: string
-  prices?: Array<{
-    token?: string | { symbol?: string; address?: string }
-  }>
-}
-
-const resolveTokenSymbolFromStats = (
-  asset: Asset,
-  serviceIndex: number,
-  serviceId?: string,
-  tokenSymbolMap?: Record<string, string>
-): string | undefined => {
-  const stats = (asset.indexedMetadata?.stats || []) as StatsEntry[]
-  const matched =
-    serviceId != null
-      ? stats.find((stat) => stat?.serviceId === serviceId)
-      : undefined
-  const stat = matched || stats[serviceIndex]
-  const priceToken = stat?.prices?.[0]?.token
-  if (!priceToken) return undefined
-
-  if (typeof priceToken === 'string') {
-    return tokenSymbolMap?.[priceToken.toLowerCase()]
-  }
-
-  if (typeof priceToken === 'object') {
-    const tokenInfo = priceToken as { symbol?: string; address?: string }
-    if (tokenInfo.symbol) return tokenInfo.symbol
-    if (tokenInfo.address) {
-      return tokenSymbolMap?.[tokenInfo.address.toLowerCase()]
-    }
-  }
-
-  return undefined
-}
-
 const getServiceTokenSymbol = (
   asset: Asset,
   serviceIndex: number,
   serviceId?: string,
   tokenSymbolMap?: Record<string, string>
 ): string =>
-  resolveTokenSymbolFromStats(asset, serviceIndex, serviceId, tokenSymbolMap) ||
+  resolveServiceTokenSymbol(asset, serviceIndex, serviceId, tokenSymbolMap) ||
   getBaseTokenSymbol(asset, serviceIndex) ||
   ''
 
@@ -239,11 +216,15 @@ const toggleExpand = (assets: NormalizedAsset[], id: string) =>
 const toggleAsset = (assets: NormalizedAsset[], id: string) =>
   assets.map((a) => {
     if (a.id !== id) return a
+    if (a.services.every((service) => service.selectionDisabled)) return a
     const newChecked = !a.checked
     return {
       ...a,
       checked: newChecked,
-      services: a.services.map((s) => ({ ...s, checked: newChecked }))
+      services: a.services.map((s) => ({
+        ...s,
+        checked: s.selectionDisabled ? false : newChecked
+      }))
     }
   })
 
@@ -256,6 +237,7 @@ const toggleService = (
   assets.map((a) => {
     if (a.id !== assetId) return a
     const services = a.services.map((s) => {
+      if (s.id === serviceId && s.selectionDisabled) return s
       if (s.id !== serviceId)
         return singleSelection ? { ...s, checked: false } : s
       return { ...s, checked: singleSelection ? true : !s.checked }
@@ -295,6 +277,9 @@ function Row({
             type="checkbox"
             className={styles.checkboxInput}
             checked={asset.checked === true}
+            disabled={asset.services.every(
+              (service) => service.selectionDisabled
+            )}
             onChange={() => onToggleAsset(asset.id)}
             onClick={(e) => e.stopPropagation()}
           />
@@ -434,6 +419,7 @@ function List({
                             type="checkbox"
                             className={styles.checkboxInput}
                             checked={service.checked || false}
+                            disabled={service.selectionDisabled}
                             onChange={() =>
                               onToggleService(asset.id, service.id)
                             }
@@ -459,6 +445,20 @@ function List({
                           <span className={styles.descriptionText}>
                             {service.description || ''}
                           </span>
+                          {service.selectionDisabledReason && (
+                            <Tooltip
+                              content={service.selectionDisabledReason}
+                              placement="top"
+                            >
+                              <button
+                                type="button"
+                                className={styles.updateInfoButton}
+                                aria-label="Why is this service unavailable?"
+                              >
+                                <InfoIcon className={styles.updateInfoIcon} />
+                              </button>
+                            </Tooltip>
+                          )}
                         </div>
                         <div className={styles.typeColumn}>{service.type}</div>
                         <div className={styles.durationColumn}>

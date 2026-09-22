@@ -18,6 +18,7 @@ import {
 import { Asset } from 'src/@types/Asset'
 import { Service } from 'src/@types/ddo/Service'
 import { Option } from 'src/@types/ddo/Option'
+import { SaasMetadata } from 'src/@types/ddo/Metadata'
 import { isCredentialAddressBased } from './credentials'
 import {
   CredentialAddressBased,
@@ -54,6 +55,21 @@ export function getServiceById(ddo: Asset, serviceId: string): Service {
   return service
 }
 
+export function getSaasMetadata(asset: Asset): SaasMetadata | undefined {
+  return asset?.credentialSubject?.metadata?.additionalInformation?.saas
+}
+
+export function isSaasAsset(asset: Asset): boolean {
+  return Boolean(getSaasMetadata(asset))
+}
+
+export function getAssetAccessType(
+  asset: Asset
+): 'saas' | 'compute' | 'access' {
+  if (isSaasAsset(asset)) return 'saas'
+  return getServiceByName(asset, 'compute') ? 'compute' : 'access'
+}
+
 export function mapTimeoutStringToSeconds(timeout: string): number {
   switch (timeout) {
     case 'Forever':
@@ -68,6 +84,23 @@ export function mapTimeoutStringToSeconds(timeout: string): number {
       return 31556952
     default:
       return 0
+  }
+}
+
+export function formatServiceTimeout(timeout: number): string {
+  switch (timeout) {
+    case 0:
+      return 'Forever'
+    case 86400:
+      return '1 day'
+    case 604800:
+      return '1 week'
+    case 2630000:
+      return '1 month'
+    case 31556952:
+      return '1 year'
+    default:
+      return `${timeout} second${timeout === 1 ? '' : 's'}`
   }
 }
 
@@ -104,16 +137,6 @@ export function secondsToString(numberOfSeconds: number): string {
 }
 
 // this is required to make it work properly for preview/publish/edit/debug.
-// TODO: find a way to only have FileInfo interface instead of FileExtended
-interface FileExtended extends FileInfo {
-  url?: string
-  query?: string
-  transactionId?: string
-  address?: string
-  abi?: string
-  headers?: { key: string; value: string }[]
-}
-
 export function normalizeFile(
   storageType: StorageType,
   file: FormFileData | FormFileData[],

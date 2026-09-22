@@ -1,9 +1,25 @@
-name: Build & Push Docker image
+name: Build & Push Docker image (DISABLED)
+
+# DISABLED. This workflow is inherited from upstream
+# OceanProtocolEnterprise/market and was never rebranded: it publishes to
+# `oceanenterprise/market:<version>` AND `:latest`, which is the UPSTREAM image.
+# Pushing any v*.*.* tag from this fork would therefore overwrite the upstream
+# release image with this fork's build.
+#
+# Two changes are disabled here:
+#   1. the automatic `push: tags: v*.*.*` trigger has been removed, so a
+#      release tag can no longer fire it, and
+#   2. the job is gated with `if: false`, so it cannot be run manually either.
+#
+# To re-enable, in this order:
+#   1. repoint the `tags:` in the build step below to this fork's own Docker
+#      namespace,
+#   2. set DOCKERHUB_USERNAME / DOCKERHUB_TOKEN to credentials for that
+#      namespace,
+#   3. remove the `if: false` below, and
+#   4. only then restore the tag trigger if automatic publishing is wanted.
 
 on:
-  push:
-    tags:
-      - 'v*.*.*'
   workflow_dispatch:
     inputs:
       version:
@@ -15,6 +31,9 @@ permissions:
 
 jobs:
   docker:
+    # Remove this guard only after the image namespace and credentials above
+    # have been repointed away from oceanenterprise/market.
+    if: false
     runs-on: ubuntu-latest
     steps:
       - name: Determine version

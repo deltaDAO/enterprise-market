@@ -14,6 +14,11 @@ import { useEthersSigner } from '@hooks/useEthersSigner'
 import { disconnectFromWallet } from '@utils/wallet/ssiWallet'
 import useSsiAllowedChain from '@hooks/useSsiAllowedChain'
 import { LoggerInstance } from '@oceanprotocol/lib'
+import {
+  clearVerifierSessions,
+  readVerifierSessions,
+  storeVerifierSession
+} from '@utils/verifierSession'
 import { useUserPreferences } from './UserPreferences'
 import {
   SsiKeyDesc,
@@ -54,7 +59,12 @@ export interface SsiWalletContext {
 }
 
 const SessionTokenStorage = 'sessionToken'
-const VerifierSessionIdStorage = 'verifierSessionId'
+
+function isSessionTokenExpired(token: SsiWalletSession): boolean {
+  if (!token?.expiration) return false
+  const expiration = new Date(token.expiration).getTime()
+  return !Number.isNaN(expiration) && expiration <= Date.now()
+}
 
 const SsiWalletContext = createContext(null)
 
@@ -63,7 +73,7 @@ export function SsiWalletProvider({
 }: {
   children: ReactNode
 }): ReactElement {
-  const { address, isConnected } = useAccount()
+  const { address, isConnected, status: walletStatus } = useAccount()
   const { setShowSsiWalletModule } = useUserPreferences()
   const { chainId, isSsiChainAllowed, isSsiChainReady } = useSsiAllowedChain()
   const walletClient = useEthersSigner()
@@ -95,6 +105,7 @@ export function SsiWalletProvider({
   const previousChainIdRef = useRef<number>()
   const previousAddressRef = useRef<string>()
   const ssiReconnectInProgressRef = useRef(false)
+  const walletReconnectHydratingRef = useRef(false)
 
   function tryAcquireSsiAutoConnectLock(): boolean {
     if (ssiAutoConnectLockRef.current) return false
@@ -112,19 +123,20 @@ export function SsiWalletProvider({
       if (!storedToken || storedToken === 'undefined') {
         setSessionToken(undefined)
       } else {
-        setSessionToken(JSON.parse(storedToken))
+        const parsedToken = JSON.parse(storedToken) as SsiWalletSession
+        if (isSessionTokenExpired(parsedToken)) {
+          localStorage.removeItem(SessionTokenStorage)
+          setSessionToken(undefined)
+        } else {
+          setSessionToken(parsedToken)
+        }
       }
     } catch (error) {
       setSessionToken(undefined)
     }
 
     try {
-      const storageString = localStorage.getItem(VerifierSessionIdStorage)
-      let sessions = JSON.parse(storageString) as Record<string, string>
-      if (!sessions) {
-        sessions = {}
-      }
-      setVerifierSessionCache(sessions)
+      setVerifierSessionCache(readVerifierSessions())
     } catch (error) {
       setVerifierSessionCache({})
     } finally {
@@ -148,7 +160,7 @@ export function SsiWalletProvider({
   const clearSsiSessionState = useCallback(() => {
     ssiWalletCache.clearCredentials()
     setCachedCredentials([])
-    localStorage.removeItem(VerifierSessionIdStorage)
+    clearVerifierSessions()
     setVerifierSessionCache({})
     setSessionToken(undefined)
   }, [ssiWalletCache, setCachedCredentials])
@@ -164,6 +176,17 @@ export function SsiWalletProvider({
     previousAddressRef.current = address
 
     if (!sessionToken) return
+
+    if (walletStatus === 'connecting' || walletStatus === 'reconnecting') {
+      walletReconnectHydratingRef.current = true
+      setIsSsiSessionHydrating(true)
+      return
+    }
+
+    if (walletReconnectHydratingRef.current) {
+      walletReconnectHydratingRef.current = false
+      setIsSsiSessionHydrating(false)
+    }
 
     const chainChanged =
       previousChainId !== undefined && previousChainId !== chainId
@@ -200,6 +223,7 @@ export function SsiWalletProvider({
     address,
     chainId,
     isConnected,
+    walletStatus,
     isSsiChainAllowed,
     isSsiChainReady,
     sessionToken,
@@ -223,22 +247,12 @@ export function SsiWalletProvider({
     sessionId: string,
     skipCheck?: boolean
   ) {
-    let storageString = localStorage.getItem(VerifierSessionIdStorage)
-    let sessions
-    try {
-      sessions = storageString ? JSON.parse(storageString) : {}
-    } catch {
-      sessions = {}
-    }
     const key = skipCheck ? `${did}_${serviceId}_skip` : `${did}_${serviceId}`
-    sessions[key] = sessionId
-    storageString = JSON.stringify(sessions)
-    localStorage.setItem(VerifierSessionIdStorage, storageString)
-    setVerifierSessionCache(sessions)
+    setVerifierSessionCache(storeVerifierSession(key, sessionId))
   }
 
   function clearVerifierSessionCache() {
-    localStorage.removeItem(VerifierSessionIdStorage)
+    clearVerifierSessions()
     setVerifierSessionCache({})
   }
 

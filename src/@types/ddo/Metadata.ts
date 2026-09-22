@@ -17,6 +17,26 @@ export interface Algorithm {
   consumerParameters?: Record<string, string | number | boolean | Option[]>[]
 }
 
+// JSON-compatible values, since additionalInformation is deserialized JSON
+export type AdditionalInformationValue =
+  | string
+  | number
+  | boolean
+  | AdditionalInformationValue[]
+  | { [key: string]: AdditionalInformationValue }
+
+// type alias (not interface) so it satisfies the index signature below
+export type SaasMetadata = {
+  redirectUrl: string
+  paymentMode: 'Subscription'
+}
+
+export interface AdditionalInformation {
+  termsAndConditions?: boolean
+  saas?: SaasMetadata
+  [key: string]: AdditionalInformationValue | undefined
+}
+
 export interface Metadata {
   created: string
   updated: string
@@ -33,7 +53,7 @@ export interface Metadata {
   attachments?: RemoteObject[]
   tags?: string[]
   categories?: string[]
-  additionalInformation?: Record<string, string | number | boolean>
+  additionalInformation?: AdditionalInformation
   // Required if asset type is algorithm
   algorithm?: Algorithm
 }
