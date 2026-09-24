@@ -7,8 +7,13 @@
   padding: calc(var(--spacer) / 4);
   max-width: 25rem;
   font-size: var(--font-size-small);
-  border: 0.5px solid var(--ink-alpha-30);
-  border-radius: 10px;
+  line-height: 1.5;
+  color: var(--foreground);
+  /* deck-card: solid white with the tinted blue/cyan border, never translucent */
+  border: 1px solid transparent;
+  background: var(--deck-card-background);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-soft), var(--shadow-blue-5);
 }
 
 .content p {
@@ -22,7 +27,12 @@
   display: inline-block;
   margin-bottom: -0.1em;
   margin-left: calc(var(--spacer) / 6);
-  fill: var(--color-secondary);
+  fill: var(--muted-foreground);
+  transition: fill 0.2s ease;
+}
+
+.icon:hover {
+  fill: var(--deck-blue);
 }
 
 .arrow,
@@ -36,7 +46,8 @@
 .arrow::before {
   content: '';
   transform: rotate(45deg);
-  background: var(--border-color);
+  background: var(--card);
+  border: 1px solid color-mix(in srgb, var(--deck-blue) 30%, var(--border));
 }
 
 .content[data-placement*='top'] > .arrow {
@@ -48,7 +59,7 @@
 }
 
 .content[data-placement*='left'] > .arrow {
-  right: 6px;
+  right: -4px;
 }
 
 .content[data-placement*='right'] > .arrow {

@@ -1,6 +1,7 @@
 .consumerParametersContainer {
-  border: 1px solid var(--border-navy-soft);
+  border: 1px solid var(--border);
   border-radius: var(--radius-xl);
+  background: var(--muted);
   padding: 24px 16px;
   margin-bottom: var(--spacer);
   display: flex;
@@ -16,24 +17,4 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-}
-
-body .consumerParametersContainer .actions .primary {
-  background: var(--gradient-accent);
-  box-shadow: var(--shadow-sm);
-  border-top-right-radius: var(--radius-xl) !important;
-  border-top-left-radius: var(--radius-xl) !important;
-  border-bottom-left-radius: var(--radius-xl) !important;
-  border-bottom-right-radius: var(--radius-xl) !important;
-  font-family: var(--font-family-base);
-  font-weight: var(--text-weight-bold);
-  font-size: var(--text-sm);
-  line-height: var(--text-sm);
-  color: var(--clr-navy);
-}
-
-.consumerParametersContainer .actions .primary:hover,
-.consumerParametersContainer .actions .primary:focus {
-  background: var(--gradient-accent);
-  box-shadow: var(--shadow-sm);
 }

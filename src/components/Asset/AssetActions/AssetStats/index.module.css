@@ -1,12 +1,12 @@
 .stats {
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid var(--border);
   margin: calc(var(--spacer) / 2) calc(var(--spacer) / -2)
     calc(var(--spacer) / -5) calc(var(--spacer) / -2);
   margin-top: calc(var(--spacer) / 2);
   padding: calc(var(--spacer) / 3);
   padding-bottom: 0;
   font-size: var(--font-size-small);
-  color: var(--color-secondary);
+  color: var(--muted-foreground);
   text-align: center;
 }
 
@@ -21,7 +21,7 @@
 }
 
 .stat {
-  border-left: 1px solid var(--border-color);
+  border-left: 1px solid var(--border);
   padding-left: calc(var(--spacer) / 3.5);
   margin-left: calc(var(--spacer) / 4);
 }
@@ -34,5 +34,6 @@
 
 .number {
   font-weight: var(--font-weight-bold);
-  color: var(--font-color-heading);
+  font-variant-numeric: tabular-nums;
+  color: var(--foreground);
 }

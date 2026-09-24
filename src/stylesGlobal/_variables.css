@@ -3,10 +3,12 @@
 
 :root {
   /* Menubar */
-  --menu-logo-size-width-sm: 7.5rem;
-  --menu-logo-size-height-sm: 3.5rem;
-  --menu-logo-size-width-lg: 16.5rem;
-  --menu-logo-size-height-lg: 5.5rem;
+  /* logo is sized by height, width follows the 2.7:1 aspect ratio */
+  --menu-logo-size-width-sm: auto;
+  --menu-logo-size-height-sm: 2.25rem;
+  --menu-logo-size-width-lg: auto;
+  --menu-logo-size-height-lg: 2.5rem;
+  --menu-height: 64px;
   --menu-mobile-navigation-border-size: var(--border-size-sm);
   --menu-border-radius: var(--border-radius-sm);
   --menu-border-size: var(--border-size);
@@ -17,8 +19,9 @@
   /* Footer */
 
   /* Homepage */
-  --home-brand-logo-size-width: 22rem;
-  --home-brand-logo-size-height: 4rem;
+  --home-brand-logo-size-width: auto;
+  --home-brand-logo-size-height: 2.75rem;
+  --footer-logo-size-height: 2.75rem;
 
   /* Input elements */
   --input-border-size: var(--border-size-sm);
@@ -48,17 +51,17 @@
   /* Pagination component */
   /* Filter and sort */
 
-  --font-family-base: 'Helvetica', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Helvetica, Arial, sans-serif;
-  --font-family-heading: 'Sharp sans', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Helvetica, Arial, sans-serif;
-  --font-family-monospace: 'Fira Code', 'Fira Mono', Menlo, Monaco, Consolas,
-    'Courier New', monospace;
+  --font-family-base: 'Inter', 'Inter Variable', ui-sans-serif, system-ui,
+    -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-family-heading: var(--font-family-base);
+  --font-family-monospace: ui-monospace, 'SF Mono', Menlo, Monaco, Consolas,
+    'Liberation Mono', monospace;
 
   --font-size-root: 15px;
   --font-size-base: 1rem;
   --font-size-large: 1.2rem;
   --font-size-small: 0.85rem;
+  --font-size-medium: 14px;
   --font-size-mini: 0.65rem;
   --font-size-label: 14px;
   --font-size-h1: 3rem;
@@ -66,20 +69,35 @@
   --font-size-h3: 1.7rem;
   --font-size-h4: 1.3rem;
   --font-size-h5: clamp(1.1rem, 2vw, 1.3rem);
-  --font-weight-base: 500;
+  --font-weight-base: 400;
+  --font-weight-medium: 500;
   --font-weight-bold: 600;
+  --font-weight-heavy: 700;
+  --font-weight-black: 800;
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-label: 0.14em;
+  --font-size-label-motif: 11px;
   --line-height: 1.6;
 
   --spacer: 2rem;
-  --border-radius-sm: 2px;
-  --border-radius: 0.2rem;
+  --border-radius-sm: var(--radius-sm);
+  --border-radius: var(--radius-lg);
   --border-size-sm: 1px;
   --border-size: 2px;
 
+  /* Radius scale (base 0.625rem = 10px) */
+  --radius: 0.625rem;
+  --radius-sm: calc(var(--radius) * 0.6); /* 6px chips */
+  --radius-md: calc(var(--radius) * 0.8); /* 8px icon tiles */
+  --radius-lg: var(--radius); /* 10px buttons, inputs */
+  --radius-xl: calc(var(--radius) * 1.4); /* 14px cards */
+  --radius-2xl: calc(var(--radius) * 1.8); /* 18px modals */
+  --radius-pill: 9999px; /* badges, status pills */
+  /* legacy radius names */
+  --radius-compact: var(--radius-sm);
+  --radius-full: var(--radius-pill);
+
   /* Spacing */
-  --radius-xl: 20px;
-  --radius-compact: 2px;
-  --radius-full: 19px; /* For circular elements */
   --sp-10: 40px;
   --sp-8_5: 34px;
   --sp-8: 32px;
@@ -97,9 +115,9 @@
   --sp-1: 4px;
   --sp-0_5: 2px;
   --sp-0_25: 1px;
-  --shadow-sm: 1px 2px 8px rgba(0, 0, 0, 0.15);
-  --shadow-md: 1px 4px 8px rgba(0, 0, 0, 0.15);
-  --shadow-lg: -2px 0px 8px rgba(0, 0, 0, 0.15);
+  --shadow-sm: var(--shadow-blue-5);
+  --shadow-md: var(--shadow-soft);
+  --shadow-lg: var(--shadow-blue-10);
 
   --break-point--small: 640px;
   --break-point--huge: 1400px;
@@ -128,7 +146,7 @@
 
   /* Form Elements */
   --field-height: 40px;
-  --field-padding: 15px 25px;
-  --field-padding-compact: 12px 30px;
+  --field-padding: 8px 12px;
+  --field-padding-compact: 8px 12px;
   --form-container-padding-top-extended: 50px 40px 40px 40px;
 }

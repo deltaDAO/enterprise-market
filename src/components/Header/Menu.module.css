@@ -1,93 +1,89 @@
+/*
+ * deltaDAO header: sticky, translucent white bar (sticky positioning lives on
+ * the <header> element in App/index.module.css).
+ */
 .menu {
   width: 100%;
-  padding: calc(var(--spacer) / 2);
+  padding: 0 calc(var(--spacer) / 2);
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  background: linear-gradient(
-    135deg,
-    #1f2c50 0%,
-    var(--navy-640) 27.47%,
-    var(--navy-620) 43.49%,
-    var(--navy-alpha-94) 55.43%,
-    #1e2e52 100%
-  );
   justify-content: center;
-  /* padding: 0; */
-  /* margin: 0; */
-  color: white;
-}
-.container {
-  width: 1160px;
-  height: 70px;
-  padding: calc(var(--spacer) / 2);
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  background: transparent;
-  margin-bottom: 40px;
+  position: relative;
+  isolation: isolate;
+  border-bottom: 1px solid var(--border);
+  color: var(--foreground);
 }
 
-.logo {
-  white-space: nowrap;
+/* the translucent blur lives on a pseudo-element: a backdrop-filter on .menu
+ * itself would become the containing block of the fixed mobile overlay */
+.menu::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(255, 255, 255, 0.85);
+  -webkit-backdrop-filter: saturate(1.4) blur(12px);
+  backdrop-filter: saturate(1.4) blur(12px);
+  pointer-events: none;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  min-height: var(--menu-height);
+  padding: 10px 0;
   display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: transparent;
 }
 
 .logo {
   order: 0;
+  white-space: nowrap;
+  display: flex;
   align-items: center;
+  color: var(--foreground);
+  border-radius: var(--radius-md);
+}
+
+.logo:hover {
+  text-decoration: none;
+}
+
+.logo svg {
+  margin-right: 0;
+}
+
+/* "Demonstration MarketPlace": small deck-blue label motif */
+.demoText {
+  order: 1;
+  align-self: center;
+  white-space: nowrap;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-label-motif);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-label);
+  color: var(--deck-blue);
+  background: var(--deck-blue-8);
+  border-radius: var(--radius-pill);
+  padding: 5px 10px;
+  margin: 0;
 }
 
 .navigation {
   order: 3;
   margin-top: calc(var(--spacer) / 2);
   text-align: center;
-  border-top: var(--menu-mobile-navigation-border-size) solid
-    var(--menu-mobile-navigation-border-color);
-  border-bottom: var(--menu-mobile-navigation-border-size) solid
-    var(--menu-mobile-navigation-border-color);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
   margin-left: -1rem;
   margin-right: -1rem;
   width: calc(100% + 2rem);
-}
-
-.actions {
-  order: 2;
-  display: flex;
-  gap: calc(var(--spacer) / 3);
-  margin-left: auto;
-  align-items: center;
-  font-size: 22px;
-}
-
-@media screen and (min-width: 75rem) {
-  .navigation {
-    order: 2;
-    width: auto;
-    margin: 0;
-    text-align: left;
-    border: none;
-  }
-  .actions {
-    order: 3;
-    margin-left: auto;
-  }
-}
-
-@media screen and (min-width: 75rem) {
-  .menu {
-    padding: calc(var(--spacer) / 0.8);
-    padding-top: 18px;
-  }
-}
-/* @media screen and (max-width: 75rem) {
-  .actions{
-    gap: calc(var(--spacer) / 3);
-
-  }
-} */
-
-.navigation {
   white-space: nowrap;
   overflow-y: hidden;
   overflow-x: auto;
@@ -107,38 +103,67 @@
   margin-left: calc(var(--spacer) / 3);
 }
 
+.actions {
+  order: 2;
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+  align-items: center;
+  font-size: 14px;
+}
+
+.actions button {
+  text-transform: none;
+}
+
+@media screen and (min-width: 75rem) {
+  .navigation {
+    order: 2;
+    width: auto;
+    margin: 0 0 0 calc(var(--spacer) / 2);
+    text-align: left;
+    border: none;
+  }
+
+  .actions {
+    order: 3;
+    margin-left: auto;
+  }
+}
+
+/* Nav links: foreground, deck-blue hover/active with a 2px underline */
 .link {
   composes: text from '../@shared/atoms/Button/index.module.css';
-
-  color: white;
-  font-weight: var(--menu-link-font-weight);
-  font-size: var(--menu-link-font-size);
+  color: var(--menu-font-color, var(--foreground));
+  font-weight: var(--font-weight-bold);
+  font-size: 14px;
 }
 
 .link,
 .link:hover,
-.link:focus,
 .link:active,
 .active {
   display: block;
-  padding: calc(var(--spacer) / 8) 0;
-  text-transform: uppercase;
+  padding: 6px 0;
+  text-transform: none;
   transform: none;
   position: relative;
   z-index: 1;
+  text-decoration: none;
 }
 
 .link:after {
   content: '';
   position: absolute;
-  background-color: var(--menu-font-color-hover);
+  background-color: var(--deck-blue);
   height: 2px;
-  left: 1px;
-  right: 1px;
+  left: 0;
+  right: 0;
   bottom: 0;
+  border-radius: 2px;
   transform-origin: 0 50%;
   transform: scaleX(0);
-  transition: transform 0.2s;
+  transition: transform 0.2s ease;
 }
 
 .link:hover:after,
@@ -146,31 +171,16 @@
   transform: scaleX(1);
 }
 
-.link:hover {
-  color: var(--menu-font-color-hover);
-}
-
+.link:hover,
 .link:active,
-.link:focus,
 .active,
 .active:hover {
-  color: var(--menu-font-color-active);
-}
-
-.active:after {
-  background-color: var(--menu-font-color-active);
+  color: var(--deck-blue);
+  text-decoration: none;
 }
 
 .link[aria-disabled] {
   pointer-events: none;
-}
-
-.logo svg {
-  margin-right: calc(var(--spacer) / 3);
-}
-
-.actions button {
-  text-transform: none;
 }
 
 .caret,
@@ -178,7 +188,7 @@ svg.caret {
   display: none;
   width: var(--menu-caret-size);
   height: var(--menu-caret-size);
-  fill: var(--menu-caret-fill-color);
+  fill: currentColor;
   transition: transform 0.2s ease-out;
   vertical-align: middle;
   margin-left: calc(var(--spacer) / 4);
@@ -188,171 +198,141 @@ svg.caret {
   transform: rotate(180deg);
 }
 
-.ctaContent {
-  display: flex;
-  gap: 1rem;
-}
-
-.ctaButton {
-  background: white;
-  border-radius: 50px;
-  border: none;
-  box-shadow: 1px 2px 8px var(--black-alpha-15);
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: transform 0.2s;
-  border-radius: 20px;
-  padding: 3px 8px;
-  width: 135px;
-  height: 40px;
-}
-
-.ctaButton:hover {
-  transform: translateY(-2px);
-}
-.buttonContent {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.buttonText {
-  font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 92%;
-  text-align: center;
-  color: #0a4b70;
-}
-.uploadIcon {
-  width: 24px;
-  height: 24px;
-}
-.demoText {
-  font-family: var(--font-family-heading);
-  font-weight: 700;
-  white-space: nowrap;
-  color: #fdd655;
-  margin-top: 0px;
-  margin-left: 60px;
-  font-size: 18px;
-  text-transform: uppercase;
-  align-content: baseline;
-  align-self: flex-end;
-}
-
 @media screen and (min-width: 75rem) {
   .caret,
   svg.caret {
     display: inline-block;
   }
-
-  .navigation {
-    margin-left: calc(var(--spacer) / 2);
-  }
 }
 
-@media screen and (min-width: 256px) and (max-width: 768px) {
-  .actions {
-    font-size: 18px;
-    margin-top: 1rem;
-  }
-}
-@media screen and (min-width: 1550px) and (max-width: 2550px) {
-  .container {
-    width: 1500px;
-    /* height: 140px; */
-  }
-}
-@media screen and (min-width: 1023px) and (max-width: 1549px) {
-  .container {
-    /* width: 1500px; */
-    height: 90px;
-  }
-}
-@media screen and (min-width: 1151px) and (max-width: 1549px) {
-  /* .container {
-    width: 1500px;
-  } */
-  .demoText {
-    white-space: nowrap;
-    color: #fdd655;
-    margin-top: 0px;
-    margin-left: 10px;
-    font-size: 18px;
-    text-transform: uppercase;
-    align-content: baseline;
-    align-self: flex-end;
-  }
+/* Header CTAs (Login, Publish, Catalogue) follow the Button rules */
+.ctaContent {
+  display: flex;
+  gap: 8px;
 }
 
-@media screen and (min-width: 768px) and (max-width: 1150px) {
-  .container {
-    width: 100%;
-    /* height: 90px; */
+.ctaButton,
+.mobileCtaButton {
+  composes: button from '../@shared/atoms/Button/index.module.css';
+  min-width: 0;
+  height: 38px;
+  padding: 0 14px;
+  text-decoration: none;
+}
+
+/* Publish is the hero-tier CTA (same treatment as Button .gradient) */
+.ctaButton:has(.uploadIcon),
+.mobileCtaButton:has(.uploadIcon) {
+  background: var(--button-hero-gradient);
+  border: 0;
+  color: var(--brand-white);
+  box-shadow: var(--button-hero-shadow);
+  transition: box-shadow 0.25s ease, filter 0.25s ease, transform 0.25s ease;
+}
+
+.ctaButton:has(.uploadIcon):hover,
+.mobileCtaButton:has(.uploadIcon):hover,
+.ctaButton:has(.uploadIcon):focus-visible,
+.mobileCtaButton:has(.uploadIcon):focus-visible {
+  background: var(--button-hero-gradient);
+  color: var(--brand-white);
+  filter: brightness(1.03); /* keeps white on #0073cd >= 4.5:1 */
+  box-shadow: var(--button-hero-shadow-hover);
+  transform: translateY(-1px);
+}
+
+.ctaButton:has(.uploadIcon):focus-visible,
+.mobileCtaButton:has(.uploadIcon):focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
+}
+
+.ctaButton:has(.uploadIcon):active,
+.mobileCtaButton:has(.uploadIcon):active {
+  filter: none;
+  box-shadow: var(--button-hero-shadow-active);
+  transform: translateY(1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ctaButton:has(.uploadIcon),
+  .mobileCtaButton:has(.uploadIcon) {
+    transition: none;
   }
-  .ctaButton {
-    border-radius: 20px;
-    width: 100px;
-    height: 30px;
-  }
-  .buttonText {
-    font-size: 16px;
-  }
-  .actions {
-    font-size: 16px;
-    font-weight: 700;
-  }
-  .demoText {
-    white-space: nowrap;
-    color: #fdd655;
-    margin-top: 0px;
-    margin-left: 5px;
-    font-size: 16px;
-    text-transform: uppercase;
-    align-content: baseline;
-    align-self: flex-end;
+
+  .ctaButton:has(.uploadIcon):hover,
+  .mobileCtaButton:has(.uploadIcon):hover,
+  .ctaButton:has(.uploadIcon):focus-visible,
+  .mobileCtaButton:has(.uploadIcon):focus-visible,
+  .ctaButton:has(.uploadIcon):active,
+  .mobileCtaButton:has(.uploadIcon):active {
+    transform: none;
   }
 }
 
-@media screen and (min-width: 2550px) {
-  .container {
-    width: 1900px;
-    /* height: 140px; */
-  }
+.buttonContent {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.buttonText {
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-bold);
+  font-size: 14px;
+  line-height: 1;
+  text-align: center;
+  color: inherit;
+}
+
+.uploadIcon {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}
+
+.uploadIcon path {
+  fill: currentColor;
 }
 
 /* Desktop Actions */
 .desktopActions {
   display: flex;
   align-items: center;
-  gap: calc(var(--spacer) / 3);
+  gap: 10px;
 }
 
 /* Burger Button */
 .burgerButton {
   display: none;
   background: none;
-  border: none;
+  border: 0; /* icon-only toggle: no boundary, same 40px box as before */
+  border-radius: var(--radius-lg);
   cursor: pointer;
-  padding: 8px;
+  padding: 9px;
+  color: inherit;
+}
+
+.burgerButton:hover {
+  background: var(--deck-blue-8);
 }
 
 .burgerIcon {
-  width: 24px;
-  height: 24px;
-  fill: white;
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
 }
 
-/* Mobile Menu */
+/* Mobile Menu: navy overlay with white text */
 .mobileMenu {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100vh;
-  background: var(--black-alpha-90);
+  height: 100dvh;
+  background: var(--deck-navy);
+  color: var(--brand-white);
   z-index: 1000;
   display: flex;
   justify-content: center;
@@ -360,6 +340,33 @@ svg.caret {
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.mobileMenu::before {
+  content: '';
+  position: absolute;
+  inset: -1px 0 auto auto;
+  width: 100%;
+  height: 13rem;
+  background: var(--wave-svg) no-repeat;
+  background-size: 100% 100%;
+  -webkit-mask-image: linear-gradient(to left, #000 35%, transparent);
+  mask-image: linear-gradient(to left, #000 35%, transparent);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.mobileMenu::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--brand-hairline);
+  opacity: 0.6;
 }
 
 .mobileMenuOpen {
@@ -371,33 +378,67 @@ svg.caret {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
   width: 100%;
   padding: 2rem;
 }
 
 .mobileCtaButton {
-  background: white;
-  border-radius: 50px;
-  border: none;
-  box-shadow: 1px 2px 8px var(--black-alpha-15);
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: transform 0.2s;
-  border-radius: 20px;
-  padding: 12px 24px;
-  width: 200px;
-  height: 50px;
+  width: 220px;
+  height: 46px;
+  background: transparent;
+  color: var(--brand-white);
+  border: 1px solid var(--control-border-on-dark);
+  box-shadow: none;
+}
+
+.mobileCtaButton:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--control-border-on-dark-hover);
+  color: var(--brand-white);
+}
+
+.mobileCtaButton:focus-visible,
+.mobileCloseButton:focus-visible {
+  outline-color: var(--deck-cyan);
 }
 
 .mobileWallet {
   max-width: 300px;
-  font-size: 20px;
+  font-size: 16px;
 }
 
-/* Responsive styles */
+.mobileCloseButton {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: 1px solid var(--control-border-on-dark);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  padding: 8px;
+  z-index: 1001;
+  color: var(--brand-white);
+}
+
+.mobileCloseButton:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--control-border-on-dark-hover);
+}
+
+.closeIcon {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+}
+
+/* Responsive */
+@media screen and (max-width: 1150px) {
+  .demoText {
+    letter-spacing: 0.1em;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .desktopActions {
     display: none;
@@ -408,33 +449,25 @@ svg.caret {
   }
 
   .actions {
-    gap: calc(var(--spacer) / 2);
-  }
-  .demoText {
-    white-space: nowrap;
-    color: #fdd655;
-    margin-top: 0px;
-    margin-left: 5px;
-    font-size: 14px;
-    text-transform: uppercase;
-    align-content: baseline;
-    align-self: flex-end;
+    gap: 8px;
   }
 }
 
-@media screen and (min-width: 50px) and (max-width: 469px) {
-  .container {
-    height: 85px;
-  }
+@media screen and (max-width: 469px) {
   .demoText {
-    white-space: nowrap;
-    color: #fdd655;
-    margin-top: 0px;
-    margin-left: 5px;
-    font-size: 14px;
-    text-transform: uppercase;
-    align-content: baseline;
-    align-self: flex-end;
+    display: none;
+  }
+
+  .container {
+    gap: 8px;
+  }
+
+  .actions {
+    gap: 4px;
+  }
+
+  .logo svg {
+    height: 2rem;
   }
 }
 
@@ -443,19 +476,30 @@ svg.caret {
     display: none !important;
   }
 }
-.mobileCloseButton {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 10px;
-  z-index: 1001;
+
+@media screen and (min-width: 1550px) {
+  .container {
+    max-width: 1500px;
+  }
 }
 
-.closeIcon {
-  width: 24px;
-  height: 24px;
-  fill: white;
+@media (prefers-reduced-motion: reduce) {
+  .mobileMenu,
+  .link:after {
+    transition: none;
+  }
+}
+
+/* icon SVGs ship with hard-coded path fills; follow the button color */
+.burgerIcon path,
+.closeIcon path,
+.uploadIcon path {
+  fill: currentColor;
+}
+
+/* light header only: icon toggles (preferences, networks) go deck-blue */
+.menu :global([class*='UserPreferences_preferences']):hover,
+.menu :global([class*='UserPreferences_preferences'])[aria-expanded='true'] {
+  color: var(--deck-blue);
+  background: var(--deck-blue-8);
 }

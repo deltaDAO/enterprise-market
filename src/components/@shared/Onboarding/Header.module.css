@@ -1,34 +1,90 @@
-.container {
+/* mist band header of the onboarding card: wave top-right + gradient hairline */
+.container.container {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   padding-left: 0;
-  background-color: var(--color-primary);
-  color: var(--brand-white);
-  border-radius: var(--border-radius) var(--border-radius) 0 0;
-  box-shadow: var(--box-template-box-shadow);
+  background-color: var(--deck-surface);
+  color: var(--foreground);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  box-shadow: none;
   position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  inset: -1px 0 auto auto;
+  width: min(100%, 48rem);
+  height: 13rem;
+  background: var(--wave-svg) no-repeat;
+  background-size: 100% 100%;
+  -webkit-mask-image: linear-gradient(to left, #000 35%, transparent);
+  mask-image: linear-gradient(to left, #000 35%, transparent);
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: -1;
+  animation: wave-drift 18s ease-in-out infinite alternate;
+}
+
+.container::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--brand-hairline);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+@keyframes wave-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-2.5%, 2%, 0) scale(1.03);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .container::before {
+    animation: none;
+  }
 }
 
 .content {
   padding: var(--spacer);
+  padding-right: calc(var(--spacer) * 2.5);
 }
 
+/* label motif eyebrow */
 .subtitle {
   display: inline-block;
-  padding: calc(var(--spacer) / 8) calc(var(--spacer) / 4) 0;
-  background-color: var(--brand-yellow);
-  margin-bottom: 0;
-  color: var(--color-primary);
+  padding: 0;
+  background-color: transparent;
+  margin-bottom: calc(var(--spacer) / 4);
+  font-family: var(--font-family-base);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted-foreground);
 }
 
 .title {
-  color: var(--brand-white);
+  color: var(--deck-blue);
+  font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
 .paragraph p {
   margin-bottom: 0;
-  color: var(--brand-white);
+  color: var(--foreground);
 }
 
 .container > svg {
@@ -38,12 +94,11 @@
 .hideButtonContainer {
   position: absolute;
   display: flex;
-  background-color: var(--background-content);
+  background-color: transparent;
   right: 0;
   top: 0;
   aspect-ratio: 1 / 1;
   padding: calc(var(--spacer) / 3);
-  border-bottom-left-radius: var(--border-radius);
 }
 
 @media screen and (min-width: 40rem) {
@@ -52,6 +107,6 @@
     display: inline;
   }
   .container svg path {
-    fill: var(--brand-white);
+    fill: var(--deck-blue);
   }
 }

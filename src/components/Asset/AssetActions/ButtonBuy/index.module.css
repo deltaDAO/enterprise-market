@@ -45,6 +45,7 @@ body .freeAssetButton {
   width: fit-content;
   padding: 6px 12px;
   border-radius: var(--radius-xl);
-  box-shadow: 1px 2px 8px 0 var(--black-alpha-15);
-  background: var(--white-alpha-20);
+  box-shadow: var(--shadow-blue-5);
+  background: var(--deck-blue-8);
+  color: var(--deck-blue);
 }

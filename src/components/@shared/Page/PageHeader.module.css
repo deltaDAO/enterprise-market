@@ -3,20 +3,93 @@
   max-width: 50rem;
 }
 
-.headerExtended {
-  margin-bottom: 100px;
+/*
+ * deltaDAO page header: a full-bleed mist band with the wave decoration in
+ * the top-right corner and the gradient hairline along the bottom edge.
+ * The band only renders when the header actually has a title (Page renders
+ * an empty PageHeader on every route).
+ */
+.header:has(> .title:not(:empty)) {
+  position: relative;
+  isolation: isolate;
   max-width: none;
   width: 100%;
-  margin-top: 60px;
+  padding: calc(var(--spacer) * 1.25) 0 calc(var(--spacer) * 1.1);
+  background: var(--deck-surface);
+  /* extend the band to the viewport edges without extra markup */
+  box-shadow: 0 0 0 100vmax var(--deck-surface);
+  clip-path: inset(0 -100vmax);
+}
+
+.header:has(> .title:not(:empty)) > * {
+  max-width: 50rem;
+}
+
+.header:has(> .title:not(:empty))::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  right: calc((100% - 100vw) / 2);
+  width: min(100vw, 48rem);
+  height: 13rem;
+  background: var(--wave-svg) no-repeat;
+  background-size: 100% 100%;
+  -webkit-mask-image: linear-gradient(to left, #000 35%, transparent);
+  mask-image: linear-gradient(to left, #000 35%, transparent);
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: -1;
+  animation: wave-drift 18s ease-in-out infinite alternate;
+}
+
+.header:has(> .title:not(:empty))::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: calc((100% - 100vw) / 2);
+  width: 100vw;
+  height: 1px;
+  background: var(--brand-hairline);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header:has(> .title:not(:empty))::before {
+    animation: none;
+  }
+}
+
+.headerExtended {
+  margin-bottom: calc(var(--spacer) * 1.5);
+  max-width: none;
+  width: 100%;
+  margin-top: 0;
 }
 
 .headerExtended .title {
-  font-family: 'Helvetica', Arial, sans-serif;
+  font-family: var(--font-family-heading);
+  font-style: normal;
+  font-weight: var(--font-weight-black);
+  letter-spacing: var(--letter-spacing-tight);
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  line-height: 1.15;
+  color: var(--deck-blue);
+  margin-top: 0;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.title {
+  font-family: var(--font-family-base);
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
   line-height: 28px;
-  color: #303031;
+  color: var(--foreground);
   margin-top: 0;
   margin-bottom: 20px;
   display: flex;
@@ -27,6 +100,7 @@
 
 .title {
   font-size: var(--text-xl);
+  color: var(--deck-blue);
   margin-top: 0;
   margin-bottom: 0;
   display: inline-flex;
@@ -45,12 +119,13 @@
 }
 
 .homeTitleContainer > svg {
+  aspect-ratio: 1058 / 350;
   width: var(--home-brand-logo-size-width);
   height: var(--home-brand-logo-size-height);
 }
 
 .homeTitleContainer h1 {
-  color: var(--color-primary);
+  color: var(--deck-blue);
   margin-bottom: 0;
 }
 
@@ -80,17 +155,18 @@
 
 .description {
   font-size: var(--text-lg);
+  color: var(--muted-foreground);
   margin-top: calc(var(--spacer) / 4);
   margin-bottom: 0;
 }
 
 .headerExtended .description {
-  font-family: 'Helvetica', Arial, sans-serif;
+  font-family: var(--font-family-base);
   font-style: normal;
   font-weight: 400;
-  font-size: 18px;
-  line-height: 26px;
-  color: var(--clr-slate-70);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--muted-foreground);
   margin-top: 0;
   margin-bottom: 0;
   width: 100%;
@@ -116,6 +192,16 @@
     font-size: 1.3rem;
   }
   .description {
-    font-size: 1.3rem;
+    font-size: 1rem;
+  }
+}
+
+/* keyframes are module-scoped, so the wave drift is declared locally */
+@keyframes wave-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-2.5%, 2%, 0) scale(1.03);
   }
 }

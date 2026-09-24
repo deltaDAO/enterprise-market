@@ -73,7 +73,7 @@
   display: block;
   text-align: right;
   font-size: var(--font-size-mini);
-  color: var(--color-secondary);
+  color: var(--muted-foreground);
 }
 
 .calculation .price {
@@ -85,6 +85,8 @@
 }
 
 .totalWrapper {
+  font-family: var(--font-family-monospace);
+  font-variant-numeric: tabular-nums;
   display: flex;
   justify-content: flex-end;
   align-items: baseline;
@@ -92,15 +94,15 @@
 }
 
 .amountMain {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 600;
-  color: var(--brand-primary);
+  color: var(--deck-blue);
 }
 
 .symbolMain {
-  font-size: 0.6rem;
+  font-size: 0.75rem;
   font-weight: 600;
-  color: var(--brand-primary);
+  color: var(--deck-blue);
   margin-left: 0.2rem;
   margin-right: 0;
 }
@@ -108,6 +110,6 @@
 .ampersand {
   font-size: 0.7rem;
   font-weight: 400;
-  color: var(--brand-primary);
+  color: var(--deck-blue);
   margin: 0 0.1rem;
 }

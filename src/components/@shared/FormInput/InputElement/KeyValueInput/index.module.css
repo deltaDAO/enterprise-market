@@ -28,12 +28,12 @@
 /* error state for the value (URL) column */
 .valueError input,
 .valueError input:focus {
-  border-color: var(--brand-alert-red);
-  color: var(--brand-alert-red);
+  border-color: var(--destructive);
+  color: var(--destructive);
 }
 
 .valueError label {
-  color: var(--brand-alert-red);
+  color: var(--destructive);
 }
 
 .pairsContainer:last-child {
@@ -61,15 +61,15 @@
 }
 
 .hasError label {
-  color: var(--brand-alert-red);
+  color: var(--destructive);
 }
 
 .hasError .pairsContainer .keyInput,
 .hasError .pairsContainer .keyInput:focus,
 .hasError .pairsContainer [class*='prefix'],
 .hasError .pairsContainer [class*='postfix'] {
-  color: var(--brand-alert-red);
-  border-color: var(--brand-alert-red);
+  color: var(--destructive);
+  border-color: var(--destructive);
 }
 
 .required {
@@ -82,44 +82,18 @@
 }
 
 .pairsContainer .addButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 9px 14px;
-  gap: 4px;
   height: 40px;
-  background: var(--gradient-accent);
-  box-shadow: var(--shadow-sm);
-  border-radius: 20px;
-  border: none;
-  font-family: var(--font-family-base);
-  font-weight: var(--text-weight-bold);
-  font-size: var(--text-sm);
-  color: var(--clr-navy);
-  cursor: pointer;
-  text-transform: uppercase;
   min-width: auto;
+  gap: 4px;
 }
 
 .pairsContainer button {
   max-width: 82px;
 }
 
-.pairsContainer .addButton:hover,
-.pairsContainer .addButton:focus {
-  background: var(--gradient-accent);
-  transform: none;
-  box-shadow: var(--shadow-sm);
-}
-
-.pairsContainer .addButton:disabled {
-  opacity: 0.25;
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
+.pairsContainer .addButton:disabled,
 .pairsAddedContainer button:disabled {
-  opacity: 0.25;
+  opacity: 0.45;
   cursor: not-allowed;
   pointer-events: none;
 }
@@ -127,9 +101,9 @@
 .addButton .addIcon {
   width: 16px;
   height: 16px;
-  fill: #0a4b70;
+  fill: currentColor;
 }
 
 .addButton .addIcon path {
-  fill: #0a4b70;
+  fill: currentColor;
 }

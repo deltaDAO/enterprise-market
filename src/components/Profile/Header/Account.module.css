@@ -5,7 +5,7 @@
 .sendMessage {
   display: flex;
   position: justify-end;
-  background-color: white;
+  background-color: transparent;
   cursor: pointer;
 }
 
@@ -42,8 +42,8 @@ See https://github.com/oceanprotocol/market/issues/1143 */
   border-radius: 50%;
   overflow: hidden;
   margin-bottom: calc(var(--spacer) / 4);
-  border: 1px solid var(--border-color);
-  box-shadow: 0 6px 17px 0 var(--box-shadow-color);
+  border: 1px solid var(--border);
+  box-shadow: 0 0 0 3px #fff, var(--shadow-blue-10);
 }
 
 .image {
@@ -52,34 +52,40 @@ See https://github.com/oceanprotocol/market/issues/1143 */
 
 .name {
   font-size: var(--font-size-h3);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--deck-blue);
   margin-bottom: calc(var(--spacer) / 8);
 }
 
 .username {
   font-size: var(--font-size-small);
-  color: var(--color-secondary);
+  color: var(--muted-foreground);
   margin-bottom: calc(var(--spacer) / 10);
   word-wrap: break-word;
 }
 
 .email {
   font-size: var(--font-size-small);
-  color: var(--color-secondary);
+  color: var(--muted-foreground);
   margin-bottom: calc(var(--spacer) / 10);
   word-wrap: break-word;
 }
 
 .userId {
+  font-family: var(--font-family-monospace);
   font-size: var(--font-size-small);
-  color: var(--color-secondary);
+  color: var(--muted-foreground);
   margin-bottom: calc(var(--spacer) / 10);
   word-wrap: break-word;
 }
 
 .accountId {
   display: block;
+  font-family: var(--font-family-monospace);
+  font-variant-numeric: tabular-nums;
   font-size: var(--font-size-small);
-  color: var(--color-secondary);
+  color: var(--muted-foreground);
   word-wrap: break-word;
   white-space: pre-wrap;
   padding: 0;

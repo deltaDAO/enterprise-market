@@ -1,58 +1,87 @@
 .featuresSection {
-  background-color: white;
-  padding: 2rem 1rem;
+  background-color: var(--deck-surface-soft);
+  padding: 4rem 1rem;
   font-weight: 400;
-  font-size: 24px;
-  line-height: 117%;
-  color: #fff;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--foreground);
 }
 
 .container {
-  width: 1160px;
-  /* max-width: 85rem; */
+  width: 100%;
+  max-width: 1160px;
   margin: 0 auto;
 }
 
 .grid {
   display: grid;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
+/* deck-card */
 .featureCard {
   display: flex;
   flex-direction: column;
+  padding: 1.5rem;
+  border-radius: var(--radius-xl);
+  border: 1px solid transparent;
+  background: linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--deck-blue) 30%, var(--border)),
+        color-mix(in srgb, var(--deck-cyan) 35%, var(--border))
+      )
+      border-box;
+  box-shadow: var(--shadow-blue-5);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .featureHeader {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
 }
 
+/* icon tile */
 .iconContainer {
-  background-color: #fdd655;
-  border-radius: 50%;
-  padding: 0.25rem;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  background-color: var(--deck-blue-8);
+  color: var(--deck-blue);
+  border-radius: var(--radius-md);
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+.iconContainer svg {
+  width: 16px;
+  height: 16px;
+}
+
+.iconContainer svg path {
+  stroke: currentColor;
+}
+
 .featureTitle {
-  line-height: 1.75rem;
+  font-family: var(--font-family-heading);
+  line-height: 1.4;
   margin: 0;
   font-weight: 700;
-  font-size: 20px;
-  color: #303031;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
 }
 
 .featureDescription {
-  line-height: 1.25rem;
+  line-height: 1.6;
   margin: 0;
   font-weight: 400;
-  font-size: 18px;
-  color: var(--clr-slate-50);
+  font-size: 15px;
+  color: var(--muted-foreground);
 }
 
 /* Responsive styles */
@@ -63,10 +92,8 @@
     margin-right: 1.1rem;
   }
   .featureCard {
-    padding: 1rem 0.5rem;
-    width: 350px;
-    height: 180px;
-    margin: auto;
+    width: 100%;
+    height: 100%;
   }
   .container {
     width: 100%;
@@ -75,7 +102,8 @@
     /* margin: 0 auto; */
   }
   .featuresSection {
-    padding-bottom: 0;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
   }
 }
 /* Responsive mobile */
@@ -86,10 +114,8 @@
     margin-right: 1.1rem;
   }
   .featureCard {
-    padding: 1rem 0.5rem;
     width: 100%;
     height: 100%;
-    margin: auto;
   }
   .container {
     width: 100%;
@@ -98,30 +124,23 @@
     /* margin: 0 auto; */
   }
   .featuresSection {
-    padding-bottom: 0;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
   }
 }
 
 @media screen and (min-width: 1200px) and (max-width: 1549px) {
   .grid {
     grid-template-columns: repeat(4, 1fr);
-    margin-left: 1.1rem;
-  }
-}
-
-@media (max-width: 30rem) {
-  .iconContainer {
-    margin: 0.1rem;
   }
 }
 
 @media screen and (min-width: 1550px) and (max-width: 2550px) {
   .container {
-    width: 1500px;
+    max-width: 1500px;
   }
   .grid {
     grid-template-columns: repeat(4, 1fr);
-    margin-left: 1.1rem;
   }
   .featuresSection {
     padding-top: 4rem;
@@ -130,18 +149,17 @@
 
 @media screen and (min-width: 2550px) {
   .container {
-    width: 1900px;
+    max-width: 1900px;
   }
   .featureDescription {
-    line-height: 2rem;
-    font-size: 22px;
+    line-height: 1.6;
+    font-size: 18px;
   }
   .featureTitle {
     font-size: 22px;
   }
   .grid {
     grid-template-columns: repeat(4, 1fr);
-    margin-left: 1.1rem;
   }
   .featuresSection {
     padding-top: 4rem;

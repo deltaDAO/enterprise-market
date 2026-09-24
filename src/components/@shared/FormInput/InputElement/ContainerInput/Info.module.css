@@ -1,8 +1,8 @@
 .info {
-  border-radius: var(--border-radius);
+  border-radius: var(--radius-lg);
   padding: calc(var(--spacer) / 2);
-  border: 1px solid var(--border-color);
-  background-color: var(--background-highlight);
+  border: 1px solid var(--border);
+  background-color: var(--muted);
   position: relative;
 }
 
@@ -14,15 +14,15 @@
   display: inline-block;
   font-size: var(--font-size-small);
   margin-right: calc(var(--spacer) / 2);
-  color: var(--color-secondary);
+  color: var(--deck-blue);
 }
 
 .info li.success {
-  color: var(--brand-alert-green);
+  color: var(--success);
 }
 
 .info li.error {
-  color: var(--brand-alert-red);
+  color: var(--destructive);
 }
 
 .contianer {
@@ -43,6 +43,6 @@
   right: 0;
   font-size: var(--font-size-h3);
   cursor: pointer;
-  color: var(--font-color-text);
+  color: var(--foreground);
   background-color: transparent;
 }

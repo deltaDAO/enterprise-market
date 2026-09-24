@@ -9,7 +9,7 @@
   display: flex;
   align-items: center;
   padding-right: 0;
-  text-transform: uppercase;
+  text-transform: none;
   cursor: pointer;
 }
 
@@ -22,7 +22,7 @@
 svg.caret {
   width: var(--font-size-small);
   height: var(--font-size-small);
-  fill: var(--menu-caret-fill-color);
+  fill: currentColor;
   margin-left: calc(var(--spacer) / 4);
   transition: transform 0.2s ease-out;
 }

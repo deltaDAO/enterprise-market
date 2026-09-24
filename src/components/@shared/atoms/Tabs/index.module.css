@@ -1,13 +1,13 @@
 .tabListContainer {
   margin-left: auto;
   margin-right: auto;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border);
   max-width: 100%;
 }
 
 .tabList {
   text-align: center;
-  padding: calc(var(--spacer) / 2);
+  padding: 0 calc(var(--spacer) / 2);
   display: flex;
   overflow-x: auto;
   scrollbar-width: none;
@@ -15,14 +15,16 @@
 
 .tab {
   display: inline-block;
-  padding: calc(var(--spacer) / 8) calc(var(--spacer) / 2);
+  padding: 10px calc(var(--spacer) / 2);
   font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-small);
-  text-transform: uppercase;
-  color: var(--color-secondary);
-  background-color: var(--background-body);
-  border: 1px solid var(--border-color);
-  margin-right: -1px;
+  font-size: 14px;
+  text-transform: none;
+  color: var(--muted-foreground);
+  background-color: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  margin: 0 0 -1px;
+  transition: color 0.2s ease, border-color 0.2s ease;
 }
 
 .tab,
@@ -31,21 +33,27 @@
 }
 
 .tab:first-child {
-  border-top-left-radius: var(--border-radius);
-  border-bottom-left-radius: var(--border-radius);
   margin-left: auto;
 }
 
 .tab:last-child {
-  border-top-right-radius: var(--border-radius);
-  border-bottom-right-radius: var(--border-radius);
   margin-right: auto;
 }
 
+.tab:hover {
+  color: var(--deck-blue);
+}
+
+.tab:focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: -2px;
+  border-radius: var(--radius-sm);
+}
+
 .tab[aria-selected='true'] {
-  background-color: var(--font-color-heading);
-  color: var(--background-body);
-  border-color: var(--font-color-heading);
+  background-color: transparent;
+  color: var(--deck-blue);
+  border-bottom-color: var(--deck-blue);
 }
 
 .tab[aria-disabled='true'] {
@@ -83,8 +91,8 @@
   margin-top: -2px;
   appearance: none;
   -webkit-appearance: none;
-  border: 1px solid #fdd655;
-  background: white;
+  border: 1px solid var(--input);
+  background: var(--background);
   border-radius: 50%;
 }
 
@@ -98,22 +106,21 @@
   width: fit-content;
   margin-left: 0;
   margin-right: 0;
-  border-bottom-color: var(--border-navy-soft);
+  border-bottom-color: var(--border);
 }
 
 .accentTab {
-  border: 0;
+  border-bottom: 2px solid transparent;
 }
 
 .accentTab[aria-selected='true'] {
-  border-radius: var(--radius-xl);
-  background-color: var(--clr-navy);
-  color: var(--brand-white);
-  border-color: var(--clr-navy);
+  background-color: transparent;
+  color: var(--deck-blue);
+  border-bottom-color: var(--deck-blue);
 }
 
 .accentTab[aria-selected='true'] > div > div > label {
-  color: var(--brand-white);
+  color: var(--deck-blue);
 }
 
 .accentTabList {

@@ -2,13 +2,13 @@
   position: relative;
   display: list-item;
   margin-top: calc(var(--spacer) / 8);
-  color: var(--font-color-text);
+  color: var(--foreground);
   list-style: none;
   padding-left: 1.5rem;
 }
 
 .ulItem {
-  padding-left: 1;
+  padding-left: 1.25rem;
 }
 
 /* ✅ Correct selector for <li class="item ulItem"> */
@@ -16,11 +16,12 @@
   content: '';
   position: absolute;
   left: 0;
-  top: 0.1rem;
-  width: 10px;
-  height: 10px;
-  background-color: #0a4b70;
-  border-radius: 50%;
+  top: 0.55em;
+  width: 6px;
+  height: 6px;
+  background: linear-gradient(135deg, var(--deck-cyan), var(--deck-blue));
+  border-radius: 1px;
+  transform: rotate(45deg);
 }
 
 .olItem {

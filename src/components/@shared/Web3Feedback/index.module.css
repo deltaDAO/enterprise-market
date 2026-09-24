@@ -1,14 +1,16 @@
 .feedback {
   /* font-size: var(--font-size-small); */
-  padding-left: 12px;
+  padding: 0 16px;
   /* padding-top: calc(var(--spacer) / 1.5); */
   margin-top: calc(var(--spacer) / 2);
   margin-bottom: calc(var(--spacer) / 1);
   position: relative;
   width: 100%;
-  background: var(--surface-warning);
+  background: var(--warning-bg);
+  border: 1px solid var(--warning-border);
+  border-radius: var(--radius-xl);
   display: flex;
-  height: 40px;
+  min-height: 40px;
   gap: 10px;
 }
 
@@ -19,23 +21,23 @@
 }
 
 .title {
-  font-family: var(--font-family);
+  font-family: var(--font-family-base);
   margin-bottom: 0px;
   margin-top: 14px;
   font-weight: 400;
   font-size: 14px;
-  color: #303031;
+  color: var(--foreground);
 }
 
 .error {
-  font-family: var(--font-family);
+  font-family: var(--font-family-base);
   font-size: 14px;
   margin-bottom: 0px;
   margin-top: 11px;
   font-weight: 700;
   text-decoration: underline;
   text-decoration-skip-ink: none;
-  color: #4ca3d3;
+  color: var(--brand-highlight);
   cursor: pointer;
 }
 

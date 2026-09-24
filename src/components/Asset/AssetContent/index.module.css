@@ -16,10 +16,11 @@
 }
 
 .grid h4 {
-  font-family: var(--font-family);
+  font-family: var(--font-family-heading);
   font-weight: 700;
-  font-size: 22px;
-  color: #303031;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
   margin-bottom: 18px;
 }
 
@@ -28,29 +29,86 @@
   padding-top: 0;
   margin-top: var(--spacer);
   position: relative;
-  box-shadow: 1px 4px 8px 0 var(--black-alpha-15);
-  background: #fff;
-  border: 1px solid var(--ink-alpha-10);
-  border-radius: 20px;
-  /* padding: 25px; */
+  border-radius: var(--radius-xl);
+  border: 1px solid transparent;
+  background: linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--deck-blue) 30%, var(--border)),
+        color-mix(in srgb, var(--deck-cyan) 35%, var(--border))
+      )
+      border-box;
+  box-shadow: var(--shadow-blue-5);
 }
 
 .assetName {
-  font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 24px;
-  color: #303031;
+  display: block;
+  font-family: var(--font-family-heading);
+  font-weight: 800;
+  font-size: 28px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--deck-blue);
+  margin-bottom: calc(var(--spacer) / 3);
 }
 
+/* asset header band: mist + wave + gradient hairline */
 .metaMenu {
   position: relative;
-  border: 1px solid var(--ink-alpha-10);
-  border-radius: 10px;
+  isolation: isolate;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
   min-height: 40px;
   width: 100%;
-  box-shadow: 1px 4px 8px 0 var(--black-alpha-15);
-  background: #fff;
-  overflow: hidden;
+  box-shadow: var(--shadow-blue-5);
+  background: var(--deck-surface);
+  /* no overflow clipping: the owner-address hover card must escape the band */
+  z-index: 2;
+}
+
+.metaMenu::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: min(100%, 36rem);
+  border-radius: 0 var(--radius-xl) var(--radius-xl) 0;
+  background: var(--wave-svg) no-repeat;
+  background-size: 106% 106%;
+  background-position: 0% 0%;
+  -webkit-mask-image: linear-gradient(to left, #000 35%, transparent);
+  mask-image: linear-gradient(to left, #000 35%, transparent);
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: -1;
+  animation: wave-bg-drift 18s ease-in-out infinite alternate;
+}
+
+/* drift inside the pseudo-element's own box (no transform, nothing to clip) */
+@keyframes wave-bg-drift {
+  from {
+    background-position: 0% 0%;
+  }
+  to {
+    background-position: 100% 100%;
+  }
+}
+
+.metaMenu::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--brand-hairline);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .metaMenu::before {
+    animation: none;
+  }
 }
 
 @media (min-width: 60rem) {
@@ -77,8 +135,8 @@
   margin-top: var(--spacer);
   margin-bottom: calc(var(--spacer) * 1.5);
   padding: calc(var(--spacer) / 3) var(--spacer);
-  border-top: 1px solid var(--border-color);
-  border-bottom: 1px solid var(--border-color);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 
 .ownerButtonsContainer {
@@ -89,38 +147,59 @@
   margin-top: var(--sp-4);
 }
 
+/* Link styled as the primary button */
 .editButton {
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 9px 14px;
-  gap: 4px;
+  padding: 0 16px;
+  gap: 6px;
   width: fit-content;
-  height: 32px;
-  background: var(--gradient-primary);
-  box-shadow: 1px 2px 8px var(--box-shadow-color);
-  border-radius: 20px;
-  border: 1px solid var(--clr-navy);
+  height: 38px;
+  background: var(--deck-blue);
+  box-shadow: 0 4px 12px var(--deck-blue-25);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--deck-blue);
   cursor: pointer;
   font-family: var(--font-family-base);
-  font-weight: var(--text-weight-bold);
-  font-size: var(--text-sm);
+  font-weight: 600;
+  font-size: 14px;
   text-align: center;
-  color: #ffffff;
+  color: #fff;
   text-transform: none;
+  text-decoration: none;
   min-width: unset;
-  min-height: 36px;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.editButton:hover,
+.editButton:focus {
+  background: var(--deck-blue-hover);
+  border-color: var(--deck-blue-hover);
+  color: #fff;
+  box-shadow: 0 6px 16px var(--deck-blue-25);
 }
 
 .editButton:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 4px var(--black-alpha-10);
+  transform: translateY(1px);
+}
+
+.editButton:focus-visible,
+.invoiceButton:focus-visible,
+.ddoToggleButton:focus-visible,
+.toggle:focus-visible,
+.dropdownItem:focus-visible,
+.closeButton:focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
 }
 
 .editIcon {
   width: 14px;
   height: 14px;
   flex-shrink: 0;
+  fill: currentColor;
 }
 
 .invoiceDropdown {
@@ -128,29 +207,36 @@
   display: inline-block;
 }
 
+/* outlined button */
 .invoiceButton {
-  border: 1px solid var(--clr-navy);
-  border-radius: var(--radius-xl);
-  padding: 9px 14px;
-  box-shadow: var(--shadow-sm);
-  background: transparent;
+  border: 1px solid var(--deck-blue-25);
+  border-radius: var(--radius-lg);
+  padding: 0 16px;
+  height: 38px;
+  box-shadow: none;
+  background: #fff;
   font-family: var(--font-family-base);
-  font-weight: var(--text-weight-bold);
-  font-size: var(--text-sm);
-  line-height: 114%;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1;
   text-align: center;
-  color: var(--clr-navy);
+  color: var(--deck-blue);
   text-transform: none;
   min-width: unset;
   display: flex;
   align-items: center;
-  gap: 4px;
-  min-height: 36px;
+  gap: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.invoiceButton:hover {
+  background: var(--deck-blue-8);
+  border-color: var(--deck-blue);
 }
 
 .invoiceButton:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transform: translateY(1px);
 }
 
 .dropdownArrow {
@@ -158,7 +244,7 @@
   height: 0;
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;
-  border-top: 6px solid #303031;
+  border-top: 6px solid currentColor;
   transition: transform 0.2s ease;
 }
 
@@ -171,10 +257,10 @@
   top: 100%;
   left: 0;
   right: 0;
-  background: white;
-  border: 1px solid rgba(48, 48, 49, 0.2);
-  border-radius: 8px;
-  box-shadow: 0 4px 12px var(--black-alpha-15);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
   margin-top: 4px;
   opacity: 0;
   visibility: hidden;
@@ -196,8 +282,8 @@
   padding: 12px 16px;
   background: none;
   border: none;
-  color: #303031;
-  font-family: 'Helvetica';
+  color: var(--foreground);
+  font-family: var(--font-family-base);
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
@@ -208,27 +294,28 @@
 }
 
 .dropdownItem:hover {
-  background: var(--neutral-120);
+  background: var(--deck-blue-8);
+  color: var(--deck-blue);
 }
 
 .dropdownItem:first-child {
-  border-radius: 8px 8px 0 0;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 }
 
 .dropdownItem:last-child {
-  border-radius: 0 0 8px 8px;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
 }
 
 .dropdownItem:only-child {
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
 }
 
 .dropdownItem:not(:last-child) {
-  border-bottom: 1px solid var(--ink-alpha-10);
+  border-bottom: 1px solid var(--border);
 }
 
 .loadingText {
-  color: #757575;
+  color: var(--muted-foreground);
   font-style: italic;
 }
 
@@ -252,11 +339,11 @@
 }
 
 .description {
-  font-family: var(--font-family);
+  font-family: var(--font-family-base);
   font-weight: 400;
-  font-size: 14px;
-  line-height: 129%;
-  color: var(--clr-slate-70);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--muted-foreground);
   word-break: break-word;
 }
 
@@ -274,43 +361,53 @@
   overflow: visible;
 }
 
+/* "more / less" chip */
 .toggle {
   font-size: 12px;
-  font-weight: 600;
-  color: #00adb2;
+  font-weight: 500;
+  color: var(--deck-blue);
   cursor: pointer;
-  border: 1px solid #00adb2;
-  border-radius: 10px;
-  padding: 0 6px;
+  border: 1px solid var(--deck-blue-25);
+  border-radius: var(--radius-pill);
+  padding: 0 8px;
+  line-height: 20px;
   white-space: nowrap;
+  background: #fff;
 }
 
 .toggle:hover {
-  background: var(--teal-alpha-10);
+  background: var(--deck-blue-8);
+  border-color: var(--deck-blue);
 }
 
+/* outlined button */
 .ddoToggleButton {
   margin-top: var(--spacer);
-  border: 1px solid var(--clr-navy);
-  border-radius: var(--radius-xl);
-  padding: 9px 14px;
-  box-shadow: var(--shadow-sm);
-  background: transparent;
+  border: 1px solid var(--deck-blue-25);
+  border-radius: var(--radius-lg);
+  padding: 0 16px;
+  height: 38px;
+  box-shadow: none;
+  background: #fff;
   font-family: var(--font-family-base);
-  font-weight: var(--text-weight-bold);
-  font-size: var(--text-sm);
-  line-height: 114%;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1;
   text-align: center;
-  color: var(--clr-navy);
+  color: var(--deck-blue);
   text-transform: none;
   min-width: unset;
-  min-height: 36px;
   cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.ddoToggleButton:hover {
+  background: var(--deck-blue-8);
+  border-color: var(--deck-blue);
 }
 
 .ddoToggleButton:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 4px var(--black-alpha-10);
+  transform: translateY(1px);
 }
 
 .ddoToggleButtonInline {
@@ -342,11 +439,15 @@
     transform: none;
     margin-top: 8px;
     box-shadow: none;
-    border: 1px solid rgba(48, 48, 49, 0.2);
+    border: 1px solid var(--border);
   }
 
   .invoiceDropdown.open .dropdownMenu {
     position: static;
+  }
+
+  .assetName {
+    font-size: 24px;
   }
 }
 
@@ -357,7 +458,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: var(--black-alpha-80);
+  background: rgba(11, 19, 34, 0.55);
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -366,8 +467,9 @@
 }
 
 .computeWizardContainer {
-  background: white;
-  border-radius: 12px;
+  background: var(--card);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-soft);
   width: 100%;
   max-width: 1200px;
   max-height: 90vh;
@@ -380,28 +482,52 @@
   flex: 1;
   overflow-y: auto;
   padding: 20px;
+  background: var(--deck-surface-soft);
 }
 
 .computeWizardHeader {
   display: flex;
   justify-content: flex-end;
-  padding: 16px 20px;
-  border-bottom: 1px solid #e0e0e0;
-  background: var(--neutral-120);
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--card);
+  position: relative;
+}
+
+.computeWizardHeader::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: var(--brand-hairline);
+  opacity: 0.6;
 }
 
 .closeButton {
   background: none;
   border: none;
-  color: var(--neutral-700);
+  color: var(--muted-foreground);
   font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
   padding: 8px 12px;
-  border-radius: 6px;
+  border-radius: var(--radius-lg);
   transition: background-color 0.2s;
 }
 
 .closeButton:hover {
-  background: var(--neutral-160);
-  color: var(--neutral-900);
+  background: var(--deck-blue-8);
+  color: var(--deck-blue);
+}
+
+/* keyframes are module-scoped, so the wave drift is declared locally */
+@keyframes wave-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-2.5%, 2%, 0) scale(1.03);
+  }
 }

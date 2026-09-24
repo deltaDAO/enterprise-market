@@ -21,7 +21,7 @@
   height: 2em;
   border-radius: 50%;
   background: transparent;
-  color: var(--brand-grey);
+  color: var(--muted-foreground);
   font: inherit;
   text-indent: 100%;
   cursor: pointer;

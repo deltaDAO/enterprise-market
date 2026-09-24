@@ -43,19 +43,19 @@
 
 .logo svg {
   height: 100%;
-  fill: var(--ocean-violet);
+  fill: var(--deck-blue);
 }
 
 .button:hover .logo,
 .button:focus .logo {
-  border-color: var(--clr-navy);
-  background-color: var(--navy-alpha-5);
-  box-shadow: 0 0 0 0.5px var(--navy-alpha-20);
+  border-color: var(--deck-blue);
+  background-color: var(--deck-blue-4);
+  box-shadow: 0 0 0 0.5px var(--deck-blue-12);
 }
 
 .button:hover .logoWrap::before,
 .button:focus .logoWrap::before {
-  color: var(--clr-navy);
+  color: var(--deck-blue);
 }
 
 .text {
@@ -70,8 +70,8 @@
   white-space: nowrap;
   background-image: linear-gradient(
       90deg,
-      var(--clr-navy) 0%,
-      var(--clr-navy) 100%
+      var(--deck-blue) 0%,
+      var(--deck-blue) 100%
     ),
     linear-gradient(90deg, var(--ink-alpha-80) 0%, var(--ink-alpha-80) 100%);
   background-size: 0% 100%, 100% 100%;
@@ -99,7 +99,7 @@
 
   .button:hover .text,
   .button:focus .text {
-    color: var(--clr-navy);
+    color: var(--deck-blue);
   }
 }
 

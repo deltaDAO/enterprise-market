@@ -1,10 +1,18 @@
 .service {
   cursor: pointer;
   padding: calc(var(--spacer) * 0.5) var(--spacer);
-  border: 1px solid var(--ink-alpha-10);
-  border-radius: 20px;
-  box-shadow: 1px 4px 8px 0 var(--black-alpha-15);
-  background: #fff;
+  border: 1px solid transparent;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--deck-blue) 30%, var(--border)),
+        color-mix(in srgb, var(--deck-cyan) 35%, var(--border))
+      )
+      border-box;
+  box-shadow: var(--shadow-blue-5);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  color: var(--deck-blue);
   position: relative;
   min-height: 145px;
   min-width: 250px;
@@ -14,14 +22,22 @@
 }
 
 .service:hover {
-  box-shadow: var(--box-template-box-shadow);
+  box-shadow: var(--shadow-blue-10);
+  transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service:hover {
+    transform: none;
+  }
 }
 
 .title {
   font-family: var(--font-family-base);
-  font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-small);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.14em;
   margin-bottom: calc(var(--spacer) / 4);
-  color: var(--font-color-heading);
+  color: var(--muted-foreground);
   text-transform: uppercase;
 }

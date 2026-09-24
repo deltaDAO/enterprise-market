@@ -1,6 +1,6 @@
 .row {
   padding: calc(var(--spacer) / 4) 0;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -45,16 +45,16 @@
 .connectButton.connectButton.connectButton:focus-visible {
   opacity: 1;
   box-shadow: var(--shadow-sm);
-  background: transparent;
-  color: var(--clr-navy);
-  transform: translate3d(0, calc(var(--sp-0_5) * -1), 0);
+  background: var(--deck-blue-8);
+  color: var(--deck-blue);
+  transform: none;
 }
 
 .connectButton.connectButton.connectButton:active {
   opacity: 1;
   box-shadow: var(--shadow-sm);
-  background: transparent;
-  color: var(--clr-navy);
+  background: var(--deck-blue-12);
+  color: var(--deck-blue);
   transform: none;
 }
 

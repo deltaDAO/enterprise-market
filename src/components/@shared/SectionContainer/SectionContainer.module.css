@@ -1,6 +1,8 @@
 .container {
   position: relative;
-  border: 1px solid var(--border-navy-soft);
+  border: 1px solid transparent;
+  background: var(--deck-card-background);
+  box-shadow: var(--shadow-blue-5);
   border-radius: var(--radius-xl);
   width: 100%;
   display: flex;
@@ -13,14 +15,12 @@
 }
 
 .accent {
-  border: var(--border-size-sm) solid var(--border-navy-soft);
   border-radius: var(--radius-xl);
   padding: var(--form-container-padding-top-extended);
   gap: var(--sp-8);
 }
 
 .border {
-  border: var(--border-size-sm) solid var(--border-navy-soft);
   border-radius: var(--radius-xl);
 }
 
@@ -28,18 +28,21 @@
   position: absolute;
   top: -10px;
   left: 16px;
-  background: var(--background-content);
+  background: var(--card);
   padding: 0 8px;
   font-family: var(--font-family-base);
   font-style: normal;
-  font-weight: var(--text-weight-bold);
-  font-size: var(--text-sm);
+  font-weight: 600;
+  font-size: var(--font-size-label-motif);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-label);
   line-height: var(--text-line-base);
-  color: var(--clr-slate-70);
+  color: var(--muted-foreground);
+  border-radius: var(--radius-sm);
 }
 
 .required {
-  color: var(--input-error-text-color);
+  color: var(--destructive);
   margin-left: 2px;
 }
 
@@ -59,9 +62,12 @@
 }
 
 .borderNavy {
-  border: 1px solid var(--clr-navy);
+  background: linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(135deg, var(--deck-blue), var(--deck-cyan)) border-box;
 }
 
 .borderless {
   border: none;
+  background: transparent;
+  box-shadow: none;
 }

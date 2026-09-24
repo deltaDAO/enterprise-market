@@ -35,10 +35,20 @@
   padding: var(--sp-4);
 }
 
+.row {
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
 .row:hover {
-  background: var(--surface-hover);
-  border-radius: var(--radius-xl);
+  background: var(--deck-blue-4);
   cursor: pointer;
+}
+
+.row:has(.input:checked) {
+  background: var(--deck-blue-8);
+  border-color: var(--deck-blue);
 }
 
 .content {
@@ -89,7 +99,7 @@
   font-style: normal;
   font-weight: var(--text-weight-regular);
   font-size: var(--text-sm);
-  color: var(--clr-did-text);
+  color: var(--brand-highlight);
 }
 
 .titleRow {
@@ -106,9 +116,9 @@
   height: 16px;
   margin: 0;
   margin-right: 0;
-  border: 1px solid var(--clr-amber);
-  border-radius: var(--radius-compact);
-  background: var(--brand-white);
+  border: 1px solid var(--input-strong);
+  border-radius: var(--radius-sm);
+  background: var(--background);
   cursor: pointer;
   position: relative;
   flex-shrink: 0;
@@ -116,9 +126,14 @@
   -webkit-appearance: none;
 }
 
+.input:focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
+}
+
 .input:checked {
-  border-color: var(--clr-amber);
-  background: var(--clr-amber);
+  border-color: var(--deck-blue);
+  background: var(--deck-blue);
 }
 
 .input:checked::after {
@@ -163,7 +178,7 @@
   font-weight: var(--text-weight-bold);
   font-size: var(--text-sm);
   line-height: var(--text-line-base);
-  color: var(--text-ink);
+  color: var(--foreground);
   margin: 0;
   display: flex;
   align-items: center;
@@ -212,8 +227,9 @@
   font-weight: var(--text-weight-bold);
   font-size: var(--text-sm);
   line-height: var(--text-line-base);
-  color: var(--text-ink);
+  color: var(--foreground);
   white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 
 .price [class*='symbol'] {
@@ -229,7 +245,9 @@
   line-height: var(--text-line-base);
   display: block;
   text-align: left;
-  color: var(--font-color-did);
+  color: var(--brand-highlight);
+  font-family: var(--font-family-monospace);
+  font-size: 12px;
   /* makes sure DotDotDot will kick in */
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -239,7 +257,7 @@
 .empty {
   padding: var(--spacer) calc(var(--spacer) / 2);
   text-align: center;
-  color: var(--color-secondary);
+  color: var(--muted-foreground);
 }
 
 @media screen and (max-width: 37.5rem) {

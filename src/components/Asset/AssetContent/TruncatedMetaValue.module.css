@@ -20,13 +20,14 @@
   max-width: 60vw;
   padding: 8px 10px;
 
-  background: #1f2937;
+  background: var(--deck-navy);
   color: #fff;
+  font-family: var(--font-family-monospace);
   font-size: 13px;
   line-height: 1.4;
 
-  border-radius: 6px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
 
   white-space: normal;
   word-break: break-all;

@@ -11,9 +11,11 @@
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  font-size: 0.9rem;
-  color: black;
-  font-weight: bold;
+  font-size: var(--font-size-label-motif);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-label);
+  color: var(--muted-foreground);
+  font-weight: 600;
 }
 
 .modal input {

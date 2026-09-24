@@ -23,7 +23,8 @@
 
 .free {
   text-align: left;
-  font-size: var(--font-size-base);
+  font-size: 14px;
+  color: var(--foreground);
 }
 
 .free [class*='FormInput_field'] {

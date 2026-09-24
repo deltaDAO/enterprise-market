@@ -11,15 +11,14 @@
 }
 
 .name {
-  font-size: var(--font-size-small);
-  color: #fff;
+  font-size: 13px;
+  font-weight: var(--font-weight-medium);
+  color: inherit;
 }
 
 .badge {
   margin-left: calc(var(--spacer) / 8);
-  background-color: var(--navy-800);
-  color: var(--menu-network-badge-font-color);
-  font-size: calc(var(--font-size-mini) * 0.8);
+  font-size: 10px;
 }
 
 .warning {

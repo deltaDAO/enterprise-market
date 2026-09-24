@@ -1,40 +1,96 @@
-/* ── Full-bleed brand panel ── */
+/* ── Full-bleed brand panel: deltaDAO navy slide ── */
 .brandPanel {
   flex: 1 1 50%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: radial-gradient(
-      circle at 50% 18%,
-      rgba(97, 165, 194, 0.2) 0%,
-      rgba(97, 165, 194, 0) 30%
+  background-color: var(--deck-navy);
+  background-image: radial-gradient(
+      circle at 1px 1px,
+      rgba(255, 255, 255, 0.06) 1px,
+      transparent 0
     ),
-    linear-gradient(180deg, #24456c 0%, #165781 38%, #1b4d73 68%, #233a5d 100%);
+    radial-gradient(
+      circle at 18% 22%,
+      color-mix(in srgb, var(--brand-highlight) 25%, transparent) 0%,
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 85% 80%,
+      color-mix(in srgb, var(--brand-secondary) 15%, transparent) 0%,
+      transparent 45%
+    );
+  background-size: 22px 22px, 100% 100%, 100% 100%;
+  color: #fff;
   position: relative;
   overflow: hidden;
+  isolation: isolate;
   padding: 40px 36px;
 }
 
-/* ── Decorative waves ── */
+/* top-right brand wave */
+.brandPanel::before {
+  content: '';
+  position: absolute;
+  inset: -1px 0 auto auto;
+  width: min(100%, 48rem);
+  height: 13rem;
+  background: var(--wave-svg) no-repeat;
+  background-size: 100% 100%;
+  -webkit-mask-image: linear-gradient(to left, #000 35%, transparent);
+  mask-image: linear-gradient(to left, #000 35%, transparent);
+  pointer-events: none;
+  z-index: 0;
+  animation: wave-drift 18s ease-in-out infinite alternate;
+}
+
+/* gradient hairline along the inner edge */
+.brandPanel::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--brand-hairline);
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Decorative waves (bottom-left brand wave; legacy SVG hidden) ── */
 .waves {
   position: absolute;
-  bottom: 0;
+  bottom: -1px;
   left: 0;
-  width: 100%;
-  height: 200px;
+  width: min(100%, 40rem);
+  height: 11rem;
   z-index: 0;
   pointer-events: none;
+  background: var(--wave-svg) no-repeat;
+  background-size: 100% 100%;
+  transform: rotate(180deg);
+  animation: wave-drift-flip 28s ease-in-out infinite alternate-reverse;
+  -webkit-mask-image: linear-gradient(to left, #000 35%, transparent);
+  mask-image: linear-gradient(to left, #000 35%, transparent);
+  opacity: 0.8;
 }
 
 .wavesSvg {
-  width: 100%;
-  height: 100%;
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brandPanel::before {
+    animation: none;
+  }
 }
 
 /* ── Content wrapper (max-width constrained so text stays readable on ultrawide) ── */
 .content {
   position: relative;
   z-index: 1;
+  text-align: left;
   width: 100%;
   max-width: 450px;
   display: flex;
@@ -57,21 +113,32 @@
 .bottom {
   margin-top: 32px;
   padding-top: 24px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-/* ── Logo ── */
+/* ── Logo (wordmark uses currentColor; the gradient mark keeps its colors) ── */
+.logoWrapper {
+  display: flex;
+  justify-content: flex-start;
+  color: #fff;
+  line-height: 0;
+}
+
 .logoWrapper svg {
-  width: 140px;
-  height: auto;
-  filter: brightness(0) invert(1);
+  width: auto;
+  height: 2.75rem;
+  max-width: 100%;
+  margin: 0;
+  /* the svg carries width/height="1em", so pin the logo's own ratio */
+  aspect-ratio: 1058 / 350;
 }
 
 /* ── Typography ── */
 .title {
+  font-family: var(--font-family-heading);
   font-size: 2rem;
-  font-weight: 700;
-  color: white;
+  font-weight: 800;
+  color: #fff;
   margin-bottom: 14px;
   line-height: 1.2;
   letter-spacing: -0.02em;
@@ -79,7 +146,7 @@
 
 .description {
   font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.7);
   margin-bottom: 28px;
   line-height: 1.6;
 }
@@ -101,12 +168,13 @@
   width: 28px;
   height: 28px;
   background: rgba(255, 255, 255, 0.08);
-  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--deck-cyan);
 }
 
 .featureText {
@@ -117,11 +185,12 @@
 
 /* ── Trust badges ── */
 .trustLabel {
-  color: rgba(255, 255, 255, 0.62);
-  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 11px;
+  font-weight: 600;
   margin-bottom: 10px;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
+  letter-spacing: 0.14em;
 }
 
 .badges {
@@ -131,13 +200,16 @@
 }
 
 .badge {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 20px;
-  padding: 4px 12px;
-  font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.72);
-  letter-spacing: 0.3px;
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-pill);
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.78);
 }
 
 /* ── 4K ── */
@@ -152,7 +224,7 @@
   }
 
   .logoWrapper svg {
-    width: 180px;
+    height: 3.25rem;
   }
 
   .title {
@@ -210,7 +282,7 @@
   }
 
   .logoWrapper svg {
-    width: 120px;
+    height: 2.5rem;
   }
 
   .title {
@@ -299,7 +371,7 @@
   }
 
   .logoWrapper svg {
-    width: 110px;
+    height: 2.25rem;
   }
 
   .title {
@@ -330,7 +402,33 @@
   }
 
   .badge {
-    font-size: 0.6rem;
-    padding: 3px 10px;
+    font-size: 11px;
+    padding: 0 8px;
+  }
+}
+
+/* keyframes are module-scoped, so the wave drift is declared locally */
+@keyframes wave-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-2.5%, 2%, 0) scale(1.03);
+  }
+}
+
+/* bottom-left wave: same drift, keeps its 180deg flip */
+@keyframes wave-drift-flip {
+  from {
+    transform: rotate(180deg) translate3d(0, 0, 0);
+  }
+  to {
+    transform: rotate(180deg) translate3d(-2.5%, 2%, 0) scale(1.03);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .waves {
+    animation: none;
   }
 }

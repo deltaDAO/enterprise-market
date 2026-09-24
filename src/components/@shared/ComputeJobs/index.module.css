@@ -1,36 +1,44 @@
 .container {
   margin-top: 3rem;
-  border: 1px solid rgba(48, 48, 49, 0.1);
-  border-radius: 20px;
   padding: 20px;
-  box-shadow: 1px 4px 8px 0 rgba(0, 0, 0, 0.15);
-  background: #fff;
+  border: 1px solid transparent;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--deck-blue) 30%, var(--border)),
+        color-mix(in srgb, var(--deck-cyan) 35%, var(--border))
+      )
+      border-box;
+  box-shadow: var(--shadow-blue-5);
 }
 
 .title {
-  font-family: var(--font-family);
+  font-family: var(--font-family-base);
   font-weight: 700;
-  font-size: 22px;
-  color: #303031;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
   margin-bottom: 20px;
 }
 
 .jobsTable {
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
 }
 
 .tableHeader {
   display: flex;
-  border-bottom: 1px solid rgba(48, 48, 49, 0.1);
+  border-bottom: 1px solid var(--border);
   padding: 0 0 16px 0;
   height: 34px;
-  font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 14px;
+  font-family: var(--font-family-base);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.14em;
   line-height: 114%;
   text-transform: uppercase;
-  color: #303031;
+  color: var(--muted-foreground);
 }
 
 .statusColumn {
@@ -47,10 +55,15 @@
 
 .jobRow {
   display: flex;
-  border-bottom: 1px solid rgba(48, 48, 49, 0.1);
+  border-bottom: 1px solid var(--border);
   padding: 0 0 16px 0;
   height: 40px;
   margin-top: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.jobRow:hover {
+  background: var(--muted);
 }
 
 .jobRow:last-child {
@@ -66,22 +79,23 @@
   flex: 1;
   display: flex;
   align-items: center;
-  font-family: var(--font-family);
+  font-family: var(--font-family-base);
   font-weight: 400;
   font-size: 12px;
   line-height: 117%;
-  color: #4ca3d3;
+  color: var(--brand-highlight);
 }
 
 .finishedCell {
   flex: 1;
   display: flex;
   align-items: center;
-  font-family: var(--font-family);
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-family-base);
   font-weight: 400;
   font-size: 12px;
   line-height: 117%;
-  color: #303031;
+  color: var(--foreground);
 }
 
 .loading,
@@ -89,16 +103,17 @@
 .empty {
   padding: 20px;
   text-align: center;
-  font-size: 16px;
-  color: #666;
+  font-size: 15px;
+  color: var(--muted-foreground);
 }
 
 .error {
-  color: #ff4d4f;
+  color: var(--destructive);
 }
 
 .empty {
-  color: #888;
+  color: var(--muted-foreground);
+  font-style: italic;
 }
 
 .statusContent {
@@ -111,30 +126,32 @@
   margin-right: 8px;
   width: 13px;
   height: 13px;
-  display: flex-start;
+  display: flex;
 }
 
 .statusText {
-  font-family: var(--font-family);
+  font-family: var(--font-family-base);
   font-weight: 400;
   font-size: 12px;
   line-height: 117%;
-  color: #303031;
+  color: var(--foreground);
 }
 .sales {
   margin-top: 1rem;
   margin-bottom: 0.5rem;
-  border-top: 1px solid rgba(48, 48, 49, 0.1);
-  font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 12px;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-family-base);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #303031;
+  color: var(--muted-foreground);
   text-align: center; /* Center text horizontally */
   padding-top: 1rem;
 }
 .salesTag {
-  color: #00adb2;
+  font-variant-numeric: tabular-nums;
+  color: var(--deck-blue);
 }
 
 .headerRow {
@@ -155,4 +172,32 @@
   justify-content: center;
   height: 1rem;
   filter: brightness(0) invert(1);
+}
+
+/* "Refresh" is a utility action.
+ * Demoted from the hero tier to the solid primary tier: only one gradient
+ * (hero) button per view (the page's final action). */
+body .refreshButton.refreshButton {
+  background: var(--deck-blue);
+  color: var(--brand-white);
+  border: 1px solid var(--deck-blue);
+  box-shadow: 0 4px 12px var(--deck-blue-25);
+  filter: none;
+}
+
+body .refreshButton.refreshButton:hover,
+body .refreshButton.refreshButton:focus-visible {
+  background: var(--deck-blue-hover);
+  border-color: var(--deck-blue-hover);
+  color: var(--brand-white);
+  box-shadow: 0 6px 18px var(--deck-blue-25);
+  filter: none;
+  transform: none;
+}
+
+body .refreshButton.refreshButton:active {
+  background: var(--deck-blue-hover);
+  box-shadow: 0 2px 6px var(--deck-blue-25);
+  filter: none;
+  transform: translateY(1px);
 }

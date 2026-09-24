@@ -25,8 +25,8 @@
   display: block;
   font-family: var(--font-family-base);
   font-weight: var(--font-weight-bold);
-  font-size: 10px;
-  color: var(--input-error-text-color);
+  font-size: 11px;
+  color: var(--destructive);
   line-height: 1.2;
   position: absolute;
   top: 100%;
@@ -47,16 +47,15 @@
 }
 
 .hasError label {
-  color: var(--input-error-text-color);
+  color: var(--destructive);
 }
 
 body .hasError input,
-body .hasError input:focus,
 body .hasError select,
 body .hasError textarea,
 body .hasError [class*='prefix'],
 body .hasError [class*='postfix'] {
-  border-color: var(--input-error-border-color) !important;
+  border-color: var(--destructive) !important;
   box-shadow: none !important;
 }
 
@@ -79,4 +78,11 @@ body .hasError [class*='postfix'] {
 :global(.argumentRow):has(.hasError),
 :global(.ruleRow):has(.hasError) {
   margin-bottom: calc(var(--spacer) * var(--line-height) + 20px) !important;
+}
+
+body .hasError input:focus,
+body .hasError select:focus,
+body .hasError textarea:focus {
+  border-color: var(--destructive) !important;
+  box-shadow: 0 0 0 3px var(--destructive-soft) !important;
 }

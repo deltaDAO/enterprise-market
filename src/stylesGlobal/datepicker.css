@@ -3,19 +3,23 @@
 
 .react-datepicker {
   font-family: inherit;
-  color: inherit;
-  border-color: red;
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
 }
 
 .react-datepicker__header {
-  background: var(--color-highlight);
+  background: var(--deck-blue);
+  border-bottom: 0;
   border-radius: 0;
 }
 
 .react-datepicker__day-name,
 .react-datepicker__day,
 .react-datepicker__time-name {
-  color: var(--brand-grey);
+  color: var(--foreground);
 }
 
 .react-datepicker__current-month,
@@ -24,6 +28,10 @@
 .react-datepicker__day-name {
   color: var(--brand-white);
   font-weight: var(--font-weight-bold);
+}
+
+.react-datepicker__navigation-icon::before {
+  border-color: var(--brand-white);
 }
 
 .react-datepicker__month-container {
@@ -39,7 +47,13 @@
 .react-datepicker__year-read-view--down-arrow:before,
 .react-datepicker__month-read-view--down-arrow:before,
 .react-datepicker__month-year-read-view--down-arrow:before {
-  border-top-color: var(--color-highlight);
+  border-top-color: var(--deck-blue);
+}
+
+.react-datepicker__day--keyboard-selected {
+  background-color: var(--deck-blue-12);
+  color: var(--deck-blue);
+  border-radius: var(--radius-sm);
 }
 
 .react-datepicker__day--selected,
@@ -48,20 +62,20 @@
 .react-datepicker__month-text--selected,
 .react-datepicker__month-text--in-selecting-range,
 .react-datepicker__month-text--in-range {
-  background-color: var(--color-highlight);
+  background-color: var(--deck-blue);
   color: var(--brand-white);
-  border-radius: 50%;
+  border-radius: var(--radius-sm);
   font-weight: var(--font-weight-bold);
 }
 
 .react-datepicker__day:hover,
 .react-datepicker__month-text:hover {
-  background-color: var(--color-highlight);
-  border-radius: 50%;
+  background-color: var(--deck-blue-8);
+  border-radius: var(--radius-sm);
   font-weight: var(--font-weight-bold);
-  color: var(--brand-white);
+  color: var(--deck-blue);
 }
 
 .react-datepicker__day--outside-month {
-  color: var(--brand-grey);
+  color: var(--muted-foreground);
 }

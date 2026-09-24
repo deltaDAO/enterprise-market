@@ -3,6 +3,6 @@
   align-items: center;
   gap: 0.5rem;
   margin-top: 0.35rem;
-  color: var(--clr-slate-70);
+  color: var(--muted-foreground);
   font-size: var(--font-size-small);
 }

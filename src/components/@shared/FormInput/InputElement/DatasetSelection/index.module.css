@@ -23,26 +23,28 @@
 }
 
 .scroll::-webkit-scrollbar-track {
-  background: var(--neutral-125);
-  border-radius: 4px;
+  background: var(--secondary);
+  border-radius: var(--radius-pill);
 }
 
 .scroll::-webkit-scrollbar-thumb {
-  background: #fdd655;
-  border-radius: 4px;
+  background: var(--deck-blue-25);
+  border-radius: var(--radius-pill);
 }
 
 .scroll::-webkit-scrollbar-thumb:hover {
-  background: var(--yellow-600);
+  background: var(--deck-blue-40);
 }
 
 .datasetCard {
-  background: var(--brand-white);
+  border: 1px solid transparent;
+  background: var(--deck-card-background);
   border-radius: var(--radius-xl);
-  padding: 24px;
+  padding: 20px 24px;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 4px var(--black-alpha-10);
+  transition: box-shadow 0.3s ease, transform 0.3s ease,
+    background-color 0.2s ease;
+  box-shadow: var(--shadow-blue-5);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -50,13 +52,14 @@
 }
 
 .datasetCard:hover {
-  box-shadow: 1px 4px 8px 0 var(--black-alpha-15);
-  background: rgba(10, 75, 112, 0.04);
+  box-shadow: var(--shadow-blue-10);
+  transform: translateY(-2px);
 }
 
 .datasetCard.selected {
-  background: rgba(10, 75, 112, 0.04);
-  box-shadow: 0 4px 8px var(--navy-alpha-20);
+  border-color: var(--deck-blue);
+  background: var(--deck-blue-8);
+  box-shadow: var(--shadow-blue-5);
 }
 
 .datasetCard.itemDisabled {
@@ -69,8 +72,8 @@
 }
 
 .datasetCard.itemDisabled:hover {
-  background: var(--brand-white);
-  box-shadow: 0 2px 4px var(--black-alpha-10);
+  transform: none;
+  box-shadow: var(--shadow-blue-5);
 }
 
 .cardHeader {
@@ -90,27 +93,27 @@
   font-family: var(--font-family-base);
   font-weight: 700;
   font-size: 18px;
-  color: var(--text-ink);
+  color: var(--foreground);
   margin: 0;
 }
 .price {
   display: flex;
   justify-content: flex-end;
   gap: 4px;
-  font-family: var(--font-family);
+  font-family: var(--font-family-base);
   font-weight: 700;
   font-size: 14px;
-  color: #303031;
+  color: var(--foreground);
 }
 .priceUnit {
-  color: #00adb2;
+  color: var(--muted-foreground);
 }
 
 .envId {
-  font-family: var(--font-family);
+  font-family: var(--font-family-base);
   font-weight: 400;
   font-size: 12px;
-  color: var(--clr-slate-50);
+  color: var(--placeholder);
   display: flex;
   align-items: center;
   gap: 6px;
@@ -130,10 +133,10 @@
 }
 
 .tokenSymbol {
-  font-family: var(--font-family);
+  font-family: var(--font-family-base);
   font-weight: 600;
   font-size: 12px;
-  color: #303031;
+  color: var(--foreground);
 }
 
 .statusTags {
@@ -143,43 +146,45 @@
 }
 
 .freeTag {
-  border: 1px solid #00adb2;
-  border-radius: 20px;
-  padding: 2px 8px;
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  border-radius: var(--radius-pill);
+  padding: 0 8px;
   width: fit-content;
-  height: fit-content;
-
-  box-shadow: 1px 2px 8px 0 var(--black-alpha-15);
-  background: var(--cyan-alpha-1);
-
-  font-weight: 700;
+  box-shadow: none;
+  font-weight: 500;
   font-size: 12px;
-  line-height: 100%;
+  line-height: 1;
   text-align: center;
-  color: #00adb2;
+  white-space: nowrap;
+  border: 1px solid rgba(4, 120, 87, 0.2);
+  background: var(--success-soft);
+  color: var(--success);
 }
 
 .paidTag {
-  border: 1px solid #45c01f;
-  border-radius: 20px;
-  padding: 2px 8px;
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  border-radius: var(--radius-pill);
+  padding: 0 8px;
   width: fit-content;
-  height: fit-content;
-
-  box-shadow: 1px 2px 8px 0 var(--black-alpha-15);
-  background: var(--green-alpha-1);
-
-  font-weight: 700;
+  box-shadow: none;
+  font-weight: 500;
   font-size: 12px;
-  line-height: 100%;
+  line-height: 1;
   text-align: center;
-  color: #45c01f;
+  white-space: nowrap;
+  border: 1px solid var(--deck-blue-25);
+  background: var(--deck-blue-8);
+  color: var(--deck-blue);
 }
 
 .description {
   font-size: 12px;
   font-weight: 400;
-  color: var(--clr-slate-70);
+  color: var(--muted-foreground);
   margin: 0;
   white-space: nowrap;
   overflow: hidden;
@@ -204,7 +209,7 @@
 }
 
 .updateInfoButton:focus-visible {
-  outline: 2px solid var(--input-error-text-color);
+  outline: 2px solid var(--destructive);
   outline-offset: 2px;
   border-radius: 50%;
 }
@@ -212,23 +217,32 @@
 .updateInfoIcon {
   width: 20px;
   height: 20px;
-  fill: var(--input-error-text-color);
+  fill: var(--destructive);
 }
 
 .selectedTag {
-  background: var(--clr-amber);
-  color: var(--clr-navy);
-  border-radius: var(--radius-xl);
-  padding: 2px 8px;
-  font-family: var(--font-family-base);
-  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  border-radius: var(--radius-pill);
+  padding: 0 8px;
+  width: fit-content;
+  box-shadow: none;
+  font-weight: 500;
   font-size: 12px;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  border: 1px solid var(--deck-blue);
+  background: var(--deck-blue);
+  color: var(--brand-white);
+  font-weight: 600;
 }
 
 .empty {
   padding: var(--spacer) calc(var(--spacer) / 2);
   text-align: center;
-  color: var(--color-secondary);
+  color: var(--muted-foreground);
 }
 
 .cardContent {
@@ -239,8 +253,15 @@
 }
 
 .network {
-  font-family: var(--font-family);
+  font-family: var(--font-family-base);
   font-weight: 400;
-  font-size: 10px;
-  color: rgba(48, 48, 49, 0.7);
+  font-size: 11px;
+  color: var(--muted-foreground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .datasetCard:hover,
+  .environmentCard:hover {
+    transform: none;
+  }
 }

@@ -5,7 +5,9 @@
 
 /* GDPR Section */
 .gdpr {
-  border: var(--border-size-sm) solid var(--border-navy-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  background: var(--muted);
   padding: calc(var(--spacer) / 2);
   margin-top: calc(var(--spacer) * -0.5);
   margin-bottom: var(--spacer);
@@ -17,8 +19,9 @@
 
 /* Docker Configuration Section */
 .dockerContainer {
-  border: 1px solid var(--border-navy-soft);
+  border: 1px solid var(--border);
   border-radius: var(--radius-xl);
+  background: var(--muted);
   padding: 24px 16px;
   margin-bottom: var(--spacer);
   display: flex;
@@ -93,27 +96,37 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 6px 10px;
+  padding: 8px 36px 8px 12px;
   gap: 10px;
   min-width: 190px;
   width: fit-content;
-  height: fit-content;
-  background: var(--surface-neutral);
-  border: 1px solid var(--clr-navy);
-  border-radius: var(--radius-xl);
+  height: 40px;
+  background-color: var(--card);
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
   font-family: var(--font-family-base);
   font-style: normal;
-  font-weight: var(--text-weight-regular);
-  font-size: var(--text-sm);
-  line-height: var(--text-line-base);
-  color: var(--clr-navy);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--foreground);
   appearance: none;
-  background-image: linear-gradient(45deg, transparent 50%, var(--clr-navy) 50%),
-    linear-gradient(135deg, var(--clr-navy) 50%, transparent 50%);
-  background-position: calc(100% - 15px) calc(50% + 2px),
-    calc(100% - 10px) calc(50% + 2px);
+  background-image: linear-gradient(
+      45deg,
+      transparent 50%,
+      var(--muted-foreground) 50%
+    ),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position: calc(100% - 17px) calc(50% + 1px),
+    calc(100% - 12px) calc(50% + 1px);
   background-size: 5px 5px, 5px 5px;
   background-repeat: no-repeat;
+}
+
+.licenseDropdownWrapper select:focus {
+  border-color: var(--deck-blue);
+  box-shadow: 0 0 0 3px var(--ring);
+  outline: none;
 }
 
 .licenseContainer .inputGroup {
@@ -134,78 +147,50 @@
 .licenseContainer .inputGroup input {
   box-sizing: border-box;
   width: 100%;
-  height: var(--field-height);
-  border: 1px solid var(--border-navy-soft);
-  box-shadow: var(--shadow-md);
-  border-radius: var(--radius-xl);
-  border-top-right-radius: var(--radius-xl);
-  border-bottom-right-radius: var(--radius-xl);
-  border-top-left-radius: var(--radius-xl);
-  border-bottom-left-radius: var(--radius-xl);
-  padding: var(--field-padding);
+  height: 40px;
+  border: 1px solid var(--input);
+  box-shadow: none;
+  border-radius: var(--radius-lg);
+  padding: 8px 12px;
+  background: var(--card);
   font-family: var(--font-family-base);
   font-style: normal;
-  font-weight: var(--text-weight-regular);
-  font-size: var(--text-sm);
-  line-height: var(--text-line-base);
-  color: var(--clr-slate-70);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--foreground);
   margin: 0;
+}
+
+.licenseContainer .inputGroup input:focus {
+  border-color: var(--deck-blue);
+  box-shadow: 0 0 0 3px var(--ring);
+  outline: none;
 }
 
 .licenseContainer .inputGroup input::placeholder {
   font-family: var(--font-family-base);
   font-style: normal;
-  font-weight: var(--text-weight-regular);
-  font-size: var(--text-sm);
-  line-height: var(--text-line-base);
-  color: var(--clr-slate-70);
+  font-weight: 400;
+  font-size: 14px;
+  color: #6b6b6b;
 }
 
+/* button keeps the Button atom look; only size/spacing here */
 .licenseContainer .inputGroup button {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  padding: 9px 14px;
-  gap: 10px;
-  width: 81px;
-  height: var(--field-height);
-  background: var(--gradient-accent);
-  box-shadow: var(--shadow-sm);
-  border-radius: var(--radius-xl);
-  border-top-right-radius: var(--radius-xl);
-  border-top-left-radius: var(--radius-xl);
-  border-bottom-left-radius: var(--radius-xl);
-  border-bottom-right-radius: var(--radius-xl);
-  border: none;
-  font-family: var(--font-family-base);
-  font-style: normal;
-  font-weight: var(--text-weight-bold);
-  font-size: var(--text-sm);
-  line-height: 22px;
-  text-align: center;
-  color: var(--clr-navy);
-  cursor: pointer;
+  min-width: 81px;
+  height: 40px;
   margin: 0;
-  margin-left: 0;
-  margin-top: 0;
-}
-
-.licenseContainer .inputGroup button:hover,
-.licenseContainer .inputGroup button:focus {
-  background: var(--gradient-accent);
-  transform: none;
-  box-shadow: var(--shadow-sm);
 }
 
 /* Primary license file label only (avoid overriding shared AdditionalLicenseSection labels). */
 .primaryLicenseLabel {
   font-family: var(--font-family-base);
   font-style: normal;
-  font-weight: var(--text-weight-bold);
-  font-size: var(--text-sm);
-  line-height: var(--text-line-base);
-  color: var(--clr-slate-70);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--foreground);
   margin-bottom: 8px;
 }
 
@@ -220,13 +205,9 @@
   max-width: 90%;
 }
 
-.continueButton:hover,
-.continueButton:focus {
-  background: var(--gradient-accent);
-  transform: none;
-}
-
 .termsAndConditionsContainer {
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -244,19 +225,20 @@
 
 /* Style the Terms and Conditions link specifically in publish context */
 .termsAndConditionsContainer :global(a) {
-  color: var(--ocean-blue);
+  color: var(--brand-highlight);
   text-decoration: none;
 }
 
 .termsAndConditionsContainer :global(a:hover) {
-  color: var(--ocean-blue);
+  color: var(--brand-highlight);
   text-decoration: underline;
 }
 
 /* Custom Parameters Section */
 .customParametersContainer {
-  border: 1px solid var(--border-navy-soft);
+  border: 1px solid var(--border);
   border-radius: var(--radius-xl);
+  background: var(--muted);
   padding: 24px 16px;
   margin-bottom: var(--spacer);
   display: flex;
@@ -273,28 +255,7 @@
   flex-direction: column;
   gap: 16px;
 }
-/* Publish-specific override for Add parameter button */
-body .customParametersContainer .actions .primary {
-  background: var(--gradient-accent);
-  box-shadow: var(--shadow-sm);
-  border-top-right-radius: var(--radius-xl) !important;
-  border-top-left-radius: var(--radius-xl) !important;
-  border-bottom-left-radius: var(--radius-xl) !important;
-  border-bottom-right-radius: var(--radius-xl) !important;
-  font-family: var(--font-family-base);
-  font-weight: var(--text-weight-bold);
-  font-size: var(--text-sm);
-  line-height: var(--text-sm);
-  color: var(--clr-navy);
-}
-
-.customParametersContainer .actions .primary:hover,
-.customParametersContainer .actions .primary:focus {
-  background: var(--gradient-accent);
-  box-shadow: var(--shadow-sm);
-}
-
 .required {
-  color: var(--input-error-text-color);
+  color: var(--destructive);
   margin-left: 0.1rem;
 }

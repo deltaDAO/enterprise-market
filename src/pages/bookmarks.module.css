@@ -1,3 +1,14 @@
-.headerWrapper header {
+/*
+ * The shared PageHeader draws the full-bleed mist band (wave + hairline),
+ * exactly as on publish / search / profile. This wrapper only spaces it
+ * from the bookmarks list, so the band is never doubled.
+ */
+.headerWrapper {
   margin-bottom: 32px;
+}
+
+.headerWrapper h1[class] {
+  color: var(--deck-blue);
+  font-weight: 800;
+  letter-spacing: -0.02em;
 }

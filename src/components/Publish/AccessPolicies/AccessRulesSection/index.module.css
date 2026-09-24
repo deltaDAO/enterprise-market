@@ -4,10 +4,10 @@
 
 .fieldLabel {
   display: block;
-  font-weight: var(--font-weight-bold);
-  color: var(--font-color-heading);
+  font-weight: 600;
+  color: var(--foreground);
   margin-bottom: var(--sp-2);
-  font-size: var(--font-size-base);
+  font-size: 14px;
 }
 
 .inputRow {
@@ -35,26 +35,29 @@
 
 .addressInput {
   flex: 1;
-  padding: calc(var(--spacer) * 0.75);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  font-size: var(--font-size-base);
-  color: var(--font-color-text);
+  height: 40px;
+  padding: 8px 12px;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  font-family: var(--font-family-monospace);
+  font-size: 14px;
+  color: var(--foreground);
   transition: border-color var(--transition), box-shadow var(--transition);
 }
 
 .addressInput:focus {
   outline: none;
-  border-color: var(--ocean-blue);
-  box-shadow: 0 0 0 3px var(--ocean-alpha-10);
+  border-color: var(--deck-blue);
+  box-shadow: 0 0 0 3px var(--ring);
 }
 
 .deleteButton {
-  border: 1px solid var(--clr-navy) !important;
-  border-radius: var(--radius-xl) !important;
-  padding: 9px 14px !important;
-  box-shadow: var(--shadow-md) !important;
-  background: var(--white-alpha-20) !important;
+  border: 1px solid var(--deck-blue-25) !important;
+  border-radius: var(--radius-lg) !important;
+  padding: 9px 12px !important;
+  box-shadow: none !important;
+  background: var(--card) !important;
   min-width: auto !important;
   display: flex !important;
   align-items: center !important;
@@ -62,25 +65,34 @@
 }
 
 .deleteButton:hover {
-  background: var(--white-alpha-30) !important;
-  border-color: var(--clr-navy) !important;
+  background: var(--destructive-soft) !important;
+  border-color: var(--destructive) !important;
   transform: none !important;
-  box-shadow: var(--shadow-md) !important;
+  box-shadow: none !important;
 }
 
 .deleteButton svg {
   width: 16px;
   height: 16px;
-  fill: var(--clr-navy);
+  fill: var(--deck-blue);
+}
+
+.deleteButton:hover svg {
+  fill: var(--destructive);
+}
+
+.deleteButton:focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
 }
 
 .deleteButton:disabled {
-  opacity: 0.5;
+  opacity: 0.45;
   cursor: not-allowed;
 }
 
 .deleteButton:disabled svg {
-  fill: var(--color-secondary);
+  fill: var(--muted-foreground);
 }
 
 .addressList > * {

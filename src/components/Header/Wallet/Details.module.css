@@ -1,13 +1,13 @@
 .details {
-  background: #ffffff;
-  padding: 1.75rem;
+  background: var(--card);
+  padding: 1.5rem;
   min-width: 23rem;
-  font-family: 'Inter', sans-serif;
-  color: var(--navy-700);
+  font-family: var(--font-family-base);
+  color: var(--foreground);
 }
 
 .section {
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid var(--border);
   padding-top: 1.25rem;
   margin-top: 1.25rem;
 }
@@ -30,7 +30,12 @@
   cursor: pointer;
   text-align: left;
   margin-bottom: 1rem;
-  color: var(--navy-700);
+  color: var(--foreground);
+  border-radius: var(--radius-md);
+}
+
+.menuRow:hover {
+  color: var(--deck-blue);
 }
 
 .menuRow:last-child {
@@ -54,13 +59,13 @@
 .menuRowLabel {
   position: relative;
   display: inline-block;
-  font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 17px;
-  line-height: 80%;
-  text-transform: uppercase;
+  font-family: var(--font-family-base);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.2;
+  text-transform: none;
   text-align: left;
-  color: #0a4b70;
+  color: inherit;
   text-decoration: none;
 }
 
@@ -87,7 +92,7 @@
 }
 
 .menuRowDisabled .menuRowLabel {
-  color: #94a3b8;
+  color: var(--muted-foreground);
 }
 
 .menuRowDisabled:hover .menuRowLabel,
@@ -105,7 +110,7 @@
 }
 
 .bookmarksRow svg {
-  color: var(--yellow-400);
+  color: var(--deck-blue);
   fill: currentColor;
 }
 
@@ -113,8 +118,8 @@
   width: 1.75rem;
   height: 1.75rem;
   border-radius: 50%;
-  background: linear-gradient(135deg, #d8e4f0 0%, #eef4fa 100%);
-  border: 1px solid #c7d7e7;
+  background: linear-gradient(135deg, var(--deck-blue-12), var(--deck-cyan-13));
+  border: 1px solid var(--deck-blue-25);
 }
 
 .walletInfo {
@@ -125,14 +130,14 @@
 }
 
 .walletHeading {
-  font-weight: 600;
-  color: var(--navy-700);
-  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--foreground);
+  font-size: 1.05rem;
 }
 
 .walletDescription {
   font-size: 0.9rem;
-  color: #64748b;
+  color: var(--muted-foreground);
   text-transform: none;
   word-break: break-word;
 }
@@ -171,33 +176,36 @@
 }
 
 .actionButton:focus-visible {
-  outline: 2px solid rgba(10, 75, 112, 0.18);
+  outline: 2px solid var(--deck-blue);
   outline-offset: 2px;
-  border-radius: 0.4rem;
+  border-radius: var(--radius-md);
 }
 
 .actionButtonDanger {
-  color: #d92d20;
+  color: var(--destructive);
 }
 
 .actionIconBadge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.9rem;
-  height: 1.9rem;
+  width: 28px;
+  height: 28px;
   flex-shrink: 0;
-  color: #0a4b70;
+  border-radius: var(--radius-md);
+  background: var(--deck-blue-8);
+  color: var(--deck-blue);
   transition: transform 0.18s ease, color 0.18s ease, opacity 0.18s ease;
 }
 
 .actionIconBadgeDanger {
-  color: #dc2626;
+  color: var(--destructive);
+  background: var(--destructive-soft);
 }
 
 .actionGlyph {
-  width: 1.55rem;
-  height: 1.55rem;
+  width: 16px;
+  height: 16px;
 }
 
 .actionContent {
@@ -216,11 +224,11 @@
 .actionTitle {
   position: relative;
   display: inline-block;
-  font-family: var(--font-family);
-  font-size: 1rem;
-  font-weight: 500;
+  font-family: var(--font-family-base);
+  font-size: 14px;
+  font-weight: 600;
   line-height: 1.2;
-  color: var(--navy-700);
+  color: var(--foreground);
   text-decoration: none;
 }
 
@@ -245,6 +253,7 @@
 .actionButton:hover .actionTitle,
 .actionButton:focus-visible .actionTitle {
   text-decoration: none;
+  color: var(--deck-blue);
 }
 
 .actionButton:hover .actionIconBadge,
@@ -252,37 +261,39 @@
   transform: translateX(0.16rem);
 }
 
-.actionButtonDanger .actionTitle {
-  color: #ef4444;
+.actionButtonDanger .actionTitle,
+.actionButtonDanger:hover .actionTitle,
+.actionButtonDanger:focus-visible .actionTitle {
+  color: var(--destructive);
 }
 
 .actionDescription {
   font-size: 0.78rem;
   line-height: 1.35;
-  color: #64748b;
+  color: var(--muted-foreground);
 }
 
 .actionButtonDanger .actionDescription {
-  color: #94a3b8;
+  color: var(--muted-foreground);
 }
 
 .userInfo {
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid var(--border);
   margin-top: 1.25rem;
   padding-top: 1rem;
   font-size: 0.85rem;
 }
 
 .userEmail {
-  font-weight: 500;
-  color: var(--navy-700);
+  font-weight: 600;
+  color: var(--foreground);
   margin-bottom: 0.25rem;
   word-break: break-all;
 }
 
 .userProvider {
   font-size: 0.75rem;
-  color: #64748b;
+  color: var(--muted-foreground);
   text-transform: capitalize;
 }
 
@@ -292,7 +303,7 @@
     min-width: auto;
     width: 68vw;
     font-size: 0.95rem;
-    border-radius: 1rem;
+    border-radius: var(--radius-xl);
   }
 
   .menuRow {
@@ -350,9 +361,11 @@
 }
 
 .chainSwitcherLabel {
-  font-size: 0.85rem;
+  font-size: var(--font-size-label-motif);
   font-weight: 600;
-  color: var(--navy-700);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-label);
+  color: var(--muted-foreground);
 }
 
 .chainList {
@@ -368,21 +381,73 @@
   align-items: center;
   padding: 0.4rem 0.6rem;
   border: 1px solid transparent;
-  border-radius: var(--border-radius);
+  border-radius: var(--radius-md);
   background: none;
   cursor: pointer;
   font-size: 0.9rem;
-  color: var(--navy-700);
+  color: var(--foreground);
   text-align: left;
   font-family: var(--font-family-base);
 }
 
 .chainItem:hover:not(:disabled) {
-  background: var(--background-highlight);
+  background: var(--deck-blue-8);
+  color: var(--deck-blue);
 }
 
 .chainItemActive {
-  background: var(--background-highlight);
+  background: var(--deck-blue-12);
+  border-color: var(--deck-blue-25);
+  color: var(--deck-blue);
   font-weight: 600;
   cursor: default;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .actionButton:hover .actionIconBadge,
+  .actionButton:focus-visible .actionIconBadge {
+    transform: none;
+  }
+}
+
+/* disconnect.svg ships with a hard-coded navy path fill */
+.actionGlyph path {
+  fill: currentColor;
+}
+
+/* menu rows share the dropdown hover language: deck-blue-8 tint + deck-blue
+ * text. The negative inline margin keeps the text aligned with headings. */
+.menuRow,
+.actionButton {
+  width: calc(100% + 16px);
+  margin-inline: -8px;
+  padding: 6px 8px;
+  border-radius: var(--radius-md);
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.menuRow {
+  margin-bottom: 0.5rem;
+}
+
+.actionButton + .actionButton {
+  margin-top: 0.5rem;
+}
+
+.menuRow:hover:not(:disabled),
+.menuRow:focus-visible,
+.actionButton:hover,
+.actionButton:focus-visible {
+  background: var(--deck-blue-8);
+  color: var(--deck-blue);
+}
+
+.actionButtonDanger:hover,
+.actionButtonDanger:focus-visible {
+  background: var(--destructive-soft);
+}
+
+.actionButtonDanger:hover .actionTitle,
+.actionButtonDanger:focus-visible .actionTitle {
+  color: var(--destructive-strong);
 }

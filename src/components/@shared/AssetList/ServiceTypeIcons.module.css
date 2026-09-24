@@ -7,14 +7,14 @@
 .serviceIcon {
   width: 16px;
   height: 16px;
-  fill: var(--clr-slate-70);
+  fill: var(--muted-foreground);
   display: block;
   flex-shrink: 0;
   margin: 0;
 }
 
 .empty {
-  color: var(--clr-slate-50);
+  color: var(--muted-foreground);
 }
 
 .servicesHeader {

@@ -10,12 +10,14 @@
   text-align: center;
 }
 
+/* section titles use the label motif, on navy */
 .title {
   margin-bottom: calc(var(--spacer) / 2);
   text-transform: uppercase;
-  color: #fff;
-  font-weight: 700;
-  font-size: 16px;
+  letter-spacing: var(--letter-spacing-label);
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 600;
+  font-size: var(--font-size-label-motif);
 }
 
 .links {
@@ -28,17 +30,20 @@
 
 .link {
   font-weight: 400;
-  font-size: 16px;
-  color: var(--white-alpha-70);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
+  text-underline-offset: 3px;
   position: relative;
   padding-right: 20px;
+  border-radius: var(--radius-sm);
 }
 
 .link:hover,
 .link:focus-visible {
-  color: #fdd655;
+  color: var(--brand-white);
   text-decoration: underline;
+  text-decoration-color: var(--deck-cyan);
 }
 
 .linkButton {
