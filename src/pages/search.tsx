@@ -5,6 +5,7 @@ import { accountTruncate } from '@utils/wallet'
 import { MAXIMUM_NUMBER_OF_PAGES_WITH_RESULTS } from '@utils/aquarius'
 import { useRouter } from 'next/router'
 import { isAddress } from 'ethers'
+import content from '../../content/pages/search.json'
 
 export default function PageSearch(): ReactElement {
   const router = useRouter()
@@ -45,8 +46,8 @@ export default function PageSearch(): ReactElement {
       description={
         totalPagesNumber &&
         totalPagesNumber > MAXIMUM_NUMBER_OF_PAGES_WITH_RESULTS
-          ? '**Results displayed are limited to the first 10k, please refine your search.**'
-          : undefined
+          ? content.limitedResults
+          : content.description
       }
       uri={router.route}
     >

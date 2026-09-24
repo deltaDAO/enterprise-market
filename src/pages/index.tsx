@@ -11,7 +11,7 @@ export default function PageHome(): ReactElement {
   return (
     <Page
       title={siteContent?.siteTitle}
-      description={siteContent?.siteTagline}
+      description={siteContent?.siteDescription}
       uri={router.route}
       headerCenter
     >
