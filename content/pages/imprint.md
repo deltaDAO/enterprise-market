@@ -1,22 +1,27 @@
 ---
 title: Imprint
+description: Legal notice for the deltaDAO Marketplace, operated by deltaDAO AG, Katharinenstraße 30a, 20457 Hamburg, Germany (HRB 170364, Amtsgericht Hamburg).
 ---
 
-Thanks for your interest in the OEC
+**deltaDAO AG**  
+Katharinenstraße 30a (Contor)  
+20457 Hamburg  
+Germany
 
-**Ocean Enterprise Collective e.V**
-Carmerstrasse 18
-10623 Berlin, Germany
+**Phone:** +49 40 43281904  
+**E-mail:** [contact@delta-dao.com](mailto:contact@delta-dao.com)
 
-**E-Mail:** info@oceanenterprise.io
+**Members of the Board:** Frederic Schwill, Kai Meinke, Albert Peci
 
-**Members of the Board:** Mihai Badea, Alexander Eger, Sheridan Johns
+**Chairwoman of the Supervisory Board:** Susanne S. Geber
 
-**Association register:** Vereinsregister, Amtsgerichts Charlottenburg (Berlin), VR 41774 B
+**Commercial register:** Handelsregister B des Amtsgerichts Hamburg, HRB 170364
 
-**Accountable pursuant to § 18 MStV:**
-Sheridan Johns
-Carmerstrasse 18
-10623 Berlin, Germany
+**VAT ID (USt-IdNr.):** DE346013532
 
-The European Commission provides a platform for online dispute resolution, which you can find here: https://ec.europa.eu/consumers/odr/. We are not obliged or willing to participate in a dispute resolution procedure before a consumer arbitration board.
+**Accountable pursuant to § 18 MStV:**  
+Albert Peci  
+Katharinenstraße 30a (Contor)  
+20457 Hamburg
+
+**Dispute resolution:** We are not obliged or willing to participate in a dispute resolution procedure before a consumer arbitration board.

@@ -21,6 +21,7 @@ import { useSearchBarStatus } from '@context/SearchBarStatus'
 import { useUserPreferences } from '@context/UserPreferences'
 import Container from '@components/@shared/atoms/Container'
 import OnboardingSection from '@components/@shared/Onboarding'
+import content from '../../../content/pages/home/content.json'
 
 async function emptySearch() {
   const searchParams = new URLSearchParams(window?.location.href)
@@ -109,14 +110,9 @@ function HeroSection({
           <Menu />
         </header>
         <div className={styles.textContent}>
-          <h1 className={styles.title}>
-            Ocean Enterprise Demonstration Marketplace
-          </h1>
+          <h1 className={styles.title}>{content.hero.title}</h1>
           <div className={styles.subtitle}>
-            <p>
-              Publish, find, compare, manage and monetize proprietary data & AI
-              products in a secure, trusted and compliant environment
-            </p>
+            <p>{content.hero.subtitle}</p>
           </div>
           <div className={styles.ctaContainer}>
             <div className={styles.ctaBlock}>

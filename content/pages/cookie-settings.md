@@ -1,6 +1,6 @@
 ---
 title: Cookie Policy
-description: This cookie policy explains how the Ocean Enterprise Demonstration Market uses cookies and similar technologies.
+description: Manage your cookie settings for the deltaDAO Marketplace demonstrator and read how it uses cookies, web storage and consent-based statistics.
 showLastUpdated: true
 ---
 

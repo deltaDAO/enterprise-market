@@ -61,13 +61,13 @@
       {
         "name": "copyrightHolder",
         "label": "Copyright Holder",
-        "placeholder": "e.g. Ocean Enterprise",
+        "placeholder": "e.g. deltaDAO AG",
         "help": "The entity holding the legal copyright for this asset."
       },
       {
         "name": "providedBy",
         "label": "Provided By",
-        "placeholder": "e.g. https://oceanenterprise.io/vc.json",
+        "placeholder": "e.g. https://delta-dao.com/vc.json",
         "help": "URL where the Verifiable Credential of the entity offering this asset resides."
       },
       {
@@ -77,7 +77,7 @@
         "keyLabel": "Title",
         "valueLabel": "URL",
         "keyPlaceholder": "e.g. Website",
-        "valuePlaceholder": "e.g. https://oceanenterprise.io",
+        "valuePlaceholder": "e.g. https://delta-dao.com",
         "validateValueAsUrl": true,
         "help": "Related links for this asset as a mapping of titles to URLs. Enter a Title and its URL, then click Add. Repeat to add more (e.g. website, demo)."
       },

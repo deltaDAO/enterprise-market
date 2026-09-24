@@ -1,11 +1,11 @@
 ---
 title: Cookie Policy
-description: This cookie policy explains how the Ocean Enterprise Demonstration Market uses cookies and similar technologies.
+description: How the deltaDAO Marketplace demonstrator, operated by deltaDAO AG, uses cookies, web storage and consent-based statistics.
 showLastUpdated: true
-lastUpdated: '2026-09-21'
+lastUpdated: '2026-09-24'
 ---
 
-This Cookie Policy explains how the Ocean Enterprise Demonstration Market uses cookies and similar technologies. This policy should be read alongside our Privacy Policy.
+This Cookie Policy explains how the deltaDAO Marketplace demonstrator, operated by deltaDAO AG, uses cookies and similar technologies. This policy should be read alongside our Privacy Policy.
 
 ## 1. What are cookies?
 
@@ -88,4 +88,4 @@ While not all are "cookies," the following services receive data during your use
 
 ## 5. Changes to this cookie policy
 
-This policy may be amended from time to time. The "Last updated" date at the top indicates the most recent changes. Material changes will be notified via a prominent notice on the demonstration market.
+This policy may be amended from time to time. The "Last updated" date at the top indicates the most recent changes. Material changes will be notified via a prominent notice on the marketplace demonstrator.

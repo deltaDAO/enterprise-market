@@ -1,264 +1,244 @@
 ---
-lastUpdated: '2026-05-04'
+title: Data Portal Usage Agreement
+description: Terms and conditions between deltaDAO AG and its customers for publishing, discovering and consuming service offerings on the deltaDAO Marketplace.
+lastUpdated: '2026-09-24'
 ---
 
 ## Data Portal Usage Agreement
 
-**Ocean Enterprise Collective e.V.**
+**deltaDAO Marketplace: Terms and Conditions for the use of the Data Portal**
 
-_Last updated: December 15, 2025_
+deltaDAO (as defined below) provides a technical infrastructure for a digital portal enabling access to data (as defined below). Based on these terms and conditions, a customer (as defined below) and deltaDAO enter into an agreement which governs the customer’s access to and use of the data portal (as defined below) and takes effect on the date of deltaDAO’s acceptance of such customer’s offer.
 
-This Ocean Enterprise Collective e.V. Data Portal Usage Agreement ("**Agreement**") constitutes a legally binding contract between you ("**Portal User**") and the Ocean Enterprise Collective e.V. seated at Carmerstrasse18, 10623 Berlin, Germany ("**Portal Operator**"), each a "**Party**", both jointly referred to as the "**Parties**". The Agreement applies to and governs Portal User's access to and use of the Portal Operator's Data Portal (as defined below).
+### 1. Definitions and Interpretation
 
-### Definitions
+**1.1 Definitions**  
+Capitalised terms shall have the meaning given to them in this Agreement; and:
 
-> **1.1 "Access Controllers"** means an infrastructure component of the Ocean Enterprise ecosystem managing access to Data.
->
-> **1.2 "Access Token"** means an ERC20 utility token enabling the use of the Data Publishers' Service Offering and creating the respective Data audit trail via the selected EVM Compatible Blockchain (i.e., documentation of activities relating to the access to the Data).
->
-> **1.3 "Data"** means any data, software, content or service based on which a Service Offering is created by a Data Publisher on the Data Portal.
->
-> **1.4 "Data Portal"** means an internet portal that is operated by Portal Operator, includes an API connector establishing links to metadata caches which query the underlying EVM Compatible Blockchain and hereby enables (a) the Publishing of Service Offerings and (b) the Utilization of Service Offerings, available under the domain name [https://market.demo.oceanenterprise.io/](https://market.demo.oceanenterprise.io/), as may be updated by Portal Operator from time to time.
->
-> **1.5 "Data Publisher"** means a user of the Data Portal when placing or having placed one or several Service Offerings on the Data Portal.
->
-> **1.6 "Data Use Agreement"** means an agreement concluded among Portal Users acting as Data Publishers and Data Users.
->
-> **1.7 "Data User"** means a user of the Data Portal when acquiring an Access Token for utilizing a Service Offering.
->
-> **1.8 "Entrepreneur"** means a natural or legal person or a partnership with legal personality who or which, when conducting a legal transaction, acts in exercise of their trade, business or profession.
->
-> **1.9 "EVM Compatible Blockchain"** means any blockchain or distributed ledger technology solution compatible with the Ethereum Virtual Machine technology.
->
-> **1.10 "Gas Fee"** means the transaction fee that may be required by EVM Compatible Blockchains for processing a transaction.
->
-> **1.11 "Lifecycle State"** means either one of the following properties of metadata in accordance with the **"Lifecycle State Policy"** (incorporated into this Agreement as **[Annex I](#annex-i)**): "active", "end-of-life", "deprecated", "revoked", "disabled", or "unlisted".
->
-> **1.12 "Personal Data"** means, in accordance with Art. 4 GDPR, any information relating to an identified or identifiable natural person.
->
-> **1.13 "Portal Operator"** means an Entrepreneur who operates a Data Portal.
->
-> **1.14 "Portal Operator Content"** means information or data that Portal Operator is entitled to.
->
-> **1.15 "Portal User"** means an Entrepreneur who by way of accessing and using the Data Portal may act as a Data Publisher or a Data User.
->
-> **1.16 "Portal User Account"** means the functionality by means of which the Portal User gains permission for the Publication and Utilization of Service Offerings on the Data Portal by using verified credentials and, if applicable, further authentication data or alternative authentication techniques in line with this Agreement.
->
-> **1.17 "Publishing"** means placing a Service Offering on the Data Portal.
->
-> **1.18 "Service Offering"** means any data-based service offer displayed on the Data Portal, including data downloads, software downloads, software services, Software-as-a-Service and Compute-to-Data offerings.
->
-> **1.19 "Smart Contract"** means a computer program automatically executing provisions of the Data Use Agreement.
->
-> **1.20 "Third-Party Content"** means Service Offerings published by any party other than Portal Operator and Portal User.
->
-> **1.21 "Utilization"** means acquiring and using an Access Token to enable the use of a Service Offering.
+**"Access Controllers"** means an infrastructure component of the Data ecosystem managing access to Data at [https://node.demo.pontus-x.eu/](https://node.demo.pontus-x.eu/)
 
----
+**"Agreement"** means the agreement between the Customer and deltaDAO based on these terms and conditions.
 
-### Registration, Access to, and Use of the Data Portal
+**"Consumption"** means the transfer of the Service Offering Token to the respective Publisher by which the respective Customer redeems the Service Offering Token for the respective Service Offering and creates the respective Data audit trail (i.e., documentation of access activities to the Data).
 
-> **2.1** In order to access and use the Data Portal, Portal User must complete the registration process which includes, in particular, submitting any requested information and documents in the registration process. By registering with the Data Portal, Portal User agrees to be bound by this Agreement and the Agreement becomes effective.
->
-> **2.2** Data Publishers can Publish Service Offerings on the Data Portal by using the form provided by Portal Operator and then clicking the "SUBMIT" button. The Data Publisher is responsible for the information provided in the form which describes the Service Offering and for the content of the Service Offering. When publishing the Service Offering, a metadata NFT will be created via the respective EVM Compatible Blockchain. The metadata NFT manages access rights to the respective Service Offering and enables Data Users to interact directly with the Data Publishers.
->
-> **2.3** The Data Portal displays published Service Offerings including their description and, thus, enables Portal Users to discover Service Offerings by means of a query mechanism and relevant metadata.
->
-> **2.4** The Data Portal further enables the Utilization of Service Offerings by acquiring the respective Access Token via the respective EVM Compatible Blockchain and hence access to the Service Offering.
->
-> **2.5** As the Data Portal enables the automatic execution of provisions of a Data Use Agreement between Data Publisher and Data User through Smart Contracts, the following access control mechanisms are in place in this regard:
->
-> > **2.5.1** Data access control based on token-ownership
-> >
-> > **2.5.2** Allow/deny-listing based on public addresses and digital credentials
-> >
-> > **2.5.3** Private key based access control to NFTs
-> >
-> > **2.5.4** Multi-sig based access control to templates of NFTs and Access Tokens by OEC e.V.
+**"Customer"** means any legal entity acting as an entrepreneur pursuant to § 14 of the German Civil Code, duly registered on the Data Portal, that: (a) creates a Service Offering, (b) uses (including compute-to-data) such Service Offering, or (c) otherwise accesses or uses the Data Portal, including pseudonymous users.
 
----
+**"Customer Account"** means the functionality by means of which the Customer gains permission for the Consumption and Publication of Service Offerings on the Data Portal by SSI/DID and Verifiable Credentials and, if applicable, further authentication data or alternative authentication techniques (e.g., entering username and password) if available.
 
-### Portal User's Responsibilities
+**"Data"** means any data for which a Service Offering is created by a Publisher on the Data Portal.
 
-> **3.1** Portal User is responsible for all activities carried out via its Portal User Account, regardless of whether the activities are authorized by the Portal User or carried out by the Portal User itself, the Portal User's employees, or a third party (including the Portal User's contractors and agents). Portal User is obliged to ensure that only authorized staff of Portal User can access the Portal User Account. Portal User will be deemed to have taken any action performed via its Portal User Account.
->
-> **3.2** Portal User will ensure that its Service Offerings and its use of the Data Portal do not violate any applicable law. Portal User is solely responsible for the development, content, operation, maintenance, availability, and use of its Service Offerings.
->
-> **3.3** Portal User is also solely responsible for ensuring that the content of the metadata provided via the description form complies with all applicable laws. Portal User must not provide Personal Data in the metadata.
->
-> **3.4** Portal User when acting as a Data Publisher will apply vis-à-vis Data Users the license terms of the Data Use Agreement applicable to the Service Offering. In the event of a conflict with this Agreement, the Data Use Agreement shall prevail with respect to the Data.
->
-> **3.5** Portal User hereby agrees to and accepts the terms of the applicable Data Use Agreement for any case of a Utilization through Portal User's backend application.
->
-> **3.6** Portal Operator does not store or have access to any sensitive account information including private keys. Portal User is responsible for the availability and maintenance of any information related to the Portal User Account.
+**"Data Buyer"** means any Customer that acquires Service Offering Token.
 
----
+**"Data Portal"** means a portal which, by means of one or more Ocean Nodes that index and query metadata recorded on the underlying EVM Compatible Blockchain, enables (a) the discovery/display of Service Offerings, (b) the Consumption of Service Offerings and (c) the Publication of a Service Offering.
 
-### Fees and Payment
+**"Service Offerings"** means service offers, of various kinds, relating to the utilization of Data, such as access-, organization-, allocation- traceability- and security-data-services.
 
-> **4.1** If a Portal User elects to publish or use Service Offerings on the Data Portal, which includes the generation and purchase of the respective Access Token, it will be conducted solely through EVM Compatible Blockchains via compatible Web3 wallets. Portal Operator will have no insight into or control over these activities, nor does Portal Operator have the ability to reverse any of these or any transaction resulting therefrom.
->
-> **4.2** EVM Compatible Blockchains may require the payment of a Gas Fee for every transaction occurring. The Gas Fee typically funds the network of computers that run the EVM Compatible Blockchains. This means that the Portal User will need to pay a Gas Fee for each transaction that occurs via the Data Portal and transacting via the Data Portal will require an accordingly funded wallet.
->
-> **4.3** In addition to the Gas Fee which may be required by the EVM Compatible Blockchain, the Portal User owes Portal Operator a Portal Fee of 0.10 EURO for Utilization. The Portal User acknowledges and agrees that the user fee will be transferred directly to Portal Operator upon the Utilization. Depending on the Data utilized by the Portal User via the Data Portal, further third-party fees may apply, e.g., a Community Fee may be transferred to the Ocean Enterprise Collective Fee Collector and a Provider Fee may have to be transferred to the access control service provider.
->
-> **4.4** Each Party will be responsible, as required under applicable law, for identifying and paying all taxes and other governmental fees and charges (and any penalties, interest, and other additions thereto) that are imposed on that Party upon or with respect to the transactions and payments under this Agreement.
+**"Service Offering Token"** means a token created by the Publisher enabling the use of the related Service Offering and creating the respective Data audit trail via the selected EVM Compatible Blockchain (i.e., documentation of access activities to the Data).
 
----
+**"deltaDAO"** means deltaDAO AG, Katharinenstraße 30a, 20457 Hamburg, Germany as provider of the Data Portal.
 
-### Service Lifecycle States
+**"deltaDAO Content"** means software or data which deltaDAO is entitled to.
 
-> **5.1** Service Offerings are subject to the Lifecycle State Policy (**[Annex I](#annex-i)**).
->
-> **5.2** The Lifecycle State Policy lists the various Lifecycle States, either one of which the Service Offerings on the Data Portal are marked with. The applicable Lifecycle State determines what actions are permitted and what restrictions apply with regard to the respective Service Offering. The Lifecycle State Policy governs the transition of one Lifecycle State to another and it provides for sanctions in case of non-compliance with its rules.
+**"EVM Compatible Blockchain"** means any blockchain or distributed ledger technology solutions compatible with the Ethereum Virtual Machine technology.
 
----
+**"Gas Fee"** means the transaction fee required by EVM Compatible Blockchains for processing a transaction, if any.
 
-### Security and Data Protection
+**"German Civil Code"** means the Bürgerliches Gesetzbuch as amended from time to time.
 
-> **6.1** Without limiting the Portal User's obligations under Section 3, the Portal Operator may implement at its own discretion measures regarding the Access Controller to help the Portal User secure published Data against loss and accidental or unlawful access or disclosure.
->
-> **6.2** Data is always stored off-chain by the Portal User. The Portal Operator has no control over the Data. Ensuring the confidentiality, integrity and availability of the Data is in the sole responsibility of Portal User.
->
-> **6.3** Only references to metadata relating to a Service Offering is stored on-chain. Such metadata is provided by Portal User via the applicable form on the Data Portal. Metadata may, in particular, include the following: information on title and description of Service Offering, on access rights and license, on pricing and links to sample data. To provide for the functionality of the Data Portal, Portal Operator saves on-chain metadata in a custom database.
->
-> **6.4** Transactions that take place via the Data Portal are managed and confirmed via the respective EVM Compatible Blockchain. The Portal User's public address on such EVM Compatible Blockchain is publicly visible whenever the Portal User engages in a transaction on the Data Portal.
->
-> **6.5** Portal Operator neither owns nor controls the EVM Compatible Blockchains, any Portal User's Web3 wallets, nor other tools, or any other third parties' site, product, or service that the Portal User might access, visit, or use when interacting via the Data Portal. Portal Operator will not be liable for the acts or omissions of any such third parties, nor will Portal Operator be liable for any damage that the Portal User may suffer as a result of transactions or any other interaction with any such third parties.
->
-> **6.6** While the Portal Operator strives to use commercially acceptable means to protect the Portal User's Data, including possibly Personal Data, the Portal User is aware of and accepts that there are remaining risks in terms of data security, risks that apply to any method of transmission over the internet or electronic storage.
->
-> **6.7** The Portal User is responsible for its own activity on the Data Portal. The Portal User must adhere to the laws in its own legal jurisdiction as well as its conscience. Portal Operator is not responsible for any malicious use of the Data Portal or any losses associated with the use of the Data Portal of any source.
+**"Lifecycle State"** means the following properties of metadata: "active", “disabled”, and “unlisted”, describing the state of Service Offerings throughout their lifecycles and being subject to the Service Lifecycle Management pursuant to respective Policies, made available on the Data Portal.
 
----
+**"Ocean Node"** means the configurable backend software component operated by deltaDAO that unifies and replaces the previously separate backend components. An Ocean Node indexes Service Offering metadata recorded on the EVM Compatible Blockchain, validates it, controls access to and delivery of Data, and exposes the functionality of the Data Portal via its interfaces.
 
-### Intellectual Property Rights
+**"Personal Data"** means any information relating to an identified or identifiable natural person.
 
-> **7.1** Except as provided in this Section 7, Portal Operator obtains no rights whatsoever under this Agreement from the Portal User (or Portal User's licensors) regarding published Data.
->
-> **7.2** Data will be published and utilized at the sole discretion of Portal User. Therefore, Portal User represents and warrants to Portal Operator that:
->
-> > **7.2.1** Portal User or Portal User's licensors own all rights, in particular copyrights, trademark rights, patent rights, utility model rights, design rights, title, and interest in and of the published Data; and
-> >
-> > **7.2.2** Portal User will not provide any content that is illegal or infringes third party rights, in particular any copyrights or trademark rights, patent rights, utility model rights and design rights of third parties.
->
-> **7.3** Portal Operator grants the Portal User a limited, revocable, non-exclusive, non-sublicensable, non-transferable right to use the Data Portal solely in accordance with this Agreement.
->
-> **7.4** Except as provided in Section 7.3, the Portal User obtains no rights under this Agreement from Portal Operator, Portal Operator's affiliates or Portal Operator's licensors, including, in particular, any intellectual property rights.
+**"Policies"** means any policy, agreement, or guideline and all restrictions described on the Data Portal and on the Website, including the Lifecycle State Policy in Annex I, that may i.a. determine sanctions such as the withdrawal of authorizations or access rights to be imposed as a result of a violation.
 
----
+**"Publication"** means placing a Service Offering on the Data Portal.
 
-### Warranties and Indemnification
+**"Publisher"** means any Customer that provides or intends to provide Service Offerings.
 
-> **8.1** The Data Portal is provided in the manner accessible to the Portal User. The Data Portal and/or Service Offerings may at times be unavailable. The Portal Operator shall use its best efforts to deal with errors in the software environment with as little impact as possible. However, Portal User agrees and acknowledges that the Data Portal may, at times, be unavailable in the cases of, without limitation, regularly scheduled maintenance, service upgrades, or other mechanical or electronic failures. In case of any long-term or permanent closure of the Data Portal that includes the loss of access to all Services Offerings, Portal Operator shall give all Portal Users at least 30 days notice in advance of the closure.
->
-> **8.2** The Portal Operator reserves the right to delegate the performance of its obligations under this Agreement, especially, without limitation, in relation to the provision, deployment, and maintenance of the Data Portal, to any of its affiliates and/or external service providers.
->
-> **8.3** Except to the extent prohibited by law, or to the extent any statutory rights apply that cannot be excluded, limited or waived, Portal Operator, its affiliates and licensors:
->
-> > **8.3.1** make no representations or warranties of any kind, whether express, implied, statutory or otherwise regarding the Data Portal, the Service Offerings available on the Data Portal or the Third-Party Content, and
-> >
-> > **8.3.2** disclaim all warranties, including any implied or express warranties (a) of merchantability, satisfactory quality, fitness for a particular purpose, non-infringement, or quiet enjoyment, (b) arising out of any course of dealing or usage of trade and (c) that any content will be secure or not otherwise lost or altered.
->
-> **8.4** Portal User warrants that none of its Publishing or Utilization of a Service Offering or its Data or any other content it shares via the Data Portal constitutes "illegal content" in accordance with Art. 3 lit. h of the EU Digital Services Act, in particular in relation to any third-party intellectual property rights.
->
-> **8.5** Portal User agrees to indemnify, defend, and hold harmless Portal Operator from and against any loss, cost, or damage of any kind (including reasonable outside attorneys' fees) to the extent arising out of its breach of this Agreement, and/or its negligence or willful misconduct.
+**“Service Lifecycle Management”** means a mechanism to change the visibility of any Service Offering from the Data Portal depending on the Lifecycle State.
 
----
+**"Service"** means all websites, software and services offered and operated by deltaDAO in connection with the provision of the Data Portal from time to time.
 
-### Liability
+**“Terms”** means these terms and conditions.
 
-> **9.1** Portal User waives all claims, whether in contract, tort or otherwise, for damages and consequential damages, in particular loss of profit, that may occur in connection with this Agreement unless it is established that such damages either (i) resulted from an injury to life, body or health or (ii) did arise from a culpable breach of material obligations by Portal Operator, its legal representatives or assistants in performance, i.e. obligations that form the essence of this Agreement, whose breach would jeopardize the purpose of this Agreement and on the performance of which the Licensee relied ("**Cardinal Obligations**"), or (iii) were caused by Portal Operator, its legal representatives or assistants in performance acting with intent or gross negligence or (iv) entitle Portal User to claims under applicable mandatory laws governing product liability or claims arising from any guarantee vis-à-vis the Product User. For damages arising from a breach of a cardinal duty as a result of simple negligence, Portal Operator can only be held liable to the extent the damages were reasonably foreseeable.
->
-> **9.2** In particular, Portal Operator assumes no liability for:
->
-> > **9.2.1.** any faults or disruptions within the Data Portal for which it is not responsible;
-> >
-> > **9.2.2** losses of Data or Service Offerings where such a loss would have been unavoidable;
-> >
-> > **9.2.3** any legal consequences arising from the Publishing or Utilization of Service Offerings on the Data Portal; this applies in particular to any claims made by third parties due to legal or factual errors in or regarding the Data;
-> >
-> > **9.2.4** any temporary or permanent lack of availability or suspension of the Data Portal, in particular following the termination of the Agreement pursuant to Section 11.5;
-> >
-> > **9.2.5** Data or Service Offerings that are unlawful or infringe the rights of any third party;
-> >
-> > **9.2.6** any acts or omissions by the Portal User causing the loss of availability of any Service Offering as a result of a change in its Lifecycle State or for other reasons; and
-> >
-> > **9.2.7** any impairments or damages resulting from the Portal User's use of the Data Portal that are not in compliance with this Agreement.
->
-> **9.3** The limitations on liability under Section 9.2 shall apply _mutatis mutandis_ in favor of Portal Operator's vicarious agents.
->
-> **9.4** To the extent that Portal Users may be redirected to databases, websites, services, etc. of third parties via the Data Portal, Portal Operator shall not be liable either for the accessibility, existence, content or security of such databases or services.
->
-> **9.5** Portal Operator has no liability to the Portal User or to any third party for any claims or damages that may arise as a result of any transactions that the Portal User engages in via a Web3 wallet, or using Smart Contracts, or any other transactions that the Portal User conducts via EVM Compatible Blockchains.
+**"Third-Party Content"** means Service Offerings published by other parties but the Customer.
 
----
+**"Website"** means the website at which this deltaDAO Marketplace is made available, currently [PLACEHOLDER: public URL of this marketplace, to be confirmed by deltaDAO] (and any successor or related site designated by deltaDAO), as may be updated by deltaDAO from time to time.
 
-### Suspension
+**1.2 Interpretation**  
+**1.2.1** Unless specified otherwise, these Terms shall be construed as follows:
 
-> **10.1** Portal Operator may suspend all or parts of Portal User's right to access or use the Data Portal, including the display of any Service Offering of Portal User, immediately with no prior notice to the Portal User if Portal Operator determines that Portal User's or a third party's use of the Portal User Account:
->
-> > **10.1.1** poses a security risk to the Data Portal, Portal Operator or any other third party;
-> >
-> > **10.1.2** could adversely impact Portal Operator's systems, the Data Portal or the systems or content of any other user of the Data Portal;
-> >
-> > **10.1.3** could subject Portal Operator, Portal Operator's affiliates, or any third party to liability;
-> >
-> > **10.1.4** could be fraudulent;
-> >
-> > **10.1.5** is in breach of essential obligations of this Agreement; and/or
-> >
-> > **10.1.6** Portal User has ceased to operate in the ordinary course, made an assignment for the benefit of creditors or similar disposition of Portal User assets, or become the subject of any bankruptcy, reorganization, liquidation, dissolution or similar proceeding.
->
-> **10.2** If Portal Operator, according to Section 10.1, suspends Portal User's right to access or use any component or all of the Data Portal:
->
-> > **10.2.1** Portal User remains responsible for all fees and charges the Portal User incurs during the period of suspension; and
-> >
-> > **10.2.2** Portal User will not be entitled to any service credits relating to its Service Offerings for any period of suspension.
+**_1.2.1.1_** insofar as the context permits, a reference to the singular includes the plural and vice versa;
 
----
+**_1.2.1.2_** a defined document or statutory provision is a reference to that exact defined document or provision as amended, supplemented, restated or modified from time to time;
 
-### Term and Termination
+**_1.2.1.3_** headings are for convenience only and shall not be considered in interpreting these Terms;
 
-> **11.1** This Agreement is concluded for an unlimited term.
->
-> **11.2** This Agreement can be terminated by either Party to the end of the next calendar month with a notice period of 30 days.
->
-> **11.3** Each Party shall have the right to terminate this Agreement for good cause without the need to adhere to a notice period. Good cause for Portal Operator shall, in particular, include the following: (a) breach of essential obligations of the Agreement by the Portal User; (b) tortious acts by a Portal User or the attempt of any such act, e.g. fraud vis-à-vis Portal Operator or another portal user; (c) circumstances pursuant to Section 10.1 relating to the Portal User.
->
-> **11.4** All notices of termination must be given in writing.
->
-> **11.5** In case of termination, access to the Data Portal, including the Publishing and Utilization of Service Offerings on the Data Portal, will cease to be available. Portal User will not receive any refunds.
+**_1.2.1.4_** insofar as the context permits, a reference to the feminine form shall include the masculine form and vice versa.
 
----
+**1.2.2** This Agreement is made in the English language. For the avoidance of doubt, the English language version of this Agreement shall prevail over any translation of this Agreement. However, where a German language term has been added to an English language term, such German term shall be decisive throughout.
 
-### Amendments
+### 2. Registration, Access to and Use of the Data Portal
 
-> **12.1** Portal Operator shall be entitled to amend or modify this Agreement with a reasonable period of notice, at least one month before the changes take effect.
->
-> **12.2** The notice shall be in writing.
->
-> **12.3** The Portal User shall be deemed to have agreed to the notified amendments if the Portal User has not objected to them in writing by the time the amendments take effect. Portal Operator will specifically draw the attention of Portal User to this effect of approval of its notification of the amendment of this Agreement.
+**2.1** The use of the Data Portal requires the registration of the Customer. The Customer shall complete the accreditation process and provide all specified information and documents. The Customer confirms their offer to consume or publish Service Offerings via the Data Portal by actively selecting the respective Terms and Conditions checkbox and thereby accepting this Terms. Upon acceptance of this Terms by the Customer an Agreement is concluded which entitles the Customer to the Consumption and Publication of Service Offering on the Data Portal. The Customer waives the receipt of the acceptance declaration pursuant to section 151 German Civil Code.
 
----
+**2.2** The Customer can access and use the Data Portal in accordance with the Agreement. The Customer undertakes to comply with this Agreement and all laws, rules and regulations as well as Policies applicable to Customer’s use of the Data Portal.
 
-### Miscellaneous
+**2.3** The Data Portal provides a portal enabling Customers to access and utilise Service Offerings. Publishers can publish Service Offerings on the portal by using the form provided by deltaDAO and then clicking the “SUBMIT” button. The Publisher is responsible for the information provided in the form which describes the Service Offering and for the content of the Service Offering. When publishing the Service offering, a Service Offering Token will be created via the respective EVM Compatible Blockchain. The Service Offering Token manages access rights to the respective Service Offering and enables Data Buyers to interact directly with Publishers.
 
-> **13.1** All general notifications and announcements by Portal Operator concerning the Service Offerings will be communicated via the Data Portal.
->
-> **13.2** Portal User is not entitled to offset any of its claims against Portal Operator unless counterclaims are legally established or undisputed.
->
-> **13.3** Portal User may transfer the rights and obligations arising from the Agreement to a third party only with the prior written consent of Portal Operator. Portal Operator shall refuse such consent only for good cause. The Portal User shall inform Portal Operator immediately if it intends to transfer rights and obligations under the Agreement with Portal Operator.
->
-> **13.4** This Agreement (including its **[Annex I](#annex-i)** and any other references) contains the entirety of the terms and conditions applicable between the Portal User and Portal Operator with respect to the Data Portal. There are no verbal side agreements.
->
-> **13.5** Terms and conditions or other deviating conditions of the Portal User shall only apply if Portal Operator has expressly accepted them in writing. The validity of individual conditions or clauses of the Portal User that deviate from or supplement this Agreement shall be excluded even if Portal Operator has not objected to them.
->
-> **13.6** Should any of the provisions of this Agreement be or become invalid or unenforceable in whole or in part, the validity or the enforceability of the remaining provisions shall not in any way be affected or impaired thereby. In this case, the invalid or unenforceable provision shall be replaced by a provision, which, to the extent legally possible, provides for an interpretation in keeping with the meaning and the economic purposes of this Agreement at the time of the conclusion of the Agreement between Portal User and Portal Operator as were reflected in the original provision. Under circumstances in which this Agreement proves to be incomplete, a supplementary interpretation in accordance with the meaning and the purposes of this Agreement under due consideration of the legitimate interest of the Parties involved shall be applied.
->
-> **13.7** Unless stipulated otherwise in this Agreement, references herein to the written form shall include text form in accordance with applicable statutes, e.g., email.
->
-> **13.8** This Agreement shall be governed and construed in accordance with the laws of Germany. For all disputes arising from or in connection with this Agreement the courts of Portal Operator's registered office location shall have exclusive jurisdiction.
+**2.4** The Data Portal displays published Service Offerings including their description and enables Customers to discover Service Offerings by means of a query mechanism.
+
+**2.5** The Data Portal further enables the Consumption of Service Offerings by acquiring the respective Service Offering Token via the respective EVM Compatible Blockchain and hence access to the Service Offering.
+
+**2.6** The Customer is responsible for its own activity on the Data Portal. The Customer must adhere to the laws in its own legal jurisdiction as well as their conscience. deltaDAO is not responsible for any malicious use of the Data Portal or any losses associated with the use of the Data Portal of any source. Some layers in Data ecosystems also accessible via the Data Portal may require the Customer to create and keep up to date verified credentials.
+
+**2.7** Publishers may restrict access to a Service Offering by means of access policies, including allow/deny lists and the requirement to present valid Verifiable Credentials (e.g., via Self-Sovereign Identity), which are verified before access to the Service Offering is granted. The Customer is solely responsible for the access policies it configures for its Service Offerings.
+
+### 3. Customer’s Responsibilities
+
+**3.1** The Customer is responsible for all activities undertaken from its Customer Account, regardless of whether the activities are authorized by the Customer or undertaken by the Customer, the Customer’s employees or a third party (including the Customer’s contractors and agents). deltaDAO and its affiliates are not responsible for unauthorized access to the Customer Account. The Customer will be deemed to have taken any action relating to its Customer Account.
+
+**3.2** The Customer will ensure that published Service Offerings and the Customer’s use of Service Offerings or the Data Portal will not violate any of the Policies or any applicable law. The Customer is solely responsible for the development, content, operation, maintenance, availability, and use of published Service Offerings. The Publisher is also solely responsible for ensuring that the content of the metadata provided via the description form complies with applicable law. **The Customer will not provide Personal Data in the metadata and Service Offering.**
+
+**3.3** The Customer will ensure that all third parties comply with its obligations according to this Agreement, mirroring those of the Customer under the Agreement and that the terms of any Customer’s agreements with third parties are consistent with this Agreement. If the Customer becomes aware of any violation of Customer’s obligations under this Agreement caused by a third party, the Customer will immediately suspend access to published Service Offerings and the Data Portal by such third party. deltaDAO does not provide any support or services to third parties, unless deltaDAO has a separate agreement with the Customer or a third party obligating deltaDAO to provide such support or services.
+
+**3.4** deltaDAO does not store or has access to any sensitive account information including keys. The Customer is responsible for the availability and maintenance of any information related to the Customer Account.
+
+### 4. Fees and Payment
+
+**4.1** If a Customer elects to publish or consume Service Offerings on the Data Portal, which includes the generation and purchase of the respective Service Offering Token, it will be conducted solely through EVM Compatible Blockchains via compatible Web3 wallets. deltaDAO will have no insight into or control over these activities, nor does deltaDAO have the ability to reverse any of these or any transaction resulting therefrom.
+
+**4.2** EVM Compatible Blockchains may require the payment of a Gas Fee for every transaction occurring. The Gas Fee typically funds the network of computers that run the EVM Compatible Blockchains. This means that the Customer will need to pay a Gas Fee for each transaction that occurs via the Data Portal and transacting via the Data Portal will require an accordingly funded wallet.
+
+**4.3** Each Party will be responsible, as required under applicable law, for identifying and paying all taxes and other governmental fees and charges (and any penalties, interest, and other additions thereto) that are imposed on that Party upon or with respect to the transactions and payments under this Agreement.
+
+**4.4** Where a Service Offering is consumed by means of compute-to-data, the Consumption may, in addition to the respective Service Offering Token, require the payment of compute resource fees for the requested compute environment and resources (e.g., based on CPU, RAM, disk and/or GPU usage for the duration of the compute job). Such fees, where applicable, are likewise conducted through EVM Compatible Blockchains via compatible Web3 wallets in the applicable fee token. Certain compute environments may be offered free of charge subject to limits on resources and job duration. Section 4.1 applies accordingly.
+
+### 5. Suspension
+
+**5.1** deltaDAO may suspend all or parts of the Customer's or any third party's right to access or use any component or all of the Data Portal immediately with no prior notice to the Customer if deltaDAO determines that the Customer or a third party’s use of the Data Portal:
+
+**_5.1.1_** poses a security risk to the Data Portal or any other third party;
+
+**_5.1.2_** could adversely impact deltaDAO`s systems, the Data Portal or the systems or content of any other deltaDAO user;
+
+**_5.1.3_** could subject deltaDAO, deltaDAO`s affiliates, or any third party to liability, and/or
+
+**_5.1.4_** could be fraudulent;
+
+**_5.1.5_** Customer or any of its customers is in breach of essential obligations of this Agreement; or
+
+**_5.1.6_** Customer has ceased to operate in the ordinary course, made an assignment for the benefit of creditors or similar disposition of Customer assets, or become the subject of any bankruptcy, reorganization, liquidation, dissolution or similar proceeding.
+
+**5.2** If deltaDAO, according to Section 5.1, suspends Customer’s right to access or use any component or all of the Data Portal:
+
+**_5.2.1_** the Customer remains responsible for all fees and charges the Customer incurs during the period of suspension; and
+
+**_5.2.2_** the Customer will not be entitled to any service credits relating to the provision of the Services for any period of suspension.
+
+### 6. Service Lifecycle Management
+
+Service Offerings are subject to Service Lifecycle Management. Service Offerings on the Data Portal are characterised with a Lifecycle State pursuant to the categories: "active", “disabled”, and “unlisted”. The default state of any Service Offering upon initial publication is "active". Being in a Lifecycle State has implications on how the Service Offering is displayed in the Data Portal, and what actions are permitted to be performed with regard to the Service Offering. The assignment and transition of one Lifecycle State to another is subject to the respective Policy. Customers are bound by the Policy regarding assignment and transition of a Lifecycle State.
+
+### 7. Security and Data Protection
+
+**7.1** Without limiting the Customer’s obligations under Section 3.2, deltaDAO will implement reasonable and appropriate measures regarding the Access Controller to help the Customer secure published Data against accidental or unlawful loss, access or disclosure.
+
+**7.2** Data is always stored off-chain. Off-chain metadata storage currently uses the IPFS storage operated by the portal provider; IPFS is the current default and, at this time, the only storage backend implemented and available in the Data Portal, and it cannot yet be changed via the frontend. deltaDAO has no control over this Data. Ensuring the confidentiality, integrity and availability of the Data is in the sole responsibility of the Customer. The information describing and locating the Data (including any access credentials provided for such storage) forms part of the Service Offering metadata and is encrypted by the Ocean Node. Only metadata relating to Data is stored on-chain. To provide for the functionality of the Data Portal deltaDAO indexes such on-chain metadata in a database operated as part of its Ocean Node. **Metadata and Service Offerings must not contain Personal Data**.
+
+**7.3** Transactions that take place via the Data Portal are managed and confirmed via the respective EVM Compatible Blockchain. The **Customer’s public key on such EVM Compatible Blockchain is publicly visible** whenever the Customer engages in a transaction on the Data Portal.
+
+**7.4** deltaDAO neither owns nor controls the EVM Compatible Blockchains, any Customer's Web3 wallets, nor other tools, or any other third parties’ site, product, or service that the Customer might access, visit, or use when interacting via the Data Portal. deltaDAO will not be liable for the acts or omissions of any such third parties, nor will deltaDAO be liable for any damage that the Customer may suffer as a result of transactions or any other interaction with any such third parties.
+
+**7.5** The security of the Customer's data is important to deltaDAO, but the Customer is aware that no method of transmission over the Internet, or method of electronic storage is 100% secure. While deltaDAO strives to use commercially acceptable means to protect the Customer's Personal Data, deltaDAO cannot guarantee its absolute security.
+
+**7.6** Where a Service Offering is consumed by means of compute-to-data, the results of a compute job are stored by the Ocean Node for a limited seven days retention period, after which they are be deleted.
+
+### 8. Term and Termination
+
+**8.1** This Agreement is concluded for an unlimited term.
+
+**8.2** This Agreement can be terminated by either party upon one months' notice to the end of any month.
+
+**8.3** Each party shall have the right to terminate this Agreement for good cause without the need to adhere to a notice period. Good cause for deltaDAO shall, in particular, include the following: (a) breach of essential obligations of the Agreement by the Customer (b) tortious acts by a Customer or the attempt of any such act, e.g. fraud; circumstances pursuant to section 5.1 relating to the Customer.
+
+**8.4** All notices of termination must be given in writing. Termination notice by e-mail is deemed to comport with the written form requirement.
+
+**8.5** In case of termination, the access to the Data Portal, including the ability to publish, consume, or access consumed Service Offerings on the Data Portal, will be suspended. deltaDAO will not be liable to you or to any third party for any such suspension. The Customer will not receive any refunds.
+
+### 9. Intellectual Property Rights
+
+**9.1** Except as provided in this Section 9, deltaDAO obtains no rights whatsoever under this Agreement from the Customer (or Customer’s licensors) regarding published Data.
+
+**9.2** Data will be utilized at the sole discretion of the Customer. Therefore, the Customer represents and warrants to deltaDAO that
+
+**_9.2.1_** the Customer or Customer’s licensors own all rights, in particular copyrights, trademark rights, patent rights, utility model rights, design rights, title, and interest in and of the published Data and
+
+**_9.2.2_** the Customer will not provide any content that is illegal or infringes third party rights, in particular any copyrights or trademark rights, patent rights, utility model rights and design rights of third parties.
+
+**9.3** deltaDAO grants the Customer a limited, revocable, non-exclusive, non-sublicensable, non-transferable license to use the Data Portal solely in accordance with this Agreement.
+
+**9.4** Except as provided in Section 9.3, the Customer obtains no rights under this Agreement from deltaDAO, deltaDAO’s affiliates or deltaDAO’s licensors to the Data Portal, including any related intellectual property rights.
+
+**9.5** deltaDAO or Third-Party Content may be provided to the Customer under a separate agreement and/or a separate license. In the event of a conflict between this Agreement and any separate agreement and/or separate license, the separate agreement and/or separate license will prevail with respect to the deltaDAO Content or Third-Party Content that is the subject of such separate agreement and/or separate license.
+
+### 10. Performance Quality and Warranties
+
+**10.1** The Data Portal and all Services are provided in the manner accessible to the Customer. The Data Portal and all Services may be unavailable at any time as it is a test environment. A shortfall of the Data Portal and all Services can be long-term or permanent.
+
+**10.2** Except to the extent prohibited by law, or to the extent any statutory rights apply that cannot be excluded, limited or waived, deltaDAO its affiliates and licensors:
+
+**_10.2.1_** make no representations or warranties of any kind, whether express, implied, statutory or otherwise regarding the Services or the Third-Party Content, and
+
+**_10.2.2_** disclaim all warranties, including any implied or express warranties (a) of merchantability, satisfactory quality, fitness for a particular purpose, non- infringement, or quiet enjoyment, (b) arising out of any course of dealing or usage of trade and (c) that any content will be secure or not otherwise lost or altered.
+
+### 11. Liability
+
+**11.1** deltaDAO shall bear unlimited liability for intentional acts and gross negligence but shall only bear liability in cases of slight negligence where it has breached obligations which are material to the Agreement. As material obligations are considered obligations, the fulfilment of which makes the proper execution of the Agreement possible, the violation of which endangers the achievement of the purpose of the Agreement and the compliance with which the Customer may regularly rely on (so-called "cardinal obligations"). In the cases of breach of any such material obligations deltaDAO shall only be liable for the foreseeable damage typical for the Agreement. The above exclusions of liability shall not apply in the event of injury to life, limb, and health.
+
+**11.2** deltaDAO assumes no liability for any faults or disruptions within the Data Portal for which it is not responsible.
+
+**11.3** deltaDAO assumes no liability for losses of Data or Service Offerings where such a loss would have been unavoidable.
+
+**11.4** deltaDAO assumes no liability for any legal consequences arising from the Publication or Consumption of Service Offerings on the Data Portal. This applies in particular to any claims made by third parties due to legal or factual errors regarding the Data underlying such Service Offerings. This also applies to claims by third parties regarding Service Offerings in the Lifecycle States of “disabled” and “unlisted”.
+
+**11.5** deltaDAO’s liability does not extend to any impairments or damages resulting from the Customer’s improper or incorrect use of the Data Portal.
+
+**11.6** The above limitations on liability shall apply mutatis mutandis in favor of deltaDAO’s vicarious agents, as well.
+
+**11.7** To the extent that Customers may be redirected to databases, websites, services etc. of third parties via the Data Portal deltaDAO shall not be liable either for the accessibility, existence or security of such databases or services or for the contents thereof.
+
+**11.8** deltaDAO has no liability to the Customer or to any third party for any claims or damages that may arise as a result of any transactions that the Customer engages in via a Web3 wallet, or using Smart Contracts, or any other transactions that the Customer conducts via EVM Compatible Blockchains.
+
+### 12. Modifications
+
+**12.1** Insofar as the functionality of the Data Portal is preserved, deltaDAO may modify, change or discontinue any Service including any policies at any time with no prior notification. Modifications, changes or discontinuation of Services concerning the essential functionality of the Data Portal will be notified to the Customer one month prior to becoming effective.
+
+**12.2** deltaDAO shall be entitled to amend or modify this Agreement with a reasonable period of notice. deltaDAO shall notify the Customer in writing (e-mail sufficient) of the changes at the latest one month before they take effect. The Customer shall be deemed to have agreed to the notified amendments or modifications if the Customer has not notified deltaDAO in writing (e-mail sufficient) of its rejection by the time the amendments take effect. deltaDAO shall specifically draw the attention of the Customer to this effect of approval in its notification of the amendment or modification of this Agreement.
+
+### 13. Miscellaneous
+
+**13.1** All notices and announcements by deltaDAO concerning the Services will be published via the Data Portal.
+
+**13.2** The Customer is not entitled to offset, unless counterclaims are legally established or undisputed.
+
+**13.3** The Customer may transfer the rights and obligations arising from the Agreement to a third party only with the prior written consent of deltaDAO. deltaDAO shall refuse such consent only for good cause. The Customer shall inform deltaDAO immediately if it intends to transfer rights and obligations under the Agreement with deltaDAO.
+
+**13.4** This Agreement (including references) contains the entirety of the terms and conditions applicable between the Customer and deltaDAO with respect to the Service. There are no verbal side agreements.
+
+**13.5** Terms and conditions or other deviating conditions of the Customer shall only apply if deltaDAO has expressly accepted them in writing. The validity of individual conditions or clauses of the Customer that deviate from or supplement this Agreement shall be excluded even if deltaDAO has not objected to them.
+
+**13.6** Should any of the provisions of this Agreement be or become invalid or unenforceable in whole or in part, the validity or the enforceability of the remaining provisions shall not in any way be affected or impaired thereby. In this case, the invalid or unenforceable provision shall be replaced by a provision, which, to the extent legally possible, provides for an interpretation in keeping with the meaning and the economic purposes of this Agreement at the time of the conclusion of the Agreement between the Customer and the deltaDAO. Under circumstances in which this Agreement proves to be incomplete, a supplementary interpretation in accordance with the meaning and the purposes of this Agreement under due considerations of the legitimate interest of the Parties involved shall be applied.
+
+**13.7** Unless otherwise stated in this Agreement, it is sufficient to comply with the written form also by using text form according to sec. 126b German Civil Code, e.g., e-mail.
+
+**13.8** The authentic language of this Agreement is English. The English language shall prevail unless a German language term is added to an English language term then such German term shall be decisive throughout. In case of ambiguity or vagueness of a legal or non-legal term, the term shall be construed in light of German statutory law and in such a way that it corresponds to the German equivalent.
+
+**13.9** This Agreement shall be governed by the laws of the Federal Republic of Germany. The application of the uniform UN Convention on Contracts for the International Sale of Goods (CISG) shall be excluded.
+
+**13.10** Exclusive - also international - place of jurisdiction for all disputes arising from or in connection with the Agreement shall be the registered office of deltaDAO. The above shall not apply if another - legally mandatory - exclusive jurisdiction exists.
 
 ---
 
@@ -266,178 +246,91 @@ This Ocean Enterprise Collective e.V. Data Portal Usage Agreement ("**Agreement*
 
 ### Lifecycle State Policy
 
-for the usage of the Data Portal.
+**For the usage of the Data Portal** <br>
+_Version: August 2026_
 
-_Version: February 2025_
+#### 1. Objective and scope
 
----
+The Lifecycle State Policy describes the assignment and transition of one Lifecycle State to another and sanctions for a violation of this policy. This policy supplements the Data Portal Usage Agreement above (in the following also "Terms and Conditions"), as updated from time to time, between Customer and deltaDAO AG (in the following “Data Portal Provider”), which governs the Customer’s access to and use of the Data Portal.
 
-#### 1. Objective and Scope
-
-This Lifecycle State Policy ("**Policy**") describes the assignment and transition of one Lifecycle State to another and sanctions for a violation of this Policy. This Policy supplements the Data Portal Usage Agreement between Portal User and Portal Operator, the Data Use Agreement, as updated from time to time, between Data User and Data Publisher or any other agreement between Data User and Data Publisher governing the usage of the Data Portal.
-
-As outlined in the Data Portal Usage Agreement, **all Data Publishers and Data Users are bound by this** Policy.
-
----
+As outlined in the Terms and Conditions, **all Customers are bound by this policy**.
 
 #### 2. Definitions
 
-Capitalized terms shall have the meaning given to them in this agreement; and:
+Capitalized terms shall have the meaning given to them in the Terms and Conditions.
 
-> **2.1 "Access Token"** means an ERC20 utility token enabling the use of the Data Publishers' Service Offering and creating the respective Data audit trail via the selected EVM Compatible Blockchain (i.e., documentation of activities relating to the access to the Data).
->
-> **2.2 "Data"** means any data, software, content or service based on which a Service Offering is created by a Data Publisher on the Data Portal.
->
-> **2.3 "Data Portal"** means an internet portal that is operated by Portal Operator, includes an API connector establishing links to metadata caches which query the underlying EVM Compatible Blockchain and hereby enables (a) the Publishing of Service Offerings and (b) the Utilization of Service Offerings, available under the domain name [https://market.demo.oceanenterprise.io/](https://market.demo.oceanenterprise.io/), as may be updated by Portal Operator from time to time.
->
-> **2.4 "Data Portal Usage Agreement"** means an agreement concluded between a Portal User and a Portal Operator governing Portal User's access to and use of Portal Operator's Data Portal.
->
-> **2.5 "Data Publisher"** means a user of the Data Portal when placing or having placed one or several Service Offerings on the Data Portal.
->
-> **2.6 "Data Use Agreement"** means an agreement concluded among Portal Users acting as Data Publishers and Data Users.
->
-> **2.7 "Data User"** means a user of the Data Portal when acquiring an Access Token for utilizing a Service Offering.
->
-> **2.8 "EVM Compatible Blockchain"** means any blockchain or distributed ledger technology solution compatible with the Ethereum Virtual Machine technology.
->
-> **2.9 "Entrepreneur"** means a natural or legal person or a partnership with legal personality who or which, when conducting a legal transaction, acts in exercise of their trade, business or profession.
->
-> **2.10 "Gas Fee"** means the transaction fee that may be required by EVM Compatible Blockchains for processing a transaction.
->
-> **2.11 "Lifecycle State"** means either one of the following properties of metadata in accordance with the Lifecycle State Policy: "active", "end-of-life", "deprecated", "revoked", "disabled", or "unlisted".
->
-> **2.12 "Personal Data"** means, in accordance with Art. 4 GDPR, any information relating to an identified or identifiable natural person.
->
-> **2.13 "Portal Operator"** means an Entrepreneur who operates a Data Portal.
->
-> **2.14 "Portal Operator Content"** means information or data that Portal Operator is entitled to.
->
-> **2.15 "Portal User"** means an Entrepreneur who by way of accessing and using the Data Portal may act as a Data Publisher or a Data User.
->
-> **2.16 "Portal User Account"** means the functionality by means of which the Portal User gains permission for the Publication and Utilization of Service Offerings on the Data Portal by using verified credentials and, if applicable, further authentication data or alternative authentication techniques in line with this Agreement.
->
-> **2.17 "Publishing"** means placing a Service Offering on the Data Portal.
->
-> **2.18 "Service Offering"** means any data-based service offer displayed on the Data Portal, including data downloads, software downloads, software services, Software-as-a-Service and Compute-to-Data offerings.
->
-> **2.19 "Third-Party Content"** means Service Offerings published by any party other than Portal Operator and Portal User.
->
-> **2.20 "Utilization"** means acquiring and using an Access Token to enable the use of a Service Offering.
+#### 3. Service Offering Lifecycle States
 
----
+Service Offerings are subject to the Service Lifecycle Management, a mechanism to change the visibility of any Service Offering from the Data Portal depending on the Lifecycle State. The Lifecycle State has implications on how the Service Offering is displayed in the Data Portal, and what actions are permitted to be performed regarding the Service Offering.
 
-#### 3. Service Offering Lifecycle states
+##### 3.1 Set by the Publisher
 
-Service Offerings and Portal User Accounts are subject to the Service Lifecycle Management (SLM), a mechanism to deactivate Portal User Accounts and change the visibility and _consumability_ of any Service Offering from the Data Portal depending on the Lifecycle State. Being in a Lifecycle State has implications on how the Service Offering is displayed in the Data Portal, and what actions are permitted to be performed regarding the Service Offering or by the Portal User Account.
+The Lifecycle State is set by the Publisher and enforced via smart contracts. Lifecycle State means the following properties of metadata describing the state of Service Offerings throughout their lifecycles.
 
-##### 3.1 Set by the Data Publisher
+- **Active:** The default state upon initial publication. Service Offerings in the "Active" state are fully functional and available for discovery on the Data Portal. Customers can search for, view, and interact with these Service Offerings. Consumption is allowed.
+- **End-of-Life:** Service Offerings in the „End-of-Life“ state remain discoverable, but Consumption is not allowed. This state indicates that the Service Offerings are usually deprecated or outdated, and they are no longer actively promoted or maintained.
+- **Deprecated:** This state indicates that another Service Offering has deprecated the current Service Offering. Deprecated Service Offerings are not discoverable, and Consumption is not allowed. Similar to the "End-of-life" state, deprecated Service Offerings are not listed under the Customer’s profile.
+- **Revoked:** When a Service Offering is revoked by its Publisher, it means that the Publisher has explicitly revoked access or ownership rights to the Service Offering. Revoked Service Offerings are not discoverable, and Consumption is not allowed.
+- **Consumption is temporary disabled:** Service Offerings in this state are still discoverable, but Consumption is temporarily disabled. These Service Offerings are still listed under the Customer's profile.
+- **Unlisted:** A state describing a Service Offering which is not visible on the Data Portal, but Consumption is allowed.
 
-Lifecycle State means the following properties of metadata describing the state of Service Offerings _and Portal User Accounts_ throughout their lifecycle. The Lifecycle State is set by the Data Publisher.
+The Lifecycle States set by the Publisher have the following properties:
 
-> **Active.**
->
-> > The default state upon initial publication. Service Offerings in the "Active" state are fully functional and available for discovery in Data Portal. Data Portal Users can search for, view, and interact with these Service Offerings. Data consumption is allowed.
->
-> **End-of-Life.**
->
-> > A terminal state after a timeout date. Service Offerings remain discoverable but cannot be consumed by Data Portal Users.
->
-> **Deprecated.**
->
-> > A terminal state describing a Service Offering superseded by another Service Offering. Deprecated Service Offerings are not discoverable, and consumption is not allowed.
->
-> **Revoked.**
->
-> > A terminal state describing a Service Offering which has been revoked by the Data Publisher, e.g., because it contained wrong or fraudulent information. Revoked Service Offerings are not discoverable, and consumption is not allowed.
->
-> **Consumption is temporary disabled.**
->
-> > A non-terminal state describing a Service Offering which cannot be consumed at the moment. It is still discoverable.
->
-> **Unlisted.**
->
-> > A non-terminal state describing a Service Offering which is not visible on the Data Portal but can still be consumed.
+| Lifecycle State | Description                    | Discoverable on Data Portal | Consumption allowed | Listed under account | Reversible |
+| :-------------- | :----------------------------- | :-------------------------- | :------------------ | :------------------- | :--------- |
+| 0               | Active                         | Yes                         | Yes                 | Yes                  | Yes        |
+| 1               | End-of-life                    | Yes                         | No                  | No                   | Yes        |
+| 2               | Deprecated                     | No                          | No                  | No                   | No         |
+| 3               | Revoked                        | No                          | No                  | No                   | No         |
+| 4               | Consumption temporary disabled | Yes                         | No                  | Yes                  | Yes        |
+| 5               | Unlisted                       | No                          | Yes                 | Yes                  | Yes        |
 
-The Lifecycle States set by the Data Publisher have the following properties:
+##### 3.2 Set by the Data Portal Provider
 
-| **Lifecycle state**                   | **Discoverable on Data Portal** | **Consumption allowed** | **Listed under account** |
-| :------------------------------------ | :------------------------------ | :---------------------- | :----------------------- |
-| **Active**                            | Yes                             | Yes                     | Yes                      |
-| **End-of-life**                       | No                              | No                      | No                       |
-| **Deprecated**                        | No                              | No                      | No                       |
-| **Revoked**                           | No                              | No                      | No                       |
-| **Consumption is temporary disabled** | Yes                             | No                      | Yes                      |
-| **Unlisted**                          | No                              | Yes                     | Yes                      |
+The Lifecycle State set by the Data Portal Provider has implications for how the Service Offering is displayed on the Data Portal, and what actions are permitted to be performed on the Data Portal regarding the Service Offering.
 
-##### 3.2 Set by the Portal Operator
-
-Being in a Lifecycle State set by the Portal Operator has implications on how the Service Offering is _displayed_ in the Data Portal, and what actions are permitted to be performed on the Data Portal regarding the Service Offering or by the Portal User Account.
-
-| **Lifecycle state** | **Discoverable on Data Portal** | **Consumption on Data Portal allowed** | **Listed under account** |
-| :------------------ | :------------------------------ | :------------------------------------- | :----------------------- |
-| **Listed**          | Yes                             | Yes                                    | Yes                      |
-| **Unlisted**        | No                              | No                                     | Yes                      |
-
----
+| Lifecycle State | Discoverable on Data Portal | Consumption on Data Portal allowed | Listed under account | Reversible |
+| :-------------- | :-------------------------- | :--------------------------------- | :------------------- | :--------- |
+| Listed          | Yes                         | Yes                                | Yes                  | Yes        |
+| Delisted        | No                          | No                                 | Yes                  | Yes        |
 
 #### 4. Transition of Lifecycle States
 
-##### Deactivation
+##### 4.1 Initiation by a Publisher
 
-> **Initiation by a Data Portal Participant**
->
-> > The Lifecycle State transition of a registered Service Offering or Data Portal Account to the states Listed/Unlisted can be requested by any Portal User. The decision to accept the request and the actual implementation of the transition is the responsibility of the Portal Operator.
-> >
-> > Portal Users can place a request including but not limited to the following cases:
-> >
-> > - The Service Offering description contains sensitive data including Personal Data.
-> > - The Service Offering contains sensitive or Personal Data without permission.
-> > - There is a potential intellectual property (IP) violation.
-> > - There is a suspected or confirmed infringement of applicable law (including GDPR infringements) in the jurisdiction of the Portal Operator.
->
-> **Initiation by a Portal Operator**
->
-> > Regardless of whether a report has been filed, Portal Operators have the right to change the Lifecycle State of Service Offerings and/or Portal User Accounts to Listed/Unlisted including but not limited to the following cases using the respective SLM _repository_:
-> >
-> > - The Service Offering and/or Portal User Account is corrupted or outdated.
-> > - The proper functionality of the Data Portal is at risk.
-> > - The Service Offering description/metadata contains sensitive data including Personal Data.
-> > - The Service Offering contains sensitive or Personal Data without permission or legal basis.
-> > - There is a potential intellectual property (IP) violation.
-> > - The Service Offering is not holding up to the description or promise.
-> > - There is a suspected or confirmed infringement of applicable law (including GDPR infringements) in the jurisdiction of the Portal Operator.
->
-> **Initiation by a Data Publisher**
->
-> > Data Publishers have the right to change the Lifecycle State of Service Offerings and/or Customer Accounts by changing the metadata (in an NFT smart contract) of the respective Service Offering in the following cases:
-> >
-> > - The Data Publisher wants to reactivate a former disabled Service Offering.
-> > - The Data Publisher wants to unlist a Service Offering.
-> > - An impersonation was reported by the impersonated person.
-> >
-> > Data Publishers do not have the right to put a Service Offering into the following states if there are open or ongoing obligations towards Data Consumers who obtained a consumption right:
-> >
-> > - End-of-life
-> > - Deprecated
-> > - Revoked
-> > - Consumption is temporarily disabled
+- 4.1.1 Publishers have the right to change the Lifecycle State of Service Offerings by changing the metadata of the respective Service Offering, except 4.1.2 applies.
+- 4.1.2 Publishers do not have the right to put a Service Offering into the following states if there are open or ongoing obligations towards Customers who obtained a consumption right: End-of-Life, Deprecated, Revoked.
 
-##### Activation
+##### 4.2 Initiation by a Customer who is not the Publisher
 
-> Service Offerings and Portal User Accounts can revert to the default ("active") Lifecycle State if one of the following conditions is met:
->
-> - The Data Publisher wants to reactivate a former disabled Service Offering.
-> - The Data Publisher wants to activate a former unlisted Service Offering
+The Lifecycle State transition of a registered Service Offering to the states Listed/Delisted can be requested from the Data Portal Provider by any Customer. The decision to accept the request and the actual implementation of the transition is the responsibility of the Data Portal Provider.
 
----
+Customers can place a request including but not limited to the following cases:
+
+- The Service Offering description contains sensitive data including Personal Data.
+- The Service Offering contains sensitive or Personal Data without permission or legal basis.
+- There is a potential intellectual property (IP) violation.
+- There is a suspected or confirmed infringement with applicable law (including GDPR infringements) in the jurisdiction of the Data Portal Provider.
+
+##### 4.3 Initiation by the Data Portal Provider
+
+Regardless of whether a report has been filed, Data Portal Providers have the right to change the Lifecycle State of Service Offerings to Listed/Delisted including but not limited to the following cases:
+
+- The Service Offering and/or a Customer Account is corrupted, stolen, or outdated.
+- The proper functionality of the Data Portal is at risk.
+- The Service Offering description/metadata contains sensitive data including Personal Data.
+- The Service Offering contains sensitive or Personal Data without permission or legal basis.
+- There is a potential intellectual property (IP) violation.
+- The Service Offering is not holding up to the description or promise.
+- There is a suspected or confirmed infringement with applicable law (including GDPR infringements) in the jurisdiction of the Data Portal Provider.
 
 #### 5. Sanctions
 
-Depending on the nature and severity of the violation of this Policy and related documents, Portal Users can be subject to the following sanctions imposed by the Portal Operator.
+Depending on the nature and severity of the violation of this policy and related documents, violators will be subject to the following sanctions.
 
-| **Severity** | **Description**                                                                                                                  | **Sanction**                                                                                                                           |
-| :----------- | :------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------- |
-| **1**        | One-time and minor non-compliance.                                                                                               | Revocation of the affected Service Offering.                                                                                           |
-| **2**        | Repeated minor non-compliance.                                                                                                   | Revocation of the affected Service Offering.<br>Additional sanctions depend on the specific case.                                      |
-| **3**        | Negligent and serious non-compliance.                                                                                            | Revocation of the affected Service Offering.<br>Legal consequences, if applicable.                                                     |
-| **4**        | Intentional and serious non-compliance (e.g., publishing of illegal content) or repeated involuntary and serious non-compliance. | Revocation of the affected Service Offering.<br>Permanent revocation of the Portal User Account.<br>Legal consequences, if applicable. |
+| Severity | Description                                                                                                                      | Sanction                                                                                                                          |
+| :------- | :------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------- |
+| 1        | One-time and minor non-compliance.                                                                                               | Revocation of the affected Service Offering(s).                                                                                   |
+| 2        | Repeated minor non-compliance.                                                                                                   | Revocation of the affected Service Offering(s).<br>Additional sanctions depend on the specific case.                              |
+| 3        | Involuntary (provable by the accused) and serious non-compliance.                                                                | Revocation of the affected Service Offering(s).<br>Legal consequences, if applicable.                                             |
+| 4        | Intentional and serious non-compliance (e.g., publishing of illegal content) or repeated involuntary and serious non-compliance. | Revocation of the affected Service Offering(s).<br>Permanent block of the Customer Account.<br>Legal consequences, if applicable. |

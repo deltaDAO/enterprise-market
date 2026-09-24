@@ -2,14 +2,7 @@ import { ReactElement } from 'react'
 import styles from './Footer.module.css'
 import Links from './Links'
 import { useMarketMetadata } from '@context/MarketMetadata'
-// import Container from '@components/@shared/atoms/Container'
-// import Image from 'next/image'
-// import logo from '../../../public/images/ecosystem/ocean_enterprise_logo.png'
 import Logo from '@images/logo.svg'
-// import XIcon from '@images/xIcon.svg'
-import LinkedInIcon from '@images/linkedInIcon.svg'
-import MediumIcon from '@images/mediumIcon.svg'
-import YoutubeIcon from '@images/youtubeIcon.svg'
 
 export default function Footer(): ReactElement {
   const { siteContent } = useMarketMetadata()
@@ -26,46 +19,16 @@ export default function Footer(): ReactElement {
           <Logo className={styles.logo} />
           <div className={styles.taglineContainer}>
             <span className={styles.tagline}>
-              Developed by the Ocean Enterprise Collective. Learn more and join
-              us!
+              Built by deltaDAO AG, your partner for data-driven business models
+              and decentralized AI solutions.
             </span>
             <a
               className={styles.websiteLink}
-              href="https://oceanenterprise.io"
+              href="https://delta-dao.com"
               target="_blank"
               rel="noopener noreferrer"
             >
-              oceanenterprise.io
-            </a>
-          </div>
-          <div className={styles.socialLinks}>
-            {/* <a
-              href="https://x.com/ocnenterprise"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <XIcon className={styles.socialIcon} />
-            </a> */}
-            <a
-              href="https://www.linkedin.com/company/ocean-enterprise-collective"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <LinkedInIcon className={styles.socialIcon} />
-            </a>
-            <a
-              href="https://medium.com/ocean-enterprise-collective"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <MediumIcon className={styles.socialIcon} />
-            </a>
-            <a
-              href="https://www.youtube.com/@OceanEnterpriseCollective"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <YoutubeIcon className={styles.socialIcon} />
+              delta-dao.com
             </a>
           </div>
         </div>
