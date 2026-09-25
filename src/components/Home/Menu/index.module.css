@@ -49,6 +49,11 @@
   align-items: center;
   font-size: 15px;
   color: #fff;
+  /* testnet badge on the hero: solid white pill with navy label, so it
+   * stays legible over every part of the gradient (like the wallet pill) */
+  --network-badge-color: var(--deck-navy);
+  --network-badge-background: #fff;
+  --network-badge-border: transparent;
 }
 
 .loginButton {
