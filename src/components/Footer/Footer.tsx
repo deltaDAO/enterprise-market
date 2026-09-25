@@ -36,7 +36,7 @@ export default function Footer(): ReactElement {
       </div>
       <p className={styles.copyright}>
         {copyright}
-        {' · '}Made by{' '}
+        {' · '}Portal technology by{' '}
         <a
           className={styles.madeByLink}
           href="https://www.delta-dao.com"
