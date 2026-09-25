@@ -34,18 +34,7 @@ export default function Footer(): ReactElement {
         </div>
         <Links />
       </div>
-      <p className={styles.copyright}>
-        {copyright}
-        {' · '}Portal technology by{' '}
-        <a
-          className={styles.madeByLink}
-          href="https://www.delta-dao.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          deltaDAO
-        </a>
-      </p>
+      <p className={styles.copyright}>{copyright}</p>
     </footer>
   )
 }

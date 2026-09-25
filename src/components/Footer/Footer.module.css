@@ -124,18 +124,6 @@ body .websiteLink:hover {
   font-variant-numeric: tabular-nums;
 }
 
-/* "Portal technology by deltaDAO" credit inside the copyright line */
-.madeByLink {
-  color: inherit;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.madeByLink:hover,
-.madeByLink:focus-visible {
-  color: #fff;
-}
-
 .socialLinks {
   display: flex;
   justify-content: flex-start;
