@@ -88,11 +88,20 @@ export function getOceanConfig(
     const validAddresses = validateAndChecksumAddresses(erc20Map[networkKey])
 
     config.tokenAddresses = validAddresses
+    // The configured ERC20 allowlist is the source of truth for the chain's
+    // base token. ocean.js ships OCEAN as the default, which this portal does
+    // not use, so every oceanTokenAddress fallback resolves to the first
+    // allowed token instead (e.g. devEURAU on OP Sepolia).
+    if (validAddresses.length > 0) {
+      config.oceanTokenAddress = validAddresses[0]
+    }
   } else {
-    // Fallback if no map entry exists: use the default config ocean token as a single-item array
-    config.tokenAddresses = config?.oceanTokenAddress
-      ? [config.oceanTokenAddress]
-      : []
+    // No allowlist entry for this chain: expose no base tokens rather than
+    // falling back to the ocean.js default OCEAN token.
+    console.warn(
+      `[getOceanConfig] No NEXT_PUBLIC_ALLOWED_ERC20_ADDRESSES entry for network: ${network}`
+    )
+    config.tokenAddresses = []
   }
   const enterpriseContracts = getOceanArtifactsAddressesByChainId(
     Number(network)
