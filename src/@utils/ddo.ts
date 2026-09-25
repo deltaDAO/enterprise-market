@@ -70,38 +70,81 @@ export function getAssetAccessType(
   return getServiceByName(asset, 'compute') ? 'compute' : 'access'
 }
 
+export const CUSTOM_TIMEOUT_OPTION = 'Custom (seconds)'
+
+// Service access duration presets. Values are stored in the DDO as
+// `service.timeout` (integer seconds, 0 = forever). Month and year values
+// must stay unchanged so existing assets keep matching their preset.
+export const TIMEOUT_PRESETS: { label: string; seconds: number }[] = [
+  { label: 'Forever', seconds: 0 },
+  { label: '5 minutes', seconds: 300 },
+  { label: '15 minutes', seconds: 900 },
+  { label: '30 minutes', seconds: 1800 },
+  { label: '1 hour', seconds: 3600 },
+  { label: '3 hours', seconds: 10800 },
+  { label: '6 hours', seconds: 21600 },
+  { label: '12 hours', seconds: 43200 },
+  { label: '1 day', seconds: 86400 },
+  { label: '3 days', seconds: 259200 },
+  { label: '1 week', seconds: 604800 },
+  { label: '2 weeks', seconds: 1209600 },
+  { label: '1 month', seconds: 2630000 },
+  { label: '3 months', seconds: 7890000 },
+  { label: '6 months', seconds: 15780000 },
+  { label: '1 year', seconds: 31556952 }
+]
+
+export function isTimeoutPreset(timeout: string): boolean {
+  return TIMEOUT_PRESETS.some((preset) => preset.label === timeout)
+}
+
+export function isCustomTimeoutValue(timeout: string): boolean {
+  return /^[1-9]\d*$/.test(timeout ?? '')
+}
+
 export function mapTimeoutStringToSeconds(timeout: string): number {
-  switch (timeout) {
-    case 'Forever':
-      return 0
-    case '1 day':
-      return 86400
-    case '1 week':
-      return 604800
-    case '1 month':
-      return 2630000
-    case '1 year':
-      return 31556952
-    default:
-      return 0
+  const preset = TIMEOUT_PRESETS.find((preset) => preset.label === timeout)
+  if (preset) return preset.seconds
+  if (/^\d+$/.test(timeout ?? '')) return Number(timeout)
+  return 0
+}
+
+export function timeoutSecondsToFormValue(seconds: number): string {
+  const timeout = Number(seconds) || 0
+  const preset = TIMEOUT_PRESETS.find((preset) => preset.seconds === timeout)
+  return preset ? preset.label : String(timeout)
+}
+
+const DURATION_UNITS: { name: string; seconds: number }[] = [
+  { name: 'year', seconds: 31556952 },
+  { name: 'month', seconds: 2630000 },
+  { name: 'week', seconds: 604800 },
+  { name: 'day', seconds: 86400 },
+  { name: 'hour', seconds: 3600 },
+  { name: 'minute', seconds: 60 },
+  { name: 'second', seconds: 1 }
+]
+
+// Formats seconds with the two largest units, e.g. 5400 -> "1 hour 30 minutes"
+export function formatSecondsPrecise(numberOfSeconds: number): string {
+  let remaining = Math.floor(Number(numberOfSeconds) || 0)
+  if (remaining <= 0) return 'Forever'
+
+  const parts: string[] = []
+  for (const unit of DURATION_UNITS) {
+    if (parts.length === 2) break
+    const amount = Math.floor(remaining / unit.seconds)
+    if (amount > 0) {
+      parts.push(`${amount} ${unit.name}${amount === 1 ? '' : 's'}`)
+      remaining -= amount * unit.seconds
+    }
   }
+  return parts.join(' ')
 }
 
 export function formatServiceTimeout(timeout: number): string {
-  switch (timeout) {
-    case 0:
-      return 'Forever'
-    case 86400:
-      return '1 day'
-    case 604800:
-      return '1 week'
-    case 2630000:
-      return '1 month'
-    case 31556952:
-      return '1 year'
-    default:
-      return `${timeout} second${timeout === 1 ? '' : 's'}`
-  }
+  const preset = TIMEOUT_PRESETS.find((preset) => preset.seconds === timeout)
+  return preset ? preset.label : formatSecondsPrecise(timeout)
 }
 
 function numberEnding(number: number): string {

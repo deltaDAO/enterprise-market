@@ -480,11 +480,9 @@
       },
       {
         "name": "timeout",
-        "label": "Timeout",
-        "help": "Define how long buyers should be able to download the dataset again after the initial purchase.",
-        "type": "select",
-        "options": ["Forever", "1 day", "1 week", "1 month", "1 year"],
-        "sortOptions": false,
+        "label": "Access Duration",
+        "help": "How long a buyer can use this service after purchase without paying again: re-download a dataset, use a SaaS subscription, or run an algorithm. Choose 'Forever' for unlimited access, or 'Custom' to enter a duration in seconds.",
+        "type": "timeout",
         "required": true
       },
       {

@@ -5,6 +5,7 @@ import { getMaxDecimalsValidation } from '@utils/numbers'
 import { getOriginalValue, testOptionalUrl } from '@utils/yup'
 import { validationConsumerParameters } from '@shared/FormInput/InputElement/ConsumerParameters/_validation'
 import { isS3File } from 'src/@types/S3File'
+import { isCustomTimeoutValue, isTimeoutPreset } from '@utils/ddo'
 import {
   normalizeDockerImageReference,
   parseDockerImageReference
@@ -461,7 +462,13 @@ export const serviceValidationSchema = Yup.object().shape({
         this.createError({ message: 'Please provide a valid file URL' })
       )
     }),
-  timeout: Yup.string().required('Required'),
+  timeout: Yup.string()
+    .required('Required')
+    .test(
+      'valid-timeout',
+      'Enter a whole number of seconds greater than 0',
+      (value) => isTimeoutPreset(value) || isCustomTimeoutValue(value)
+    ),
   usesConsumerParameters: Yup.boolean(),
   consumerParameters: Yup.array().when('usesConsumerParameters', {
     is: true,
