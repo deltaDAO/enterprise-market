@@ -154,7 +154,7 @@
   margin: 0;
 }
 
-/* CTA buttons: publish = hero tier (gradient + cyan glow), catalogue = white outline on navy */
+/* CTA buttons: catalogue = hero tier (gradient + cyan glow), publish = white outline on navy */
 .ctaButton {
   display: flex;
   justify-content: center;
@@ -191,16 +191,16 @@
   box-shadow: var(--button-hero-shadow-active);
 }
 
-.ctaBlock:last-child .ctaButton {
+.ctaBlock:first-child .ctaButton {
   background: transparent;
   border: 1px solid var(--control-border-on-dark);
   box-shadow: none;
   filter: none;
 }
 
-.ctaBlock:last-child .ctaButton:hover,
-.ctaBlock:last-child .ctaButton:focus-visible,
-.ctaBlock:last-child .ctaButton:active {
+.ctaBlock:first-child .ctaButton:hover,
+.ctaBlock:first-child .ctaButton:focus-visible,
+.ctaBlock:first-child .ctaButton:active {
   background: rgba(255, 255, 255, 0.12);
   border-color: var(--control-border-on-dark-hover);
   box-shadow: none;
