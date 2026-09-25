@@ -6,7 +6,7 @@
   width: 100%;
   height: 100%;
   color: #fff;
-  /* spotlight blobs + dotted radial grid + navy base */
+  /* spotlight blobs + navy base */
   background: radial-gradient(
       ellipse 42rem 28rem at 12% 18%,
       color-mix(in srgb, var(--brand-highlight) 25%, transparent),
@@ -17,11 +17,6 @@
       color-mix(in srgb, var(--brand-secondary) 15%, transparent),
       transparent 70%
     ),
-    radial-gradient(
-        color-mix(in srgb, #fff 9%, transparent) 1px,
-        transparent 1.5px
-      )
-      0 0 / 22px 22px,
     var(--deck-navy);
   display: flex;
   justify-content: center;
