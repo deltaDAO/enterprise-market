@@ -21,10 +21,7 @@ export default function AuthGuard({ children }: AuthGuardProps) {
       '/auth/login',
       '/auth/callback',
       '/about',
-      '/terms',
-      '/privacy',
-      '/imprint',
-      '/cookie-settings'
+      '/privacy'
     ]
 
     if (exactPublicPaths.includes(path)) {

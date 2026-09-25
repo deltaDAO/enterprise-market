@@ -1,91 +1,73 @@
 ---
 title: Cookie Policy
-description: How the deltaDAO Marketplace demonstrator, operated by deltaDAO AG, uses cookies, web storage and consent-based statistics.
-showLastUpdated: true
-lastUpdated: '2026-09-24'
+lastUpdated: '2026-09-21'
 ---
 
-This Cookie Policy explains how the deltaDAO Marketplace demonstrator, operated by deltaDAO AG, uses cookies and similar technologies. This policy should be read alongside our Privacy Policy.
+### Table of contents
 
 ## 1. What are cookies?
 
-A cookie is a small file that stores information on your device. Your web browser downloads it on your first visit to a website. When you return using the same device, the cookie is either sent back to the site that created it (first-party) or to another website it belongs to (third-party).
+A cookie is a small file that stores information on your device. Your web browser downloads it on the first visit to a website. The next time you open this website with the same device, the cookie and the information stored in it are either:
 
-In this policy, the term "cookies" refers to standard browser cookies as well as web storage (`localStorage` and `sessionStorage`), which serves similar functions. Web storage stays on your device and is not sent along with your requests; `sessionStorage` is deleted automatically when you close the browser tab.
+- sent back to the website that created it (**first-party cookie**), or
+- sent to another website it belongs to (**third-party cookie**).
 
-### Cookie Categories
+This enables the website to detect that you have opened it previously with this browser and, in some cases, to vary the displayed content.
 
-- **Essential cookies:** Strictly necessary for you to browse the website and use its features, such as logging in, connecting a wallet, or remembering a setting you deliberately changed. No consent is required for these.
-- **Preference cookies:** Remember settings that are not strictly necessary but make the website more user-friendly.
-- **Statistics cookies:** Collect anonymized information about how the website is used, to improve it. We only set these with your consent.
-- **Marketing cookies:** Track online activity to deliver advertising. **We do not use marketing cookies.**
+**Web storage** (local storage and session storage) has similar functionality to cookies. In the following, the term “cookies” refers to **both**, web storage and regular cookies.
+
+**Cookie categories**
+
+There are several categories of cookies including the following cookie categories.
+
+- **Essential cookies**: These cookies are strictly necessary for you to browse a website and use its features.
+- **Preference cookies**: Preference cookies are not absolutely necessary for the technical operation of a website but increase user-friendliness.
+- **Statistics cookies**: Statistics cookies or performance cookies collect information about how you use a website, e.g., which pages you visited, to improve website functions. The information is aggregated and not used to identify you.
+- **Marketing cookies**: Marketing cookies track your activity to deliver relevant advertising or to limit the number of times you see an ad. That information can be shared with other organizations or advertisers.
 
 ## 2. How do we use cookies?
 
-All cookies and web storage entries below are first-party: they are created by this website, for this website, and are never shared with advertisers. Settings cookies are only created when you actually change a default setting or use the related feature — simply visiting the site does not store them — and they are erased again when you return to the default.
+On our portal demonstrator we use **strictly necessary (essential)** first party cookies and web storage only. They are needed for you to use the portal's features, which is why no consent is required for them and why you are not asked to agree to anything.
 
-### Settings (essential, stored as cookies)
+You can find further information about each item in the table below.
 
-| Name                        | Purpose                                                                                             | Duration                                                                                                                      |
-| --------------------------- | --------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `cookieConsentAcknowledged` | Remembers that you have seen and acknowledged the cookie notice, so it is not shown on every visit. | Created when you close the cookie notice. Stored for one year.                                                                |
-| `AnalyticsCookieConsent`    | Remembers your choice about statistics cookies (accepted or declined).                              | Created when you make a choice in the cookie notice. Stored for one year.                                                     |
-| `chainIds`                  | Stores the network(s) you have selected, allowing you to switch the data source of the interface.   | Created if you change the default network selection. Stored for one year, or erased immediately if you return to the default. |
-| `bookmarks`                 | Stores your bookmarked assets.                                                                      | Created if you bookmark assets. Stored for one year, or erased immediately if you remove all your bookmarks.                  |
-| `allowExternalContent`      | Stores whether the portal is allowed to load and display external content.                          | Created if you allow external content. Stored for 60 days, or erased immediately if you return to the default (do not allow). |
-| `debug`                     | Stores whether debug mode is enabled, allowing you to use the debug feature.                        | Created if you activate debug mode. Stored for 60 days, or erased immediately if you deactivate it.                           |
-| `onboardingModule`          | Stores whether the onboarding module is shown, so you can hide or re-enable the onboarding feature. | Created if you change the default setting. Stored for 60 days, or erased immediately if you return to the default.            |
-| `onboardingStep`            | Stores your current step in the onboarding process, so you can continue where you left off.         | Created once you progress past the first step. Stored for 60 days, or erased immediately when you are back at step 0.         |
-| `assetView`                 | Stores whether you prefer the grid or list view for asset lists.                                    | Created if you switch away from the default grid view. Stored for 60 days, or erased immediately if you switch back.          |
+| Name                              | Service              | Purpose                                                                                                                                                                                            | Type and duration                                                                                                                                                        |
+| --------------------------------- | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `allowExternalContent`            | market.delta-dao.com | Remembers that you allowed the portal to load content from other websites, such as images embedded in an asset description.                                                                        | First party cookie created if you allow external content. Stored for 60 days, or erased immediately if you return to the default setting: do not allow external content. |
+| `assetView`                       | market.delta-dao.com | Remembers whether you prefer to see assets as a grid of cards or as a list.                                                                                                                        | First party cookie created if you switch away from the default grid view. Stored for 60 days, or erased immediately if you switch back.                                  |
+| `bookmarks`                       | market.delta-dao.com | Stores the assets you have bookmarked so you can find them again.                                                                                                                                  | First party cookie created if you bookmark an asset. Stored for one year, or erased immediately if you remove all your bookmarks.                                        |
+| `cachedCredentials`               | market.delta-dao.com | Keeps a copy of the verifiable credentials you have presented, so you do not have to present them again for every action.                                                                          | Local storage. Deleted when you disconnect your wallet, log out, or your session expires.                                                                                |
+| `chainIds`                        | market.delta-dao.com | Stores which blockchain network(s) you selected, so the portal shows data from those networks.                                                                                                     | First party cookie created if you change the default network selection. Stored for one year, or erased immediately if you return to the default.                         |
+| `compute-rerun:<jobId>`           | market.delta-dao.com | Briefly carries the settings of a finished compute job, so the form can be prefilled when you rerun it. Contains public identifiers only.                                                          | Local storage. Written when you select "rerun" and deleted a moment later, once the form has been filled.                                                                |
+| `computeOutputEncryption:<jobId>` | market.delta-dao.com | Stores the key needed to decrypt the results of your own compute job, so you can open them later.                                                                                                  | Local storage. Kept until you clear your browser storage. Without it, encrypted results can no longer be opened.                                                         |
+| `credential_<assetId>`            | market.delta-dao.com | Stores the time of a successful credential check, so the portal can show how long that check stays valid. It does not grant access by itself.                                                      | Local storage. Saved while you interact with an asset and deleted once the check is no longer valid.                                                                     |
+| `credentialSelectionStorage`      | market.delta-dao.com | Remembers which of your credentials you chose during a credential check.                                                                                                                           | Local storage. Deleted when you disconnect your wallet or log out.                                                                                                       |
+| `debug`                           | market.delta-dao.com | Remembers that you switched on debug mode, which shows additional technical information.                                                                                                           | First party cookie created if you activate debug mode. Stored for 60 days, or erased immediately if you deactivate it.                                                   |
+| `jsonWallet:chainId`              | market.delta-dao.com | Remembers which network you selected for a wallet you imported from a file.                                                                                                                        | Session storage. Deleted when you disconnect or close the browser tab.                                                                                                   |
+| `jsonWallet:encryptedJson`        | market.delta-dao.com | Stores a wallet file you imported, in the same encrypted form in which you supplied it, so you can unlock it again without uploading the file each time. It can only be opened with your password. | Local storage. Kept until you remove the stored wallet in the wallet menu.                                                                                               |
+| `jsonWallet:pk`                   | market.delta-dao.com | Holds the unlocked key of an imported wallet while you are working with it, so the portal can sign your transactions.                                                                              | Session storage. Deleted when you disconnect or close the browser tab.                                                                                                   |
+| `onboardingModule`                | market.delta-dao.com | Remembers whether you hid or re-enabled the onboarding guide.                                                                                                                                      | First party cookie created if you change the default setting. Stored for 60 days, or erased immediately if you return to the default.                                    |
+| `onboardingStep`                  | market.delta-dao.com | Remembers how far you got in the onboarding guide, so you can continue where you left off.                                                                                                         | First party cookie created once you move past the first step. Stored for 60 days, or erased immediately when you are back at the first step.                             |
+| `sessionToken`                    | market.delta-dao.com | Stores the session token issued after you connect your SSI wallet, so you stay signed in to it.                                                                                                    | Local storage. Stored until the token expires, or until you disconnect or log out.                                                                                       |
+| `ssiWalletApiOverride`            | market.delta-dao.com | Stores an SSI wallet address you entered by hand, so the portal uses that one instead of the default.                                                                                              | Session storage. Deleted when you close the browser tab.                                                                                                                 |
+| `verifierSessionId`               | market.delta-dao.com | Stores confirmation that you passed a credential check, so you can download or start a job without verifying again.                                                                                | Local storage. Each entry is kept for at most one day, and all entries are deleted when you disconnect or log out.                                                       |
+| `wagmi.io.metamask.disconnected`  | wagmi.sh             | Remembers that you disconnected MetaMask, so the portal does not reconnect automatically.                                                                                                          | Local storage. Kept until you connect again or clear your browser storage.                                                                                               |
+| `wagmi.recentConnectorId`         | wagmi.sh             | Remembers which wallet you last connected with, for example MetaMask or an imported wallet file, so the portal can offer to reconnect.                                                             | Local storage. Written when you connect a wallet and kept until you clear your browser storage.                                                                          |
+| `wagmi.store`                     | wagmi.sh             | Remembers your wallet connection, including the connected account and network, so the connection survives a page reload.                                                                           | Local storage. Created as soon as the portal loads, updated when you connect or disconnect a wallet, and kept until you clear your browser storage.                      |
 
-### Signing in and wallet connections (essential, web storage)
+&nbsp;
+For reach analysis we use an **aggregated statistics** tool which does not use cookies, does not track individual visitors and does not create persistent identifiers. Further information about the **aggregated statistics** can be found in our [**privacy policy**](/privacy/privacy-policy).
 
-| Name                                                                                   | Purpose                                                                                                                        | Duration                                                                                                                                                                              |
-| -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `oidc_session`, `auth_meta`, `token_expires_at`                                        | Keep you logged in to your account and remember when your login needs to be renewed.                                           | `localStorage`; removed when you log out or your login session ends.                                                                                                                  |
-| `sessionToken`                                                                         | Keeps you signed in to your SSI wallet so you do not have to unlock it again on every action.                                  | `localStorage`; stored until the token expires or you disconnect the wallet or log out.                                                                                               |
-| `cachedCredentials`                                                                    | Caches your verifiable credentials so you do not have to present them again each time.                                         | `localStorage`; deleted when you disconnect the SSI wallet, log out, or your session expires.                                                                                         |
-| `credentialSelectionStorage`                                                           | Remembers which of your credentials you selected during a credential check.                                                    | `localStorage`; deleted together with `cachedCredentials` on disconnect or logout.                                                                                                    |
-| `verifierSessionId`                                                                    | Stores verification session IDs after you pass a credential check, so you can download or start a job without verifying again. | `localStorage`; each entry is stored for at most one day, and everything is deleted on disconnect or logout.                                                                          |
-| `credential_<assetId>_<serviceId>`                                                     | Stores the time of a successful credential check for an asset, to show you a "valid for X more minutes" countdown.             | `localStorage`; saved while you interact with an asset and removed when the check is reset or no longer valid.                                                                        |
-| `wagmi.store`, `wagmi.recentConnectorId`                                               | Remember your wallet connection state (connected account, network) and the last wallet type you used, enabling auto-reconnect. | `localStorage`; `wagmi.store` is created as soon as the site loads and `wagmi.recentConnectorId` when you first connect a wallet. Both are kept until you clear your browser storage. |
-| `dfns_username`                                                                        | Remembers the username of your DFNS wallet so it can be reconnected.                                                           | `localStorage`; stored until you clear your browser storage.                                                                                                                          |
-| `auth_callback_url`, `auth_mode`, `oidc_logout_pending`                                | Temporarily remember where to return to and which sign-in method you used while a login or logout is in progress.              | `sessionStorage`; removed after the sign-in or sign-out completes, at the latest when you close the browser tab.                                                                      |
-| `signer_server_connected`, `signer_server_selected_chain_id`, `dfns_selected_chain_id` | Temporarily remember which wallet service and network you connected through.                                                   | `sessionStorage`; deleted when you close the browser tab.                                                                                                                             |
-| `ssiWalletApiOverride`                                                                 | Stores an SSI wallet API address you entered manually.                                                                         | `sessionStorage`; deleted when you close the browser tab.                                                                                                                             |
+## 3. How to block or delete cookies
 
-### Using compute features (essential, web storage)
+**Removing cookies from your device**
 
-| Name                              | Purpose                                                                                                    | Duration                                                                                                                 |
-| --------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| `compute-rerun:<jobId>`           | Passes a finished job's setup (algorithm and dataset IDs) along, to prefill the form when you rerun a job. | `localStorage`; stored only for a few seconds after selecting "rerun" for a compute job, then removed automatically.     |
-| `computeOutputEncryption:<jobId>` | Stores the key needed to decrypt the results of your own compute job, so you can open them later.          | `localStorage`; stored until you clear your browser storage — without it, encrypted job results can no longer be opened. |
+You can delete all cookies or site-specific cookies from your computer's hard disk at any time in your browser settings. For more details, please check the privacy or cookie settings in your preferred browser.
 
-### Statistics (only with your consent)
+**Blocking cookies**
 
-If you consent to statistics cookies in the cookie notice, we use PostHog, a privacy-friendly product analytics service, to understand how the marketplace is used (for example, which pages are visited). This information is aggregated and anonymized and is used exclusively by us to improve the website.
+Most browsers have settings you can use to prevent cookies from being placed on your device. For more details, please check the privacy or cookie settings in your preferred browser. These settings may result in some websites not displaying content or functioning correctly.
 
-| Name   | Purpose                                                                                          | Duration                                                                                                                    |
-| ------ | ------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------- |
-| `ph_*` | PostHog cookies and web storage used to recognize returning visits and collect usage statistics. | Only set after you consent; removed again if you withdraw your consent in the cookie settings. Cookies last up to one year. |
+## 4. Changes to this cookie policy
 
-If you do not consent, no statistics cookies or storage are created and nothing is sent to PostHog.
-
-## 3. External Data Transfers
-
-While not all are "cookies," the following services receive data during your use of the market:
-
-- SSI Wallet API: Processes wallet addresses and credential IDs during verification.
-- Ocean Node: Receives DIDs and consumer addresses for asset downloads or compute jobs, processes search and filter queries.
-- IPFS (Pinata/Gateways): Used for pinning and retrieving decentralized content.
-- PostHog (only with your consent): Receives anonymized usage statistics.
-
-## 4. How to block or delete cookies
-
-- Changing your consent: You can reopen the cookie settings at any time via the "Cookie Settings" link in the footer and change your choice about statistics cookies.
-- Removing cookies: You can delete all cookies or site-specific cookies via your browser settings at any time.
-- Blocking cookies: Most browsers allow you to prevent cookies from being placed. Please note that blocking essential cookies and web storage will prevent logging in, wallet connections, and asset access from functioning.
-
-## 5. Changes to this cookie policy
-
-This policy may be amended from time to time. The "Last updated" date at the top indicates the most recent changes. Material changes will be notified via a prominent notice on the marketplace demonstrator.
+This cookie policy will be amended from time to time. You can see the date of the last alteration at the top of this cookie policy. If we make any material changes to our use of cookies, we will notify you by prominently posting a notice on the portal demonstrator.

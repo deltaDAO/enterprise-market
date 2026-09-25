@@ -1,14 +1,12 @@
 ---
 title: Privacy Policy
-description: How deltaDAO AG processes your personal data when you visit and use the deltaDAO Marketplace demonstrator or contact us, and which rights you have.
-lastUpdated: '2026-09-24'
+description: This privacy policy informs you about how deltaDAO AG (in the following deltaDAO, we, us, our) processes your personal data when you visit our portal demonstrator, when you use one of our portal demonstrator functionalities and when you contact us. Moreover, this privacy policy informs you about your rights.
+lastUpdated: '2026-09-11'
 ---
 
-## Privacy Policy
+### Table of contents
 
-This privacy policy informs you about how **deltaDAO AG (in the following deltaDAO, we, us, our)** processes your personal data when you visit our marketplace demonstrator, when you use one of our marketplace demonstrator functionalities and when you contact us. Moreover, this privacy policy informs you about your rights.
-
-### 1. Contact details of the controller and Data Protection Officer
+## 1. Contact details of the controller and Data Protection Officer
 
 The controller pursuant to the EU General Data Protection Regulation ("GDPR") for the processing of your personal data is:
 
@@ -27,21 +25,19 @@ Katharinenstraße 30a
 Germany  
 E-mail: <privacy@delta-dao.com>
 
-### 2. What's personal data?
+## 2. What's personal data?
 
 Personal data is any information that can be (directly or indirectly) associated with you. We process the following personal data.
 
-- **Usage Data (including IP addresses):** Usage Data including your IP address and the address of the content accessed (URL) are processed when visiting and using our marketplace demonstrator. In addition, depending on the configuration, your browser transmits further data (browser type, browser version, operating system used, referrer URL).
+- **Usage Data (including IP addresses):** Usage Data including your IP address and the address of the content accessed (URL) are processed when visiting and using our portal demonstrator. In addition, depending on the configuration, your browser transmits further data (browser type, browser version, operating system used, referrer URL).
 - **E-mail:** If you contact deltaDAO via e-mail, we process your e-mail address and any personal data you decide to provide in your message (such as your name).
 
 For detailed information about the processing operations, lawfulness, purposes, and how your personal data serves to reach these purposes, please take a look at the chapter "Processing operations according to Article 13 GDPR".
 
-### 3. Recipients and cross-border data transfer
-
-> **[PLACEHOLDER: deltaDAO to confirm]** The hosting details below (Vercel, Exoscale) are taken from the deltaDAO SENSE portal demonstrator and must be confirmed for this marketplace deployment.
+## 3. Recipients and cross-border data transfer
 
 **Vercel**  
-When visiting and using our marketplace demonstrator, your Usage Data is processed by Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789, **USA**. Vercel is a service provider that hosts our marketplace demonstrator. Our marketplace demonstrator is served by Vercel using a Content Delivery Network, a geographically distributed network, with servers within and outside of the European Economic Area (EEA). This means, if you are located within the EEA, your Usage Data will most likely (but not guaranteed) be processed on a Vercel server within the EEA.
+When visiting and using our portal demonstrator, your Usage Data is processed by Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789, **USA**. Vercel is a service provider that hosts our portal demonstrator. Our portal demonstrator is served by Vercel using a Content Delivery Network, a geographically distributed network, with servers within and outside of the European Economic Area (EEA). This means, if you are located within the EEA, your Usage Data will most likely (but not guaranteed) be processed on a Vercel server within the EEA.
 
 There is no adequacy decision for the USA from the European Commission. Our cooperation with Vercel is based on a Data Processing Agreement (DPA) including Standard Contractual Clauses (SCC). You have the right to receive a copy of these SCC. To exercise your right, please contact us at <privacy@delta-dao.com>.
 
@@ -51,7 +47,7 @@ There is no adequacy decision for the USA from the European Commission. Our coop
 Further information about the **purpose, legal basis, and retention period** can be found in chapter 4.
 
 **Exoscale**  
-When using our marketplace demonstrator functionalities, your Usage Data is processed by our marketplace demonstrator backend. Marketplace demonstrator backend components are managed by deltaDAO and hosted on Exoscale servers located in Frankfurt, **Germany** by our hosting provider Akenes SAE. Akenes SAE is headquartered in Boulevard de Grancy 19A, 1006 – Lausanne, **Switzerland**. There is an adequacy decision for Switzerland from the European Commission. Our cooperation with Akenes SAE is based on a Data Processing Agreement (DPA). Here you can find Akenes SAE&#39;s current [**DPA** &#8599;](https://www.exoscale.com/dpa/).
+When using our portal demonstrator functionalities, your Usage Data is processed by our portal demonstrator backend. Portal demonstrator backend components are managed by deltaDAO and hosted hosted on Exoscale servers located in Frankfurt, **Germany** by our hosting provider Akenes SAE. Akenes SAE is headquartered in Boulevard de Grancy 19A, 1006 – Lausanne, **Switzerland**. There is an adequacy decision for Switzerland from the European Commission. Our cooperation with Akenes SAE is based on a Data Processing Agreement (DPA). Here you can find Akenes SAE&#39;s current [**DPA** &#8599;](https://www.exoscale.com/dpa/).
 
 Further information about the **purpose, legal basis, and retention period** can be found in chapter 4.
 
@@ -72,26 +68,21 @@ deltaDAO uses [**Plausible Analytics** &#8599;](https://plausible.io/) (by Plaus
 
 Further information about the **purpose, legal basis, and retention period** can be found in chapter 4.
 
-**PostHog (only with your consent)**  
-If you consent to statistics cookies, usage statistics are processed by PostHog, a product analytics service. **[PLACEHOLDER: deltaDAO to confirm the PostHog contracting entity, address, server location (e.g. EU cloud), DPA and, where applicable, SCC for this deployment.]**
-
-Further information about the **purpose, legal basis, and retention period** can be found in chapter 4.
-
-### 4. Processing operations according to Article 13 GDPR
+## 4. Processing operations according to Article 13 GDPR
 
 We process your personal data for the following purposes.
 
-**4.1 Providing our marketplace demonstrator and ensuring its security**  
-Your Usage Data (including IP addresses) is collected, used, and stored when visiting our marketplace demonstrator. Our marketplace demonstrator (frontend) is hosted externally by our service provider Vercel (see also chapter 3).
+**4.1 Providing our portal demonstrator and ensuring its security**  
+Your Usage Data (including IP addresses) is collected, used, and stored when visiting our portal demonstrator. Our portal demonstrator (frontend) is hosted externally by our service provider Vercel (see also chapter 3).
 
 **Purpose:**  
-Collecting and using your Usage Data is necessary for providing our marketplace demonstrator because it is a technical requirement for ensuring communication between your device and our marketplace demonstrator. Your IP address and other log file data are also processed for security, fraud-prevention, abuse-prevention, and troubleshooting purposes.
+Collecting and using your Usage Data is necessary for providing our portal demonstrator because it is a technical requirement for ensuring communication between your device and our portal demonstrator. Your IP address and other log file data are also processed for security, fraud-prevention, abuse-prevention, and troubleshooting purposes.
 
 **Legal basis:**  
 The legal basis for this processing is our legitimate interest, according to Art. 6(1)(f) GDPR.
 
 **Legitimate interests:**  
-Our legitimate interest is to provide the marketplace demonstrator and to enable security, a technically error-free presentation, and the optimization of the marketplace demonstrator.
+Our legitimate interest is to provide the portal demonstrator and to enable security, a technically error-free presentation, and the optimization of the portal demonstrator.
 
 **Retention period:**  
 Vercel retains your personal data for as long as needed to provide their services. Additionally, Vercel does not delete the data when it is needed for the establishment, exercise, or defense of legal claims. In this case, the information is retained as long as needed for exercising respective potential legal claims.
@@ -99,10 +90,10 @@ Vercel retains your personal data for as long as needed to provide their service
 **Right to object:**  
 You have the right to object to the processing of your personal data (see also chapter 9.6).
 
-**4.2 Providing marketplace demonstrator functionalities**  
-When using our marketplace demonstrator functionalities, your Usage Data is collected, used, and stored by our marketplace demonstrator backend. Backend components are managed by deltaDAO and hosted on Exoscale servers (see also chapter 3).
+**4.2 Providing portal demonstrator functionalities**  
+When using our portal demonstrator functionalities, your Usage Data is collected, used, and stored by our portal demonstrator backend. Backend components are managed by deltaDAO and hosted on Exoscale servers (see also chapter 3).
 
-Marketplace demonstrator functionalities consist of:
+Portal demonstrator functionalities consist of:
 
 - Viewing, publishing, editing and consuming services
 - Connecting and using your (SSI) wallet
@@ -110,13 +101,13 @@ Marketplace demonstrator functionalities consist of:
 - Visualization and verification of Gaia-X Credentials using deltaDAO's GXDCH (Gaia-X Digital Clearing House) services
 
 **Purpose:**  
-Processing your Usage Data is necessary for providing our marketplace demonstrator functionalities, because it is a technical requirement for ensuring communication between your device and our marketplace demonstrator backend, and for enabling secure processing and system stability.
+Processing your Usage Data is necessary for providing our portal demonstrator functionalities, because it is a technical requirement for ensuring communication between your device and our portal demonstrator backend, and for enabling secure processing and system stability.
 
 **Legal basis:**
 The legal basis for this processing is our legitimate interest, according to Art. 6(1)(f) GDPR.
 
 **Legitimate interest:**
-Our legitimate interest is to provide our marketplace demonstrator functionalities to you and to make sure the marketplace demonstrator works properly and is secure.
+Our legitimate interest is to provide our portal demonstrator functionalities to you and to make sure the portal demonstrator works properly and is secure.
 
 **Retention period:**  
 Usage Data (except your IP address) received by the backend components are retained for up to seven days.
@@ -170,47 +161,32 @@ As described above, your personal data is anonymized after 24 hours.
 
 **Right to object:** You have the right to object to the processing of your personal data (see also chapter 9.6).
 
-**4.5 Statistics with your consent (PostHog)**
+## 5. Interaction with third-party wallet tools
 
-If you accept statistics cookies in the cookie notice, deltaDAO uses PostHog (see also chapter 3) to understand how the marketplace demonstrator is used, for example which pages are visited. PostHog sets cookies and web storage entries (`ph_*`) on your device for this purpose. If you do not consent, no statistics cookies or storage are created and nothing is sent to PostHog. Details on each entry can be found in our [**Cookie Policy**](/privacy/cookie-policy).
+To use the features of the portal demonstrator, you have the option to connect your self-managed organizational wallet using MetaMask. MetaMask is a third-party tool operated by the independent controller Consensys Software Inc., 5049 Edwards Ranch Rd, Fort Worth, TX 76109, United States (in the following Consensys). The operations of Consensys are separate from our portal demonstrator.
+When you connect your organizational wallet via MetaMask and use our portal demonstrator functionalities, we process your personal data as described in chapter 4.2. Any data processed directly inside the MetaMask extension or app remains the sole responsibility of Consensys. You can find more details about the processing of personal data in their [**Privacy Policy** &#8599;](https://consensys.io/privacy-notice).
 
-**Purpose:**
-We process your personal data to measure and improve the marketplace demonstrator.
-
-**Legal basis:**
-The legal basis for this processing is your consent, according to Art. 6(1)(a) GDPR.
-
-**Retention period:**
-**[PLACEHOLDER: deltaDAO to confirm the PostHog retention period.]** Cookies last up to one year and are removed again if you withdraw your consent.
-
-**Right to withdraw consent:** You can withdraw your consent at any time with effect for the future via the "Cookie Settings" link in the footer (see also chapter 9.8).
-
-### 5. Interaction with third-party wallet tools
-
-To use the features of the marketplace demonstrator, you have the option to connect your self-managed organizational wallet using MetaMask. MetaMask is a third-party tool operated by the independent controller Consensys Software Inc., 5049 Edwards Ranch Rd, Fort Worth, TX 76109, United States (in the following Consensys). The operations of Consensys are separate from our marketplace demonstrator.
-When you connect your organizational wallet via MetaMask and use our marketplace demonstrator functionalities, we process your personal data as described in chapter 4.2. Any data processed directly inside the MetaMask extension or app remains the sole responsibility of Consensys. You can find more details about the processing of personal data in their [**Privacy Policy** &#8599;](https://consensys.io/privacy-notice).
-
-### 6. Automated decision making including profiling according to Article 13(2)(f) GDPR
+## 6. Automated decision making including profiling according to Article 13(2)(f) GDPR
 
 Automated decision making including profiling does not take place.
 
-### 7. Cookies and Analytics
+## 7. Cookies and Analytics
 
 **7.1 Cookies**
 
 A cookie is a small file that stores information on your device. Your web browser downloads it on the first visit to a website. The next time you open this website with the same device, the cookie and the information stored in it are either sent back to the website that created it (first-party cookie) or sent to another website it belongs to (third-party cookie). This enables the website to detect that you have opened it previously with this browser and, in some cases, to vary the displayed content. Web storage (local storage and session storage) has similar functionality to cookies.
 
-On our marketplace demonstrator we are using cookies and web storage. Statistics cookies (PostHog) are only set with your consent. You can find more information about our use of cookie and web storage in our [**Cookie Policy**](/privacy/cookie-policy).
+On our portal demonstrator we are using cookies and web storage. You can find more information about our use of cookie and web storage in our [**Cookie Policy**](/privacy/cookie-policy).
 
 **7.2 Analytics**
 
 deltaDAO uses [**Plausible Analytics** &#8599;](https://plausible.io/), a privacy-friendly web analytics tool for tracking overall trends in our website traffic. Plausible Analytics **does not use cookies or similar technologies** that require information to be stored on your device. Plausible Analytics **does not track individual visitors** and **does not create persistent identifiers**. It does not use cross-platform or cross-device tracking and does not pass on data to third parties. You can find further information in chapter 3 and 4.
 
-### 8. External links
+## 8. External links
 
-Our marketplace demonstrator contains links to external websites that are beyond the control and responsibility of deltaDAO. External links are marked with this symbol: &#8599;.
+Our portal demonstrator contains links to external websites that are beyond the control and responsibility of deltaDAO. External links are marked with this symbol: &#8599;.
 
-### 9. Your rights
+## 9. Your rights
 
 If you want to make use of your rights described below, do not hesitate to contact us.
 
@@ -239,13 +215,10 @@ You have the right to lodge a complaint with a supervisory authority if you cons
 - in the Member State of your place of work, and
 - in the place of the alleged infringement.
 
-**9.8 Right to withdraw consent (Art. 7(3) GDPR)**  
-You have the right to withdraw your consent at any time. The withdrawal of consent does not affect the lawfulness of processing based on consent before its withdrawal.
-
-### 10. Questions
+## 10. Questions
 
 For any requests regarding our privacy policy, please send us an e-mail to <privacy@delta-dao.com>.
 
-### 11. Changes to the Privacy Policy
+## 11. Changes to the Privacy Policy
 
-We adjust this policy from time to time, by publishing a new version on our marketplace demonstrator. You can find the date of the current version at the beginning of this policy. The latest version of this policy applies to the processing of your personal data.
+We adjust this policy from time to time, by publishing a new version on our portal demonstrator. You can find the date of the current version at the beginning of this policy. The latest version of this policy applies to the processing of your personal data.

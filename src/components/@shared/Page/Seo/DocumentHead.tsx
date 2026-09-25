@@ -43,7 +43,7 @@ function getPageMeta(
   page: string,
   pageProps?: { frontmatter?: PageMeta }
 ): PageMeta {
-  // Markdown pages (imprint, terms, privacy/*) carry their own front matter
+  // Markdown pages (privacy/*) carry their own front matter
   if (pageProps?.frontmatter?.title) {
     return {
       title: pageProps.frontmatter.title,

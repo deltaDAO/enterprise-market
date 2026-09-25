@@ -81,7 +81,7 @@ describe('robots.txt and sitemap.xml', () => {
     expect(sitemap).toContain('<loc>https://market.example.com</loc>')
     expect(sitemap).toContain('<loc>https://market.example.com/publish/1</loc>')
     expect(sitemap).toContain(
-      '<loc>https://market.example.com/privacy/en</loc>'
+      '<loc>https://market.example.com/privacy/terms</loc>'
     )
     jest.dontMock('../../app.config.cjs')
   })

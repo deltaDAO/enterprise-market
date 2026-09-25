@@ -117,9 +117,10 @@ export const SITEMAP_PATHS = [
   '/search',
   '/publish/1',
   '/bookmarks',
-  '/imprint',
-  '/terms',
-  '/privacy/en'
+  '/privacy/terms',
+  '/privacy/privacy-policy',
+  '/privacy/cookie-policy',
+  '/privacy/lifecycle-state-policy'
 ]
 
 type HeaderValue = string | string[] | undefined

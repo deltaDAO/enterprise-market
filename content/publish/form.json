@@ -111,7 +111,7 @@
         "title": "URL",
         "label": "Terms and Conditions",
         "placeholder": "e.g. https://file.com/tandc.md",
-        "help": "The Terms and Conditions under which this service can be accessed. A resolvable link to the T&C document is expected. If no Terms are given the default [terms of this portal](/terms) will be applied.",
+        "help": "The Terms and Conditions under which this service can be accessed. A resolvable link to the T&C document is expected. If no Terms are given the default [terms of this portal](/privacy/terms) will be applied.",
         "prominentHelp": true,
         "required": false
       },
@@ -200,7 +200,7 @@
         "type": "checkbox",
         "options": ["Terms and Conditions"],
         "prefixes": ["I agree to the"],
-        "actions": ["/privacy/en#terms-and-conditions"],
+        "actions": ["/privacy/terms"],
         "required": true
       },
       {

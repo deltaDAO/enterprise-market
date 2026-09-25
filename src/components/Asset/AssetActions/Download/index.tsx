@@ -13,7 +13,6 @@ import {
 } from '@oceanprotocol/lib'
 
 import { useAsset } from '@context/Asset'
-import { useUserPreferences } from '@context/UserPreferences'
 import { useSsiWallet } from '@context/SsiWallet'
 import { useIsMounted } from '@hooks/useIsMounted'
 import useNetworkMetadata from '@hooks/useNetworkMetadata'
@@ -109,7 +108,6 @@ export default function Download({
   const { isConnected } = useAccount()
   const { isSupportedOceanNetwork } = useNetworkMetadata()
   const { isInPurgatory, isAssetNetwork } = useAsset()
-  const { privacyPolicySlug } = useUserPreferences()
   const isMounted = useIsMounted()
   const { balance } = useBalance()
   const chainId = useChainId()
@@ -632,7 +630,7 @@ export default function Download({
             type="checkbox"
             options={['Terms and Conditions']}
             prefixes={['I agree to the']}
-            actions={[`${privacyPolicySlug}#terms-and-conditions`]}
+            actions={['/privacy/terms#terms-and-conditions']}
             disabled={isLoading}
             hideLabel={true}
           />

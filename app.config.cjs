@@ -113,10 +113,15 @@ module.exports = {
   // If set to true a gdpr.json file inside the content directory
   // is used to create and show a privacy preference center / cookie banner
   // To learn more about how to configure and use this, please refer to the readme
+  // Off by default: this portal sets only strictly necessary cookies, and its
+  // analytics tool is cookieless, so no consent is required and no banner is
+  // shown. Set NEXT_PUBLIC_PRIVACY_PREFERENCE_CENTER=true only if a deployment
+  // introduces a cookie category that does require consent -- note that the
+  // same flag also switches the consent requirement itself back on.
   privacyPreferenceCenter:
     getEnv('NEXT_PUBLIC_PRIVACY_PREFERENCE_CENTER') ||
     process.env.NEXT_PUBLIC_PRIVACY_PREFERENCE_CENTER ||
-    'true',
+    'false',
 
   // Default terms to be used for service offerings made on this marketplace
   defaultAccessTerms:

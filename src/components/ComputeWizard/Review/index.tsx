@@ -22,7 +22,6 @@ import useBalance from '@hooks/useBalance'
 import { useSsiWallet } from '@context/SsiWallet'
 import { useCancelToken } from '@hooks/useCancelToken'
 import { useAsset } from '@context/Asset'
-import { useUserPreferences } from '@context/UserPreferences'
 import { useMarketMetadata } from '@context/MarketMetadata'
 import { getAccessDetails } from '@utils/accessDetailsAndPricing'
 import { getFixedBuyPrice } from '@utils/ocean/fixedRateExchange'
@@ -268,7 +267,6 @@ export default function Review({
   const { lookupVerifierSessionId } = useSsiWallet()
   const newCancelToken = useCancelToken()
   const { isAssetNetwork } = useAsset()
-  const { privacyPolicySlug } = useUserPreferences()
   const { approvedBaseTokens } = useMarketMetadata()
 
   const [symbol, setSymbol] = useState('')
@@ -2447,7 +2445,7 @@ export default function Review({
               type="checkbox"
               options={['Terms and Conditions']}
               prefixes={['I agree to the']}
-              actions={[`${privacyPolicySlug}#terms-and-conditions`]}
+              actions={['/privacy/terms#terms-and-conditions']}
               onChange={handleTermsChange}
               disabled={false}
               hideLabel={true}

@@ -29,14 +29,13 @@
   "footer": {
     "subtitle": "The deltaDAO data and AI marketplace",
     "copyright": "© deltaDAO AG 2026",
-    "privacyTitle": "Privacy",
     "content": [
       {
         "title": "Resources",
         "links": [
           {
             "name": "Log",
-            "link": "https://sepolia.etherscan.io/"
+            "link": "https://explorer.pontus-x.eu/"
           },
           {
             "name": "GitHub",
@@ -44,11 +43,11 @@
           },
           {
             "name": "Docs",
-            "link": "https://docs.pontus-x.eu"
+            "link": "https://docs.pontus-x.eu/"
           },
           {
-            "name": "Blog",
-            "link": "https://delta-dao.com/blog"
+            "name": "deltaDAO",
+            "link": "https://delta-dao.com"
           }
         ]
       },
@@ -70,14 +69,14 @@
         ]
       },
       {
-        "title": "Privacy",
+        "title": "Legal",
         "links": [
           {
-            "name": "Terms and Conditions",
-            "link": "/privacy/terms"
+            "name": "Imprint",
+            "link": "https://www.delta-dao.com/imprint"
           },
           {
-            "name": "Privacy",
+            "name": "Privacy Policy",
             "link": "/privacy/privacy-policy"
           },
           {
@@ -85,8 +84,16 @@
             "link": "/privacy/cookie-policy"
           },
           {
-            "name": "Data Portal Usage Agreement",
-            "link": "/privacy/data-portal-usage-agreement"
+            "name": "Cookie Settings",
+            "link": "/privacy/cookie-policy"
+          },
+          {
+            "name": "Terms and Conditions",
+            "link": "/privacy/terms"
+          },
+          {
+            "name": "Lifecycle State Policy",
+            "link": "/privacy/lifecycle-state-policy"
           }
         ]
       }

@@ -27,16 +27,21 @@ describe('DocumentHead', () => {
   it('uses markdown front matter for legal pages', () => {
     const view = renderToStaticMarkup(
       <DocumentHead
-        page="/[slug]"
-        asPath="/imprint"
+        page="/privacy/[slug]"
+        asPath="/privacy/terms"
         pageProps={{
-          frontmatter: { title: 'Imprint', description: 'Legal notice.' }
+          frontmatter: {
+            title: 'Terms and Conditions',
+            description: 'Terms of use.'
+          }
         }}
       />
     )
 
-    expect(view).toContain(`<title>Imprint - ${siteContent.siteTitle}</title>`)
-    expect(view).toContain('name="description" content="Legal notice."')
+    expect(view).toContain(
+      `<title>Terms and Conditions - ${siteContent.siteTitle}</title>`
+    )
+    expect(view).toContain('name="description" content="Terms of use."')
     expect(view).toContain('name="robots" content="noindex,nofollow"')
   })
 })
