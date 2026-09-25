@@ -49,7 +49,7 @@ function encodeSvg(svgString: string): string {
 const nftMetadataTemplate = {
   name: 'Data NFT',
   symbol: 'DDAO-NFT',
-  description: `This NFT represents an asset in the deltaDAO Marketplace.`,
+  description: `This NFT represents an asset.`,
   // The marketplace this asset is published from (NEXT_PUBLIC_SITE_URL, or
   // the origin the app runs on), so the NFT links back to a real host.
   get external_url(): string {
