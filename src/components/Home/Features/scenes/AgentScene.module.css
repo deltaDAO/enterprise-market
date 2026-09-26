@@ -1,0 +1,532 @@
+/* 8s loop: lines draw in, then 3 staggered steps (1.7s apart), hold, reset */
+.scene {
+  --loop: 8s;
+  --step: 1.7s;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  container-type: inline-size;
+  font-family: inherit;
+  color: var(--foreground);
+  user-select: none;
+}
+
+/* Connectors (no viewBox: coordinates are real pixels, percentages resolve to the box) */
+.lines {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  margin: 0;
+  overflow: visible;
+}
+
+.line,
+.logLine {
+  fill: none;
+  stroke: var(--deck-blue-40);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-dashoffset: 0;
+  animation: draw var(--loop) ease-out calc(var(--i) * 0.12s) infinite both;
+}
+
+.logLine {
+  stroke: var(--deck-cyan-25);
+}
+
+/* Query / result packets */
+.packet {
+  position: absolute;
+  z-index: 2;
+  left: var(--ax);
+  top: var(--ay);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  translate: -50% -50%;
+  background: var(--deck-cyan);
+  box-shadow: 0 0 0 4px var(--deck-cyan-25), 0 0 12px 2px var(--deck-cyan-25);
+  opacity: 0;
+  animation: travel var(--loop) ease-in-out calc(var(--i) * var(--step))
+    infinite both;
+}
+
+/* Organization data nodes */
+.node {
+  position: absolute;
+  z-index: 3;
+  left: var(--x);
+  top: var(--y);
+  translate: -50% -50%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px 7px 10px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 0 0 0 var(--deck-blue-12), var(--shadow-blue-10);
+  white-space: nowrap;
+  animation: flash var(--loop) ease-out calc(var(--i) * var(--step)) infinite
+    both;
+}
+
+.dot {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--dot);
+  box-shadow: 0 0 0 3px var(--deck-blue-8);
+}
+
+.nodeText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.org {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.kind {
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+
+.tick {
+  --from: scale(0.3);
+  --pop: scale(1.18);
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  width: 18px;
+  height: 18px;
+  padding: 3px;
+  border-radius: 50%;
+  border: 2px solid var(--card);
+  background: var(--deck-blue);
+  color: var(--card);
+  box-sizing: border-box;
+  animation-duration: var(--loop);
+  animation-timing-function: ease-out;
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+}
+
+.icon {
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  margin: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* AI agent */
+.agent {
+  position: absolute;
+  z-index: 3;
+  left: var(--ax);
+  top: var(--ay);
+  width: 56px;
+  height: 56px;
+  translate: -50% -50%;
+}
+
+.agent::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: var(--deck-cyan-25);
+  animation: halo calc(var(--loop) / 2) ease-out infinite;
+}
+
+.agentCore {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  background: var(--button-hero-gradient);
+  box-shadow: 0 8px 20px -6px var(--deck-blue-40), var(--shadow-blue-10);
+  animation: breathe calc(var(--loop) / 2) ease-in-out infinite;
+}
+
+.bot {
+  display: block;
+  width: 28px;
+  height: 28px;
+  margin: 0;
+  fill: none;
+  stroke: var(--card);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Credential badge: the agent has a verifiable identity */
+.badge {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-blue-10);
+}
+
+.shield {
+  display: block;
+  width: 13px;
+  height: 13px;
+  margin: 0;
+  fill: var(--deck-blue-12);
+  stroke: var(--deck-blue);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.agentLabel {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  translate: -50% 0;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--deck-navy);
+  white-space: nowrap;
+}
+
+/* Activity log */
+.log {
+  position: absolute;
+  z-index: 3;
+  left: var(--x);
+  top: var(--y);
+  translate: -50% -50%;
+  padding: 8px 12px 9px 10px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-blue-10);
+  white-space: nowrap;
+}
+
+.logTitle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.live {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--deck-cyan);
+  animation: live 2s ease-in-out infinite;
+}
+
+.rows {
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rows .row {
+  --from: translateX(-6px);
+  --pop: translateX(1px);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 3px;
+  font-size: 12px;
+  line-height: 16px;
+  animation-duration: var(--loop);
+  animation-timing-function: ease-out;
+  animation-delay: 0.8s;
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+}
+
+.rowCheck {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  padding: 3px;
+  border-radius: 50%;
+  background: var(--deck-cyan-13);
+  color: var(--deck-blue);
+  box-sizing: border-box;
+}
+
+.rowAction {
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.rowOrg {
+  margin-left: auto;
+  padding-left: 10px;
+  color: var(--muted-foreground);
+}
+
+/* Step timing (tick pops as the packet arrives, the log row as it returns) */
+.s1 {
+  animation-name: step1;
+}
+
+.s2 {
+  animation-name: step2;
+}
+
+.s3 {
+  animation-name: step3;
+}
+
+@container (max-width: 400px) {
+  .rowOrg {
+    display: none;
+  }
+}
+
+/* smallest phones: slimmer nodes, log docked bottom right below the agent label */
+@container (max-width: 340px) {
+  .node {
+    gap: 6px;
+    padding: 6px 10px 6px 8px;
+  }
+
+  .log {
+    top: auto;
+    left: auto;
+    right: 6px;
+    bottom: 8px;
+    translate: none;
+  }
+}
+
+@container (min-width: 540px) {
+  .node {
+    gap: 10px;
+    padding: 9px 14px 9px 12px;
+  }
+
+  .org,
+  .kind,
+  .rows .row {
+    font-size: 13px;
+  }
+}
+
+@keyframes draw {
+  0% {
+    stroke-dashoffset: 100px;
+    opacity: 1;
+  }
+  10%,
+  88% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  93% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+  100% {
+    stroke-dashoffset: 100px;
+    opacity: 0;
+  }
+}
+
+@keyframes travel {
+  0%,
+  11% {
+    left: var(--ax);
+    top: var(--ay);
+    opacity: 0;
+    background: var(--deck-cyan);
+  }
+  12% {
+    left: var(--ax);
+    top: var(--ay);
+    opacity: 1;
+  }
+  19% {
+    left: var(--x);
+    top: var(--y);
+    background: var(--deck-cyan);
+  }
+  23% {
+    left: var(--x);
+    top: var(--y);
+    background: var(--deck-blue);
+  }
+  29.5% {
+    left: var(--ax);
+    top: var(--ay);
+    opacity: 1;
+    background: var(--deck-blue);
+  }
+  30%,
+  100% {
+    left: var(--ax);
+    top: var(--ay);
+    opacity: 0;
+  }
+}
+
+@keyframes flash {
+  0%,
+  18%,
+  32%,
+  100% {
+    border-color: var(--border);
+    box-shadow: 0 0 0 0 var(--deck-blue-12), var(--shadow-blue-10);
+    transform: none;
+  }
+  20%,
+  27% {
+    border-color: var(--deck-blue);
+    box-shadow: 0 0 0 4px var(--deck-blue-12), var(--shadow-blue-10);
+    transform: scale(1.04);
+  }
+}
+
+@keyframes step1 {
+  0%,
+  19.5% {
+    opacity: 0;
+    transform: var(--from);
+  }
+  22% {
+    opacity: 1;
+    transform: var(--pop);
+  }
+  24.5%,
+  88% {
+    opacity: 1;
+    transform: none;
+  }
+  93%,
+  100% {
+    opacity: 0;
+    transform: none;
+  }
+}
+
+@keyframes step2 {
+  0%,
+  40.75% {
+    opacity: 0;
+    transform: var(--from);
+  }
+  43.25% {
+    opacity: 1;
+    transform: var(--pop);
+  }
+  45.75%,
+  88% {
+    opacity: 1;
+    transform: none;
+  }
+  93%,
+  100% {
+    opacity: 0;
+    transform: none;
+  }
+}
+
+@keyframes step3 {
+  0%,
+  62% {
+    opacity: 0;
+    transform: var(--from);
+  }
+  64.5% {
+    opacity: 1;
+    transform: var(--pop);
+  }
+  67%,
+  88% {
+    opacity: 1;
+    transform: none;
+  }
+  93%,
+  100% {
+    opacity: 0;
+    transform: none;
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.045);
+  }
+}
+
+@keyframes halo {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.6;
+  }
+  70%,
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+@keyframes live {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* Static end state: lines drawn, ticks and log rows visible, packets hidden */
+@media (prefers-reduced-motion: reduce) {
+  .scene *,
+  .scene *::before {
+    animation: none !important;
+  }
+
+  .agent::before {
+    opacity: 0;
+  }
+}

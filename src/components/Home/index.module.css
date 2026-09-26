@@ -4,7 +4,6 @@
   isolation: isolate;
   overflow: hidden;
   width: 100%;
-  height: 100%;
   color: #fff;
   /* spotlight blobs + navy base */
   background: radial-gradient(
@@ -14,15 +13,13 @@
     ),
     radial-gradient(
       ellipse 36rem 26rem at 88% 92%,
-      color-mix(in srgb, var(--brand-secondary) 15%, transparent),
+      color-mix(in srgb, var(--deck-cyan) 12%, transparent),
       transparent 70%
     ),
     var(--deck-navy);
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  padding: 0;
-  margin: 0;
 }
 
 /* top-right brand wave */
@@ -41,17 +38,60 @@
   animation: wave-drift 18s ease-in-out infinite alternate;
 }
 
-/* gradient hairline along the bottom edge */
-.hero::after {
-  content: '';
+/* layered brand wave that hands over to the light section below */
+.heroWave {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
-  height: 1px;
-  background: var(--brand-hairline);
-  opacity: 0.6;
+  bottom: -1px;
+  width: 100%;
+  height: clamp(72px, 10vw, 150px);
   pointer-events: none;
+}
+
+.heroWaveLayer {
+  animation: hero-wave-flow calc(24s + var(--i) * 10s) linear infinite;
+}
+
+.heroWaveLayer:nth-of-type(2n) {
+  animation-direction: reverse;
+}
+
+/* vertical gradient stops: each wave brightens towards its base */
+.stopNavy {
+  stop-color: var(--deck-navy-2);
+}
+
+.stopBlue {
+  stop-color: var(--deck-blue);
+  stop-opacity: 0.85;
+}
+
+.stopHighlight {
+  stop-color: var(--brand-highlight);
+}
+
+.stopCyan {
+  stop-color: var(--deck-cyan);
+}
+
+/* the front wave ends in the mist of the section below */
+.stopMist {
+  stop-color: color-mix(
+    in srgb,
+    var(--deck-cyan) 22%,
+    var(--deck-surface-soft)
+  );
+}
+
+.stopWhite {
+  stop-color: var(--deck-surface-soft);
+}
+
+@keyframes hero-wave-flow {
+  to {
+    transform: translateX(-1440px);
+  }
 }
 
 /* local copy: CSS Modules localise animation names, so the global keyframes are not reachable */
@@ -64,21 +104,41 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .hero::before {
-    animation: none;
-  }
-}
-
 .contentContainer {
+  position: relative;
+  z-index: 1;
   width: 100%;
   max-width: 1160px;
-  min-height: 565px;
   display: flex;
   flex-direction: column;
-  gap: 72px;
-  padding: 0 20px 3rem;
+  gap: 3.5rem;
+  padding: 0 20px 4rem;
   box-sizing: border-box;
+}
+
+/* thin editorial column rules framing the centre stage */
+.contentContainer::before,
+.contentContainer::after {
+  content: '';
+  position: absolute;
+  top: var(--menu-height);
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.04) 70%,
+    transparent
+  );
+  pointer-events: none;
+}
+
+.contentContainer::before {
+  left: 20px;
+}
+
+.contentContainer::after {
+  right: 20px;
 }
 
 .contentContainer > header {
@@ -86,152 +146,203 @@
 }
 
 .textContent {
+  position: relative;
   display: flex;
   flex-direction: column;
-  text-align: left;
+  align-items: center;
+  text-align: center;
   width: 100%;
-  height: auto;
 }
 
+/* ---------- headline ---------- */
 .title {
-  line-height: 1.1;
-  font-weight: 800;
-  font-size: 56px;
-  letter-spacing: -0.02em;
-  color: #fff;
   max-width: 22ch;
   margin: 0 0 1.25rem;
+  font-size: 68px;
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  color: #fff;
+  text-wrap: balance;
 }
 
 .subtitle {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  max-width: 44rem;
-}
-
-.subtitle p {
-  font-family: var(--font-family-base);
-  color: rgba(255, 255, 255, 0.78);
+  max-width: 40rem;
+  margin: 0;
   font-size: 20px;
   line-height: 1.55;
-  margin: 0;
-  font-weight: 400;
+  color: rgba(255, 255, 255, 0.72);
+  text-wrap: balance;
 }
 
-.ctaContainer {
+/* ---------- pill search ---------- */
+.searchBlock {
   width: 100%;
-  height: auto;
-  display: flex;
-  justify-content: left;
-  gap: 48px;
-  align-items: flex-start;
-  margin: 3rem 0 0;
+  max-width: 40rem;
+  margin-top: 2.75rem;
 }
 
-.ctaBlock {
+.searchContainer {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
-  width: 179px;
-  height: auto;
-}
-
-/* label motif on navy */
-.ctaTitle {
-  color: rgba(255, 255, 255, 0.6);
-  font-family: var(--font-family-base);
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 1.4;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  margin: 0;
-}
-
-/* CTA buttons: catalogue = hero tier (gradient + cyan glow), publish = white outline on navy */
-.ctaButton {
-  display: flex;
-  justify-content: center;
   align-items: center;
-  width: 179px;
-  height: 48px;
-  padding: 0 24px;
-  border-radius: var(--radius-lg);
-  border: 0;
-  background: var(--button-hero-gradient);
+  height: 60px;
+  padding: 6px;
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.searchContainer:hover {
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.searchContainer:focus-within {
+  border-color: var(--deck-cyan);
+  background: rgba(255, 255, 255, 0.11);
+}
+
+.searchContainer .searchInput,
+.searchContainer .searchInput:focus {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  margin: 0;
+  padding: 0 1.25rem;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  background: transparent;
+  font-family: var(--font-family-base);
+  font-size: 16px;
   color: #fff;
-  font-weight: 600;
+  /* long placeholders end in an ellipsis instead of a hard cut */
+  text-overflow: ellipsis;
+}
+
+.searchContainer .searchInput::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  opacity: 1;
+}
+
+.searchButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 100%;
+  flex-shrink: 0;
+  padding: 0 1.4rem;
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: var(--button-hero-gradient);
   box-shadow: var(--button-hero-shadow);
+  font-family: var(--font-family-base);
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
   cursor: pointer;
-  transition: box-shadow 0.25s ease, filter 0.25s ease, transform 0.25s ease,
-    background-color 0.25s ease;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
 }
 
-.ctaButton:hover,
-.ctaButton:focus-visible {
-  filter: brightness(1.03); /* keeps white on #0073cd >= 4.5:1 */
+.searchButton:hover,
+.searchButton:focus-visible {
   box-shadow: var(--button-hero-shadow-hover);
-  transform: translateY(-1px);
 }
 
-.ctaButton:focus-visible {
+.searchButton:focus-visible {
   outline: 2px solid var(--deck-cyan);
   outline-offset: 2px;
 }
 
-.ctaButton:active {
-  filter: none;
-  transform: translateY(1px);
-  box-shadow: var(--button-hero-shadow-active);
+.searchIcon,
+.searchIcon path {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
 }
 
-.ctaBlock:first-child .ctaButton {
-  background: transparent;
-  border: 1px solid var(--control-border-on-dark);
-  box-shadow: none;
-  filter: none;
-}
-
-.ctaBlock:first-child .ctaButton:hover,
-.ctaBlock:first-child .ctaButton:focus-visible,
-.ctaBlock:first-child .ctaButton:active {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: var(--control-border-on-dark-hover);
-  box-shadow: none;
-  filter: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .ctaButton,
-  .ctaButton:hover,
-  .ctaButton:focus-visible,
-  .ctaButton:active {
-    transition: none;
-    transform: none;
-  }
-}
-
-.buttonContent {
+/* ---------- pill actions ---------- */
+.ctaRow {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.ctaGhost,
+.ctaPrimary {
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
-}
-
-.buttonText {
+  gap: 0.5rem;
+  height: 48px;
+  padding: 0 1.5rem;
+  border-radius: var(--radius-lg);
   font-family: var(--font-family-base);
-  font-weight: 600;
   font-size: 15px;
-  line-height: 1;
-  text-align: center;
-  color: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.25s ease, border-color 0.25s ease,
+    color 0.25s ease, transform 0.25s ease;
 }
 
-.divider {
-  width: 1px;
-  height: 84px;
+.ctaGhost {
+  border: 1px solid var(--control-border-on-dark);
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+}
+
+.ctaGhost:hover,
+.ctaGhost:focus-visible {
+  border-color: var(--control-border-on-dark-hover);
   background: rgba(255, 255, 255, 0.12);
-  margin-top: 0;
+}
+
+.ctaPrimary {
+  border: 1px solid #fff;
+  background: #fff;
+  color: var(--deck-navy);
+}
+
+.ctaPrimary:hover,
+.ctaPrimary:focus-visible {
+  background: var(--deck-surface);
+  border-color: var(--deck-surface);
+}
+
+.ctaGhost:focus-visible,
+.ctaPrimary:focus-visible {
+  outline: 2px solid var(--deck-cyan);
+  outline-offset: 2px;
+}
+
+.ctaGhost:active,
+.ctaPrimary:active {
+  transform: translateY(1px);
+}
+
+.ctaArrow {
+  display: inline-block;
+  transition: transform 0.25s ease;
+}
+
+.ctaPrimary:hover .ctaArrow {
+  transform: translateX(3px);
+}
+
+.uploadIcon {
+  width: 18px;
+  height: 18px;
+  /* the global svg rule centres with auto margins, which splits flex items */
+  margin: 0;
+}
+
+.uploadIcon path {
+  fill: currentColor;
 }
 
 /* everything below the hero sits on the soft mist body */
@@ -239,342 +350,78 @@
   background: var(--deck-surface-soft);
 }
 
-/* the divider rendered between hero and onboarding is just spacing */
-.hero + .divider {
-  width: 100%;
-  height: calc(var(--spacer) * 1.5);
-  background: none;
-}
-
-.searchBlock {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  flex: 1;
-  width: 240px;
-  height: auto;
-}
-
-.searchContainer {
-  width: 100%;
-  height: 48px;
-  background: #fff;
-  border-radius: var(--radius-lg);
-  display: flex;
-  align-items: center;
-  box-shadow: var(--shadow-blue-10);
-  overflow: hidden;
-  transition: box-shadow 0.2s ease;
-}
-
-.searchContainer:focus-within {
-  outline: 2px solid var(--deck-cyan);
-  outline-offset: 2px;
-}
-
-.searchContainer .searchInput,
-.searchContainer .searchInput:focus {
-  flex: 1;
-  border: none;
-  outline: none;
-  box-shadow: none;
-  font-family: var(--font-family-base);
-  font-size: 15px;
-  color: var(--foreground);
-  padding: 0 16px;
-  background: transparent;
-  border-radius: var(--radius-lg) 0 0 var(--radius-lg);
-  width: 565px;
-  height: 48px;
-  margin: 0;
-}
-
-.searchContainer .searchInput::placeholder {
-  color: var(--muted-foreground);
-  opacity: 1;
-}
-
-.searchButton {
-  width: 48px;
-  height: 40px;
-  margin-right: 4px;
-  flex-shrink: 0;
-  background: var(--deck-blue);
-  border: none;
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: background-color 0.2s ease;
-  position: relative;
-}
-
-.searchButton:hover {
-  background: var(--deck-blue-hover);
-}
-
-.searchButton:focus-visible {
-  outline: 2px solid var(--deck-blue);
-  outline-offset: 2px;
-}
-
-.searchIcon,
-.searchIcon path {
-  width: 18px;
-  height: 18px;
-  fill: #fff;
-  transition: transform 0.2s ease;
-}
-
-.searchButton:hover .searchIcon {
-  transform: scale(1.08);
-}
-
-.ecosystem {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  width: 100%;
-  height: auto;
-}
-
-.ecosystemDivider {
-  width: 100%;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.12);
-}
-
-.ecosystemTitle {
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  margin: 0;
-  text-transform: uppercase;
-}
-
-.logos {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 40px;
-  width: 100%;
-}
-
-.logoItem {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.logoImage {
-  height: 105px;
-  width: auto;
-  max-width: 150px;
-  object-fit: contain;
-  opacity: 0.85;
-  transition: opacity 0.3s ease;
-}
-
-.logoImage:hover {
-  opacity: 1;
-}
-
-.uploadIcon {
-  width: 20px;
-  height: 20px;
-}
-
-.uploadIcon path {
-  fill: currentColor;
-}
-
 /* ================== RESPONSIVE ADJUSTMENTS ================== */
-/* Small phones (portrait) */
+@media (max-width: 1024px) {
+  .contentContainer {
+    gap: 3.5rem;
+    padding: 0 2rem 3.5rem;
+  }
+
+  .contentContainer::before,
+  .contentContainer::after {
+    display: none;
+  }
+
+  .title {
+    font-size: 52px;
+  }
+
+  .subtitle {
+    font-size: 17px;
+  }
+}
+
 @media (max-width: 480px) {
   .contentContainer {
-    width: 100%;
-    min-height: 0;
-    flex-direction: column;
-    align-items: center;
-    padding: 1rem 16px 2.5rem;
-    gap: 32px;
-    text-align: center;
-  }
-
-  .textContent {
-    width: 100%;
-    align-items: center;
-    text-align: center;
-    margin-top: 1.5rem;
-  }
-
-  .buttonText {
-    font-size: 15px;
+    gap: 2.5rem;
+    padding: 0 16px 3rem;
   }
 
   .title {
-    font-size: 32px;
-    line-height: 1.15;
-    text-align: center;
+    font-size: 38px;
+    letter-spacing: -0.035em;
   }
 
   .subtitle {
-    max-width: 100%;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .subtitle p {
     font-size: 16px;
-    line-height: 1.55;
-    margin: 0 auto;
-    text-align: center;
   }
 
-  .logoImage {
-    max-height: 40px;
-    max-width: 80px;
-  }
-
-  .ctaContainer {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    gap: 24px;
+  .searchBlock {
     margin-top: 2rem;
   }
 
-  .ctaBlock {
+  .searchContainer {
+    height: 56px;
+  }
+
+  .searchContainer .searchInput,
+  .searchContainer .searchInput:focus {
+    padding: 0 0.75rem 0 1rem;
+  }
+
+  .searchButton {
+    padding: 0 1rem;
+  }
+
+  /* icon-only search button on phones */
+  .searchButton span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .ctaRow {
+    flex-direction: column;
     width: 100%;
     max-width: 20rem;
-    text-align: center;
-    align-items: center;
   }
 
-  .searchBlock {
-    width: 100%;
-    max-width: 100%;
-    text-align: center;
-  }
-
-  .ctaButton {
-    width: 100%;
-    max-width: 100%;
-    padding: 0 20px;
-  }
-
-  .divider {
-    display: none;
-  }
-
-  .hero + .divider {
-    display: block;
-  }
-
-  .searchContainer {
-    width: 100%;
-  }
-
-  .searchContainer .searchInput {
-    width: 100%;
-    min-width: 0;
-  }
-}
-
-@media (min-width: 481px) and (max-width: 1024px) {
-  .contentContainer {
-    width: 100%;
-    min-height: 0;
-    flex-direction: column;
-    align-items: center;
-    padding: 1.5rem 2rem 3rem;
-    gap: 40px;
-    text-align: center;
-  }
-
-  .textContent {
-    width: 100%;
-    align-items: center;
-    text-align: center;
-    margin-top: 2rem;
-  }
-
-  .title {
-    font-size: 40px;
-    line-height: 1.15;
-    text-align: center;
-  }
-
-  .subtitle {
-    max-width: 90%;
-    align-items: center;
-    gap: 14px;
-  }
-
-  .subtitle p {
-    font-size: 18px;
-    line-height: 1.55;
-    margin: 0 auto;
-    text-align: center;
-  }
-
-  .logoImage {
-    max-height: 60px;
-    max-width: 120px;
-  }
-
-  .ctaContainer {
-    flex-direction: column;
-    align-items: center;
+  .ctaGhost,
+  .ctaPrimary {
     justify-content: center;
-    width: 100%;
-    gap: 28px;
-    margin-top: 2.5rem;
-  }
-
-  .ctaBlock {
-    width: 70%;
-    max-width: 100%;
-    text-align: center;
-    align-items: center;
-  }
-
-  .searchBlock {
-    width: 100%;
-    max-width: 36rem;
-    text-align: center;
-  }
-
-  .ctaButton {
-    width: 100%;
-    max-width: 300px;
-  }
-
-  .divider {
-    display: none;
-  }
-
-  .hero + .divider {
-    display: block;
-  }
-
-  .searchContainer {
-    width: 100%;
-  }
-
-  .searchContainer .searchInput {
-    width: 100%;
-    min-width: 0;
-  }
-}
-
-@media (min-width: 1025px) and (max-width: 1225px) {
-  .contentContainer {
-    width: 100%;
-    min-height: 0;
   }
 }
 
@@ -582,7 +429,6 @@
 @media screen and (min-width: 1550px) and (max-width: 2549px) {
   .contentContainer {
     max-width: 1500px;
-    min-height: 640px;
   }
 }
 
@@ -590,45 +436,49 @@
 @media (min-width: 2550px) {
   .contentContainer {
     max-width: 1900px;
-    gap: 60px;
-    min-height: 760px;
   }
 
   .title {
-    font-size: 70px;
+    font-size: 92px;
   }
 
   .subtitle {
-    max-width: 60rem;
-  }
-
-  .subtitle p {
+    max-width: 56rem;
     font-size: 26px;
   }
 
-  .ctaContainer {
-    margin: 4rem 0 0;
+  .searchBlock {
+    max-width: 56rem;
   }
 
-  .ctaTitle {
-    font-size: 13px;
+  .searchContainer {
+    height: 76px;
   }
 
-  .buttonText {
-    font-size: 18px;
+  .searchContainer .searchInput,
+  .ctaGhost,
+  .ctaPrimary,
+  .searchButton {
+    font-size: 19px;
   }
 
-  .ctaBlock,
-  .ctaButton {
-    width: 224px;
-  }
-
-  .ctaButton {
+  .ctaGhost,
+  .ctaPrimary {
     height: 56px;
   }
+}
 
-  .logoImage {
-    max-height: 100px;
-    max-width: 180px;
+@media (prefers-reduced-motion: reduce) {
+  .hero::before,
+  .heroWaveLayer {
+    animation: none;
+  }
+
+  .ctaGhost,
+  .ctaPrimary,
+  .ctaArrow,
+  .searchButton {
+    transition: none;
+    transform: none;
   }
 }

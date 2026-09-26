@@ -1,0 +1,996 @@
+/* Self-sovereign identity: a credential fills in, is presented to a
+   provider, gets verified and unlocks access. One loop = 8s. Base styles
+   are the end state, so reduced motion simply drops the animations. */
+
+.root {
+  --loop: 8s;
+  --ease: cubic-bezier(0.65, 0, 0.35, 1);
+  --token-w: 44px;
+  --overlap: 14px;
+
+  position: relative;
+  container-type: inline-size;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(6px, 2.5%, 18px);
+  width: 100%;
+  height: 100%;
+  padding: 40px clamp(8px, 3.5%, 28px) 0;
+  overflow: hidden;
+  font: inherit;
+  color: var(--foreground);
+  user-select: none;
+}
+
+.root svg {
+  margin: 0;
+  flex-shrink: 0;
+  max-width: none;
+}
+
+/* credential card */
+
+.card {
+  flex: 0 0 auto;
+  /* wide enough for badge + title and the holder line on one row */
+  width: clamp(208px, 38%, 250px);
+  padding: 14px 16px 13px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-blue-10);
+  animation: present var(--loop) var(--ease) infinite both;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cardBadge {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: var(--button-hero-gradient);
+  color: var(--card);
+}
+
+.cardBadgeIcon {
+  width: 16px;
+  height: 16px;
+}
+
+.cardHeading {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.cardTitle {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--foreground);
+}
+
+.holder {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+}
+
+.holderLabels {
+  display: grid;
+}
+
+.holderLabel {
+  grid-area: 1 / 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-weight: 500;
+  color: var(--deck-blue);
+  opacity: 0;
+  animation: holder calc(var(--loop) * 3) linear infinite both;
+  animation-delay: calc(var(--i) * var(--loop));
+}
+
+.holderLabel:first-child {
+  opacity: 1;
+}
+
+.holderIcon {
+  width: 12px;
+  height: 12px;
+}
+
+.claims {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 13px 0 12px;
+  padding: 0;
+  list-style: none;
+}
+
+.claim {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 18px;
+  margin: 0 -6px;
+  padding: 0 6px;
+  border-radius: 6px;
+}
+
+/* the claim the policy reads lights up while it is checked */
+.claimMatch {
+  animation: match var(--loop) var(--ease) infinite both;
+}
+
+.claimDot {
+  flex: 0 0 auto;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--deck-blue);
+  animation: dot var(--loop) var(--ease) infinite both;
+  animation-delay: calc(var(--i) * 0.5s);
+}
+
+.claimBody {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.skeleton {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: var(--w);
+  height: 8px;
+  margin-top: -4px;
+  border-radius: 4px;
+  background: var(--deck-blue-8);
+  opacity: 0;
+  animation: skeleton var(--loop) var(--ease) infinite both;
+  animation-delay: calc(var(--i) * 0.5s);
+}
+
+.claimText {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--foreground);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  animation: claim var(--loop) var(--ease) infinite both;
+  animation-delay: calc(var(--i) * 0.5s);
+}
+
+.claimName {
+  color: var(--muted-foreground);
+}
+
+.cardFooter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.standard {
+  flex: 0 0 auto;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--deck-blue-8);
+  color: var(--deck-blue);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: 0.02em;
+}
+
+/* signature proof line */
+.proof {
+  flex: 1 1 auto;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--deck-blue), var(--deck-cyan));
+  transform-origin: left center;
+  animation: proof var(--loop) var(--ease) infinite both;
+}
+
+/* presentation path */
+
+.track {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 24px;
+  height: 40px;
+  z-index: 1;
+}
+
+.track::before,
+.track::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+}
+
+.track::before {
+  border-top: 1.5px dashed var(--deck-blue-25);
+  margin-top: -1px;
+}
+
+.track::after {
+  height: 2px;
+  margin-top: -1px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--deck-blue-40), var(--deck-cyan));
+  box-shadow: 0 0 8px var(--deck-cyan-25);
+  transform-origin: left center;
+  animation: trail var(--loop) var(--ease) infinite both;
+}
+
+/* spans the track so translateX(100%) lands the token on the provider */
+.mover {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--overlap) * -1);
+  right: calc(var(--token-w) - var(--overlap));
+  z-index: 1;
+  transform: translateX(100%);
+  animation: travel var(--loop) var(--ease) infinite both;
+}
+
+.token {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  width: var(--token-w);
+  height: 24px;
+  margin-top: -12px;
+  border-radius: 999px;
+  background: var(--card);
+  border: 1px solid var(--deck-cyan);
+  box-shadow: 0 0 0 4px var(--deck-cyan-13), 0 6px 16px var(--deck-cyan-25);
+  color: var(--deck-blue);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  opacity: 0;
+  animation: token var(--loop) var(--ease) infinite both;
+}
+
+.tokenIcon {
+  width: 12px;
+  height: 12px;
+}
+
+/* Rego policy card, pinned to the top-right corner above the provider */
+
+.policy {
+  position: absolute;
+  top: 8px;
+  right: clamp(8px, 3.5%, 28px);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px 10px 9px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: var(--shadow-blue-10);
+  white-space: nowrap;
+  animation: policy var(--loop) var(--ease) infinite both;
+}
+
+.policyHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.policyFile {
+  font-family: var(--font-family-monospace);
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--muted-foreground);
+}
+
+.verdict {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--success) 12%, var(--card));
+  color: var(--success);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 16px;
+  animation: verdict var(--loop) var(--ease) infinite both;
+}
+
+.verdictIcon {
+  width: 10px;
+  height: 10px;
+  stroke-width: 3;
+}
+
+.code {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-family-monospace);
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--foreground);
+  background: none;
+  padding: 0;
+  white-space: pre;
+}
+
+.codeLine {
+  display: block;
+  margin: 0 -4px;
+  padding: 0 4px;
+  border-radius: 4px;
+}
+
+.keyword {
+  color: var(--deck-blue);
+  font-weight: 600;
+}
+
+.string {
+  color: var(--brand-accent-darker);
+}
+
+/* the country condition is highlighted while it evaluates */
+.condition {
+  background: var(--deck-cyan-13);
+  animation: condition var(--loop) var(--ease) infinite both;
+}
+
+/* provider */
+
+.provider {
+  position: relative;
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: center;
+  width: clamp(92px, 19%, 128px);
+}
+
+.node {
+  position: relative;
+  width: 72px;
+  height: 72px;
+}
+
+.nodeBox {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--button-hero-gradient);
+  color: var(--card);
+  box-shadow: 0 0 0 6px var(--deck-cyan-13),
+    0 12px 26px -6px var(--deck-blue-40);
+  animation: glow var(--loop) var(--ease) infinite both;
+}
+
+.lock {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  overflow: visible;
+}
+
+.shackle {
+  transform-box: fill-box;
+  transform-origin: 100% 100%;
+  transform: translateY(-3px) rotate(16deg);
+  animation: shackle var(--loop) var(--ease) infinite both;
+}
+
+.scan {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0 38%,
+    color-mix(in srgb, var(--card) 70%, transparent) 50%,
+    transparent 62% 100%
+  );
+  opacity: 0;
+  animation: scan var(--loop) linear infinite both;
+}
+
+.ring {
+  position: absolute;
+  inset: -4px;
+  border: 2px solid var(--deck-cyan);
+  border-radius: 24px;
+  opacity: 0;
+  animation: ring var(--loop) ease-out infinite both;
+  animation-delay: calc(var(--i, 0) * 0.35s);
+}
+
+.check {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 24px;
+  height: 24px;
+  transform-origin: center;
+  animation: badge var(--loop) var(--ease) infinite both;
+}
+
+.checkCircle {
+  fill: var(--card);
+  stroke: var(--success);
+  stroke-width: 1.75;
+}
+
+.checkMark {
+  stroke: var(--success);
+  stroke-width: 2.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 16;
+  stroke-dashoffset: 0;
+  animation: tick var(--loop) var(--ease) infinite both;
+}
+
+.nodeLabel,
+.granted {
+  position: absolute;
+  left: 50%;
+  white-space: nowrap;
+  font-size: 12px;
+  line-height: 16px;
+  transform: translateX(-50%);
+}
+
+.nodeLabel {
+  top: calc(100% + 10px);
+  font-weight: 500;
+  color: var(--muted-foreground);
+}
+
+.granted {
+  top: calc(100% + 34px);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--deck-blue-8);
+  color: var(--deck-blue);
+  font-size: 11px;
+  font-weight: 600;
+  animation: granted var(--loop) var(--ease) infinite both;
+}
+
+.grantedIcon {
+  width: 11px;
+  height: 11px;
+  stroke-width: 3;
+}
+
+/* phones: extra room so the policy card clears the credential card
+   (container queries cannot style the container itself) */
+@media (max-width: 767px) {
+  .root {
+    padding-top: 104px;
+  }
+}
+
+@media (max-width: 479px) {
+  .root {
+    gap: 5px;
+    padding-inline: 4px;
+  }
+}
+
+/* narrow panels (phones) */
+@container (max-width: 440px) {
+  .policy {
+    top: 6px;
+    right: 8px;
+    padding: 6px 8px;
+  }
+
+  .policyFile {
+    display: none;
+  }
+
+  .card {
+    width: clamp(148px, 38%, 250px);
+    padding: 10px 11px;
+  }
+
+  .cardBadge {
+    display: none;
+  }
+
+  .cardTitle {
+    font-size: 12px;
+  }
+
+  .holderIcon,
+  .tokenIcon {
+    display: none;
+  }
+
+  .track {
+    --token-w: 34px;
+  }
+
+  .claims {
+    gap: 6px;
+    margin: 9px 0 8px;
+  }
+
+  .claim {
+    gap: 6px;
+  }
+
+  .claimText {
+    font-size: 11px;
+  }
+
+  .node {
+    width: 58px;
+    height: 58px;
+  }
+
+  .nodeBox {
+    border-radius: 16px;
+  }
+
+  .ring {
+    border-radius: 20px;
+  }
+
+  .lock {
+    width: 26px;
+    height: 26px;
+  }
+
+  .nodeLabel {
+    font-size: 11px;
+    top: calc(100% + 8px);
+  }
+
+  .granted {
+    top: calc(100% + 29px);
+    padding: 3px 7px;
+  }
+
+  .grantedIcon {
+    display: none;
+  }
+}
+
+/* small phones: slimmer provider and track so the row still fits */
+@container (max-width: 300px) {
+  .track {
+    min-width: 16px;
+  }
+
+  .provider {
+    width: 80px;
+  }
+
+  /* "granted" alone fits under the node */
+  .grantedPrefix {
+    display: none;
+  }
+
+  .grantedIcon {
+    display: block;
+  }
+}
+
+/* smallest phones: tighter card, claims still fit in full */
+@container (max-width: 260px) {
+  .card {
+    width: 140px;
+    padding: 10px 8px;
+  }
+
+  .claim {
+    gap: 5px;
+  }
+}
+
+/* keyframes: percentages of the 8s loop */
+
+@keyframes match {
+  0%,
+  53%,
+  70%,
+  100% {
+    background: transparent;
+  }
+  56%,
+  64% {
+    background: var(--deck-cyan-13);
+  }
+}
+
+@keyframes policy {
+  0%,
+  51%,
+  72%,
+  100% {
+    border-color: var(--border);
+    box-shadow: var(--shadow-blue-10);
+  }
+  55%,
+  64% {
+    border-color: var(--deck-cyan);
+    box-shadow: 0 0 0 4px var(--deck-cyan-13), var(--shadow-blue-10);
+  }
+}
+
+@keyframes condition {
+  0%,
+  53% {
+    background: transparent;
+  }
+  56%,
+  89% {
+    background: var(--deck-cyan-13);
+  }
+  95%,
+  100% {
+    background: transparent;
+  }
+}
+
+@keyframes verdict {
+  0%,
+  58% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  61% {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+  63%,
+  89% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  95%,
+  100% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+@keyframes skeleton {
+  0%,
+  5% {
+    opacity: 1;
+  }
+  11%,
+  89% {
+    opacity: 0;
+  }
+  95%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes claim {
+  0%,
+  5% {
+    clip-path: inset(0 100% 0 0);
+    opacity: 1;
+  }
+  12%,
+  89% {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+  95% {
+    clip-path: inset(0 0 0 0);
+    opacity: 0;
+  }
+  100% {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0;
+  }
+}
+
+@keyframes dot {
+  0%,
+  5% {
+    background: var(--deck-blue-25);
+    transform: scale(0.8);
+  }
+  9% {
+    background: var(--deck-blue);
+    transform: scale(1.3);
+  }
+  12%,
+  89% {
+    background: var(--deck-blue);
+    transform: scale(1);
+  }
+  95%,
+  100% {
+    background: var(--deck-blue-25);
+    transform: scale(0.8);
+  }
+}
+
+@keyframes proof {
+  0%,
+  24% {
+    transform: scaleX(0);
+    opacity: 1;
+  }
+  31%,
+  89% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  95% {
+    transform: scaleX(1);
+    opacity: 0;
+  }
+  100% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+}
+
+@keyframes present {
+  0%,
+  28%,
+  46%,
+  100% {
+    border-color: var(--border);
+    box-shadow: var(--shadow-blue-10);
+  }
+  34% {
+    border-color: var(--deck-cyan);
+    box-shadow: 0 0 0 4px var(--deck-cyan-13), var(--shadow-blue-10);
+  }
+}
+
+@keyframes holder {
+  0% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  2%,
+  31% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  33.33%,
+  100% {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes trail {
+  0%,
+  32% {
+    transform: scaleX(0);
+    opacity: 1;
+  }
+  52%,
+  88% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  95% {
+    transform: scaleX(1);
+    opacity: 0;
+  }
+  100% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+}
+
+@keyframes travel {
+  0%,
+  32% {
+    transform: translateX(0);
+  }
+  52%,
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes token {
+  0%,
+  28% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  33%,
+  49% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  55%,
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
+@keyframes scan {
+  0%,
+  52% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  53% {
+    opacity: 1;
+    transform: translateY(-100%);
+  }
+  62% {
+    opacity: 1;
+    transform: translateY(100%);
+  }
+  63%,
+  100% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+@keyframes ring {
+  0%,
+  52% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  53% {
+    opacity: 0.9;
+    transform: scale(0.95);
+  }
+  66%,
+  100% {
+    opacity: 0;
+    transform: scale(1.45);
+  }
+}
+
+@keyframes badge {
+  0%,
+  62% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  65% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+  67%,
+  89% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  94%,
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+@keyframes tick {
+  0%,
+  64% {
+    stroke-dashoffset: 16;
+  }
+  70%,
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes shackle {
+  0%,
+  66% {
+    transform: none;
+  }
+  70% {
+    transform: translateY(-4px) rotate(8deg);
+  }
+  73%,
+  88% {
+    transform: translateY(-3px) rotate(16deg);
+  }
+  95%,
+  100% {
+    transform: none;
+  }
+}
+
+@keyframes glow {
+  0%,
+  68%,
+  96%,
+  100% {
+    box-shadow: 0 0 0 0 var(--deck-cyan-13),
+      0 10px 22px -8px var(--deck-blue-25);
+  }
+  74%,
+  89% {
+    box-shadow: 0 0 0 6px var(--deck-cyan-13),
+      0 12px 26px -6px var(--deck-blue-40);
+  }
+}
+
+@keyframes granted {
+  0%,
+  69% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(6px) scale(0.85);
+  }
+  73% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1.05);
+  }
+  75%,
+  89% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+  95%,
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(0) scale(0.95);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root *,
+  .root *::before,
+  .root *::after {
+    animation: none !important;
+  }
+}
