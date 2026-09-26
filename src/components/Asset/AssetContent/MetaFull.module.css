@@ -39,14 +39,11 @@
 .metaFull + div {
   margin-top: 10px;
 }
+/* MetaItem styles its own label; uppercase/tracking here would leak into the
+   author value (e.g. turning "deltaDAO" into "DELTADAO") */
 .dataAuther {
   font-family: var(--font-family-base);
-  font-weight: 600;
-  font-size: 11px;
-  letter-spacing: 0.14em;
   line-height: 1.5;
-  color: var(--muted-foreground);
-  text-transform: uppercase;
 }
 
 .licenseRow {

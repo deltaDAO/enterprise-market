@@ -2,7 +2,7 @@
 lastUpdated: '2026-09-11'
 ---
 
-# DELTADAO MARKETPLACE - TERMS AND CONDITIONS
+# deltaDAO MARKETPLACE - TERMS AND CONDITIONS
 
 deltaDAO (as defined below) provides a technical infrastructure for a digital portal enabling access to data (as defined below). Based on these terms and conditions, a customer (as defined below) and deltaDAO enter into an agreement which governs the customer’s access to and use of the data portal (as defined below) and takes effect on the date of deltaDAO’s acceptance of such customer’s offer.
 
