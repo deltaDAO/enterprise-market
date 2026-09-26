@@ -1,13 +1,18 @@
-/* deltaDAO footer: the dark navy slide that bookends the site */
+/* deltaDAO footer: the dark navy slide that bookends the site.
+ * Content sits on the same grid as the home sections: a 1160px box with 20px
+ * side padding (1120px of content), 1500px at >=1550px, 1900px at >=2550px. */
 .footer {
+  --footer-content-width: 1120px;
+  --footer-gutter: 20px;
+
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  text-align: center;
+  text-align: left;
   color: rgba(255, 255, 255, 0.7);
   background-color: var(--deck-navy);
   font-size: var(--font-size-small);
-  padding: calc(var(--spacer) * 1.5) calc(var(--spacer) / 2) 1rem;
+  padding: 3rem 0 1.5rem;
 }
 
 /* gradient hairline along the top edge */
@@ -23,13 +28,14 @@
   pointer-events: none;
 }
 
-/* faint wave in the bottom-left corner */
+/* faint wave in the bottom-left corner, bled 2rem past the left edge and
+ * 1rem past the bottom so its drift never opens a gap along either edge */
 .footer::after {
   content: '';
   position: absolute;
-  inset: auto auto -1px 0;
-  width: min(100%, 40rem);
-  height: 10rem;
+  inset: auto auto -1rem -2rem;
+  width: min(100% + 2rem, 42rem);
+  height: 11rem;
   background: var(--wave-svg) no-repeat;
   background-size: 100% 100%;
   transform: rotate(180deg);
@@ -45,23 +51,27 @@
   outline-color: var(--deck-cyan);
 }
 
+/* shared content edge for the top row and the bottom row */
+.container,
+.copyright {
+  width: min(100% - 2 * var(--footer-gutter), var(--footer-content-width));
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* phone + tablet: brand block stacked above the link columns */
 .container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: var(--spacer);
-  margin: 0 auto var(--spacer);
-  width: 100%;
-  max-width: var(--container-width);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  row-gap: 2.5rem;
 }
 
 .logoSection {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 14px;
+  align-items: flex-start;
+  gap: 1rem;
   color: var(--brand-white); /* white wordmark */
 }
 
@@ -82,25 +92,26 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  text-align: left;
-  gap: 2px;
+  gap: 0.25rem;
 }
 
 .tagline {
   font-weight: 400;
   font-size: 14px;
   line-height: 1.5;
-  text-align: left;
   color: rgba(255, 255, 255, 0.7);
   max-width: 300px;
 }
 
 .websiteLink {
+  font-size: 14px;
+  line-height: 1.5;
   color: rgba(255, 255, 255, 0.7);
   text-decoration: underline;
   text-decoration-color: var(--deck-cyan);
   text-underline-offset: 3px;
   text-decoration-skip-ink: none;
+  border-radius: var(--radius-sm);
 }
 
 body .websiteLink:hover {
@@ -112,15 +123,13 @@ body .websiteLink:hover {
   position: relative;
   font-size: 13px;
   line-height: 1.5;
-  text-align: center;
+  text-align: left;
   color: rgba(255, 255, 255, 0.7);
   font-weight: 500;
-  margin-top: calc(var(--spacer) * 1.5);
-  padding-top: calc(var(--spacer) / 2);
+  margin-top: 3rem;
+  margin-bottom: 0;
+  padding-top: 1.5rem;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  max-width: var(--container-width);
-  margin-left: auto;
-  margin-right: auto;
   font-variant-numeric: tabular-nums;
 }
 
@@ -179,49 +188,43 @@ body .websiteLink:hover {
   }
 }
 
-@media screen and (min-width: 55rem) {
+/* tablet: more air, same stacked layout */
+@media screen and (min-width: 768px) {
   .footer {
-    padding: calc(var(--spacer) * 2) calc(var(--spacer) * 2) 1rem;
+    padding-top: 3.5rem;
   }
 
   .container {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: calc(var(--spacer) / 2);
-  }
-
-  .logoSection {
-    align-items: flex-start;
-    text-align: left;
-    gap: 18px;
+    row-gap: 3rem;
   }
 }
 
-@media screen and (max-width: 900px) {
+/* desktop: brand block on the left, link columns grouped on the right edge */
+@media screen and (min-width: 1024px) {
   .footer {
-    padding: var(--spacer) calc(var(--spacer) / 2) 1rem;
+    padding-top: 4rem;
   }
 
   .container {
-    flex-direction: column;
+    grid-template-columns: minmax(0, 20rem) max-content;
     justify-content: space-between;
-    align-items: center;
-    gap: calc(var(--spacer) / 2);
+    column-gap: 4rem;
   }
 
-  .logoSection {
-    order: 2;
-    align-items: center;
-    margin-top: 2rem;
-    gap: 12px;
+  .copyright {
+    margin-top: 4rem;
   }
 }
 
 @media screen and (min-width: 1550px) {
-  .container,
-  .copyright {
-    max-width: 1500px;
+  .footer {
+    --footer-content-width: 1460px;
+  }
+}
+
+@media screen and (min-width: 2550px) {
+  .footer {
+    --footer-content-width: 1860px;
   }
 }
 
