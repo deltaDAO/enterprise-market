@@ -17,7 +17,7 @@
     ),
     radial-gradient(
       circle at 85% 80%,
-      color-mix(in srgb, var(--brand-secondary) 15%, transparent) 0%,
+      color-mix(in srgb, var(--deck-cyan) 15%, transparent) 0%,
       transparent 45%
     );
   background-size: 22px 22px, 100% 100%, 100% 100%;
