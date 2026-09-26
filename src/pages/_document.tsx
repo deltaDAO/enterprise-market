@@ -37,6 +37,13 @@ class MyDocument extends Document<MyDocumentProps> {
       <Html lang="en">
         <Head>
           <script src="/runtime-config.js" />
+          <link
+            rel="preload"
+            href="/static/fonts/hanken-grotesk/hanken-grotesk-latin-wght-normal.woff2"
+            as="font"
+            type="font/woff2"
+            crossOrigin="anonymous"
+          />
           <DocumentHead
             page={__NEXT_DATA__.page}
             asPath={dangerousAsPath}

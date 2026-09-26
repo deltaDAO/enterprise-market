@@ -9,7 +9,7 @@
 
 .titleText {
   font-family: var(--font-family-base);
-  font-weight: 800;
+  font-weight: var(--font-weight-display);
   font-size: 24px;
   letter-spacing: -0.02em;
   color: var(--deck-blue);

@@ -34,7 +34,6 @@ body {
   -webkit-tap-highlight-color: var(--black-alpha-0);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-feature-settings: 'cv11', 'ss01';
   position: relative;
   background: var(--background);
   /* full-bleed bands (page headers) may paint past the container; clip
@@ -83,7 +82,7 @@ h5 {
 
 h1 {
   font-size: var(--font-size-h2);
-  font-weight: var(--font-weight-black);
+  font-weight: var(--font-weight-display);
   letter-spacing: var(--letter-spacing-tight);
   line-height: 1.1;
   color: var(--deck-blue);
@@ -161,6 +160,14 @@ ul li {
 :focus-visible {
   outline: 2px solid var(--deck-blue);
   outline-offset: 2px;
+}
+
+/* form controls do not inherit the font by default (they fell back to Arial) */
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
 }
 
 form,

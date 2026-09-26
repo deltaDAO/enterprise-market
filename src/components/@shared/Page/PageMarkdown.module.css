@@ -22,7 +22,7 @@
   font-size: var(--font-size-h3);
   color: var(--deck-blue);
   margin: 0 0 calc(var(--spacer) / 2) 0;
-  font-weight: var(--font-weight-black);
+  font-weight: var(--font-weight-display);
   letter-spacing: var(--letter-spacing-tight);
 }
 
@@ -37,7 +37,7 @@
   background: var(--deck-surface);
   border-radius: calc(var(--radius-xl) - 1px) calc(var(--radius-xl) - 1px) 0 0;
   font-size: clamp(1.75rem, 3vw, 2.25rem);
-  font-weight: 800;
+  font-weight: var(--font-weight-display);
   letter-spacing: -0.02em;
   line-height: 1.15;
   color: var(--deck-blue);
@@ -130,6 +130,13 @@
   color: var(--foreground);
   margin-top: var(--spacer);
   margin-bottom: calc(var(--spacer) / 2);
+}
+
+/* a document h1 sits at h2 size; keep it at heading weight so it does not
+ * render lighter than the section h2s under the display-weight h1 default */
+.content h1 {
+  font-weight: var(--font-weight-heavy);
+  letter-spacing: -0.015em;
 }
 
 .content h2:first-of-type {

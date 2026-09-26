@@ -70,7 +70,7 @@
 .headerExtended .title {
   font-family: var(--font-family-heading);
   font-style: normal;
-  font-weight: var(--font-weight-black);
+  font-weight: var(--font-weight-display);
   letter-spacing: var(--letter-spacing-tight);
   font-size: clamp(1.75rem, 3vw, 2.25rem);
   line-height: 1.15;

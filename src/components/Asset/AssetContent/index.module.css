@@ -44,7 +44,7 @@
 .assetName {
   display: block;
   font-family: var(--font-family-heading);
-  font-weight: 800;
+  font-weight: var(--font-weight-display);
   font-size: 28px;
   line-height: 1.2;
   letter-spacing: -0.02em;

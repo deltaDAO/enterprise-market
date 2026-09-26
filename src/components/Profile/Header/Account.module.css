@@ -52,7 +52,7 @@ See https://github.com/oceanprotocol/market/issues/1143 */
 
 .name {
   font-size: var(--font-size-h3);
-  font-weight: 800;
+  font-weight: var(--font-weight-display);
   letter-spacing: -0.02em;
   color: var(--deck-blue);
   margin-bottom: calc(var(--spacer) / 8);

@@ -9,6 +9,6 @@
 
 .headerWrapper h1[class] {
   color: var(--deck-blue);
-  font-weight: 800;
+  font-weight: var(--font-weight-display);
   letter-spacing: -0.02em;
 }

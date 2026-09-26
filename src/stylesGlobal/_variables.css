@@ -51,8 +51,8 @@
   /* Pagination component */
   /* Filter and sort */
 
-  --font-family-base: 'Inter', 'Inter Variable', ui-sans-serif, system-ui,
-    -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-family-base: 'Hanken Grotesk', ui-sans-serif, system-ui, -apple-system,
+    'Segoe UI', Roboto, Arial, sans-serif;
   --font-family-heading: var(--font-family-base);
   --font-family-monospace: ui-monospace, 'SF Mono', Menlo, Monaco, Consolas,
     'Liberation Mono', monospace;
@@ -72,9 +72,10 @@
   --font-weight-base: 400;
   --font-weight-medium: 500;
   --font-weight-bold: 600;
-  --font-weight-heavy: 700;
-  --font-weight-black: 800;
-  --letter-spacing-tight: -0.02em;
+  --font-weight-heavy: 600;
+  /* large titles: light weight + tight tracking instead of heavy black */
+  --font-weight-display: 500;
+  --letter-spacing-tight: -0.03em;
   --letter-spacing-label: 0.14em;
   --font-size-label-motif: 11px;
   --line-height: 1.6;
