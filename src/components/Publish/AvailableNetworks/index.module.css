@@ -7,10 +7,13 @@
   gap: calc(var(--spacer) / 6);
 }
 .title {
-  font-size: var(--font-size-small);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
   margin-bottom: calc(var(--spacer) / 6);
   margin-top: calc(var(--spacer) / 2);
-  color: var(--color-secondary);
+  color: var(--muted-foreground);
 }
 .content {
   padding: calc(var(--spacer) / 2);

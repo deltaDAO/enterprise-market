@@ -18,130 +18,77 @@ function CookieSettingsButton({
   )
 }
 
+/**
+ * Footer links are driven entirely by content/site.json — this portal varies
+ * its footer there rather than hardcoding a privacy column, so upstream's
+ * hardcoded block and its /privacy/* href overrides are deliberately not
+ * adopted (they would override this portal's external Imprint link).
+ *
+ * From upstream v1.5.0: "Cookie Settings" opens the preference centre and
+ * "Cookie Policy" is a plain link to the policy page. They used to be the same
+ * entry, which meant the policy page could not be reached without also opening
+ * the preference centre.
+ */
 export default function Links(): ReactElement {
   const { appConfig, siteContent } = useMarketMetadata()
   const { setShowPPC } = useUserPreferences()
 
-  const { content, privacyTitle } = siteContent.footer
+  const { content } = siteContent.footer
   const showCookieSettings = appConfig.privacyPreferenceCenter === 'true'
   const openCookieSettings = () => setShowPPC(true)
 
   return (
     <div className={styles.container}>
-      {content?.map(
-        (section) =>
-          section.title !== 'Privacy' && (
-            <div key={section.title} className={styles.section}>
-              <p className={styles.title}>{section.title}</p>
-              <div className={styles.links}>
-                {section.links.map((e) => {
-                  if (e.name === 'Cookie Settings') {
-                    return showCookieSettings ? (
-                      <CookieSettingsButton
-                        key={`${e.name}-${e.link}`}
-                        onClick={openCookieSettings}
-                      />
-                    ) : null
-                  }
-                  if (e.name === 'Cookie Policy') {
-                    return (
-                      <Link
-                        key={`${e.name}-${e.link}`}
-                        className={styles.link}
-                        href="/privacy/cookie-policy"
-                      >
-                        Cookie Policy
-                      </Link>
-                    )
-                  }
-                  if (e.name === 'Privacy') {
-                    return (
-                      <Link
-                        key={`${e.name}-${e.link}`}
-                        className={styles.link}
-                        href="/privacy/privacy-policy"
-                      >
-                        {e.name}
-                      </Link>
-                    )
-                  }
-                  if (e.name === 'Imprint') {
-                    return (
-                      <Link
-                        key={`${e.name}-${e.link}`}
-                        className={styles.link}
-                        href="/privacy/imprint"
-                      >
-                        {e.name}
-                      </Link>
-                    )
-                  }
-                  const isInternalLink = e.link.startsWith('/')
-                  return isInternalLink ? (
-                    <Link
-                      key={`${e.name}-${e.link}`}
-                      className={styles.link}
-                      href={e.link}
-                    >
-                      {e.name === 'Log' ? (
-                        <>
-                          <span>Log</span>
-                          <span className={styles.logIcon}>&nbsp;↗</span>{' '}
-                        </>
-                      ) : (
-                        e.name
-                      )}
-                    </Link>
-                  ) : (
-                    <a
-                      key={`${e.name}-${e.link}`}
-                      className={styles.link}
-                      href={e.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {e.name === 'Log' ? (
-                        <>
-                          <span>Log</span>
-                          <span className={styles.logIcon}>&nbsp;↗</span>{' '}
-                        </>
-                      ) : (
-                        e.name
-                      )}
-                    </a>
-                  )
-                })}
-              </div>
-            </div>
-          )
-      )}
-      <div className={styles.section}>
-        <p className={styles.title}>{privacyTitle}</p>
-        <div className={styles.links}>
-          <Link className={styles.link} href="/privacy/imprint">
-            Imprint
-          </Link>
-          <Link className={styles.link} href="/privacy/terms">
-            Terms & Conditions
-          </Link>
-          <Link className={styles.link} href="/privacy/privacy-policy">
-            Privacy Policy
-          </Link>
-          <Link
-            className={styles.link}
-            href="/privacy/data-portal-usage-agreement"
-          >
-            Data Portal Usage Agreement
-          </Link>
+      {content?.map((section) => (
+        <div key={section.title} className={styles.section}>
+          <p className={styles.title}>{section.title}</p>
+          <div className={styles.links}>
+            {section.links.map((e) => {
+              const key = `${e.name}-${e.link}`
 
-          <Link className={styles.link} href="/privacy/cookie-policy">
-            Cookie Policy
-          </Link>
-          {showCookieSettings && (
-            <CookieSettingsButton onClick={openCookieSettings} />
-          )}
+              if (e.name === 'Cookie Settings') {
+                return showCookieSettings ? (
+                  <CookieSettingsButton
+                    key={key}
+                    onClick={openCookieSettings}
+                  />
+                ) : null
+              }
+
+              const linkLabel =
+                e.name === 'Log' ? (
+                  <>
+                    <span>Log</span>
+                    <span className={styles.logIcon}>&nbsp;↗</span>{' '}
+                  </>
+                ) : (
+                  e.name
+                )
+
+              const isInternalLink = e.link.startsWith('/')
+              if (isInternalLink) {
+                return (
+                  <Link key={key} className={styles.link} href={e.link}>
+                    {linkLabel}
+                  </Link>
+                )
+              }
+
+              return (
+                <a
+                  key={key}
+                  className={styles.link}
+                  href={e.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {linkLabel}
+                </a>
+              )
+            })}
+          </div>
         </div>
-      </div>
+      ))}
     </div>
   )
 }

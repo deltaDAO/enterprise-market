@@ -21,14 +21,16 @@ body .header div {
 
 .content {
   padding-left: var(--sp-4);
-  border-left: 3px solid var(--clr-amber);
+  border-left: 3px solid var(--deck-blue-25);
   margin-left: calc(var(--sp-4) + 3px);
 }
 
 .label {
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-bold);
-  color: var(--clr-slate-70);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
 }
 
 .field {
@@ -40,9 +42,11 @@ body .header div {
 }
 
 .field label {
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-bold);
-  color: var(--clr-slate-70);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
   margin-bottom: var(--sp-1);
 }
 
@@ -59,7 +63,7 @@ body .header div {
 .fieldContainer label {
   font-size: var(--font-size-small);
   font-weight: var(--font-weight-bold);
-  color: var(--clr-slate-70);
+  color: var(--muted-foreground);
   margin-bottom: 0;
 }
 
@@ -69,7 +73,7 @@ body .header div {
 }
 
 .required {
-  color: var(--input-error-text-color);
+  color: var(--destructive);
   margin-left: 2px;
 }
 
@@ -91,13 +95,13 @@ body .header div {
 .policyInput {
   flex: 1;
   width: 100%;
-  border: 1px solid color-mix(in srgb, var(--clr-navy) 50%, white);
-  border-radius: 20px 0 0 20px;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg) 0 0 var(--radius-lg);
 }
 
 .policyDelete {
   height: 100%;
-  border-radius: 0 20px 20px 0;
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
 }
 
 .argumentRow {

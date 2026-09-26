@@ -13,15 +13,18 @@
 }
 
 .title {
-  font-size: var(--font-size-base);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--foreground);
   margin-bottom: 0;
 }
 
 .tokens {
   display: grid;
-  border: 1px solid var(--border-color);
-  background: var(--background-highlight);
-  border-radius: var(--border-radius);
+  border: 1px solid var(--border);
+  background: var(--muted);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
 }
 
 @media screen and (min-width: 40rem) {
@@ -32,11 +35,11 @@
 
 .subtitle {
   display: inline-block;
-  color: var(--color-secondary);
+  color: var(--muted-foreground);
   margin-left: calc(var(--spacer) / 4);
   font-family: var(--font-family-base);
-  font-weight: var(--font-weight-base);
-  font-size: var(--font-size-small);
+  font-weight: 400;
+  font-size: 12px;
 }
 
 .alertArea {

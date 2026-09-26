@@ -7,8 +7,8 @@
 .textButton {
   border: none;
   background: transparent;
-  color: var(--ocean-bright-alpha-90);
-  font-family: var(--font-family);
+  color: var(--brand-highlight);
+  font-family: var(--font-family-base);
   font-size: 14px;
   cursor: pointer;
   text-align: left;
@@ -16,7 +16,7 @@
 }
 
 .textButton:hover {
-  color: #303031;
+  color: var(--deck-blue-hover);
   text-decoration: underline;
 }
 
@@ -29,21 +29,23 @@
 }
 
 .copyButton {
-  border: 1px solid var(--border-color);
-  background: #f7f7f7;
-  color: #303031;
+  border: 1px solid var(--border);
+  background: var(--muted);
+  color: var(--foreground);
   font-size: 0.8rem;
   padding: 4px 8px;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
 }
 
 .copyButton:hover {
-  background: var(--neutral-150);
+  background: var(--deck-blue-8);
+  border-color: var(--deck-blue-25);
+  color: var(--deck-blue);
 }
 
 .badge {
-  color: var(--green-600);
+  color: var(--success);
   font-size: 11px;
   display: inline-flex;
   align-items: center;
@@ -58,7 +60,7 @@
 
 .circle {
   fill: none;
-  stroke: var(--green-600);
+  stroke: var(--success);
   stroke-width: 4px;
   stroke-dasharray: 62.83;
   stroke-dashoffset: 62.83;
@@ -67,6 +69,13 @@
 
 @keyframes drawCircle {
   to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .circle {
+    animation: none;
     stroke-dashoffset: 0;
   }
 }

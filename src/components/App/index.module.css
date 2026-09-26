@@ -11,6 +11,17 @@
   width: 100%;
 }
 
+/* sticky, translucent deltaDAO header (styled in Header/Menu.module.css) */
+.app > header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.main {
+  background: var(--deck-surface-soft);
+}
+
 .main {
   /* sticky footer technique */
   flex: 1;
@@ -29,7 +40,7 @@
 .modalOverlay {
   position: fixed;
   inset: 0;
-  background-color: var(--black-alpha-50);
+  background-color: var(--modal-overlay-background);
   z-index: 9999;
 
   display: flex;
@@ -43,12 +54,13 @@
   max-width: 600px;
   padding: 2.5rem;
 
-  background: #ffffff;
-  color: var(--black-1000);
-  border-radius: 12px;
+  background: var(--card);
+  color: var(--foreground);
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--border);
 
   text-align: center;
-  box-shadow: 0 10px 40px var(--black-alpha-25);
+  box-shadow: var(--shadow-soft);
 }
 
 .modalClose {
@@ -62,4 +74,12 @@
   font-size: 24px;
   cursor: pointer;
   line-height: 1;
+  color: var(--muted-foreground);
+  border-radius: var(--radius-md);
+  padding: 2px 8px;
+}
+
+.modalClose:hover {
+  color: var(--deck-blue);
+  background: var(--deck-blue-8);
 }

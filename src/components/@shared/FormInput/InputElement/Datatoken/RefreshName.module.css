@@ -3,7 +3,7 @@
 }
 
 .refresh svg {
-  fill: var(--color-primary);
+  fill: var(--deck-blue);
   width: var(--font-size-mini);
   height: var(--font-size-mini);
 }

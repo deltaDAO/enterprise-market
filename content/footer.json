@@ -2,14 +2,14 @@
   "links": [
     {
       "name": "Docs",
-      "url": "https://docs.oceanprotocol.com"
+      "url": "https://docs.pontus-x.eu"
     },
     {
       "name": "GitHub",
-      "url": "https://github.com/OceanProtocolEnterprise"
+      "url": "https://github.com/deltaDAO"
     }
   ],
   "stats": {
-    "note": "Counted on-chain from our NFT factories. Includes assets in all Ocean Market forks and [purgatory](https://github.com/oceanprotocol/list-purgatory)."
+    "note": "Counted on-chain from the NFT factories of the supported networks. Includes assets published through any compatible marketplace and [purgatory](https://github.com/oceanprotocol/list-purgatory)."
   }
 }

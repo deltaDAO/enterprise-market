@@ -189,7 +189,7 @@ export default function ServicesFields(): ReactElement {
       <SectionContainer
         title="Service Configuration"
         required
-        help="Configure essential settings for your service here. Upload relevant files using the appropriate field. Enter your service provider's URL and any associated links, and specify the timeout duration as needed. Ensure all details are accurately entered for optimal service performance."
+        help="Configure essential settings for your service here. Upload relevant files using the appropriate field. Enter your service provider's URL and any associated links, and set the access duration as needed. Ensure all details are accurately entered for optimal service performance."
       >
         {/* Card 1: Provider URL Card */}
         <SectionContainer border padding="16px">

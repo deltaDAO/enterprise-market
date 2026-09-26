@@ -81,7 +81,7 @@ export default function ServiceCard({
         {service.type}
       </span>
       <br />
-      <span className={styles.title}>Timeout: </span>
+      <span className={styles.title}>Access Duration: </span>
       <span>{formatServiceTimeout(service.timeout)}</span>
       <br />
       <span className={styles.title}>Price: </span>

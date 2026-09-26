@@ -20,7 +20,7 @@
   font-family: var(--font-family-base);
   font-weight: var(--text-weight-regular);
   font-size: var(--text-sm);
-  color: var(--text-ink);
+  color: var(--foreground);
   margin: 0 0 var(--sp-4) 0;
 }
 
@@ -36,19 +36,23 @@
 .inputField {
   box-sizing: border-box;
   width: 100%;
-  border: var(--border-size-sm) solid var(--border-navy-soft);
-  border-radius: var(--radius-xl);
-  padding: var(--field-padding-compact);
-  padding-bottom: 8px;
-  box-shadow: var(--shadow-md);
+  min-height: 40px;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  padding: 8px 32px 8px 12px;
+  box-shadow: none;
   font-family: var(--font-family-base);
   font-weight: var(--text-weight-regular);
   font-size: var(--text-sm);
-  color: var(--text-ink);
-  background: var(--brand-white);
+  color: var(--foreground);
+  background-color: #fff;
   appearance: none;
-  background-image: linear-gradient(45deg, transparent 50%, var(--clr-navy) 50%),
-    linear-gradient(135deg, var(--clr-navy) 50%, transparent 50%);
+  background-image: linear-gradient(
+      45deg,
+      transparent 50%,
+      var(--deck-blue) 50%
+    ),
+    linear-gradient(135deg, var(--deck-blue) 50%, transparent 50%);
   background-position: calc(100% - 15px) calc(50% + 2px),
     calc(100% - 10px) calc(50% + 2px);
   background-size: 5px 5px, 5px 5px;
@@ -57,38 +61,63 @@
 
 .inputField:focus {
   outline: none;
-  border-color: var(--clr-navy);
-  box-shadow: var(--shadow-md), 0 0 0 3px var(--navy-alpha-10);
+  border-color: var(--deck-blue);
+  box-shadow: 0 0 0 3px var(--ring);
 }
 
+/* primary button */
 .acceptButton {
-  border-radius: var(--radius-xl);
-  padding: 4px 20px;
-  width: 94px;
-  height: var(--field-height);
-  box-shadow: var(--shadow-sm);
-  background: var(--gradient-accent);
+  border-radius: var(--radius-lg);
+  padding: 0 20px;
+  min-width: 94px;
+  height: 38px;
+  box-shadow: 0 4px 12px var(--deck-blue-25);
+  background: var(--deck-blue);
   border: none;
   font-family: var(--font-family-base);
-  font-weight: var(--text-weight-bold);
-  font-size: var(--text-sm);
-  color: var(--clr-navy);
+  font-weight: 600;
+  font-size: 14px;
+  color: #fff;
   cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
+.acceptButton:hover {
+  background: var(--deck-blue-hover);
+}
+
+.acceptButton:disabled,
+.abortButton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.acceptButton:focus-visible,
+.abortButton:focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
+}
+
+/* outlined button */
 .abortButton {
-  border-radius: var(--radius-xl);
-  padding: 4px 20px;
-  width: 79px;
-  height: var(--field-height);
-  box-shadow: var(--shadow-sm);
-  background: var(--clr-slate-12);
-  border: none;
+  border-radius: var(--radius-lg);
+  padding: 0 20px;
+  min-width: 79px;
+  height: 38px;
+  box-shadow: none;
+  background: #fff;
+  border: 1px solid var(--deck-blue-25);
   font-family: var(--font-family-base);
-  font-weight: var(--text-weight-bold);
-  font-size: var(--text-sm);
-  color: var(--text-ink);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--deck-blue);
   cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.abortButton:hover {
+  background: var(--deck-blue-8);
+  border-color: var(--deck-blue);
 }
 
 .panelRow:last-child {

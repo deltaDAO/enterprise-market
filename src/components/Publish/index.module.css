@@ -1,183 +1,161 @@
-/* Main Publish Container */
-.publish {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0;
-  gap: var(--space-4xl);
-  max-width: var(--container-width);
-  margin: 0 auto;
-  font-family: var(--font-family-base);
-}
+/*
+ * Publish flow shell.
+ * Only `.form` is referenced from index.tsx; the page header (PageHeader,
+ * rendered right before the form) is reached with `:has(+ .form)` so the
+ * mist band applies to the publish page only.
+ */
 
-/* Header Section */
-.header {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0;
-  gap: var(--sp-6);
+/* ── Page header: full-bleed mist band with wave + hairline ── */
+header:has(+ .form) {
+  position: relative;
+  isolation: isolate;
+  max-width: none;
   width: 100%;
-  align-self: stretch;
+  margin-top: 0;
+  margin-bottom: 32px;
+  padding: 48px 0 40px;
+  background-color: var(--deck-surface);
+  /* extend the band edge to edge without creating horizontal overflow */
+  box-shadow: 0 0 0 100vmax var(--deck-surface);
+  clip-path: inset(0 -100vmax);
 }
 
-/* Title Row */
-.titleRow {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 0;
-  gap: var(--sp-2);
+/* top-right brand wave, faded towards both ends */
+header:has(+ .form)::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto auto;
+  width: min(100%, 48rem);
+  height: 13rem;
+  max-height: 100%;
+  background: var(--wave-svg) no-repeat;
+  background-size: 100% 100%;
+  -webkit-mask-image: linear-gradient(
+    to left,
+    transparent,
+    #000 12%,
+    #000 40%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to left,
+    transparent,
+    #000 12%,
+    #000 40%,
+    transparent
+  );
+  pointer-events: none;
+  z-index: -1;
+  animation: wave-drift 18s ease-in-out infinite alternate;
 }
 
-/* Main Title */
-.mainTitle {
-  font-family: var(--font-family-base);
-  font-style: normal;
-  font-weight: var(--text-weight-bold);
-  font-size: var(--text-xl);
-  line-height: var(--text-line-3xl);
-  color: var(--text-ink);
+@media (prefers-reduced-motion: reduce) {
+  header:has(+ .form)::before {
+    animation: none;
+  }
+}
+
+header:has(+ .form)::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--brand-hairline);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+header:has(+ .form) h1[class] {
+  margin: 0 0 12px;
+  color: var(--deck-blue);
+}
+
+header:has(+ .form) h1 + div,
+header:has(+ .form) h1 + div p {
+  max-width: 44rem;
   margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--muted-foreground);
 }
 
-/* Network Info Container */
-.networkInfo {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 0;
-  gap: var(--sp-1);
-}
-
-/* Network Details */
-.networkDetails {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  padding: 0;
-  gap: 3px;
-}
-
-/* Network Icon */
-.networkIcon {
-  width: var(--text-line-3xl);
-  height: var(--text-line-3xl);
-}
-
-/* Network Name */
-.networkName {
-  font-family: var(--font-family-base);
-  font-style: normal;
-  font-weight: var(--text-weight-bold);
-  font-size: var(--text-xl);
-  line-height: var(--text-line-3xl);
-  color: var(--text-ink);
-  margin: 0;
-}
-
-/* Info Icon */
-.infoIcon {
-  width: 22px;
-  height: 22px;
-  color: var(--text-neutral);
-}
-
-/* Description */
-.description {
-  font-family: var(--font-family-base);
-  font-style: normal;
-  font-weight: var(--text-weight-regular);
-  font-size: var(--text-lg);
-  line-height: var(--text-line-2xl);
-  color: var(--clr-slate-70);
-  margin: 0;
-  align-self: stretch;
-}
-
-/* Main Content */
-.content {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0;
-  gap: var(--sp-10);
-  width: 100%;
-  align-self: stretch;
-}
-
-/* Form Section */
+/* ── Form wrapper ── */
 .form {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  padding: 0;
-  gap: var(--sp-10);
+  gap: 24px;
   width: 100%;
-}
-
-.section {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0;
-  gap: var(--sp-4);
-  width: 100%;
-}
-
-/* Section Title */
-.sectionTitle {
   font-family: var(--font-family-base);
-  font-style: normal;
-  font-weight: var(--text-weight-bold);
-  font-size: var(--text-base);
-  line-height: var(--text-line-lg);
-  color: var(--text-ink);
+  color: var(--foreground);
+}
+
+/* The step content lives in a deck-card (ContainerForm follows the nav) */
+.form > nav + div[class] {
+  border: 1px solid transparent;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--deck-blue) 30%, var(--border)),
+        color-mix(in srgb, var(--deck-cyan) 35%, var(--border))
+      )
+      border-box;
+  box-shadow: var(--shadow-soft);
+  padding: 32px;
+}
+
+/* sections inside the card are separated by hairline dividers */
+.form > nav + div[class] > h3,
+.form > nav + div[class] > h4 {
   margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--foreground);
 }
 
-/* Section Content */
-.sectionContent {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0;
-  gap: var(--sp-4);
-  width: 100%;
-  align-self: stretch;
+/* the action row closes the card, separated by a divider */
+.form > nav + div[class] > :last-child:not(:first-child) {
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
 }
 
-/* Responsive Design */
-@media (max-width: 1200px) {
-  .publish {
-    width: 100%;
-    padding: 0 var(--sp-6);
-  }
+/* ── Selectable option cards (radio box selections) ── */
+.form input[type='radio']:checked + label[class*='boxSelection'] {
+  color: var(--deck-blue);
+  border: 1px solid var(--deck-blue);
+  background: var(--deck-blue-8);
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+.form input[type='radio']:checked + label[class*='boxSelection'] svg,
+.form input[type='radio']:checked + label[class*='boxSelection'] svg path {
+  fill: var(--deck-blue) !important;
+}
+
+.form input[type='radio']:focus-visible + label[class*='boxSelection'] {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
 }
 
 @media (max-width: 768px) {
-  .publish {
-    gap: var(--sp-10);
+  header:has(+ .form) {
+    padding: 32px 0 28px;
+    margin-bottom: 24px;
   }
 
-  .header {
-    gap: var(--sp-4);
+  .form > nav + div[class] {
+    padding: 20px 16px;
   }
+}
 
-  .titleRow {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--sp-4);
+/* keyframes are module-scoped, so the wave drift is declared locally */
+@keyframes wave-drift {
+  from {
+    transform: translate3d(0, 0, 0);
   }
-
-  .mainTitle,
-  .networkName {
-    font-size: var(--text-lg);
-    line-height: var(--text-line-2xl);
-  }
-
-  .description {
-    font-size: var(--text-base);
-    line-height: var(--text-line-xl);
+  to {
+    transform: translate3d(-2.5%, 2%, 0) scale(1.03);
   }
 }

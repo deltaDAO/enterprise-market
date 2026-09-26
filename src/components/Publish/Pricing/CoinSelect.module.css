@@ -2,17 +2,18 @@
   composes: select from '../../@shared/FormInput/InputElement/index.module.css';
   font-size: var(--font-size-small);
   font-weight: var(--font-weight-base);
-  border: 1px solid var(--clr-navy);
+  border: 1px solid var(--input);
   border-right: none;
   margin-right: -0.5rem;
-  background-color: var(--background-highlight);
+  background-color: var(--muted);
+  color: var(--foreground);
   width: auto;
   padding: 0 1.75rem 0 0.25rem;
-  height: 41px;
+  height: 40px;
   text-align: center;
-  font-weight: var(--font-weight-bold);
-  border-top-left-radius: var(--radius-xl);
-  border-bottom-left-radius: var(--radius-xl);
+  font-weight: 600;
+  border-top-left-radius: var(--radius-lg);
+  border-bottom-left-radius: var(--radius-lg);
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 
@@ -20,8 +21,8 @@
   background-image: linear-gradient(
       45deg,
       transparent 50%,
-      var(--font-color-text) 50%
+      var(--muted-foreground) 50%
     ),
-    linear-gradient(135deg, var(--font-color-text) 50%, transparent 50%);
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
   background-position: calc(100% - 14px) 1.2rem, calc(100% - 9px) 1.2rem, 100% 0;
 }

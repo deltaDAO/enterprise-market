@@ -1,8 +1,10 @@
 .number,
 .number * {
-  font-weight: var(--font-weight-bold);
+  font-weight: 700;
   font-size: var(--font-size-h4);
-  color: var(--font-color-heading);
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+  color: var(--foreground);
   margin-left: 0;
 }
 
@@ -18,8 +20,16 @@
   font-size: var(--font-size-h5);
 }
 
+/* label motif */
 .label {
   display: block;
+  margin-top: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted-foreground);
 }
 
 .number svg {
@@ -27,26 +37,41 @@
   height: var(--font-size-large);
   margin-right: calc(var(--spacer) / 4);
   stroke: currentColor;
+  color: var(--deck-blue);
 }
 
+/* stat card = deck-card */
 .unit {
   font-size: var(--font-size-small);
-  color: var(--color-secondary);
+  color: var(--muted-foreground);
   width: 10rem;
+  min-width: 10rem;
+  padding: 14px 16px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--deck-blue) 30%, var(--border)),
+        color-mix(in srgb, var(--deck-cyan) 35%, var(--border))
+      )
+      border-box;
+  box-shadow: var(--shadow-blue-5);
 }
 
 .unit a {
-  color: var(--color-secondary);
+  color: var(--brand-highlight);
   display: block;
-  padding: 0.5rem 1rem;
-  border: 0.1rem solid transparent;
-  border-radius: 0.2rem;
+  margin: 6px -8px 0;
+  padding: 4px 8px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
 }
 
 .unit a:hover,
 .unit a:focus {
-  background: var(--brand-white);
-  border: 0.1rem solid var(--color-primary);
+  background: var(--deck-blue-8);
+  border-color: var(--deck-blue-25);
 }
 
 .tooltip svg {

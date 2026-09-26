@@ -12,7 +12,7 @@
 
 .datasetName {
   font-weight: 500;
-  color: var(--text-ink);
+  color: var(--foreground);
 }
 
 .credentialStatus {
@@ -24,11 +24,12 @@
 .checkIcon {
   width: 16px;
   height: 16px;
+  fill: var(--success);
 }
 
 .validText {
   font-size: 14px;
-  color: var(--ocean-blue);
+  color: var(--success);
   font-weight: 500;
 }
 
@@ -37,8 +38,13 @@
   align-items: center;
   gap: 6px;
   margin-left: 8px;
+  height: 20px;
+  padding: 0 8px;
+  border-radius: var(--radius-pill);
+  background: var(--success-soft);
   font-size: 12px;
-  color: var(--clr-teal);
+  font-weight: 500;
+  color: var(--success);
 }
 
 .servicesList {
@@ -46,7 +52,7 @@
 }
 
 .serviceItem {
-  color: var(--clr-slate-70);
+  color: var(--muted-foreground);
   font-size: 14px;
   margin-bottom: 0.25rem;
 }

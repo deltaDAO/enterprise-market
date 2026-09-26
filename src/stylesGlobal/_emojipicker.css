@@ -7,18 +7,22 @@
 }
 .EmojiPickerReact {
   --epr-emoji-size: 24px !important;
+  --epr-highlight-color: var(--deck-blue) !important;
+  --epr-hover-bg-color: var(--deck-blue-8) !important;
+  --epr-focus-bg-color: var(--deck-blue-12) !important;
 }
 
 .EmojiPickerReact .epr-search-container input.epr-search {
   background-color: transparent !important;
-  border-color: var(--border-color) !important;
-  border-radius: var(--border-radius) !important;
-  color: var(--brand-black) !important;
+  border-color: var(--input) !important;
+  border-radius: var(--radius-lg) !important;
+  color: var(--foreground) !important;
 }
 
 .EmojiPickerReact .epr-search-container input.epr-search:focus {
   background-color: var(--epr-search-input-bg-color-active);
-  border-color: var(--brand-black) !important;
+  border-color: var(--deck-blue) !important;
+  box-shadow: 0 0 0 3px var(--ring);
 }
 
 .EmojiPickerReact.epr-dark-theme .epr-search-container input.epr-search {
@@ -30,8 +34,8 @@
 }
 
 .EmojiPickerReact .epr-category-nav > button.epr-cat-btn {
-  -webkit-filter: hue-rotate(110deg) saturate(2);
-  filter: hue-rotate(110deg) saturate(2);
+  -webkit-filter: none;
+  filter: none;
 }
 
 .EmojiPickerReact .epr-body::-webkit-scrollbar {

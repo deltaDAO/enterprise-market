@@ -7,5 +7,15 @@
 .title,
 .subtitle {
   text-align: center;
-  color: var(--color-primary);
+}
+
+.title {
+  color: var(--deck-blue);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.subtitle {
+  color: var(--muted-foreground);
+  font-weight: 500;
 }

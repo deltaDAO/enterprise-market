@@ -24,7 +24,10 @@
   max-width: var(--break-point--small);
   position: relative;
   animation: moveUp 0.2s ease-out backwards;
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-2xl);
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
 }
 
 @media (max-height: 40rem) {
@@ -50,6 +53,7 @@
 
 .title {
   font-size: var(--font-size-h3);
+  color: var(--deck-blue);
   margin: 0;
 }
 
@@ -76,12 +80,18 @@
   padding: 0;
   line-height: 1;
   font-size: var(--font-size-h2);
-  color: var(--font-color-text);
+  color: var(--muted-foreground);
+  border-radius: var(--radius-md);
+  transition: color 0.2s ease;
 }
 
-.close:hover,
-.close:focus {
-  opacity: 0.7;
+.close:hover {
+  color: var(--deck-blue);
+}
+
+.close:focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
 }
 
 @keyframes fadeIn {
@@ -101,5 +111,12 @@
 
   to {
     transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modalOverlay,
+  .modal {
+    animation: none;
   }
 }

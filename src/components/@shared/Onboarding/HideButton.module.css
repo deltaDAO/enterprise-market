@@ -1,3 +1,11 @@
+.hideButton {
+  color: var(--muted-foreground);
+}
+
+.hideButton:hover {
+  color: var(--deck-blue);
+}
+
 .hideButton svg {
   display: inline;
   width: var(--spacer);

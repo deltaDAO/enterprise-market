@@ -1,45 +1,60 @@
+/* tinted alert card: icon, message and action on one centred row */
 .feedback {
-  /* font-size: var(--font-size-small); */
-  padding-left: 12px;
-  /* padding-top: calc(var(--spacer) / 1.5); */
-  margin-top: calc(var(--spacer) / 2);
-  margin-bottom: calc(var(--spacer) / 1);
   position: relative;
-  width: 100%;
-  background: var(--surface-warning);
   display: flex;
-  height: 40px;
-  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: calc(var(--spacer) / 2);
+  margin-bottom: var(--spacer);
+  padding: 12px 16px;
+  background: var(--warning-bg);
+  border: 1px solid var(--warning-border);
+  border-radius: var(--radius-xl);
 }
 
-.feedback i {
-  position: absolute;
-  left: 0;
-  /* top: calc(var(--spacer) / 1.45); */
-}
-
-.title {
-  font-family: var(--font-family);
-  margin-bottom: 0px;
-  margin-top: 14px;
-  font-weight: 400;
-  font-size: 14px;
-  color: #303031;
-}
-
-.error {
-  font-family: var(--font-family);
-  font-size: 14px;
-  margin-bottom: 0px;
-  margin-top: 11px;
-  font-weight: 700;
-  text-decoration: underline;
-  text-decoration-skip-ink: none;
-  color: #4ca3d3;
-  cursor: pointer;
+.warningImage {
+  display: flex;
+  flex-shrink: 0;
 }
 
 .warningImage svg {
-  width: 25px !important;
-  height: 43px !important;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+}
+
+/* message column takes the free space so the action never squeezes it */
+.text {
+  display: flex;
+  flex: 1 1 12rem;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 8px;
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: 0;
+  color: var(--foreground);
+}
+
+.error {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-skip-ink: none;
+  color: var(--brand-highlight);
+  cursor: pointer;
 }

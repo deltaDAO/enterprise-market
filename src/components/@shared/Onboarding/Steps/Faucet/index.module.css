@@ -6,8 +6,8 @@
   height: 100%;
   max-height: 600px;
   margin: 0 auto;
-  background: white;
-  border-radius: 24px;
+  background: var(--card);
+  border-radius: var(--radius-xl);
   overflow: hidden;
 }
 
@@ -18,7 +18,7 @@
   min-height: 0;
   height: 100%;
   scrollbar-width: thin;
-  scrollbar-color: #fbbf24 #fffbeb;
+  scrollbar-color: var(--deck-blue-25) var(--deck-surface-soft);
 }
 
 .scrollableContent::-webkit-scrollbar {
@@ -26,20 +26,20 @@
 }
 
 .scrollableContent::-webkit-scrollbar-track {
-  background: #fffbeb;
-  border-radius: 20px;
-  border: 1px solid #fef3c7;
+  background: var(--deck-surface-soft);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
 }
 
 .scrollableContent::-webkit-scrollbar-thumb {
-  background-color: #fbbf24;
-  border-radius: 20px;
-  border: 2px solid #fffbeb;
+  background-color: var(--deck-blue-25);
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--deck-surface-soft);
   min-height: 40px;
 }
 
 .scrollableContent::-webkit-scrollbar-thumb:hover {
-  background-color: #f59e0b;
+  background-color: var(--deck-blue);
 }
 
 /* Testnet Styles */
@@ -58,13 +58,19 @@
 }
 
 .dropdown {
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
-  background: white;
+  border-radius: var(--radius-xl);
+  border: 1px solid transparent;
+  background: linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--deck-blue) 30%, var(--border)),
+        color-mix(in srgb, var(--deck-cyan) 35%, var(--border))
+      )
+      border-box;
   overflow: hidden;
   width: 100%;
   flex-shrink: 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-blue-5);
 }
 
 .summary {
@@ -72,7 +78,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 16px 18px;
-  background: #f9fafb;
+  background: var(--muted);
+  color: var(--foreground);
   cursor: pointer;
   font-weight: 600;
   font-size: 15px;
@@ -82,7 +89,12 @@
 }
 
 .summary:hover {
-  background: #f3f4f6;
+  background: var(--deck-blue-8);
+}
+
+.summary:focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: -2px;
 }
 
 .summary::-webkit-details-marker {
@@ -102,8 +114,8 @@
 .chevron {
   width: 10px;
   height: 10px;
-  border-right: 2px solid #9ca3af;
-  border-bottom: 2px solid #9ca3af;
+  border-right: 2px solid var(--muted-foreground);
+  border-bottom: 2px solid var(--muted-foreground);
   transform: rotate(45deg);
   transition: transform 0.2s ease;
   margin-right: 4px;
@@ -114,8 +126,8 @@
 }
 
 .content {
-  border-top: 1px solid #f3f4f6;
-  background: white;
+  border-top: 1px solid var(--border);
+  background: var(--card);
   max-height: 250px;
   overflow-y: auto;
 }
@@ -124,12 +136,12 @@
   display: flex;
   align-items: center;
   padding: 14px 18px;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid var(--border);
   transition: background-color 0.2s ease;
 }
 
 .row:hover {
-  background-color: #f9fafb;
+  background-color: var(--muted);
 }
 
 .row:last-child {
@@ -143,11 +155,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f3f4f6;
+  background: var(--secondary);
   border-radius: 50%;
   flex-shrink: 0;
   overflow: hidden;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
 }
 
 .icon {
@@ -176,7 +188,7 @@
 }
 
 .link {
-  color: #2563eb;
+  color: var(--brand-highlight);
   font-weight: 500;
   text-decoration: none;
   font-size: 15px;
@@ -189,7 +201,7 @@
 }
 
 .disabled {
-  color: #94a3b8;
+  color: var(--muted-foreground);
   font-size: 15px;
 }
 
@@ -208,14 +220,14 @@
 }
 
 .mainnetNote {
-  padding: 18px 20px;
-  background: #fffbeb;
-  border: 1px solid #fef3c7;
-  border-radius: 16px;
-  color: #92400e;
+  padding: 16px 20px;
+  border: 1px solid var(--info-border);
+  background: var(--info-bg);
+  border-radius: var(--radius-xl);
+  color: var(--foreground);
   font-size: 14px;
   line-height: 1.6;
-  box-shadow: 0 2px 6px rgba(251, 191, 36, 0.1);
+  box-shadow: none;
 }
 
 .exchangesGrid {
@@ -230,22 +242,31 @@
   flex-direction: column;
   align-items: center;
   padding: 18px 12px 14px;
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
+  border-radius: var(--radius-xl);
+  border: 1px solid transparent;
+  background: linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--deck-blue) 30%, var(--border)),
+        color-mix(in srgb, var(--deck-cyan) 35%, var(--border))
+      )
+      border-box;
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
   cursor: pointer;
   position: relative;
   min-width: 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-blue-5);
 }
 
 .exchangeCard:hover {
-  background: #f3f4f6;
-  border-color: #fbbf24;
   transform: translateY(-2px);
-  box-shadow: 0 10px 15px -6px rgba(251, 191, 36, 0.25);
+  box-shadow: var(--shadow-blue-10);
+}
+
+.exchangeCard:focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
 }
 
 .exchangeIconWrapper {
@@ -255,16 +276,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: white;
+  background: var(--card);
   border-radius: 50%;
   flex-shrink: 0;
   overflow: hidden;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   transition: border-color 0.2s ease;
 }
 
 .exchangeCard:hover .exchangeIconWrapper {
-  border-color: #fbbf24;
+  border-color: var(--deck-blue-25);
 }
 
 .exchangeIcon {
@@ -274,7 +295,7 @@
 }
 
 .exchangeName {
-  color: #111827;
+  color: var(--foreground);
   font-weight: 600;
   font-size: 15px;
   text-align: center;
@@ -284,7 +305,7 @@
 }
 
 .externalLinkIcon {
-  color: #9ca3af;
+  color: var(--muted-foreground);
   font-size: 15px;
   transition: transform 0.2s ease, color 0.2s ease;
   position: absolute;
@@ -294,7 +315,7 @@
 
 .exchangeCard:hover .externalLinkIcon {
   transform: translate(3px, -3px);
-  color: #fbbf24;
+  color: var(--deck-blue);
 }
 .exchangeIconContainer {
   width: 100%;
@@ -325,14 +346,15 @@
 }
 
 .error {
-  color: #dc2626;
+  /* error badge pairing from the spec contrast table (5.9:1) */
+  color: #b91c1c;
   text-align: center;
   font-size: 15px;
   padding: 24px;
   max-width: 320px;
-  background: #fef2f2;
-  border-radius: 16px;
-  border: 1px solid #fee2e2;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--destructive-border);
+  background: var(--destructive-bg);
 }
 
 .fallbackIcon {
@@ -341,7 +363,7 @@
 }
 
 .testnetDescription {
-  color: #4b5563;
+  color: var(--muted-foreground);
   font-size: 14px;
   line-height: 1.6;
   margin: 0 0 20px 0;
@@ -393,5 +415,12 @@
     width: 44px;
     height: 44px;
     padding: 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dropdown[open] .chevron,
+  .exchangeCard:hover {
+    transform: none;
   }
 }

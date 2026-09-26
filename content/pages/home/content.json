@@ -1,22 +1,267 @@
 {
-  "teaser": {
-    "title": "The Enterprise Data Ecosystem",
-    "text": "The next generation of data infrastructure: an **open, transparent and secure digital ecosystem**, where data and services can be made available, collated and shared in an environment of trust."
+  "hero": {
+    "title": "Data and AI Marketplace",
+    "subtitle": "Publish, discover and monetize data and AI assets, for people and AI agents.",
+    "searchPlaceholder": "Search data and algorithms…"
   },
-  "paragraphs": [
-    {
-      "title": "Building on the principal of decentralization",
-      "body": "The principle of decentralization is a perfect fit for **Distributed Ledger Technology**. [Ocean Protocol](https://oceanprotocol.com) is a fully open-source technology stack, leveraging DLT and decentralization, aiming to give control back to the owners of data services. The enterprise marketplace is built on top of Ocean Protocol further leveraging its strengths in an enterprise context.",
-      "cta": "Learn More",
-      "ctaTo": "https://github.com/OceanProtocolEnterprise/market",
-      "image": "/images/ecosystem/example_logo.png"
-    },
-    {
-      "title": "Compute-to-Data and its benefits",
-      "body": "One core concept of Ocean Protocol is the **Compute-to-Data (CtD)** approach. Compute-to-Data is the functionality that solves the current trade-off between the benefits of using private data and the risks of exposing it. It allows data consumers to run compute jobs on private data while the data stays on-premise with the data provider.",
-      "cta": "Learn More",
-      "ctaTo": "https://docs.oceanprotocol.com/developers/compute-to-data",
-      "image": "/images/ctd_benefits.png"
+  "ecosystem": {
+    "title": "Trusted by",
+    "titleMuted": "leading organizations",
+    "partners": [
+      {
+        "name": "UDL",
+        "logo": "/images/partners/udl.png",
+        "logoColor": "/images/partners/color/udl.webp"
+      },
+      {
+        "name": "SBB",
+        "logo": "/images/partners/sbb.png",
+        "logoColor": "/images/partners/color/sbb.webp"
+      },
+      {
+        "name": "Sense",
+        "logo": "/images/partners/sense.png",
+        "logoColor": "/images/partners/color/sense.webp"
+      },
+      {
+        "name": "TU Wien",
+        "logo": "/images/partners/tu-wien.png",
+        "logoColor": "/images/partners/color/tu-wien.webp"
+      },
+      {
+        "name": "ACCURATE",
+        "logo": "/images/partners/accurate.png",
+        "logoColor": "/images/partners/color/accurate.webp"
+      },
+      {
+        "name": "AgrospAI",
+        "logo": "/images/partners/agrospai.png",
+        "logoColor": "/images/partners/color/agrospai.webp"
+      },
+      {
+        "name": "AllUnity",
+        "logo": "/images/partners/allunity.png",
+        "logoColor": "/images/partners/color/allunity.webp"
+      },
+      {
+        "name": "beebucket",
+        "logo": "/images/partners/beebucket.png",
+        "logoColor": "/images/partners/color/beebucket.webp"
+      },
+      {
+        "name": "EuProGigant",
+        "logo": "/images/partners/euprogigant.png",
+        "logoColor": "/images/partners/color/euprogigant.webp"
+      },
+      {
+        "name": "Ocean Enterprise",
+        "logo": "/images/partners/ocean-enterprise.png",
+        "logoColor": "/images/partners/color/ocean-enterprise.webp"
+      },
+      {
+        "name": "GMN",
+        "logo": "/images/partners/gmn.png",
+        "logoColor": "/images/partners/color/gmn.webp"
+      },
+      {
+        "name": "Airbus",
+        "logo": "/images/partners/airbus.png",
+        "logoColor": "/images/partners/color/airbus.webp"
+      },
+      {
+        "name": "Airbus Defence and Space",
+        "logo": "/images/partners/airbus-defence-and-space-gmbh.png",
+        "logoColor": "/images/partners/color/airbus-defence-and-space-gmbh.webp"
+      },
+      {
+        "name": "AIT Austrian Institute of Technology",
+        "logo": "/images/partners/ait-austrian-institute-of-technology-gmbh.png",
+        "logoColor": "/images/partners/color/ait-austrian-institute-of-technology-gmbh.webp"
+      },
+      {
+        "name": "DLR – German Aerospace Center",
+        "logo": "/images/partners/dlr-german-aerospace-center.png",
+        "logoColor": "/images/partners/color/dlr-german-aerospace-center.webp"
+      },
+      {
+        "name": "TEF agrifood",
+        "logo": "/images/partners/tef-agrifood.png",
+        "logoColor": "/images/partners/color/tef-agrifood.webp"
+      },
+      {
+        "name": "Gaia-X AISBL",
+        "logo": "/images/partners/gaia-x-aisbl.png",
+        "logoColor": "/images/partners/color/gaia-x-aisbl.webp"
+      },
+      {
+        "name": "PTW TU Darmstadt",
+        "logo": "/images/partners/ptw-tu-darmstadt.png",
+        "logoColor": "/images/partners/color/ptw-tu-darmstadt.webp"
+      },
+      {
+        "name": "Neusta Aerospace",
+        "logo": "/images/partners/neusta-aerospace.png",
+        "logoColor": "/images/partners/color/neusta-aerospace.webp"
+      },
+      {
+        "name": "OHB SE",
+        "logo": "/images/partners/ohb-se.png",
+        "logoColor": "/images/partners/color/ohb-se.webp"
+      },
+      {
+        "name": "Oasis",
+        "logo": "/images/partners/oasis.png",
+        "logoColor": "/images/partners/color/oasis.webp"
+      },
+      {
+        "name": "UBC",
+        "logo": "/images/partners/ubc.png",
+        "logoColor": "/images/partners/color/ubc.webp"
+      },
+      {
+        "name": "FIWARE",
+        "logo": "/images/partners/fiware.png",
+        "logoColor": "/images/partners/color/fiware.webp"
+      },
+      {
+        "name": "CIRP",
+        "logo": "/images/partners/cirp.png",
+        "logoColor": "/images/partners/color/cirp.webp"
+      },
+      {
+        "name": "Cooperants",
+        "logo": "/images/partners/cooperants.png",
+        "logoColor": "/images/partners/color/cooperants.webp"
+      },
+      {
+        "name": "CLIO-X",
+        "logo": "/images/partners/clio-x.png",
+        "logoColor": "/images/partners/color/clio-x.webp"
+      },
+      {
+        "name": "FEN",
+        "logo": "/images/partners/fen.png",
+        "logoColor": "/images/partners/color/fen.webp"
+      },
+      {
+        "name": "PSNC",
+        "logo": "/images/partners/psnc.png",
+        "logoColor": "/images/partners/color/psnc.webp"
+      },
+      {
+        "name": "Dione-X",
+        "logo": "/images/partners/dione-x.png",
+        "logoColor": "/images/partners/color/dione-x.webp"
+      },
+      {
+        "name": "Flex4Res",
+        "logo": "/images/partners/flex4res.png",
+        "logoColor": "/images/partners/color/flex4res.webp"
+      },
+      {
+        "name": "Gaia-X 4 Future Mobility",
+        "logo": "/images/partners/gaia-x-4-future-mobility.png",
+        "logoColor": "/images/partners/color/gaia-x-4-future-mobility.webp"
+      },
+      {
+        "name": "Gaia-X Hub Germany",
+        "logo": "/images/partners/gaia-x-hub-germany.png",
+        "logoColor": "/images/partners/color/gaia-x-hub-germany.webp"
+      },
+      {
+        "name": "Gaia-X Hub Austria",
+        "logo": "/images/partners/gaia-x-hub-austria.png",
+        "logoColor": "/images/partners/color/gaia-x-hub-austria.webp"
+      },
+      {
+        "name": "Gaia-X Hub France",
+        "logo": "/images/partners/gaia-x-hub-france.png",
+        "logoColor": "/images/partners/color/gaia-x-hub-france.webp"
+      },
+      {
+        "name": "Gaia-X Hub Spain",
+        "logo": "/images/partners/gaia-x-hub-spain.png",
+        "logoColor": "/images/partners/color/gaia-x-hub-spain.webp"
+      },
+      {
+        "name": "Gaia-X Hub Netherlands",
+        "logo": "/images/partners/gaia-x-hub-netherlands.png",
+        "logoColor": "/images/partners/color/gaia-x-hub-netherlands.webp"
+      }
+    ]
+  },
+  "features": {
+    "title": "Data & AI collaboration,",
+    "titleMuted": "reimagined",
+    "items": [
+      {
+        "scene": "agents",
+        "title": "AI agent ready",
+        "text": "Give your AI agents a secure workspace across organizations.",
+        "points": [
+          "Discover and publish assets on their own",
+          "Transact within the permissions you delegate",
+          "Built-in agent payments for data, models and compute"
+        ]
+      },
+      {
+        "scene": "identity",
+        "title": "Self-Sovereign Identity",
+        "text": "Verifiable identities built on W3C standards, for people, organizations and AI agents.",
+        "points": [
+          "Regulatory and contractual obligations as executable, verifiable Policies-as-Code",
+          "Scalable, rule-based access control without manual approvals",
+          "Gaia-X compatible federated trust services for identity, credentials and catalogue"
+        ]
+      },
+      {
+        "scene": "sovereignty",
+        "title": "Data sovereignty, any cloud",
+        "text": "Deploy where your data is. No need to upload it to a central platform.",
+        "points": [
+          "Your data stays in your own infrastructure",
+          "Compute runs next to the data, not the other way round",
+          "Pick any cloud, on-premise or edge for compute and storage"
+        ]
+      }
+    ]
+  },
+  "products": {
+    "title": "One stack,",
+    "titleMuted": "from data space to marketplace",
+    "items": [
+      {
+        "visual": "network",
+        "title": "Pontus-X",
+        "text": "The largest data space ecosystem. Verify provenance and protect intellectual property across organizations.",
+        "links": [
+          {
+            "label": "View documentation",
+            "href": "https://docs.pontus-x.eu"
+          }
+        ]
+      },
+      {
+        "visual": "compute",
+        "title": "Compute-to-Data",
+        "text": "Let AI models and agents compute on sensitive partner data without the raw data ever leaving their secure enclave.",
+        "links": []
+      },
+      {
+        "visual": "marketplace",
+        "title": "Your Data Marketplace",
+        "text": "A branded marketplace for your datasets, models and compute, shared privately or with the whole ecosystem.",
+        "links": []
+      }
+    ],
+    "cta": {
+      "title": "The secure foundation",
+      "titleMuted": "for the AI & data economy",
+      "text": "Join Pontus-X for free.",
+      "label": "Onboard now",
+      "href": "https://onboarding.delta-dao.com",
+      "contactLabel": "Contact us",
+      "contactHref": "https://delta-dao.com/contact"
     }
-  ]
+  }
 }

@@ -1,9 +1,9 @@
 {
-  "name": "@OceanProtocolEnterprise/market",
-  "description": "Ocean Protocol Enterprise Marketplace",
+  "name": "@deltadao/enterprise-market",
+  "description": "deltaDAO Marketplace, a data and AI marketplace built on Ocean Enterprise",
   "version": "1.5.0",
   "license": "Apache-2.0",
-  "homepage": "https://github.com/OceanProtocolEnterprise",
+  "homepage": "https://github.com/deltaDAO/enterprise-market",
   "type": "module",
   "scripts": {
     "start": "npm run pregenerate && next dev -p 8008",
@@ -36,7 +36,6 @@
     "@oceanprotocol/art": "^3.2.0",
     "@oceanprotocol/ddo-js": "^0.4.1",
     "@oceanprotocol/lib": "^9.0.0",
-    "@oceanprotocol/typographies": "^0.1.0",
     "@plausible-analytics/tracker": "^0.4.5",
     "@react-spring/web": "^9.7.5",
     "@tanstack/react-query": "^5.90.11",
@@ -189,7 +188,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/OceanProtocolEnterprise/market"
+    "url": "https://github.com/deltaDAO/enterprise-market"
   },
   "engines": {
     "node": "22"

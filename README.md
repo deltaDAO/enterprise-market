@@ -1,6 +1,8 @@
-[![banner](https://raw.githubusercontent.com/oceanprotocol/art/master/github/repo-banner%402x.png)](https://oceanprotocol.com)
+[![deltaDAO Marketplace](public/share.png)](https://delta-dao.com)
 
-<h1 align="center">Ocean Protocol Enterprise Market</h1>
+<h1 align="center">deltaDAO Marketplace</h1>
+
+<p align="center">A data and AI marketplace by <a href="https://delta-dao.com">deltaDAO AG</a>, built on the open-source <a href="https://github.com/OceanProtocolEnterprise/market">Ocean Enterprise market</a>.</p>
 
 [![Build Status](https://github.com/oceanprotocol/market/workflows/CI/badge.svg)](https://github.com/oceanprotocol/market/actions)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/c85f4d8b-95e1-4010-95a4-2bacd8b90981/deploy-status)](https://app.netlify.com/sites/market-oceanprotocol/deploys)

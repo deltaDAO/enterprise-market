@@ -23,6 +23,7 @@ import Credentials from './Credential'
 import Option from './Radio/Option'
 import { ConsumerParametersBuilder } from './ConsumerParameters/ConsumerParametersBuilder'
 import InputKeyValue from './KeyValueInput'
+import TimeoutInput from './TimeoutInput'
 import type { KeyValuePair } from 'src/@types/KeyValuePair'
 
 const cx = classNames.bind(styles)
@@ -319,6 +320,14 @@ const InputElement = forwardRef(
         )
       case 'credentials':
         return <Credentials {...field} {...props} />
+      case 'timeout':
+        return (
+          <TimeoutInput
+            name={props.name}
+            disabled={props.disabled}
+            placeholder={props.placeholder}
+          />
+        )
       default:
         return prefix || postfix ? (
           <div

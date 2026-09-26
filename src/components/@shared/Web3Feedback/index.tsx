@@ -1,5 +1,4 @@
 import { ReactElement, useEffect, useState } from 'react'
-import Status from '@shared/atoms/Status'
 import styles from './index.module.css'
 import WalletNetworkSwitcher from '../WalletNetworkSwitcher'
 import Warning from '@images/warning.svg'
@@ -66,26 +65,28 @@ export default function Web3Feedback({
   return (
     <>
       {showFeedback && (
-        <section className={styles.feedback}>
-          <Status state={state} aria-hidden />
-          <div className={styles.warningImage}>
+        <section className={styles.feedback} data-state={state}>
+          <div className={styles.warningImage} aria-hidden="true">
             <Warning />
           </div>
-          {isAssetNetwork === false ? (
-            <Tooltip
-              content={
-                <>
-                  This asset is published on {ddoNetworkName} but your wallet is
-                  connected to {walletNetworkName}. Connect to {ddoNetworkName}
-                  to interact with this asset.
-                </>
-              }
-            >
+          <div className={styles.text}>
+            {isAssetNetwork === false ? (
+              <Tooltip
+                content={
+                  <>
+                    This asset is published on {ddoNetworkName} but your wallet
+                    is connected to {walletNetworkName}. Connect to{' '}
+                    {ddoNetworkName}
+                    to interact with this asset.
+                  </>
+                }
+              >
+                <h3 className={styles.title}>{title}</h3>
+              </Tooltip>
+            ) : (
               <h3 className={styles.title}>{title}</h3>
-            </Tooltip>
-          ) : (
-            <h3 className={styles.title}>{title}</h3>
-          )}
+            )}
+          </div>
           {isAssetNetwork === false ? (
             <WalletNetworkSwitcher />
           ) : (

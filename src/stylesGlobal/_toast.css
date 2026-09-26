@@ -3,30 +3,63 @@
 div.Toastify__toast {
   font-family: var(--font-family-base);
   font-size: var(--font-size-small);
-  font-weight: var(--font-weight-bold);
-  border-radius: var(--border-radius);
-  box-shadow: 0 6px 15px 0 var(--box-shadow-color);
-  padding: calc(var(--spacer) / 2) var(--spacer);
-  background: var(--background-body);
-  color: var(--font-color-text);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-soft);
+  padding: 14px 16px;
+  color: var(--foreground);
+  border: 1px solid var(--info-border);
+  background: var(--info-bg);
+}
+
+/* solid card under the translucent tint so page content never shows through */
+div.Toastify__toast--default,
+div.Toastify__toast--info {
+  background: linear-gradient(var(--info-bg), var(--info-bg)), var(--card);
+  border-color: var(--info-border);
 }
 
 div.Toastify__toast--error {
-  background: var(--brand-alert-red);
-  color: var(--brand-white);
+  background: linear-gradient(var(--destructive-bg), var(--destructive-bg)),
+    var(--card);
+  border-color: var(--destructive-border);
+  color: var(--foreground);
 }
 
 div.Toastify__toast--success {
-  background: var(--brand-alert-green);
-  color: var(--brand-white);
-}
-
-div.Toastify__toast--info {
-  background: var(--brand-white);
-  color: var(--brand-grey);
+  background: linear-gradient(var(--success-bg), var(--success-bg)), var(--card);
+  border-color: var(--success-border);
+  color: var(--foreground);
 }
 
 div.Toastify__toast--warning {
-  background: var(--brand-alert-yellow);
-  color: var(--brand-white);
+  background: linear-gradient(var(--warning-bg), var(--warning-bg)), var(--card);
+  border-color: var(--warning-border);
+  color: var(--foreground);
+}
+
+div.Toastify__toast .Toastify__close-button {
+  color: currentColor;
+  opacity: 0.6;
+}
+
+div.Toastify__toast .Toastify__progress-bar {
+  background: var(--brand-hairline);
+}
+
+div.Toastify__toast--error .Toastify__toast-icon svg {
+  fill: var(--destructive-strong);
+}
+
+div.Toastify__toast--success .Toastify__toast-icon svg {
+  fill: var(--success);
+}
+
+div.Toastify__toast--warning .Toastify__toast-icon svg {
+  fill: var(--warning-strong);
+}
+
+div.Toastify__toast--info .Toastify__toast-icon svg {
+  fill: var(--deck-blue);
 }

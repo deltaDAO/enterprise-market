@@ -1,6 +1,9 @@
 .status {
   text-transform: uppercase;
-  color: var(--color-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--muted-foreground);
 }
 
 .computeTableContainer {

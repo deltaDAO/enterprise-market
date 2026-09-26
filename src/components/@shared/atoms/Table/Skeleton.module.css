@@ -8,7 +8,7 @@
   gap: calc(var(--spacer) / 1.5);
   align-items: center;
   padding: calc(var(--spacer) / 2.5) calc(var(--spacer) / 4);
-  border-bottom: var(--border-size-sm) solid var(--border-color);
+  border-bottom: var(--border-size-sm) solid var(--border);
 }
 
 .skeletonHeaderRow {

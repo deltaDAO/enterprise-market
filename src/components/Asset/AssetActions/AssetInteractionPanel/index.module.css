@@ -1,9 +1,10 @@
 .assetInteractionCard {
   padding: calc(var(--spacer) * 0.5) var(--spacer);
-  border: 1px solid var(--ink-alpha-10);
-  border-radius: 20px;
-  box-shadow: 1px 4px 8px 0 var(--black-alpha-15);
-  background: #fff;
+  border: 1px solid rgba(22, 22, 22, 0.05);
+  border-radius: var(--radius-xl);
+  box-shadow: none;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(4px);
   position: relative;
   margin-bottom: calc(var(--spacer) / 2);
 }
@@ -28,15 +29,19 @@
 }
 
 .fileDetailItem {
-  font-family: var(--font-family);
+  font-family: var(--font-family-base);
   font-weight: 400;
   font-size: 12px;
-  color: var(--text-ink);
+  color: var(--foreground);
   line-height: 120%;
 }
 
 .fileDetailLabel {
-  color: var(--clr-slate-50);
+  color: var(--muted-foreground);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
 }
 
 .priceSection {
@@ -46,18 +51,21 @@
 }
 
 .priceValue {
-  font-family: var(--font-family);
+  font-family: var(--font-family-base);
+  font-family: var(--font-family-monospace);
+  font-variant-numeric: tabular-nums;
   font-weight: 700;
   font-size: 16px;
-  color: var(--clr-teal);
+  color: var(--deck-blue);
   line-height: 150%;
 }
 
 .salesCount {
-  font-family: var(--font-family);
+  font-family: var(--font-family-base);
   font-weight: 400;
-  font-size: 10px;
-  color: var(--clr-slate-70);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted-foreground);
   line-height: 150%;
 }
 

@@ -20,21 +20,21 @@
 .description {
   font-size: 18px;
   line-height: 1.6;
-  color: #334155;
+  color: var(--foreground);
 }
 
 .infoBox {
-  background-color: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
+  background-color: var(--deck-surface-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
   padding: 20px 24px;
 }
 
 .heading {
   margin: 0 0 16px;
   font-size: 17px;
-  font-weight: 600;
-  color: #0f172a;
+  font-weight: 700;
+  color: var(--foreground);
   line-height: 1.4;
 }
 
@@ -52,18 +52,29 @@
   gap: 12px;
   font-size: 16px;
   line-height: 1.5;
-  color: #334155;
+  color: var(--foreground);
 }
 
 .stepNumber {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: var(--radius-pill);
+  background: var(--deck-blue);
+  color: #fff;
+  font-size: 12px;
   font-weight: 600;
-  color: #070707;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
   min-width: 60px;
   flex-shrink: 0;
+  margin-top: 1px;
 }
 
 .stepText {
-  color: #475569;
+  color: var(--muted-foreground);
   flex: 1;
 }
 
@@ -75,8 +86,8 @@
 .linksHeading {
   margin: 0 0 12px 0;
   font-size: 18px;
-  font-weight: 600;
-  color: #0f172a;
+  font-weight: 700;
+  color: var(--foreground);
 }
 
 .links {
@@ -89,7 +100,7 @@
 .primaryLink {
   font-size: 16px;
   font-weight: 500;
-  color: #2563eb;
+  color: var(--brand-highlight);
   text-decoration: none;
   display: inline-block;
   padding: 4px 0;
@@ -101,7 +112,7 @@
 
 .secondaryLink {
   font-size: 16px;
-  color: #64748b;
+  color: var(--muted-foreground);
   text-decoration: none;
   display: inline-block;
   padding: 4px 0;
@@ -111,7 +122,7 @@
 
 .secondaryLink:hover {
   text-decoration: underline;
-  color: #475569;
+  color: var(--foreground);
 }
 
 .imageWrapper {
@@ -123,20 +134,18 @@
 }
 
 .image {
-  border-radius: 33px;
+  border-radius: var(--radius-2xl);
   object-fit: contain;
   max-height: 400px;
   width: auto;
-  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.2),
-    0 10px 15px -5px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-blue-10), var(--shadow-soft);
   transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
   cursor: pointer;
 }
 
 .image:hover {
   transform: scale(1.03);
-  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.2),
-    0 10px 15px -5px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-blue-10), var(--shadow-soft);
 }
 
 .clickableContainer {
@@ -144,9 +153,9 @@
 }
 
 .clickableContainer:focus-visible {
-  outline: 2px solid #2563eb;
+  outline: 2px solid var(--deck-blue);
   outline-offset: 2px;
-  border-radius: 35px;
+  border-radius: var(--radius-2xl);
 }
 
 .staticImage {

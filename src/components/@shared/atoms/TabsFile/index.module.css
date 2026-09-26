@@ -1,7 +1,7 @@
 .tabListContainer {
   margin-left: auto;
   margin-right: auto;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border);
   max-width: 100%;
 }
 
@@ -19,16 +19,17 @@
   justify-content: center;
   padding: 10px 16px;
   font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-small);
-  text-transform: uppercase;
-  color: var(--color-secondary);
-  margin-right: -1px;
+  font-size: 14px;
+  text-transform: none;
+  color: var(--muted-foreground);
+  margin: 0 0 -1px;
   background: none;
   border: 0;
-  border-radius: 20px 20px 0 0;
+  border-bottom: 2px solid transparent;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
   min-height: 40px;
   cursor: pointer;
-  transition: all 0.2s ease-out;
+  transition: color 0.2s ease, border-color 0.2s ease;
 }
 
 .tabHidden {
@@ -40,14 +41,19 @@
   cursor: pointer;
 }
 
+.tab:hover {
+  color: var(--deck-blue);
+}
+
 .tab:focus-visible {
-  outline: none;
+  outline: 2px solid var(--deck-blue);
+  outline-offset: -2px;
 }
 
 .tab[aria-selected='true'] {
-  color: var(--clr-navy);
+  color: var(--deck-blue);
   list-style: none;
-  border-bottom: 2px solid var(--clr-navy);
+  border-bottom-color: var(--deck-blue);
 }
 
 .tab[aria-disabled='true'] {
@@ -75,10 +81,10 @@
 }
 
 .tabPanel {
-  color: var(--font-color-text);
+  color: var(--foreground);
   font-size: var(--font-size-base);
-  font-family: var(--font-family-heading);
-  line-height: 1.2;
+  font-family: var(--font-family-base);
+  line-height: 1.4;
   display: block;
   margin-bottom: 0;
 }
@@ -93,12 +99,13 @@
 }
 
 .existingFileNotice {
-  background: var(--background-highlight, rgba(0, 0, 0, 0.05));
-  border-radius: 6px;
+  background: var(--deck-blue-4);
+  border: 1px solid var(--deck-blue-12);
+  border-radius: var(--radius-md);
   padding: calc(var(--spacer) / 4) calc(var(--spacer) / 2);
   margin-bottom: calc(var(--spacer) / 4);
   font-size: var(--font-size-small);
-  color: var(--color-secondary);
+  color: var(--deck-blue);
 }
 
 @media (min-width: 60rem) {

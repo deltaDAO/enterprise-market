@@ -660,7 +660,7 @@ export function dfnsConnector() {
         const webAuthnSigner = new WebAuthnSigner({
           relyingParty: {
             id: dfnsConfig.relyingPartyId,
-            name: 'Ocean Enterprise Marketplace'
+            name: 'deltaDAO Marketplace'
           }
         })
         const authenticator = new DfnsAuthenticator({

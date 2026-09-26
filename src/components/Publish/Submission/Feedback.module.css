@@ -15,77 +15,98 @@
   margin-bottom: 0;
 }
 
-/* inject the numbers */
+/* inject the numbers: step circles like the publish navigation */
 .feedback li:before {
   position: relative;
   content: counter(list-number);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--sp-6);
-  height: var(--sp-6);
-  border-radius: var(--radius-full);
-  border: 1px solid var(--clr-navy);
-  margin-right: var(--sp-6);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  margin-right: var(--sp-4);
   font-family: var(--font-family-base);
-  font-weight: var(--text-weight-bold);
-  font-size: var(--text-sm);
-  background: var(--brand-white);
-  color: var(--clr-navy);
-  top: -0.15rem;
+  font-weight: 600;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  background: var(--card);
+  color: var(--muted-foreground);
+  top: -0.1rem;
 }
 
+/* in progress: deck-blue with a deck-blue-12 track ring */
 .feedback .active:before {
-  background: var(--clr-navy);
-  border-color: var(--clr-navy);
-  color: var(--brand-white);
+  background: var(--deck-blue);
+  border-color: var(--deck-blue);
+  color: #fff;
+  box-shadow: 0 0 0 4px var(--deck-blue-12);
   animation: none;
 }
 
 .feedback .success:before {
-  content: counter(list-number);
-  background: var(--brand-alert-green);
-  border-color: var(--brand-alert-green);
-  color: var(--brand-white);
+  content: '\2713';
+  background: var(--success-soft);
+  border-color: color-mix(in srgb, var(--success) 30%, transparent);
+  color: var(--success);
 }
 
 .feedback .error:before {
-  content: counter(list-number);
-  background: var(--brand-alert-red);
-  border-color: var(--brand-alert-red);
-  color: var(--brand-white);
+  content: '!';
+  background: var(--destructive-soft);
+  border-color: color-mix(in srgb, var(--destructive) 30%, transparent);
+  color: var(--destructive);
 }
 
 .title {
   font-family: var(--font-family-base);
-  font-weight: var(--text-weight-bold);
-  font-size: var(--text-base);
-  line-height: var(--text-line-lg);
-  color: var(--text-ink);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--foreground);
   display: inline-block;
   margin-bottom: 0;
+}
+
+.success .title {
+  color: var(--success);
+}
+
+.error .title {
+  color: var(--destructive);
 }
 
 .txs {
   display: inline-flex;
   align-items: center;
-  background: var(--clr-amber);
-  border-radius: var(--radius-xl);
-  padding: var(--sp-1) var(--sp-2);
+  height: 20px;
+  background: var(--deck-blue-8);
+  border-radius: var(--radius-pill);
+  padding: 0 8px;
   margin-left: var(--sp-4);
   margin-bottom: var(--sp-2);
   white-space: nowrap;
   width: auto;
 }
 
+.success .txs {
+  background: var(--success-soft);
+}
+
 .txs span,
 .txs a {
   font-family: var(--font-family-base);
-  font-weight: var(--text-weight-bold);
-  font-size: var(--text-xs);
-  /* line-height: var(--text-line-sm); */
-  color: var(--brand-white);
+  font-weight: 500;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--deck-blue);
   text-decoration: none;
+}
+
+.success .txs span,
+.success .txs a {
+  color: var(--success);
 }
 
 .txs a:hover {
@@ -94,21 +115,21 @@
 
 .description {
   font-family: var(--font-family-base);
-  font-weight: var(--text-weight-regular);
-  font-size: var(--text-sm);
-  line-height: var(--text-line-lg);
-  color: var(--clr-slate-70);
-  margin-left: calc(var(--sp-6) + var(--sp-6));
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+  margin-left: calc(28px + var(--sp-4));
   margin-bottom: 0;
 }
 
 .errorMessage {
   font-family: var(--font-family-base);
-  font-weight: var(--text-weight-regular);
-  font-size: var(--text-sm);
-  line-height: var(--text-line-lg);
-  color: var(--brand-alert-red);
-  margin-left: calc(var(--sp-6) + var(--sp-6));
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--destructive);
+  margin-left: calc(28px + var(--sp-4));
   margin-bottom: 0;
   display: block;
   white-space: nowrap;

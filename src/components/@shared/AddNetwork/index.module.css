@@ -5,5 +5,5 @@
 .logo svg {
   height: 100%;
   padding: 1px;
-  fill: var(--color-primary);
+  fill: var(--deck-blue);
 }

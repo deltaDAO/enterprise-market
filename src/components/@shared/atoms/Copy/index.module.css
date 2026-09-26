@@ -1,4 +1,4 @@
 .feedback {
   font-size: var(--font-size-mini);
-  color: var(--brand-alert-green);
+  color: var(--success);
 }

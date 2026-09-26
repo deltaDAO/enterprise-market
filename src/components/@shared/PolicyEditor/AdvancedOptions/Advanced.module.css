@@ -1,6 +1,6 @@
 .container {
   padding: var(--sp-4);
-  border: 1px solid var(--field-border-color-muted);
+  border: 1px solid var(--border);
   border-radius: var(--radius-xl);
 }
 
@@ -13,8 +13,9 @@
 
 .title {
   font-size: var(--font-size-large);
-  font-weight: var(--font-weight-bold);
-  color: var(--clr-slate-70);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
   margin-bottom: var(--sp-4);
 }
 
@@ -86,16 +87,23 @@
 .requiredCredentialsSection {
   width: 100%;
   padding: var(--sp-6);
-  border: 1px solid var(--neutral-210);
-  border-radius: 20px;
-  box-shadow: 1px 4px 8px var(--black-alpha-15);
-  background: var(--brand-white);
+  border: 1px solid transparent;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--deck-blue) 30%, var(--border)),
+        color-mix(in srgb, var(--deck-cyan) 35%, var(--border))
+      )
+      border-box;
+  box-shadow: var(--shadow-blue-5);
 }
 
 .sectionLabel {
   font-size: var(--font-size-large);
-  font-weight: var(--font-weight-bold);
-  color: var(--clr-slate-70);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
   margin-bottom: var(--sp-4);
 }
 
@@ -115,48 +123,53 @@
 .vpCredentialSelect {
   min-width: 220px;
   padding: 4px 12px;
-  border-radius: 4px;
-  border: 1px solid var(--neutral-205);
+  min-height: 40px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--input);
   background: #fff;
+  color: var(--foreground);
   font-size: 1em;
 }
 
 .addButton {
-  background: var(--gradient-primary);
-  color: var(--brand-white);
+  background: var(--deck-blue);
+  color: #fff;
   border: none;
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 12px var(--deck-blue-25);
   margin: 10px;
 }
 
 .addButton:hover {
-  background: var(--gradient-primary);
-  opacity: 0.9;
+  background: var(--deck-blue-hover);
 }
 
 .deleteButton {
   display: flex;
   align-items: center;
   gap: var(--sp-1);
-  height: 40px;
-  border-radius: 20px !important;
-  background: transparent;
-  color: var(--clr-navy);
-  border: 1px solid var(--clr-navy);
+  height: 38px;
+  border-radius: var(--radius-lg) !important;
+  background: var(--destructive-soft);
+  /* destructive darkened 15% so text passes 4.5:1 on the soft tint */
+  color: color-mix(in srgb, var(--destructive) 85%, #000);
+  border: 1px solid transparent;
   text-transform: none;
-  padding: 9px 14px;
-  transition: all 0.3s ease;
+  font-weight: 600;
+  padding: 0 14px;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .deleteButton:hover {
-  background: var(--red-100);
-  color: var(--red-800);
+  background: color-mix(in srgb, var(--destructive) 12%, #fff);
+  border-color: color-mix(in srgb, var(--destructive) 35%, transparent);
+  color: color-mix(in srgb, var(--destructive) 85%, #000);
 }
 
 .anyOfSection {
   margin: 0.5em 0;
   padding-left: 1em;
-  border-left: 2px solid var(--blue-100);
+  border-left: 2px solid var(--deck-blue-25);
   display: flex;
   flex-direction: column;
   gap: 0.3em;

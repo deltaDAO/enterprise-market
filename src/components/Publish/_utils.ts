@@ -879,7 +879,7 @@ export async function transformPublishFormToDdo(
         orders: 0,
         price: {
           value: values?.pricing.type === 'free' ? 0 : values.pricing.price,
-          tokenSymbol: values.pricing?.baseToken?.symbol || 'OCEAN',
+          tokenSymbol: values.pricing?.baseToken?.symbol || '',
           tokenAddress:
             values.pricing?.baseToken?.address ||
             getOceanConfig(chainId).oceanTokenAddress

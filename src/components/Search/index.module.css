@@ -3,8 +3,62 @@
   flex-direction: column;
   gap: calc(var(--spacer) / 2);
 }
+/*
+ * The search page has no page title, so the search bar sits in the same
+ * mist band motif as the other page headers: wave top-right, hairline bottom.
+ */
 .searchContainer {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   margin-bottom: 20px;
+  padding: 20px;
+  background: var(--deck-surface);
+  border-radius: var(--radius-xl);
+}
+
+.searchContainer::before {
+  content: '';
+  position: absolute;
+  inset: -1px 0 auto auto;
+  width: min(100%, 48rem);
+  height: 100%;
+  min-height: 6rem;
+  background: var(--wave-svg) no-repeat;
+  background-size: 100% 100%;
+  -webkit-mask-image: linear-gradient(to left, #000 35%, transparent);
+  mask-image: linear-gradient(to left, #000 35%, transparent);
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: -1;
+  animation: wave-drift 18s ease-in-out infinite alternate;
+}
+
+.searchContainer::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--brand-hairline);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .searchContainer::before {
+    animation: none;
+  }
+}
+
+@keyframes wave-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-2.5%, 2%, 0) scale(1.03);
+  }
 }
 .filterContainer {
   display: flex;
@@ -22,11 +76,11 @@
   .filterContainer {
     flex-direction: column;
     width: 16rem;
-    border-right: 1px solid var(--border-color);
+    border-right: 1px solid var(--border);
   }
   .filterContainer > div {
     padding-bottom: calc(var(--spacer) / 1.2);
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border);
   }
   .results {
     width: 100%;
@@ -45,11 +99,11 @@
   .filterContainer {
     flex-direction: column;
     width: 15rem;
-    border-right: 1px solid var(--border-color);
+    border-right: 1px solid var(--border);
   }
   .filterContainer > div {
     padding-bottom: calc(var(--spacer) / 1.2);
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border);
   }
   .results {
     width: 100%;

@@ -1,7 +1,7 @@
 .modalDescription {
   margin: 0 0 8px;
   font-size: 15px;
-  color: var(--clr-slate-70);
+  color: var(--muted-foreground);
   word-break: break-word;
 }
 
@@ -27,20 +27,22 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  border: 1px solid var(--ink-alpha-10);
-  border-radius: 14px;
+  border: 1px solid rgba(22, 22, 22, 0.05);
+  border-radius: var(--radius-xl);
   padding: 12px 14px;
-  background: var(--brand-white);
-  box-shadow: 0 2px 8px var(--black-alpha-10);
+  background: rgba(255, 255, 255, 0.6);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  box-shadow: var(--shadow-blue-5);
 }
 
 .ownerInfoSectionTitle {
   margin: 0;
-  font-weight: 700;
-  font-size: 12px;
-  letter-spacing: 0.02em;
+  font-weight: 600;
+  font-size: var(--font-size-label-motif);
+  letter-spacing: var(--letter-spacing-label);
   text-transform: uppercase;
-  color: var(--clr-slate-50);
+  color: var(--muted-foreground);
   line-height: 1.2;
 }
 
@@ -51,31 +53,27 @@
 }
 
 .ownerInfoItem {
-  font-size: 16px;
-  color: var(--clr-slate-70);
-  line-height: 1.35;
+  font-size: 15px;
+  color: var(--foreground);
+  line-height: 1.45;
   word-break: break-word;
 }
 
 .providerUrlCard {
   margin-top: 0;
   margin-bottom: 16px;
-  border: 1px solid var(--ink-alpha-10);
-  border-radius: 14px;
+  border: 1px solid var(--deck-blue-12);
+  border-radius: var(--radius-xl);
   padding: 14px 16px;
-  background: linear-gradient(
-    180deg,
-    var(--navy-alpha-5) 0%,
-    rgba(10, 75, 112, 0.02) 100%
-  );
+  background: var(--deck-blue-4);
 }
 
 .providerUrlLabel {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+  font-size: var(--font-size-label-motif);
+  font-weight: 600;
+  letter-spacing: var(--letter-spacing-label);
   text-transform: uppercase;
-  color: var(--clr-slate-50);
+  color: var(--muted-foreground);
   margin-bottom: 6px;
 }
 
@@ -83,22 +81,21 @@
   font-size: 18px;
   font-weight: 500;
   line-height: 1.3;
-  color: var(--text-ink);
+  color: var(--foreground);
   word-break: break-word;
 }
 
 .ownerInfoKey {
   font-weight: 700;
-  color: var(--text-ink);
+  color: var(--foreground);
 }
 
 .ownerInfoValue {
-  color: var(--text-ink);
-  opacity: 0.75;
+  color: var(--muted-foreground);
 }
 
 .ownerInfoLink {
-  color: var(--ocean-blue-dark, var(--ocean-blue));
+  color: var(--brand-highlight);
   text-decoration: underline;
   text-underline-offset: 2px;
 }

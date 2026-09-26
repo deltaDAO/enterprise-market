@@ -1,12 +1,13 @@
 .link {
   color: inherit;
+  border-radius: var(--radius-sm);
 }
 
 .link svg {
   width: 0.6em;
   height: 0.6em;
   display: inline-block;
-  fill: var(--font-color-light);
+  fill: var(--muted-foreground);
 }
 
 .link code {
@@ -20,5 +21,5 @@
 .link:focus,
 .link:hover *,
 .link:focus * {
-  color: var(--link-font-color);
+  color: var(--brand-highlight);
 }

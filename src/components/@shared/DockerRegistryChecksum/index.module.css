@@ -1,9 +1,9 @@
 .container {
   width: 100%;
   padding: var(--sp-5);
-  border: 1px solid var(--brand-alert-yellow);
+  border: 1px solid var(--warning-border);
+  background: var(--warning-bg);
   border-radius: var(--radius-xl);
-  background: var(--background-highlight);
 }
 
 .container h4 {

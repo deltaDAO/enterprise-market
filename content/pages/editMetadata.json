@@ -50,7 +50,7 @@
         "keyLabel": "Title",
         "valueLabel": "URL",
         "keyPlaceholder": "e.g. Website",
-        "valuePlaceholder": "e.g. https://oceanenterprise.io",
+        "valuePlaceholder": "e.g. https://delta-dao.com",
         "validateValueAsUrl": true,
         "help": "Related links for this asset as a mapping of titles to URLs. Enter a Title and its URL, then click Add. Repeat to add more (e.g. website, demo).",
         "required": false
@@ -71,14 +71,14 @@
       {
         "name": "copyrightHolder",
         "label": "Copyright Holder",
-        "placeholder": "e.g. Ocean Enterprise",
+        "placeholder": "e.g. deltaDAO AG",
         "help": "The entity holding the legal copyright for this asset.",
         "required": false
       },
       {
         "name": "providedBy",
         "label": "Provided By",
-        "placeholder": "e.g. https://oceanenterprise.io/vc.json",
+        "placeholder": "e.g. https://delta-dao.com/vc.json",
         "help": "URL where the Verifiable Credential of the entity offering this asset resides.",
         "required": false
       },
@@ -192,7 +192,7 @@
         "title": "URL",
         "label": "Terms and Conditions",
         "placeholder": "e.g. https://file.com/tandc.md",
-        "help": "The Terms and Conditions under which this service can be accessed. A resolvable link to the T&C document is expected. If no Terms are given the default [terms of this portal](/terms) will be applied.",
+        "help": "The Terms and Conditions under which this service can be accessed. A resolvable link to the T&C document is expected. If no Terms are given the default [terms of this portal](/privacy/terms) will be applied.",
         "prominentHelp": true,
         "type": "files",
         "required": false

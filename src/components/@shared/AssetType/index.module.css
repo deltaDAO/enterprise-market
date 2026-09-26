@@ -4,7 +4,7 @@
   align-items: center;
   gap: calc(var(--spacer) / 4);
   font-size: var(--sp-3);
-  color: var(--text-color);
+  color: inherit;
 }
 
 .icon,
@@ -32,7 +32,7 @@
 .typeLabel {
   display: inline-block;
   text-transform: uppercase;
-  border-left: 1px solid var(--border-color);
+  border-left: 1px solid var(--border);
   padding-left: var(--sp-2_5);
 }
 

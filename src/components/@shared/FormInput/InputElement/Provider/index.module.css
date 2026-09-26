@@ -8,22 +8,25 @@
 }
 
 .select :global(.provider-select__control) {
-  border: var(--border-size-sm) solid var(--border-navy-soft);
-  border-radius: var(--radius-xl);
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
   min-height: var(--field-height);
-  box-shadow: var(--shadow-md);
-  background: var(--brand-white);
+  box-shadow: none;
+  background: var(--background);
   font-family: var(--font-family-base);
 }
 
-.select :global(.provider-select__control:hover),
+.select :global(.provider-select__control:hover) {
+  border-color: var(--input-hover);
+}
+
 .select :global(.provider-select__control--is-focused) {
-  border-color: var(--clr-navy);
-  box-shadow: 0 0 0 2px var(--navy-alpha-20);
+  border-color: var(--deck-blue);
+  box-shadow: 0 0 0 3px var(--ring);
 }
 
 .select :global(.provider-select__value-container) {
-  padding: 0 16px;
+  padding: 0 12px;
 }
 
 .select :global(.provider-select__single-value),
@@ -31,40 +34,43 @@
 .select :global(.provider-select__placeholder),
 .select :global(.provider-select__option) {
   font-size: var(--text-sm);
-  color: var(--clr-slate-70);
+  color: var(--foreground);
 }
 
 .select :global(.provider-select__placeholder) {
-  opacity: 0.7;
+  color: var(--placeholder);
 }
 
 .select :global(.provider-select__menu) {
   z-index: 20;
   overflow: hidden;
-  border: 1px solid var(--border-navy-soft);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
+  border: 1px solid transparent;
+  background: var(--deck-card-background);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-soft);
 }
 
 .select :global(.provider-select__option--is-focused) {
-  background: var(--background-highlight);
+  background: var(--deck-blue-8);
+  color: var(--deck-blue);
 }
 
 .select :global(.provider-select__option--is-selected) {
-  background: var(--clr-navy);
-  color: var(--brand-white);
+  background: var(--deck-blue-12);
+  color: var(--deck-blue);
+  font-weight: 600;
 }
 
 .select :global(.provider-select__dropdown-indicator) {
-  color: var(--clr-slate-70);
+  color: var(--muted-foreground);
 }
 
 .select :global(.provider-select__dropdown-indicator:hover) {
-  color: var(--clr-navy);
+  color: var(--deck-blue);
 }
 
 .select :global(.provider-select__control--is-disabled) {
-  background-color: var(--background-highlight);
+  background-color: var(--muted);
   cursor: not-allowed;
 }
 
@@ -95,7 +101,7 @@
 
 .confirmed {
   font-weight: var(--font-weight-base);
-  color: var(--color-success, #5fb359);
+  color: var(--success);
 }
 
 .infoButton {

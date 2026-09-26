@@ -28,12 +28,12 @@
 @media screen and (min-width: 65rem) {
   .filterContainer {
     width: 16rem;
-    border-right: 1px solid var(--border-color);
+    border-right: 1px solid var(--border);
   }
 
   .filterContainer > div {
     padding-bottom: calc(var(--spacer) / 1.2);
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border);
   }
 }
 
@@ -51,7 +51,7 @@
 }
 
 .empty {
-  color: var(--color-secondary);
+  color: var(--muted-foreground);
   font-size: var(--font-size-small);
   font-style: italic;
 }
@@ -84,7 +84,7 @@
 
 .expanded {
   padding: 0 0 calc(var(--spacer) / 2) calc(var(--spacer));
-  background: var(--background-body);
+  background: var(--card);
 }
 
 .servicesCard {
@@ -95,10 +95,10 @@
   --service-price-width: minmax(7rem, 0.8fr);
   --service-revenue-width: minmax(7rem, 0.8fr);
 
-  background: var(--navy-alpha-5);
-  border: var(--border-size-sm) solid var(--navy-alpha-10);
+  background: var(--muted);
+  border: 1px solid var(--border);
   border-top: none;
-  border-radius: 0 0 var(--border-radius) var(--border-radius);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
   padding: calc(var(--spacer) / 3) calc(var(--spacer) / 2);
   overflow-x: auto;
 }
@@ -128,34 +128,43 @@
 
 .expandedHeader {
   padding: calc(var(--spacer) / 5) 0 calc(var(--spacer) / 4);
-  border-bottom: var(--border-size-sm) solid var(--navy-alpha-10);
-  color: var(--color-secondary);
-  font-size: var(--font-size-mini);
-  font-weight: var(--font-weight-bold);
+  border-bottom: 1px solid var(--border);
+  color: var(--muted-foreground);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
 .downloadsExpandedHeader {
   padding: calc(var(--spacer) / 5) 0 calc(var(--spacer) / 4);
-  border-bottom: var(--border-size-sm) solid var(--navy-alpha-10);
-  color: var(--color-secondary);
-  font-size: var(--font-size-mini);
-  font-weight: var(--font-weight-bold);
+  border-bottom: 1px solid var(--border);
+  color: var(--muted-foreground);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
 .expandedRow {
   padding: calc(var(--spacer) / 4) 0;
-  border-bottom: var(--border-size-sm) solid var(--navy-alpha-10);
-  color: var(--text-ink);
+  border-bottom: 1px solid var(--border);
+  color: var(--foreground);
   font-size: var(--font-size-small);
+  font-variant-numeric: tabular-nums;
 }
 
 .downloadsExpandedRow {
   padding: calc(var(--spacer) / 4) 0;
-  border-bottom: var(--border-size-sm) solid var(--navy-alpha-10);
-  color: var(--text-ink);
+  border-bottom: 1px solid var(--border);
+  color: var(--foreground);
   font-size: var(--font-size-small);
+  font-variant-numeric: tabular-nums;
+}
+
+.expandedRow:hover,
+.downloadsExpandedRow:hover {
+  background: var(--card);
 }
 
 .expandedRow:last-child {
@@ -199,7 +208,8 @@
 .identifier {
   display: inline-block;
   max-width: 100%;
-  color: var(--font-color-did);
+  font-family: var(--font-family-monospace);
+  color: var(--muted-foreground);
 }
 
 .expandedSales,
@@ -207,6 +217,7 @@
 .expandedTime,
 .expandedPrice,
 .expandedRevenue {
+  font-variant-numeric: tabular-nums;
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;

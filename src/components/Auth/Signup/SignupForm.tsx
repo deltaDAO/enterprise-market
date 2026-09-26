@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useAuth } from '@hooks/useAuth'
-import { useUserPreferences } from '@context/UserPreferences'
 import { authConfig } from '../../../config/auth.config'
 import { authSignupCopy } from '../constants'
 import { SsoIcon } from '../SsoIcons'
@@ -9,7 +8,6 @@ import styles from './SignupForm.module.css'
 
 export default function SignupForm() {
   const { beginOidcFlow } = useAuth()
-  const { privacyPolicySlug } = useUserPreferences()
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleOIDCSignup = async () => {
@@ -53,11 +51,11 @@ export default function SignupForm() {
 
       <div className={styles.terms}>
         {authSignupCopy.termsIntro}{' '}
-        <Link href={`${privacyPolicySlug}#terms-and-conditions`}>
+        <Link href="/privacy/terms#terms-and-conditions">
           {authSignupCopy.termsLabel}
         </Link>{' '}
         and{' '}
-        <Link href={`${privacyPolicySlug}#privacy-policy`}>
+        <Link href="/privacy/privacy-policy#privacy-policy">
           {authSignupCopy.privacyLabel}
         </Link>
       </div>

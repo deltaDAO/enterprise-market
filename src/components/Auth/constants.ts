@@ -28,7 +28,7 @@ export const authBrandDefaults: {
   trustLabel: string
   trustBadges: string[]
 } = {
-  title: 'Ocean Enterprise Marketplace',
+  title: 'deltaDAO Marketplace',
   description:
     'Discover, publish and manage data, software and AI services with enterprise-grade governance and trusted access control.',
   features: [

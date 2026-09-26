@@ -14,14 +14,14 @@
   font-family: var(--font-family-base);
   font-weight: var(--font-weight-bold);
   text-transform: uppercase;
-  border-radius: var(--border-radius);
-  transition: 0.2s ease-out;
-  color: var(--clr-navy);
-  box-shadow: 0 9px 18px 0 var(--black-alpha-10);
+  border-radius: var(--radius-lg);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  color: var(--deck-blue);
+  box-shadow: none;
   -webkit-user-select: none;
   user-select: none;
   text-align: center;
-  border-top-right-radius: var(--border-radius);
+  border-top-right-radius: var(--radius-lg);
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   margin-top: 0;
@@ -30,8 +30,8 @@
   width: -moz-fit-content;
   width: fit-content;
   white-space: nowrap;
-  background: var(--gradient-accent);
-  border: 0;
+  background: var(--deck-blue-8);
+  border: 1px solid var(--deck-blue-25);
 }
 
 .methodDropdownWrapper {
@@ -43,15 +43,15 @@
 
 body .inputMethod.accentSelect,
 body select.inputMethod {
-  background: #fdd655;
-  color: var(--clr-navy);
+  background: var(--deck-blue-8);
+  color: var(--deck-blue);
   border: 0;
   width: 100%;
   min-height: 40px;
   padding: 9px 14px;
   font-weight: var(--font-weight-bold);
-  border-radius: var(--radius-xl);
-  box-shadow: 0 9px 18px 0 var(--black-alpha-10);
+  border-radius: var(--radius-lg);
+  box-shadow: none;
   text-align: center;
   margin-top: 0;
   margin-left: 0;
@@ -72,20 +72,33 @@ body .methodDisplay {
   align-items: center;
   justify-content: center;
   gap: 4px;
-  background: #fdd655;
-  color: var(--clr-navy);
-  border-radius: var(--radius-xl);
+  background: var(--deck-blue-8);
+  color: var(--deck-blue);
+  border: 1px solid var(--deck-blue-25);
+  border-radius: var(--radius-lg);
   width: fit-content;
   min-width: 82px;
   min-height: 40px;
-  padding: 9px 14px;
+  padding: 8px 14px;
   font-weight: var(--font-weight-bold);
-  box-shadow: 0 9px 18px 0 var(--black-alpha-10);
+  font-size: 14px;
+  box-shadow: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.methodDropdownWrapper:hover .methodDisplay {
+  background: var(--deck-blue-12);
+  border-color: var(--deck-blue);
+}
+
+.methodDropdownWrapper:focus-within .methodDisplay {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
   text-transform: capitalize;
 }
 
 body .methodDisplay.disabled {
-  opacity: 0.25;
+  opacity: 0.45;
   cursor: not-allowed;
   pointer-events: none;
 }
@@ -93,29 +106,29 @@ body .methodDisplay.disabled {
 .getIcon {
   min-width: 16px;
   min-height: 16px;
-  fill: var(--clr-navy);
+  fill: var(--deck-blue);
   display: block;
 }
 
 .getIcon path {
-  fill: var(--clr-navy);
+  fill: var(--deck-blue);
 }
 
 .postIcon {
   min-width: 16px;
   min-height: 16px;
-  fill: var(--clr-navy);
+  fill: var(--deck-blue);
   transform: rotate(180deg);
   display: block;
 }
 
 .postIcon path {
-  fill: var(--clr-navy);
+  fill: var(--deck-blue);
 }
 
 .hasError {
-  color: var(--brand-alert-red);
-  border-color: var(--brand-alert-red);
+  color: var(--destructive);
+  border-color: var(--destructive);
 }
 
 .error {

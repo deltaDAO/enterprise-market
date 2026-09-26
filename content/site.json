@@ -1,10 +1,11 @@
 {
-  "siteTitle": "Ocean Protocol Enterprise",
-  "siteTagline": "Publish, find, compare, manage and monetize proprietary data & AI products in a secure,",
-  "taglineContinuation": "Continuted",
-  "siteUrl": "https://enterprise.oceanprotocol.com",
+  "siteTitle": "deltaDAO Marketplace",
+  "siteTagline": "Publish, discover and monetize data and AI assets with full data sovereignty, privacy-preserving Compute-to-Data and built-in GDPR compliance.",
+  "taglineContinuation": "",
+  "siteUrl": "",
   "siteImage": "/share.png",
-  "copyright": "All Rights Reserved. Powered by [Ocean Protocol](https://oceanprotocol.com).",
+  "siteImageAlt": "deltaDAO Marketplace: publish, discover and monetize data and AI assets",
+  "copyright": "All rights reserved. Built by [deltaDAO AG](https://delta-dao.com).",
   "menu": [
     {
       "name": "Catalogue",
@@ -24,30 +25,29 @@
   "warning": {
     "ctd": "Please note that Compute-to-Data is still in beta phase."
   },
-  "siteDescription": "A decentralized data marketplace powered by Ocean Protocol.",
+  "siteDescription": "The deltaDAO Marketplace lets organizations publish, discover and monetize data and AI assets with Compute-to-Data, verifiable credentials and GDPR compliance.",
   "footer": {
-    "subtitle": "The enterprise data market",
-    "copyright": "© Ocean Enterprise 2025",
-    "privacyTitle": "Privacy",
+    "subtitle": "The deltaDAO data and AI marketplace",
+    "copyright": "© deltaDAO AG 2026",
     "content": [
       {
         "title": "Resources",
         "links": [
           {
-            "name": "Log",
-            "link": "https://sepolia.etherscan.io/"
-          },
-          {
             "name": "GitHub",
-            "link": "https://github.com/OceanProtocolEnterprise"
+            "link": "https://github.com/deltaDAO"
           },
           {
             "name": "Docs",
-            "link": "https://docs.oceanenterprise.io/"
+            "link": "https://docs.pontus-x.eu/"
           },
           {
-            "name": "Medium",
-            "link": "https://medium.com/ocean-enterprise-collective"
+            "name": "deltaDAO",
+            "link": "https://delta-dao.com"
+          },
+          {
+            "name": "Contact",
+            "link": "https://delta-dao.com/contact"
           }
         ]
       },
@@ -69,14 +69,14 @@
         ]
       },
       {
-        "title": "Privacy",
+        "title": "Legal",
         "links": [
           {
-            "name": "Terms and Conditions",
-            "link": "/imprint"
+            "name": "Imprint",
+            "link": "https://www.delta-dao.com/imprint"
           },
           {
-            "name": "Privacy",
+            "name": "Privacy Policy",
             "link": "/privacy/privacy-policy"
           },
           {
@@ -84,8 +84,16 @@
             "link": "/privacy/cookie-policy"
           },
           {
-            "name": "Data Portal Usage Agreement",
-            "link": "/privacy/en#ocean-enterprise-collective-ev-data-portal-usage-agreement"
+            "name": "Cookie Settings",
+            "link": "/privacy/cookie-policy"
+          },
+          {
+            "name": "Terms and Conditions",
+            "link": "/privacy/terms"
+          },
+          {
+            "name": "Lifecycle State Policy",
+            "link": "/privacy/lifecycle-state-policy"
           }
         ]
       }

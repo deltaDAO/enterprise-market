@@ -12,6 +12,7 @@ import { Signer, TransactionResponse } from 'ethers'
 import { toast } from 'react-toastify'
 import { Asset } from 'src/@types/Asset'
 import { encryptProviderData } from './provider'
+import { getSiteOrigin } from './seo'
 
 // https://docs.opensea.io/docs/metadata-standards
 export interface NftMetadata {
@@ -47,9 +48,13 @@ function encodeSvg(svgString: string): string {
 
 const nftMetadataTemplate = {
   name: 'Data NFT',
-  symbol: 'OEC-NFT',
-  description: `This NFT represents an asset in Ocean Enterprise ecosystems.`,
-  external_url: 'https://enterprise.oceanprotocol.com'
+  symbol: 'DDAO-NFT',
+  description: `This NFT represents an asset.`,
+  // The marketplace this asset is published from (NEXT_PUBLIC_SITE_URL, or
+  // the origin the app runs on), so the NFT links back to a real host.
+  get external_url(): string {
+    return getSiteOrigin()
+  }
 }
 
 export function generateNftMetadata(): NftMetadata {
@@ -185,7 +190,7 @@ export async function setNFTMetadataAndTokenURI(
         : {
             name: (asset as Asset).indexedMetadata.nft.name,
             symbol: (asset as Asset).indexedMetadata.nft.symbol,
-            description: `${nftMetadataTemplate.description}\n\nView on Ocean Enterprise: ${externalUrl}`,
+            description: `${nftMetadataTemplate.description}\n\nView on the deltaDAO Marketplace: ${externalUrl}`,
             external_url: externalUrl
           }
     )

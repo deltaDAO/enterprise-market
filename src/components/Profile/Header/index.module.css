@@ -1,23 +1,70 @@
+/* profile header: mist band + wave + gradient hairline */
 .grid {
   composes: box from '@shared/atoms/Box.module.css';
-  background: var(--brand-white);
-  border: var(--border-size-sm) solid var(--border-navy-soft);
-  border-top: 0;
+  background: var(--deck-surface);
+  border: 1px solid var(--border);
   border-radius: var(--radius-xl);
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-blue-5);
   backdrop-filter: none;
   position: relative;
+  isolation: isolate;
+  /* no overflow clipping: address hover cards must escape the band */
+  z-index: 2;
 }
 
 .grid.grid {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+  background: var(--deck-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+}
+
+.grid::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: min(100%, 48rem);
+  max-height: 13rem;
+  border-radius: 0 var(--radius-xl) var(--radius-xl) 0;
+  background: var(--wave-svg) no-repeat;
+  background-size: 106% 106%;
+  background-position: 0% 0%;
+  -webkit-mask-image: linear-gradient(to left, #000 35%, transparent);
+  mask-image: linear-gradient(to left, #000 35%, transparent);
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: -1;
+  animation: wave-bg-drift 18s ease-in-out infinite alternate;
+}
+
+@keyframes wave-bg-drift {
+  from {
+    background-position: 0% 0%;
+  }
+  to {
+    background-position: 100% 100%;
+  }
+}
+
+.grid::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--brand-hairline);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grid::before {
+    animation: none;
+  }
 }
 
 .description {
-  color: var(--color-secondary);
+  color: var(--muted-foreground);
   font-size: var(--font-size-small);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -66,7 +113,7 @@
 }
 
 .meta {
-  color: var(--color-secondary);
+  color: var(--muted-foreground);
   font-size: var(--font-size-mini);
   position: absolute;
   right: calc(var(--spacer) / 3);
@@ -107,14 +154,26 @@
 }
 
 .tokenPlaceholder {
-  color: var(--color-secondary);
+  color: var(--muted-foreground);
   font-size: var(--font-size-small);
 }
 
 .selectorLabel {
-  font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-label);
-  color: var(--font-color-label);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
   line-height: 1.2;
   font-family: var(--font-family-base);
+}
+
+/* keyframes are module-scoped, so the wave drift is declared locally */
+@keyframes wave-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-2.5%, 2%, 0) scale(1.03);
+  }
 }

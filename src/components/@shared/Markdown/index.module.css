@@ -15,6 +15,9 @@
 
 .markdown h1 {
   font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-heavy);
+  letter-spacing: -0.015em;
+  color: var(--foreground);
 }
 
 .markdown h2 {
@@ -51,11 +54,15 @@
 }
 
 .markdown ul li:before {
-  content: '▪';
-  top: -2px;
+  content: '';
+  top: 0.62em;
   position: absolute;
-  left: -1.5rem;
-  color: var(--brand-grey-light);
+  left: -1.1rem;
+  width: 6px;
+  height: 6px;
+  border-radius: 1px;
+  transform: rotate(45deg);
+  background: linear-gradient(135deg, var(--deck-cyan), var(--deck-blue));
   user-select: none;
 }
 
@@ -75,7 +82,7 @@
   margin: calc(var(--spacer) * 1.5) auto;
   max-width: 20%;
   border: 0;
-  border-top: 2px solid var(--border-color);
+  border-top: 1px solid var(--border);
 }
 
 .markdown img {

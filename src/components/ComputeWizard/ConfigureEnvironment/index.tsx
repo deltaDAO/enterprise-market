@@ -460,7 +460,7 @@ export default function ConfigureEnvironment({
     [supportedTokensFromEnv, symbolMap, isTokenListLoading]
   )
 
-  const displaySymbol = symbolMap[values.baseToken] ?? 'OCEAN'
+  const displaySymbol = symbolMap[values.baseToken] ?? ''
 
   const escrowAvailableFunds = useMemo(() => {
     if (!displaySymbol) return 0

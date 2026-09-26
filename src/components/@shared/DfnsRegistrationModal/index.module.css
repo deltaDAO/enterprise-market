@@ -7,22 +7,25 @@
 
 .description {
   margin: 0;
-  color: var(--color-secondary);
+  color: var(--muted-foreground);
   font-size: var(--font-size-small);
 }
 
 .label {
-  font-size: var(--font-size-small);
-  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-label-motif);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-label);
+  color: var(--muted-foreground);
 }
 
 .input {
   width: 100%;
   padding: calc(var(--spacer, 1rem) / 2);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  background: var(--background-content);
-  color: var(--font-color-text);
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  color: var(--foreground);
 }
 
 .actions {

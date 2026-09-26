@@ -1,41 +1,24 @@
 .select [class$='control'] {
-  border-color: var(--border-navy-soft);
-  border-radius: var(--radius-xl);
+  border-color: var(--input);
+  border-radius: var(--radius-lg);
   box-shadow: none;
-  background-color: var(--input-background);
+  background-color: var(--background);
   font-size: var(--text-sm);
   font-family: var(--font-family-base);
   font-weight: var(--text-weight-regular);
   cursor: text;
-  min-height: 43px;
-  border: var(--border-size-sm) solid var(--border-navy-soft);
+  min-height: var(--field-height);
+  border: 1px solid var(--input);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .select [class$='control']:hover {
-  border-color: var(--border-navy-soft);
+  border-color: var(--input-hover);
 }
 
 .select [class$='control']:focus-within {
-  border-color: var(--border-navy-soft);
-}
-
-/* ONLY when dropdown menu is actually open/visible */
-.select [class*='menu-is-open'] [class$='control'],
-.select [class*='menuIsOpen'] [class$='control'],
-.select:has([class$='menu']) [class$='control'] {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.select [class$='control'] + * [class$='menu'] ~ [class$='control'],
-.select [class$='menu'] + [class$='control'] {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.select:has([class$='menu'] ~ *) [class$='control'] {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+  border-color: var(--deck-blue);
+  box-shadow: 0 0 0 3px var(--ring);
 }
 
 .select [class$='ValueContainer'] {
@@ -52,14 +35,14 @@
 }
 
 .select input {
-  color: var(--text-ink) !important;
+  color: var(--foreground) !important;
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
 }
 
 .select [class$='option'] {
-  color: var(--text-ink);
+  color: var(--foreground);
   font-size: var(--text-sm);
   font-family: var(--font-family-base);
   font-weight: var(--text-weight-regular);
@@ -68,16 +51,16 @@
 }
 
 .select [class$='option']:active {
-  background-color: var(--input-background-highlight);
+  background-color: var(--deck-blue-12);
 }
 
 .select [class$='multiValue'],
 .select [class$='multiValue'] > *,
 .select [class$='multiValue']:hover > * {
-  border-radius: var(--radius-xl);
-  background-color: var(--input-background-highlight);
-  color: var(--text-ink);
-  font-size: var(--text-sm);
+  border-radius: var(--radius-pill);
+  background-color: var(--deck-blue-8);
+  color: var(--deck-blue);
+  font-size: 12px;
   font-family: var(--font-family-base);
   font-weight: var(--text-weight-regular);
   padding-top: 0;
@@ -92,31 +75,35 @@
 .select [class$='placeholder'] {
   margin-left: 0;
   margin-right: 0;
-  color: var(--clr-slate-70);
+  color: var(--placeholder);
   font-family: var(--font-family-base);
   font-weight: var(--text-weight-regular);
   font-size: var(--text-sm);
-  transition: 0.2s ease-out;
-  opacity: 0.7;
+  opacity: 1;
 }
 
 .select [class$='menu'] {
-  background-color: var(--input-background);
-  margin-top: 0;
-  border: 2px solid var(--border-navy-soft);
-  border-top: none;
-  border-bottom-left-radius: var(--radius-xl);
-  border-bottom-right-radius: var(--radius-xl);
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  box-shadow: var(--shadow-md);
+  /* react-select paints the keyboard-focused option with theme.primary25,
+   * which the TSX maps to var(--border-color). Re-scope it inside the menu
+   * so virtual (keyboard) focus gets the same tint as hover. */
+  --border-color: var(--deck-blue-8);
+  margin-top: 4px;
+  border: 1px solid transparent;
+  background: var(--deck-card-background);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-soft);
   overflow: hidden;
 }
 
 .select [class$='menu'] [class$='option']:hover,
 .select [class$='menu'] [class$='option']:focus-within {
-  background-color: var(--input-background-highlight);
-  color: var(--text-ink);
+  background-color: var(--deck-blue-8);
+  color: var(--deck-blue);
+}
+
+.select [class$='menu'] [class$='option'][aria-selected='true'] {
+  background-color: var(--deck-blue-12);
+  color: var(--deck-blue);
 }
 
 .select [class$='menu'] [class$='option']:first-child {
@@ -131,11 +118,12 @@
   padding: 0;
 }
 
-.select [class$='NoOptionsMessage'] {
+.select [class$='NoOptionsMessage'],
+.select [class$='menu'] [id$='-listbox'] > div:not([id]) {
   font-size: var(--text-sm);
   font-family: var(--font-family-base);
   font-weight: var(--text-weight-regular);
-  color: var(--clr-slate-70);
+  color: var(--muted-foreground);
   text-align: left;
   padding: var(--sp-4);
   margin: 0;

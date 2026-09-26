@@ -13,10 +13,10 @@
   display: inline-flex;
   align-items: center;
   gap: 0.38rem;
-  border: 1px solid var(--ink-alpha-24);
-  border-radius: var(--radius-xl);
-  color: var(--clr-slate-70);
-  background: var(--background-body);
+  border: 1px solid var(--deck-blue-25);
+  border-radius: var(--radius-lg);
+  color: var(--deck-blue);
+  background: #fff;
   box-shadow: none;
   text-decoration: none;
   cursor: pointer;
@@ -28,25 +28,30 @@
     background-color 0.18s ease-out;
 }
 
+.toggleButton:focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
+}
+
 .toggleButton:hover,
 .toggleButton:focus-visible {
-  color: var(--clr-navy);
-  background: var(--ink-alpha-5);
-  border-color: var(--border-navy-soft);
+  color: var(--deck-blue);
+  background: var(--deck-blue-8);
+  border-color: var(--deck-blue);
   opacity: 1;
   transform: none;
 }
 
 .toggleButtonExpanded {
-  color: var(--clr-navy);
-  background: var(--ink-alpha-5);
-  border-color: var(--border-navy-soft);
+  color: var(--deck-blue);
+  background: var(--deck-blue-8);
+  border-color: var(--deck-blue);
 }
 
 .toggleButton:active {
-  color: var(--clr-navy);
-  background: var(--ink-alpha-10);
-  border-color: var(--border-navy-soft);
+  color: var(--deck-blue);
+  background: var(--deck-blue-12);
+  border-color: var(--deck-blue);
   opacity: 1;
   transform: none;
 }
@@ -71,10 +76,11 @@
 }
 
 .panel {
-  background: var(--background-body);
-  border: 1px solid var(--ink-alpha-24);
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(22, 22, 22, 0.05);
+  backdrop-filter: blur(4px);
   border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-blue-5);
   overflow: hidden;
 }
 
@@ -96,8 +102,12 @@
   padding: 0.56rem 0.75rem;
 }
 
+.item:hover {
+  background: var(--muted);
+}
+
 .item:not(:last-child) {
-  border-bottom: 1px solid var(--ink-alpha-10);
+  border-bottom: 1px solid var(--border);
 }
 
 .documentMain {
@@ -113,7 +123,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: var(--color-secondary);
+  color: var(--brand-highlight);
   font-size: var(--font-size-small);
   text-decoration: none;
 }
@@ -131,9 +141,10 @@
 }
 
 .fileSize {
-  color: var(--clr-slate-70);
+  color: var(--muted-foreground);
   font-size: var(--font-size-small);
   font-family: var(--font-family-monospace);
+  font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
 
