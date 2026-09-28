@@ -32,10 +32,8 @@ export function Steps({
   useEffect(() => {
     if (!approvedBaseTokens?.length) return
 
-    const defaultBaseToken =
-      approvedBaseTokens?.find((token) =>
-        token.name.toLowerCase().includes('ocean')
-      ) || approvedBaseTokens?.[0]
+    // Default to the first approved token, i.e. the first allowlist entry
+    const defaultBaseToken = approvedBaseTokens[0]
     const isBaseTokenSet = !!approvedBaseTokens?.find(
       (token) => token?.address === values?.pricing?.baseToken?.address
     )
