@@ -119,10 +119,6 @@ module.exports = {
     process.env.NEXT_PUBLIC_PRIVACY_PREFERENCE_CENTER ||
     'false',
 
-  // Default terms to be used for service offerings made on this marketplace
-  defaultAccessTerms:
-    'https://raw.githubusercontent.com/OceanProtocolEnterprise/market/main/content/pages/terms.md',
-
   // Purgatory URI, leave as an empty string to disable the API call
   purgatoryUrl:
     getEnv('NEXT_PUBLIC_PURGATORY_URI') ||

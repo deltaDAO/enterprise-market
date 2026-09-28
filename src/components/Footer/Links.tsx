@@ -55,21 +55,11 @@ export default function Links(): ReactElement {
                 ) : null
               }
 
-              const linkLabel =
-                e.name === 'Log' ? (
-                  <>
-                    <span>Log</span>
-                    <span className={styles.logIcon}>&nbsp;↗</span>{' '}
-                  </>
-                ) : (
-                  e.name
-                )
-
               const isInternalLink = e.link.startsWith('/')
               if (isInternalLink) {
                 return (
                   <Link key={key} className={styles.link} href={e.link}>
-                    {linkLabel}
+                    {e.name}
                   </Link>
                 )
               }
@@ -82,7 +72,7 @@ export default function Links(): ReactElement {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {linkLabel}
+                  {e.name}
                 </a>
               )
             })}

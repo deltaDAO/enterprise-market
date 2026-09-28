@@ -30,7 +30,6 @@ export interface AppConfig {
     classNameLight: string
     storageKey: string
   }
-  defaultAccessTerms: string
   purgatoryUrl: string
   dockerHubProxyUrl: string
   showPreviewAlert: string
@@ -51,7 +50,6 @@ export interface SiteContent {
   siteUrl: string
   siteImage: string
   siteImageAlt?: string
-  copyright: string
   menu: {
     name: string
     link?: string
