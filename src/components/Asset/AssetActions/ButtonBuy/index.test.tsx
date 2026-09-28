@@ -47,6 +47,9 @@ const computeProps: ButtonBuyProps = {
   retry: false
 }
 
+// keep whitespace as rendered so double or trailing spaces fail the match
+const raw = (text: string) => text
+
 describe('Asset/AssetActions/ButtonBuy', () => {
   //  TESTS FOR LOADING
   it('Renders Buy button without crashing', () => {
@@ -101,6 +104,34 @@ describe('Asset/AssetActions/ButtonBuy', () => {
     )
     const button = screen.getByText('Buy')
     expect(button).toContainHTML('<button')
+    expect(screen.getByText('Buy', { normalizer: raw })).toBeInTheDocument()
+  })
+
+  it.each(['1 minute', '10 minutes', '1 hour', '1 hour 30 minutes'])(
+    'Renders Buy button text for a short access duration (%s)',
+    (assetTimeout) => {
+      render(<ButtonBuy {...downloadProps} assetTimeout={assetTimeout} />)
+      expect(
+        screen.getByText(`Buy for ${assetTimeout}`, { normalizer: raw })
+      ).toBeInTheDocument()
+    }
+  )
+
+  it('Renders Subscribe button text for SaaS access durations', () => {
+    const { unmount } = render(
+      <ButtonBuy {...downloadProps} assetType="saas" assetTimeout="1 minute" />
+    )
+    expect(
+      screen.getByText('Subscribe for 1 minute', { normalizer: raw })
+    ).toBeInTheDocument()
+    unmount()
+
+    render(
+      <ButtonBuy {...downloadProps} assetType="saas" assetTimeout="Forever" />
+    )
+    expect(
+      screen.getByText('Subscribe', { normalizer: raw })
+    ).toBeInTheDocument()
   })
 
   // TESTS FOR COMPUTE
