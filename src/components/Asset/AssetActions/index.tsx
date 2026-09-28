@@ -196,7 +196,6 @@ export default function AssetActions({
 
       // TODO: replace 'any' with correct typing
       const file = formikState?.values?.services[serviceIndex].files[0] as any
-      const query = file?.query || undefined
       const abi = file?.abi || undefined
       const headers = file?.headers || undefined
       const method = file?.method || undefined
@@ -208,7 +207,6 @@ export default function AssetActions({
               formikState?.values?.services?.[serviceIndex].files?.[0].url,
               providerUrl,
               storageType,
-              query,
               headers,
               abi,
               chainId,

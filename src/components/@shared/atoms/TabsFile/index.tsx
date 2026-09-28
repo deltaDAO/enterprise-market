@@ -10,7 +10,6 @@ import styles from './index.module.css'
 import IconUrl from '@images/url.svg'
 import IconIpfs from '@images/ipfs.svg'
 import IconArweave from '@images/arweave.svg'
-import IconGraphql from '@images/graphql.svg'
 import IconS3Storage from '@images/s3_storage.svg'
 import IconFtp from '@images/ftp.svg'
 
@@ -47,7 +46,6 @@ const iconMap = {
   URL: IconUrl,
   IPFS: IconIpfs,
   ARWEAVE: IconArweave,
-  GRAPHQL: IconGraphql,
   S3: IconS3Storage,
   'FTP/FTPS': IconFtp
 }

@@ -37,7 +37,6 @@ export type KnownStorageType =
   | 'url'
   | 'ftp'
   | 'smartcontract'
-  | 'graphql'
   | 'hidden'
   | 'ftp'
 
@@ -232,7 +231,6 @@ export async function getFileInfo(
   file: string,
   providerUrl: string,
   storageType: StorageType,
-  query?: string,
   headers?: KeyValuePair[],
   abi?: string,
   chainId?: number,
