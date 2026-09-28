@@ -314,8 +314,11 @@ export default function ComputeWizardController({
   useUserPreferences()
   const { isAssetNetwork } = useAsset()
   const { isConnected } = useAccount()
-  const config = getOceanConfig(asset.credentialSubject.chainId)
-  const { oceanTokenAddress } = config
+  // null for unknown chains; oceanTokenAddress is undefined on chains without
+  // an ERC20 allowlist entry (see getOceanConfig), which skips the lookup below
+  const oceanTokenAddress = getOceanConfig(
+    asset.credentialSubject?.chainId
+  )?.oceanTokenAddress
   const newCancelToken = useCancelToken()
   const { isSupportedOceanNetwork } = useNetworkMetadata()
   const { approvedBaseTokens } = useMarketMetadata()

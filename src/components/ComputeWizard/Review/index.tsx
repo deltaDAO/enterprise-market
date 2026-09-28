@@ -472,8 +472,11 @@ export default function Review({
     const effectiveProvider = signer?.provider
     const effectiveChainId = asset?.credentialSubject?.chainId
     if (!effectiveProvider || !effectiveChainId) return
+    // Undefined on chains without an ERC20 allowlist entry (see getOceanConfig)
+    const oceanTokenAddress =
+      getOceanConfig(effectiveChainId)?.oceanTokenAddress
+    if (!oceanTokenAddress) return
     const fetchTokenDetails = async () => {
-      const { oceanTokenAddress } = getOceanConfig(effectiveChainId)
       const tokenDetails = await getTokenInfo(
         oceanTokenAddress,
         effectiveProvider

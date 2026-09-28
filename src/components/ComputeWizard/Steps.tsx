@@ -239,8 +239,11 @@ export default function Steps({
     const provider = signer?.provider
     if (!chainId || !provider) return
 
+    // Undefined on chains without an ERC20 allowlist entry (see getOceanConfig)
+    const oceanTokenAddress = getOceanConfig(chainId)?.oceanTokenAddress
+    if (!oceanTokenAddress) return
+
     const fetchTokenDetails = async () => {
-      const { oceanTokenAddress } = getOceanConfig(chainId)
       const info = await getTokenInfo(oceanTokenAddress, provider)
       setTokenInfo(info)
     }

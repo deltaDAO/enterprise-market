@@ -136,6 +136,14 @@ export default function AddService({
         return
       }
 
+      // oceanTokenAddress is the first entry of the chain's ERC20 allowlist and
+      // is undefined for chains without one (see getOceanConfig).
+      const baseTokenAddress = values.baseToken || config?.oceanTokenAddress
+      if (!baseTokenAddress) {
+        setError('No base token is configured for this network.')
+        return
+      }
+
       // --------------------------------------------------
       // 1. Create Datatoken
       // --------------------------------------------------
@@ -147,7 +155,7 @@ export default function AddService({
         accountId,
         values.paymentCollector,
         marketFeeAddress,
-        values.baseToken || config.oceanTokenAddress,
+        baseTokenAddress,
         publisherMarketFixedSwapFee,
         defaultDatatokenCap,
         'Access Token',
@@ -196,14 +204,11 @@ export default function AddService({
           `Creating fixed rate exchange with price ${values.price} for datatoken ${datatokenAddress}`
         )
 
-        const tokenInfo = await getTokenInfo(
-          values.baseToken || config.oceanTokenAddress,
-          ethersProvider
-        )
+        const tokenInfo = await getTokenInfo(baseTokenAddress, ethersProvider)
 
         const freParams: FreCreationParams = {
           fixedRateAddress: config.fixedRateExchangeAddress,
-          baseTokenAddress: values.baseToken || config.oceanTokenAddress,
+          baseTokenAddress,
           owner: accountId,
           marketFeeCollector: marketFeeAddress,
           baseTokenDecimals: tokenInfo?.decimals || 18,
