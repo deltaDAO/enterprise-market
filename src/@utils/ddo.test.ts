@@ -1,10 +1,12 @@
 import {
+  MAX_CUSTOM_TIMEOUT_SECONDS,
   TIMEOUT_PRESETS,
   formatSecondsPrecise,
   formatServiceTimeout,
   isCustomTimeoutValue,
   isTimeoutPreset,
   mapTimeoutStringToSeconds,
+  normalizeCustomTimeoutInput,
   timeoutSecondsToFormValue
 } from './ddo'
 
@@ -46,6 +48,31 @@ describe('service timeout (access duration)', () => {
     expect(isCustomTimeoutValue('1.5')).toBe(false)
     expect(isCustomTimeoutValue('-5')).toBe(false)
     expect(isCustomTimeoutValue('')).toBe(false)
+    expect(isCustomTimeoutValue('1e5')).toBe(false)
+    expect(isCustomTimeoutValue('0100')).toBe(false)
+  })
+
+  it('bounds custom seconds to a safe maximum', () => {
+    expect(MAX_CUSTOM_TIMEOUT_SECONDS).toBeLessThan(Number.MAX_SAFE_INTEGER)
+    expect(isCustomTimeoutValue(String(MAX_CUSTOM_TIMEOUT_SECONDS))).toBe(true)
+    expect(isCustomTimeoutValue(String(MAX_CUSTOM_TIMEOUT_SECONDS + 1))).toBe(
+      false
+    )
+    expect(isCustomTimeoutValue('99999999999999999999')).toBe(false)
+  })
+
+  it('ignores non-digit input instead of altering the number', () => {
+    expect(normalizeCustomTimeoutInput('1.5')).toBeUndefined()
+    expect(normalizeCustomTimeoutInput('1e5')).toBeUndefined()
+    expect(normalizeCustomTimeoutInput('-5')).toBeUndefined()
+    expect(normalizeCustomTimeoutInput('5400')).toBe('5400')
+    expect(normalizeCustomTimeoutInput('')).toBe('')
+  })
+
+  it('strips leading zeros from custom input', () => {
+    expect(normalizeCustomTimeoutInput('0100')).toBe('100')
+    expect(normalizeCustomTimeoutInput('000')).toBe('0')
+    expect(normalizeCustomTimeoutInput('0')).toBe('0')
   })
 
   it('formats custom durations precisely', () => {
@@ -53,5 +80,12 @@ describe('service timeout (access duration)', () => {
     expect(formatSecondsPrecise(1)).toBe('1 second')
     expect(formatSecondsPrecise(90061)).toBe('1 day 1 hour')
     expect(formatSecondsPrecise(0)).toBe('Forever')
+    expect(formatSecondsPrecise(365 * 86400)).toBe('1 year')
+    expect(formatSecondsPrecise(30 * 86400)).toBe('1 month')
+  })
+
+  it('accepts timeouts stored as strings', () => {
+    expect(formatServiceTimeout('86400' as unknown as number)).toBe('1 day')
+    expect(formatServiceTimeout(undefined)).toBe('Forever')
   })
 })

@@ -8,7 +8,11 @@ import { FormUrlFileInfo } from './_types'
 import { additionalLicenseSourceOptions } from './_license'
 import { isS3File } from 'src/@types/S3File'
 import { normalizeDockerImageReference } from '@utils/docker'
-import { isCustomTimeoutValue, isTimeoutPreset } from '@utils/ddo'
+import {
+  TIMEOUT_VALIDATION_MESSAGE,
+  isCustomTimeoutValue,
+  isTimeoutPreset
+} from '@utils/ddo'
 
 // TODO: conditional validation
 // e.g. when algo is selected, Docker image is required
@@ -466,7 +470,7 @@ const validationService = {
     .required('Required')
     .test(
       'valid-timeout',
-      'Enter a whole number of seconds greater than 0',
+      TIMEOUT_VALIDATION_MESSAGE,
       (value) => isTimeoutPreset(value) || isCustomTimeoutValue(value)
     ),
   access: Yup.string()

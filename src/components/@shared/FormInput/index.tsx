@@ -66,6 +66,7 @@ export interface InputProps {
   rows?: number
   multiple?: boolean
   pattern?: string
+  inputMode?: React.HTMLAttributes<HTMLInputElement>['inputMode']
   min?: string
   max?: string
   disabled?: boolean

@@ -1,4 +1,4 @@
-import { ChangeEvent, ReactElement, useState } from 'react'
+import { ChangeEvent, ReactElement, useEffect, useState } from 'react'
 import { useField } from 'formik'
 import InputElement from '@shared/FormInput/InputElement'
 import {
@@ -6,7 +6,8 @@ import {
   TIMEOUT_PRESETS,
   formatSecondsPrecise,
   isCustomTimeoutValue,
-  isTimeoutPreset
+  isTimeoutPreset,
+  normalizeCustomTimeoutInput
 } from '@utils/ddo'
 import styles from './index.module.css'
 
@@ -29,7 +30,13 @@ export default function TimeoutInput({
   const [customSelected, setCustomSelected] = useState(
     value !== '' && !isTimeoutPreset(value)
   )
-  const isCustom = customSelected || isCustomTimeoutValue(value)
+  // Keep the "Custom" selection in sync with the field value, e.g. when
+  // Formik reinitialises the form with a preset.
+  useEffect(() => {
+    if (isTimeoutPreset(value)) setCustomSelected(false)
+    else if (value !== '') setCustomSelected(true)
+  }, [value])
+  const isCustom = !isTimeoutPreset(value) && (customSelected || value !== '')
 
   function handleSelectChange(e: ChangeEvent<HTMLSelectElement>) {
     const selected = e.target.value
@@ -44,8 +51,11 @@ export default function TimeoutInput({
   }
 
   function handleSecondsChange(e: ChangeEvent<HTMLInputElement>) {
+    const seconds = normalizeCustomTimeoutInput(e.target.value)
+    // ignore keystrokes that are not digits instead of altering the number
+    if (seconds === undefined) return
     helpers.setTouched(true, false)
-    helpers.setValue(e.target.value.replace(/\D/g, ''))
+    helpers.setValue(seconds)
   }
 
   return (
@@ -65,9 +75,9 @@ export default function TimeoutInput({
         <div className={styles.custom}>
           <InputElement
             name={`${name}-seconds`}
-            type="number"
-            min="1"
-            step="1"
+            type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
             placeholder="e.g. 5400"
             postfix="seconds"
             disabled={disabled}

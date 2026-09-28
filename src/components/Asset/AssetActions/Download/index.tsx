@@ -24,7 +24,7 @@ import {
   getAvailablePrice,
   getOrderPriceAndFees
 } from '@utils/accessDetailsAndPricing'
-import { getSaasMetadata, secondsToString } from '@utils/ddo'
+import { formatServiceTimeout, getSaasMetadata } from '@utils/ddo'
 import { MAX_DECIMALS } from '@utils/constants'
 import { checkVerifierSessionId } from '@utils/wallet/policyServer'
 import { getStoredVerifierSessionId } from '@utils/verifierSession'
@@ -451,7 +451,7 @@ export default function Download({
         dtSymbol={asset.indexedMetadata?.stats[serviceIndex]?.symbol}
         dtBalance={dtBalance}
         type="submit"
-        assetTimeout={secondsToString(service.timeout)}
+        assetTimeout={formatServiceTimeout(service.timeout)}
         assetType={saas ? 'saas' : asset.credentialSubject?.metadata?.type}
         stepText={statusText}
         isLoading={isLoading}

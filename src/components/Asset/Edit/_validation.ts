@@ -5,7 +5,11 @@ import { getMaxDecimalsValidation } from '@utils/numbers'
 import { getOriginalValue, testOptionalUrl } from '@utils/yup'
 import { validationConsumerParameters } from '@shared/FormInput/InputElement/ConsumerParameters/_validation'
 import { isS3File } from 'src/@types/S3File'
-import { isCustomTimeoutValue, isTimeoutPreset } from '@utils/ddo'
+import {
+  TIMEOUT_VALIDATION_MESSAGE,
+  isCustomTimeoutValue,
+  isTimeoutPreset
+} from '@utils/ddo'
 import {
   normalizeDockerImageReference,
   parseDockerImageReference
@@ -466,7 +470,7 @@ export const serviceValidationSchema = Yup.object().shape({
     .required('Required')
     .test(
       'valid-timeout',
-      'Enter a whole number of seconds greater than 0',
+      TIMEOUT_VALIDATION_MESSAGE,
       (value) => isTimeoutPreset(value) || isCustomTimeoutValue(value)
     ),
   usesConsumerParameters: Yup.boolean(),

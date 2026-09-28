@@ -1,7 +1,7 @@
 import { ReactElement, useEffect, useMemo, useState } from 'react'
 import { useMarketMetadata } from '@context/MarketMetadata'
 import Price from '@shared/Price'
-import { secondsToString } from '@utils/ddo'
+import { formatServiceTimeout } from '@utils/ddo'
 import Download from '@images/download.svg'
 import Compute from '@images/compute.svg'
 import BranchArrow from '@images/arrow_branch.svg'
@@ -203,7 +203,7 @@ export default function ExpandedServices({
                 {isCompute ? 'Compute' : 'Download'}
               </div>
               <div className={styles.expandedDuration}>
-                {secondsToString(Number(service.timeout) || 0)}
+                {formatServiceTimeout(service.timeout)}
               </div>
               <div className={styles.expandedPrice}>
                 <Price price={prices} size="small" />

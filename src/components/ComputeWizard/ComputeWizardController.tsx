@@ -39,7 +39,7 @@ import { CredentialDialogProvider } from '../Asset/AssetActions/Compute/Credenti
 import { useAsset } from '@context/Asset'
 import { useUserPreferences } from '@context/UserPreferences'
 import { useSsiWallet } from '@context/SsiWallet'
-import { secondsToString } from '@utils/ddo'
+import { formatServiceTimeout } from '@utils/ddo'
 import {
   getAlgorithmAssetSelectionListForComputeWizard,
   getAlgorithmsForAsset
@@ -1353,7 +1353,7 @@ export default function ComputeWizardController({
         const dtSymbolSelectedComputeAsset =
           selectedAlgoAssetForDisplay?.accessDetails?.[svcIndex]?.datatoken
             ?.symbol
-        const selectedComputeAssetTimeout = secondsToString(
+        const selectedComputeAssetTimeout = formatServiceTimeout(
           selectedAlgoAssetForDisplay?.credentialSubject?.services?.[svcIndex]
             ?.timeout
         )
@@ -1416,7 +1416,7 @@ export default function ComputeWizardController({
                       hasPreviousOrder={!!validOrderTx}
                       hasDatatoken={hasDatatoken}
                       dtBalance={dtBalance}
-                      assetTimeout={secondsToString(service.timeout)}
+                      assetTimeout={formatServiceTimeout(service.timeout)}
                       hasPreviousOrderSelectedComputeAsset={
                         isAlgorithmFlow ? !!validAlgorithmOrderTx : false
                       }
@@ -1480,7 +1480,7 @@ export default function ComputeWizardController({
                     btSymbol={accessDetails.baseToken?.symbol}
                     dtSymbol={accessDetails.datatoken?.symbol}
                     dtBalance={dtBalance}
-                    assetTimeout={secondsToString(service.timeout)}
+                    assetTimeout={formatServiceTimeout(service.timeout)}
                     assetType={asset.credentialSubject?.metadata.type}
                     hasPreviousOrderSelectedComputeAsset={
                       !!validAlgorithmOrderTx
