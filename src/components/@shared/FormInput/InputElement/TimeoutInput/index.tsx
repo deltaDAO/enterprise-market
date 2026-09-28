@@ -4,7 +4,7 @@ import InputElement from '@shared/FormInput/InputElement'
 import {
   CUSTOM_TIMEOUT_OPTION,
   TIMEOUT_PRESETS,
-  formatSecondsPrecise,
+  formatServiceTimeout,
   isCustomTimeoutValue,
   isTimeoutPreset,
   normalizeCustomTimeoutInput
@@ -86,7 +86,7 @@ export default function TimeoutInput({
           />
           {isCustomTimeoutValue(value) && (
             <span className={styles.preview}>
-              ≈ {formatSecondsPrecise(Number(value))}
+              ≈ {formatServiceTimeout(value)}
             </span>
           )}
         </div>
