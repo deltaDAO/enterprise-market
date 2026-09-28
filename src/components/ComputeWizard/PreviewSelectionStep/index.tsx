@@ -10,6 +10,7 @@ import {
 } from 'react'
 import { useFormikContext } from 'formik'
 import { truncateDid } from '@utils/string'
+import { formatServiceTimeout } from '@utils/ddo'
 import Link from 'next/link'
 import External from '@images/external.svg'
 import styles from './index.module.css'
@@ -80,14 +81,6 @@ function normalizeDescription(value: unknown): string | undefined {
   if (typeof value !== 'string') return undefined
   const trimmed = value.trim()
   return trimmed.length > 0 ? trimmed : undefined
-}
-
-function formatAccessDuration(duration: number): string {
-  if (Number(duration) === 0 || Number.isNaN(Number(duration))) {
-    return 'Forever'
-  }
-
-  return `${Math.floor(Number(duration) / (60 * 60 * 24))} days`
 }
 
 function useClampedOverflow<T extends HTMLElement>(
@@ -211,7 +204,7 @@ function SelectionCard({
                   </span>
                 )}
                 <span className={styles.metaPill}>
-                  Access: {formatAccessDuration(service.duration)}
+                  Access: {formatServiceTimeout(service.duration)}
                 </span>
               </div>
             </div>
