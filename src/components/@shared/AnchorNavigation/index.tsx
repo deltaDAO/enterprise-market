@@ -2,9 +2,12 @@ import { ReactElement } from 'react'
 import { useRouter } from 'next/router'
 import styles from './index.module.css'
 
+// An item needs an `href` (navigate to that page, optionally to `anchor` on
+// it) or an `anchor` alone (scroll to that id on the current page). Only set
+// `anchor` when the target page really renders an element with that id.
 interface AnchorItem {
   label: string
-  anchor: string
+  anchor?: string
   href?: string
 }
 
@@ -19,8 +22,8 @@ export default function AnchorNavigation({
 
   const handleClick = (item: AnchorItem) => {
     if (item.href) {
-      router.push(`${item.href}#${item.anchor}`)
-    } else {
+      router.push(item.anchor ? `${item.href}#${item.anchor}` : item.href)
+    } else if (item.anchor) {
       const element = document.getElementById(item.anchor)
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -32,7 +35,7 @@ export default function AnchorNavigation({
     <div className={styles.container}>
       {items.map((item) => (
         <button
-          key={item.anchor}
+          key={item.label}
           className={styles.button}
           onClick={() => handleClick(item)}
           type="button"

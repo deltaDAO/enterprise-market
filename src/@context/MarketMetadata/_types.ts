@@ -24,7 +24,6 @@ export interface AppConfig {
   allowFixedPricing: string
   allowDynamicPricing: string
   allowFreePricing: string
-  defaultPrivacyPolicySlug: string
   privacyPreferenceCenter: string
   darkModeConfig: {
     classNameDark: string

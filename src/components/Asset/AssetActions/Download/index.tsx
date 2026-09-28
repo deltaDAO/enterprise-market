@@ -630,7 +630,7 @@ export default function Download({
             type="checkbox"
             options={['Terms and Conditions']}
             prefixes={['I agree to the']}
-            actions={['/privacy/terms#terms-and-conditions']}
+            actions={['/privacy/terms']}
             disabled={isLoading}
             hideLabel={true}
           />

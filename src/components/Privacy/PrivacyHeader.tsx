@@ -28,6 +28,10 @@ export default function PrivacyPolicyHeader({
     dateFormat: 'MMMM dd, yyyy.'
   }
 
+  // Only keep an `anchor` where the target renders that id: the terms,
+  // privacy and cookie pages have no matching heading id, so their tabs just
+  // open the page. rehype-slug gives the lifecycle policy H1 its id, and the
+  // deltaDAO imprint page has an element with id="imprint".
   const navItems = [
     {
       label: 'Imprint',
@@ -36,12 +40,10 @@ export default function PrivacyPolicyHeader({
     },
     {
       label: 'Terms and Conditions',
-      anchor: 'terms-and-conditions',
       href: '/privacy/terms'
     },
     {
       label: 'Privacy Policy',
-      anchor: 'privacy-policy',
       href: '/privacy/privacy-policy'
     },
     // Deliberately not listed: /privacy/data-portal-usage-agreement. That page
@@ -50,7 +52,6 @@ export default function PrivacyPolicyHeader({
     // footer either. Leave it unreachable until the entity is corrected.
     {
       label: 'Cookie Policy',
-      anchor: 'cookie-policy',
       href: '/privacy/cookie-policy'
     },
     {

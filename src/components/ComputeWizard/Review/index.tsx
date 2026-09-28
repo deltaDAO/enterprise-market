@@ -2447,7 +2447,7 @@ export default function Review({
               type="checkbox"
               options={['Terms and Conditions']}
               prefixes={['I agree to the']}
-              actions={['/privacy/terms#terms-and-conditions']}
+              actions={['/privacy/terms']}
               onChange={handleTermsChange}
               disabled={false}
               hideLabel={true}

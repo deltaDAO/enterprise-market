@@ -51,11 +51,8 @@ export default function SignupForm() {
 
       <div className={styles.terms}>
         {authSignupCopy.termsIntro}{' '}
-        <Link href="/privacy/terms#terms-and-conditions">
-          {authSignupCopy.termsLabel}
-        </Link>{' '}
-        and{' '}
-        <Link href="/privacy/privacy-policy#privacy-policy">
+        <Link href="/privacy/terms">{authSignupCopy.termsLabel}</Link> and{' '}
+        <Link href="/privacy/privacy-policy">
           {authSignupCopy.privacyLabel}
         </Link>
       </div>

@@ -104,10 +104,6 @@ module.exports = {
     process.env.NEXT_PUBLIC_ALLOW_FREE_PRICING ||
     'true',
 
-  // Set the default privacy policy to initially display
-  // this should be the slug of your default policy markdown file
-  defaultPrivacyPolicySlug: '/privacy/en',
-
   // This enables / disables the use of a GDPR compliant
   // privacy preference center to manage cookies on the market
   // If set to true a gdpr.json file inside the content directory
