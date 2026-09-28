@@ -107,4 +107,37 @@ describe('service timeout (access duration)', () => {
     expect(formatServiceTimeout('86400' as unknown as number)).toBe('1 day')
     expect(formatServiceTimeout(undefined)).toBe('Forever')
   })
+
+  it('formats short access durations', () => {
+    expect(formatServiceTimeout(60)).toBe('1 minute')
+    expect(formatServiceTimeout(600)).toBe('10 minutes')
+    expect(formatServiceTimeout(3600)).toBe('1 hour')
+    expect(formatServiceTimeout(1)).toBe('1 second')
+    expect(formatServiceTimeout(90)).toBe('1 minute 30 seconds')
+    expect(formatServiceTimeout(120)).toBe('2 minutes')
+    expect(formatServiceTimeout('600')).toBe('10 minutes')
+  })
+})
+
+describe('Forever access duration (stored as 0)', () => {
+  it('is the first preset and maps to 0 in the DDO', () => {
+    expect(TIMEOUT_PRESETS[0]).toEqual({ label: 'Forever', seconds: 0 })
+    expect(mapTimeoutStringToSeconds('Forever')).toBe(0)
+  })
+
+  it('displays 0 and missing or invalid values as Forever', () => {
+    expect(formatServiceTimeout(0)).toBe('Forever')
+    expect(formatServiceTimeout('0')).toBe('Forever')
+    expect(formatServiceTimeout(undefined)).toBe('Forever')
+    expect(formatServiceTimeout(null)).toBe('Forever')
+    expect(formatServiceTimeout(NaN)).toBe('Forever')
+    expect(formatServiceTimeout('abc')).toBe('Forever')
+  })
+
+  it('round-trips through the edit form', () => {
+    expect(timeoutSecondsToFormValue(0)).toBe('Forever')
+    expect(timeoutSecondsToFormValue(undefined)).toBe('Forever')
+    expect(mapTimeoutStringToSeconds(timeoutSecondsToFormValue(0))).toBe(0)
+    expect(isTimeoutPreset('Forever')).toBe(true)
+  })
 })
