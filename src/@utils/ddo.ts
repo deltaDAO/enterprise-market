@@ -72,38 +72,35 @@ export function getAssetAccessType(
 
 export const CUSTOM_TIMEOUT_OPTION = 'Custom (seconds)'
 
+// '1 year' as stored in the DDO (365.2425 days). Also the custom maximum.
+const ONE_YEAR_SECONDS = 31556952
+
 // Service access duration presets. Values are stored in the DDO as
-// `service.timeout` (integer seconds, 0 = forever). Month and year values
-// must stay unchanged so existing assets keep matching their preset.
+// `service.timeout` (integer seconds, 0 = forever). Day, week, month and
+// year values must stay unchanged so existing assets keep matching their
+// preset; any other stored value is shown as a custom duration.
 export const TIMEOUT_PRESETS: { label: string; seconds: number }[] = [
   { label: 'Forever', seconds: 0 },
-  { label: '5 minutes', seconds: 300 },
-  { label: '15 minutes', seconds: 900 },
-  { label: '30 minutes', seconds: 1800 },
+  { label: '1 minute', seconds: 60 },
+  { label: '10 minutes', seconds: 600 },
   { label: '1 hour', seconds: 3600 },
-  { label: '3 hours', seconds: 10800 },
-  { label: '6 hours', seconds: 21600 },
-  { label: '12 hours', seconds: 43200 },
   { label: '1 day', seconds: 86400 },
-  { label: '3 days', seconds: 259200 },
   { label: '1 week', seconds: 604800 },
-  { label: '2 weeks', seconds: 1209600 },
   { label: '1 month', seconds: 2630000 },
-  { label: '3 months', seconds: 7890000 },
   { label: '6 months', seconds: 15780000 },
-  { label: '1 year', seconds: 31556952 }
+  { label: '1 year', seconds: ONE_YEAR_SECONDS }
 ]
 
 export function isTimeoutPreset(timeout: string): boolean {
   return TIMEOUT_PRESETS.some((preset) => preset.label === timeout)
 }
 
-// Upper bound for custom durations. Anything longer is effectively
-// unlimited and should use 'Forever'; the bound also keeps values far below
-// Number.MAX_SAFE_INTEGER so they survive the string -> number conversion.
-export const MAX_CUSTOM_TIMEOUT_SECONDS = 315569520 // 10 years (10 x '1 year')
+// Upper bound for custom durations: 1 year. Anything longer should use
+// 'Forever'; the bound also keeps values far below Number.MAX_SAFE_INTEGER
+// so they survive the string -> number conversion.
+export const MAX_CUSTOM_TIMEOUT_SECONDS = ONE_YEAR_SECONDS
 
-export const TIMEOUT_VALIDATION_MESSAGE = `Enter a whole number of seconds between 1 and ${MAX_CUSTOM_TIMEOUT_SECONDS} (10 years), or choose 'Forever'`
+export const TIMEOUT_VALIDATION_MESSAGE = `Enter a whole number of seconds between 1 and ${MAX_CUSTOM_TIMEOUT_SECONDS} (1 year), or choose 'Forever'`
 
 export function isCustomTimeoutValue(timeout: string): boolean {
   return (

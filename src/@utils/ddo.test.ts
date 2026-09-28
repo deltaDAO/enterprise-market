@@ -52,12 +52,31 @@ describe('service timeout (access duration)', () => {
     expect(isCustomTimeoutValue('0100')).toBe(false)
   })
 
-  it('bounds custom seconds to a safe maximum', () => {
-    expect(MAX_CUSTOM_TIMEOUT_SECONDS).toBeLessThan(Number.MAX_SAFE_INTEGER)
-    expect(isCustomTimeoutValue(String(MAX_CUSTOM_TIMEOUT_SECONDS))).toBe(true)
-    expect(isCustomTimeoutValue(String(MAX_CUSTOM_TIMEOUT_SECONDS + 1))).toBe(
-      false
-    )
+  it('offers Forever plus the timed presets in order', () => {
+    expect(TIMEOUT_PRESETS.map(({ label }) => label)).toEqual([
+      'Forever',
+      '1 minute',
+      '10 minutes',
+      '1 hour',
+      '1 day',
+      '1 week',
+      '1 month',
+      '6 months',
+      '1 year'
+    ])
+  })
+
+  it('shows stored values that are no longer presets as custom', () => {
+    expect(timeoutSecondsToFormValue(900)).toBe('900')
+    expect(formatServiceTimeout(900)).toBe('15 minutes')
+    expect(formatServiceTimeout(10800)).toBe('3 hours')
+  })
+
+  it('caps custom seconds at 1 year', () => {
+    expect(MAX_CUSTOM_TIMEOUT_SECONDS).toBe(31556952)
+    expect(MAX_CUSTOM_TIMEOUT_SECONDS).toBe(mapTimeoutStringToSeconds('1 year'))
+    expect(isCustomTimeoutValue('31556952')).toBe(true)
+    expect(isCustomTimeoutValue('31556953')).toBe(false)
     expect(isCustomTimeoutValue('99999999999999999999')).toBe(false)
   })
 
