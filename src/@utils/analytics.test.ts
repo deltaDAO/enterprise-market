@@ -240,10 +240,10 @@ describe('maybeInitAnalytics consent gate', () => {
     })
   })
 
-  function mockConsent(consented: boolean) {
+  function mockConsent(consented: boolean, privacyPreferenceCenter = 'true') {
     jest.doMock('../../app.config.cjs', () => ({
       __esModule: true,
-      default: { privacyPreferenceCenter: 'true' }
+      default: { privacyPreferenceCenter }
     }))
     jest.doMock('./cookies', () => ({
       getCookieValue: () => (consented ? 'true' : undefined)
@@ -273,5 +273,30 @@ describe('maybeInitAnalytics consent gate', () => {
     expect(mockPlausibleInit).toHaveBeenCalledWith({
       domain: 'market.example.com'
     })
+  })
+
+  it('keeps PostHog off without consent when the banner is disabled', async () => {
+    mockConsent(false, 'false')
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { maybeInitAnalytics } = require('./analytics')
+
+    maybeInitAnalytics()
+    await flushDynamicImports()
+
+    expect(mockInit).not.toHaveBeenCalled()
+    expect(mockPlausibleInit).toHaveBeenCalledWith({
+      domain: 'market.example.com'
+    })
+  })
+
+  it('starts PostHog with consent when the banner is disabled', async () => {
+    mockConsent(true, 'false')
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { maybeInitAnalytics } = require('./analytics')
+
+    maybeInitAnalytics()
+    await flushDynamicImports()
+
+    expect(mockInit).toHaveBeenCalledTimes(1)
   })
 })
