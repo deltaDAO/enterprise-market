@@ -1,14 +1,97 @@
 .langSelect {
-  background: var(--background-body);
-  border: var(--border-size-sm) solid var(--border-navy-soft);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 16px;
+  background: var(--deck-surface);
+  border: 1px solid transparent;
   border-radius: var(--radius-xl);
-  padding: var(--sp-10);
+  padding: 14px 20px;
   margin: var(--spacer) auto;
   text-align: center;
+  color: var(--foreground);
+  font-size: 14px;
+}
+
+.langSelect::before {
+  content: '';
+  position: absolute;
+  inset: -1px 0 auto auto;
+  width: min(100%, 36rem);
+  height: 100%;
+  background: var(--wave-svg) no-repeat;
+  background-size: 100% 100%;
+  -webkit-mask-image: linear-gradient(to left, #000 35%, transparent);
+  mask-image: linear-gradient(to left, #000 35%, transparent);
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: -1;
+  animation: wave-drift 18s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .langSelect::before {
+    animation: none;
+  }
+}
+
+/* on narrow screens the wave spans the whole box, under the links */
+@media screen and (max-width: 767px) {
+  .langSelect::before {
+    opacity: 0.5;
+  }
+}
+
+@keyframes wave-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-2.5%, 2%, 0) scale(1.03);
+  }
+}
+
+.langSelect::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--brand-hairline);
+  opacity: 0.6;
+  pointer-events: none;
 }
 
 .langLabel {
-  font-size: var(--font-size-base);
-  color: var(--font-color-heading);
-  font-weight: var(--font-weight-bold);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted-foreground);
+}
+
+.langOptions {
+  color: var(--muted-foreground);
+}
+
+.langOptions a {
+  /* deck-blue-hover keeps >= 4.5:1 where the wave sits behind the text (5.36 est.) */
+  color: var(--deck-blue-hover);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.langOptions a:hover {
+  text-decoration: underline;
+}
+
+.langOptions a:focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
 }

@@ -17,12 +17,16 @@
   margin: 0;
 }
 
+/* label motif for sort group titles */
 .sortList div h5 {
   margin: calc(var(--spacer) / 4) 0;
-  font-weight: 700;
-  /* font-size: 14px; */
-  line-height: 171%;
-  color: var(--clr-slate-70);
+  font-family: var(--font-family-base);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.6;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted-foreground);
 }
 
 .sortList > div > div:not(:last-child) {

@@ -23,7 +23,8 @@
 .title {
   font-size: var(--text-lg);
   line-height: var(--text-line-base);
-  color: var(--clr-slate-70);
+  color: var(--foreground);
   font-weight: 700;
+  letter-spacing: -0.01em;
   margin: 0;
 }

@@ -1,27 +1,36 @@
 .network {
-  height: 100%;
-  border: var(--menu-border-size) solid var(--menu-border-color);
-  border-top-left-radius: var(--menu-border-radius);
-  border-bottom-left-radius: var(--menu-border-radius);
-  padding: calc(var(--spacer) / 6) calc(var(--spacer) / 3);
-  background: var(--background-content);
+  height: 38px;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-lg);
+  padding: 0 12px;
+  background: var(--card);
+  color: var(--foreground);
   white-space: nowrap;
   display: inline-flex;
   align-items: center;
   cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.network:hover,
+.network[aria-expanded='true'],
+:global([aria-expanded='true']) > .network {
+  background: var(--deck-blue-8-solid);
+  border-color: var(--control-border-hover);
+  color: var(--deck-blue);
 }
 
 .name {
-  font-size: var(--font-size-small);
-  color: var(--menu-font-color);
+  font-size: 13px;
+  font-weight: var(--font-weight-medium);
+  color: inherit;
   cursor: pointer;
 }
 
 .badge {
   margin-left: calc(var(--spacer) / 8);
-  background-color: var(--navy-800);
-  color: var(--menu-network-badge-font-color);
-  font-size: calc(var(--font-size-mini) * 0.8);
+  font-size: 10px;
 }
 
 .warning {
@@ -32,7 +41,7 @@
   display: none;
   width: var(--menu-caret-size);
   height: var(--menu-caret-size);
-  fill: var(--menu-icon-color-fill);
+  fill: currentColor;
   display: inline-block;
   vertical-align: middle;
   margin-left: calc(var(--spacer) / 3);
@@ -46,6 +55,6 @@
 @media screen and (min-width: 25rem) {
   .caret {
     display: inline-block;
-    fill: var(--menu-icon-fill-color);
+    fill: currentColor;
   }
 }

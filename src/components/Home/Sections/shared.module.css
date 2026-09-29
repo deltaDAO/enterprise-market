@@ -1,0 +1,139 @@
+/* layout + header shared by the home content sections */
+.container {
+  width: 100%;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* editorial header: two-tone headline, optional intro set beside it */
+.header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: start;
+  gap: 1.25rem 4rem;
+  margin: 0 0 3.5rem;
+  text-align: left;
+}
+
+@media (min-width: 1024px) {
+  .header[data-has-intro] {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    align-items: end;
+  }
+}
+
+.header[data-align='center'] {
+  justify-items: center;
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.header[data-align='center'] .title {
+  max-width: none;
+}
+
+.title {
+  max-width: 18ch;
+  margin: 0;
+  font-family: var(--font-family-heading);
+  font-size: 52px;
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  color: var(--foreground);
+}
+
+/* second half of the headline recedes: ~4.4:1 on white, large text only */
+.titleMuted {
+  color: #767a82;
+}
+
+.intro {
+  max-width: 34rem;
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* scroll reveal: children with .reveal rise in, staggered by --i */
+[data-reveal='out'] .reveal {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+}
+
+[data-reveal='in'] .reveal {
+  animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 120ms);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .title {
+    font-size: 34px;
+  }
+
+  .intro {
+    font-size: 16px;
+  }
+
+  .header {
+    margin-bottom: 2rem;
+  }
+}
+
+@media screen and (min-width: 1550px) and (max-width: 2549px) {
+  .container {
+    max-width: 1500px;
+  }
+}
+
+/* 4K: type scales ~1.375x with the wider container */
+@media screen and (min-width: 2550px) {
+  .container {
+    max-width: 1900px;
+  }
+
+  .title {
+    font-size: 72px;
+  }
+
+  .intro {
+    font-size: 26px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal='out'] .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  [data-reveal='in'] .reveal {
+    animation: none;
+  }
+}

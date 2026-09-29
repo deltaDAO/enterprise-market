@@ -6,6 +6,11 @@ import { getOriginalValue, testOptionalUrl } from '@utils/yup'
 import { validationConsumerParameters } from '@shared/FormInput/InputElement/ConsumerParameters/_validation'
 import { isS3File } from 'src/@types/S3File'
 import {
+  TIMEOUT_VALIDATION_MESSAGE,
+  isCustomTimeoutValue,
+  isTimeoutPreset
+} from '@utils/ddo'
+import {
   normalizeDockerImageReference,
   parseDockerImageReference
 } from '@utils/docker'
@@ -461,7 +466,13 @@ export const serviceValidationSchema = Yup.object().shape({
         this.createError({ message: 'Please provide a valid file URL' })
       )
     }),
-  timeout: Yup.string().required('Required'),
+  timeout: Yup.string()
+    .required('Required')
+    .test(
+      'valid-timeout',
+      TIMEOUT_VALIDATION_MESSAGE,
+      (value) => isTimeoutPreset(value) || isCustomTimeoutValue(value)
+    ),
   usesConsumerParameters: Yup.boolean(),
   consumerParameters: Yup.array().when('usesConsumerParameters', {
     is: true,

@@ -543,9 +543,6 @@ function ProfileProvider({
         })
       })
 
-      const oceanTokenAddress = getOceanConfig(chainId)?.oceanTokenAddress
-      if (oceanTokenAddress) tokenAddresses.add(oceanTokenAddress)
-
       const providerUrl = appConfig?.customProviderUrl
       if (providerUrl) {
         try {

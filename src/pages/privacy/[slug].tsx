@@ -65,8 +65,15 @@ export async function getServerSideProps({
   params: { slug: string }
 }) {
   const page = await getPageBySlug(params.slug, 'privacy')
-  const content = markdownToHtmlWithToc(page?.content || '')
-  const headings = extractHeadingsFromMarkdown(page?.content || '')
+
+  // A slug with no document behind it must 404 rather than render an empty
+  // page. Withdrawn legal documents would otherwise keep answering 200.
+  if (!page?.content || page.notFound) {
+    return { notFound: true }
+  }
+
+  const content = markdownToHtmlWithToc(page.content)
+  const headings = extractHeadingsFromMarkdown(page.content)
 
   return {
     props: { ...page, content, headings }

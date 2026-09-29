@@ -196,6 +196,9 @@ export default function ButtonBuy({
   computeWizard,
   insufficientSymbol
 }: ButtonBuyProps): ReactElement {
+  // assetTimeout is the formatted access duration (formatServiceTimeout)
+  const timeoutSuffix =
+    !assetTimeout || assetTimeout === 'Forever' ? '' : ` for ${assetTimeout}`
   const buttonText = retry
     ? 'Retry'
     : action === 'download'
@@ -204,10 +207,10 @@ export default function ButtonBuy({
         ? 'Go to service'
         : 'Download'
       : assetType === 'saas'
-      ? `Subscribe${assetTimeout === 'Forever' ? '' : ` for ${assetTimeout}`}`
+      ? `Subscribe${timeoutSuffix}`
       : priceType === 'free'
       ? 'Get'
-      : `Buy ${assetTimeout === 'Forever' ? '' : ` for ${assetTimeout}`}`
+      : `Buy${timeoutSuffix}`
     : hasPreviousOrder &&
       hasPreviousOrderSelectedComputeAsset &&
       !hasProviderFee

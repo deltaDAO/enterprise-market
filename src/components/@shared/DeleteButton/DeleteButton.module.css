@@ -2,31 +2,38 @@ body .deleteButton {
   display: flex;
   align-items: center;
   gap: var(--sp-1);
-  height: 40px;
-  border-radius: 20px !important;
-  background: transparent;
-  color: var(--clr-navy);
-  border: 1px solid var(--clr-navy);
+  height: 38px;
+  border-radius: var(--radius-lg) !important;
+  background: var(--destructive-soft);
+  /* destructive darkened 15% so text passes 4.5:1 on the soft tint */
+  color: color-mix(in srgb, var(--destructive) 85%, #000);
+  border: 1px solid transparent;
+  box-shadow: none;
+  font-weight: 600;
+  font-size: 14px;
   text-transform: none;
-  padding: 9px 14px;
-  transition: all 0.3s ease;
+  padding: 0 14px;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 body .deleteButton:hover,
 body .deleteButton:focus {
-  border-color: var(--clr-navy-darker, var(--navy-900));
-  color: var(--clr-navy-darker, var(--navy-900));
+  border-color: color-mix(in srgb, var(--destructive) 35%, transparent);
+  color: color-mix(in srgb, var(--destructive) 85%, #000);
   cursor: pointer;
-  background: transparent;
-  fill: var(--clr-navy-darker, var(--navy-900));
-  cursor: pointer;
-  transform: scale(1.02);
-  box-shadow: 1px 2px 8px var(--box-shadow-color);
-  transition: all 0.3s ease;
+  background: color-mix(in srgb, var(--destructive) 12%, #fff);
+  fill: currentColor;
+  transform: none;
+  box-shadow: none;
+}
+
+body .deleteButton:focus-visible {
+  outline: 2px solid var(--destructive);
+  outline-offset: 2px;
 }
 
 body .deleteButton:disabled {
-  opacity: 0.5;
+  opacity: 0.45;
   cursor: not-allowed;
 }
 

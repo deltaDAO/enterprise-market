@@ -24,11 +24,11 @@
 }
 
 .item:nth-child(2n + 1) {
-  background-color: var(--background-highlight);
+  background-color: var(--muted);
 }
 
 .editorLabel {
-  color: var(--font-color-text);
+  color: var(--foreground);
   font-size: var(--font-size-base);
   font-family: var(--font-family-heading);
   line-height: 1.2;
@@ -163,8 +163,8 @@
 .selectDropdown {
   padding: 0.5em;
   margin-left: 1em;
-  border-radius: 4px;
-  border: 1px solid var(--neutral-250);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--input);
 }
 
 .enablePolicyToggle {
@@ -184,19 +184,20 @@
 .checkboxLabel input[type='checkbox'] {
   width: 16px;
   height: 16px;
+  accent-color: var(--deck-blue);
 }
 
 .numberInput {
   width: 50px;
   margin-left: 1em;
-  border-radius: 4px;
-  border: 1px solid var(--neutral-250);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--input);
 }
 
 /* Default policies section styling */
 .defaultPoliciesSection {
-  background: var(--yellow-alpha-10);
-  border: 1px solid var(--clr-amber);
+  background: var(--deck-blue-8);
+  border: 1px solid var(--deck-blue-25);
   border-radius: var(--radius-xl);
   padding: var(--sp-6);
   margin-bottom: var(--sp-6);
@@ -205,8 +206,9 @@
 
 .defaultPoliciesTitle {
   font-size: 1.125rem;
-  font-weight: var(--font-weight-bold);
-  color: var(--clr-slate-70);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
   margin-bottom: var(--sp-4);
 }
 
@@ -227,7 +229,7 @@
   align-items: center;
   gap: var(--sp-2_5);
   font-size: var(--font-size-base);
-  color: var(--clr-slate-70);
+  color: var(--foreground);
   cursor: pointer;
 }
 
@@ -241,11 +243,12 @@
   display: inline-block;
   vertical-align: middle;
   margin-top: -2px;
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
 }
 
-.checkbox:focus {
-  box-shadow: 0 0 0 var(--input-selected-background);
+.checkbox:focus-visible {
+  box-shadow: 0 0 0 3px var(--ring);
+  border-color: var(--deck-blue);
 }
 
 .checkbox::after {
@@ -258,7 +261,7 @@
   transition: transform 0.3s ease-out, opacity 0.2s;
   width: 6px;
   height: 9px;
-  border: 2px solid var(--input-background);
+  border: 2px solid #fff;
   border-top: 0;
   border-left: 0;
   left: 5px;
@@ -267,8 +270,8 @@
 }
 
 .checkbox:checked {
-  border-color: var(--input-selected-background);
-  background: var(--input-selected-background);
+  border-color: var(--deck-blue);
+  background: var(--deck-blue);
 }
 
 .checkbox:checked::after {
@@ -280,7 +283,7 @@
 }
 
 .infoIcon {
-  color: var(--clr-navy);
+  color: var(--deck-blue);
   font-size: var(--font-size-small);
 }
 
@@ -302,9 +305,9 @@
 
 .input,
 .selectDropdown {
-  border-radius: var(--radius-xl);
-  height: 48px;
-  border: 1px solid var(--neutral-210);
+  border-radius: var(--radius-lg);
+  height: 40px;
+  border: 1px solid var(--input);
 }
 
 .policiesRow {
@@ -314,8 +317,11 @@
 }
 
 .label {
+  font-size: 11px;
   font-weight: 600;
-  color: var(--clr-slate-70);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
 }
 
 .addPolicyContainer {
@@ -327,10 +333,11 @@
 .policyTypeSelect {
   min-width: 200px;
   height: 40px;
-  border: 1px solid var(--border-navy-soft);
-  border-radius: 20px;
-  padding: 12px 30px;
-  background: var(--brand-white);
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  padding: 8px 32px 8px 12px;
+  background-color: #fff;
+  color: var(--foreground);
   appearance: none;
   background-image: url('../../../@images/chevron_down.svg');
   background-position: calc(100% - 15px) center;
@@ -339,9 +346,9 @@
 }
 
 .addPolicy {
-  height: 40px;
-  border-radius: 20px;
-  padding: 12px 24px;
+  height: 38px;
+  border-radius: var(--radius-lg);
+  padding: 0 20px;
 }
 
 .dropdownButtonWrapper {
@@ -349,34 +356,28 @@
 }
 
 body .addPolicyDropdown {
-  border-radius: 20px;
-  padding: 9px 16px;
-  width: 124px;
-  height: 32px;
-  box-shadow: 1px 2px 8px 0 var(--black-alpha-15);
-  background: linear-gradient(45deg, transparent 50%, #ffffff 50%),
-    linear-gradient(135deg, #ffffff 50%, transparent 50%),
-    linear-gradient(
-      135deg,
-      #1f2c50 0%,
-      rgba(10, 75, 112, 0.8) 27.47%,
-      rgba(10, 75, 112, 0.7) 43.49%,
-      rgba(10, 75, 112, 0.8) 55.43%,
-      #1e2e52 100%
-    ) !important;
+  border-radius: var(--radius-lg);
+  padding: 0 28px 0 14px;
+  width: auto;
+  min-width: 124px;
+  height: 36px;
+  box-shadow: 0 4px 12px var(--deck-blue-25);
+  background: linear-gradient(45deg, transparent 50%, #fff 50%),
+    linear-gradient(135deg, #fff 50%, transparent 50%),
+    linear-gradient(var(--deck-blue), var(--deck-blue)) !important;
   background-position: calc(100% - 15px) calc(50% + 2px),
     calc(100% - 10px) calc(50% + 2px), 0 0 !important;
   background-size: 5px 5px, 5px 5px, 100% 100% !important;
   background-repeat: no-repeat !important;
   border: none;
   cursor: pointer;
-  font-family: 'Helvetica';
+  font-family: var(--font-family-base);
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 14px;
   line-height: 14px;
   text-align: center;
-  color: #ffffff;
+  color: #fff;
   text-transform: none;
   appearance: none;
   -webkit-appearance: none;
@@ -384,19 +385,26 @@ body .addPolicyDropdown {
 }
 
 body .addPolicyDropdown option {
-  background: #ffffff;
-  color: #303031;
-  font-family: 'Helvetica';
+  background: #fff;
+  color: var(--foreground);
+  font-family: var(--font-family-base);
   font-weight: 400;
   padding: 8px 12px;
 }
 
-.addPolicyDropdown:hover {
-  opacity: 0.9;
+body .addPolicyDropdown:hover {
+  background: linear-gradient(45deg, transparent 50%, #fff 50%),
+    linear-gradient(135deg, #fff 50%, transparent 50%),
+    linear-gradient(var(--deck-blue-hover), var(--deck-blue-hover)) !important;
+}
+
+body .addPolicyDropdown:focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
 }
 
 .noPolicies {
-  color: var(--clr-slate-70);
+  color: var(--muted-foreground);
   text-align: left;
   font-size: var(--font-size-mini);
 }
@@ -405,10 +413,19 @@ body .addPolicyDropdown option {
 .selectDropdown {
   min-width: 200px;
   height: 40px;
-  border: 1px solid var(--border-navy-soft);
-  border-radius: 20px;
-  padding: 12px 30px;
-  background: var(--brand-white);
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  padding: 8px 12px;
+  background: #fff;
+  color: var(--foreground);
+}
+
+.input:focus,
+.selectDropdown:focus,
+.policyTypeSelect:focus {
+  outline: none;
+  border-color: var(--deck-blue);
+  box-shadow: 0 0 0 3px var(--ring);
 }
 
 body .advancedOptionsCheckbox {
@@ -427,21 +444,21 @@ body .advancedOptionsCheckbox {
 }
 
 .policyMenu {
-  background: white;
-  border: 1px solid var(--border-navy-soft);
-  border-radius: 8px;
-  box-shadow: 1px 4px 8px var(--black-alpha-15);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
   min-width: 160px;
   z-index: 1000;
 }
 
 .policyOption {
   padding: 12px 16px;
-  font-family: 'Helvetica';
+  font-family: var(--font-family-base);
   font-size: 14px;
-  color: #303031;
+  color: var(--foreground);
   cursor: pointer;
-  border-bottom: 1px solid var(--navy-alpha-10);
+  border-bottom: 1px solid var(--border);
 }
 
 .policyOption:last-child {
@@ -449,7 +466,8 @@ body .advancedOptionsCheckbox {
 }
 
 .policyOption:hover {
-  background: var(--navy-alpha-5);
+  background: var(--deck-blue-8);
+  color: var(--deck-blue);
 }
 
 .select {
@@ -458,10 +476,10 @@ body .advancedOptionsCheckbox {
   padding: 0 1rem;
   font-size: var(--font-size-base);
   font-family: inherit;
-  color: var(--font-color);
-  background-color: var(--background-color);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
+  color: var(--foreground);
+  background-color: #fff;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
   appearance: none;
   line-height: 1.5;
   box-sizing: border-box;

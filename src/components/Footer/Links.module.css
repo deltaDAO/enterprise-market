@@ -1,71 +1,100 @@
+/*
+ * Footer link columns: a left-aligned grid of equal tracks, so every heading
+ * shares one baseline and every link starts on its heading's left edge.
+ * Phone: 2 columns (1 below 360px). Tablet/desktop: one fixed-width track per
+ * section in a single row (desktop: grouped on the footer's right edge).
+ */
 .container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: calc(var(--spacer) * 2);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 2.5rem 1.5rem;
   width: 100%;
+  text-align: left;
 }
 
 .section {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
 }
 
+/* section titles use the label motif, on navy */
 .title {
-  margin-bottom: calc(var(--spacer) / 2);
+  margin: 0 0 1rem;
+  line-height: 1.5;
   text-transform: uppercase;
-  color: #fff;
-  font-weight: 700;
-  font-size: 16px;
+  letter-spacing: var(--letter-spacing-label);
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 600;
+  font-size: var(--font-size-label-motif);
 }
 
 .links {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  gap: calc(var(--spacer) / 4);
-  text-transform: capitalize;
+  align-items: flex-start;
+  gap: 0.625rem;
 }
 
 .link {
+  display: inline-block;
+  max-width: 100%;
+  padding: 0;
   font-weight: 400;
-  font-size: 16px;
-  color: var(--white-alpha-70);
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: left;
+  color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
-  position: relative;
-  padding-right: 20px;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+  border-radius: var(--radius-sm);
 }
 
 .link:hover,
 .link:focus-visible {
-  color: #fdd655;
+  color: var(--brand-white);
   text-decoration: underline;
+  text-decoration-color: var(--deck-cyan);
 }
 
+/* "Cookie Settings" is a <button>: strip every UA default so it is
+ * indistinguishable from the anchors around it */
 .linkButton {
   composes: link;
+  -webkit-appearance: none;
+  appearance: none;
   background: none;
   border: 0;
   margin: 0;
-  padding: 0 20px 0 0;
+  padding: 0;
   cursor: pointer;
-  text-align: inherit;
   font-family: inherit;
-  line-height: inherit;
+  letter-spacing: inherit;
+  text-transform: none;
 }
 
-.arrow {
-  position: absolute;
-  top: 0;
-  right: 0;
-  font-size: var(--font-size-small);
-}
-
-@media screen and (min-width: 55rem) {
+@media screen and (max-width: 359px) {
   .container {
-    justify-content: flex-start;
-    width: auto;
+    grid-template-columns: minmax(0, 1fr);
   }
-  .section {
-    text-align: left;
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 10rem;
+    justify-content: start;
+    column-gap: 4rem;
+  }
+}
+
+@media screen and (min-width: 2550px) {
+  .container {
+    grid-auto-columns: 12rem;
+    column-gap: 5rem;
   }
 }

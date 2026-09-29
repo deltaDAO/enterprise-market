@@ -23,7 +23,7 @@
   left: 1px;
   padding: calc(var(--spacer) / 4);
   width: var(--button-size);
-  color: var(--font-color-text);
+  color: var(--foreground);
   background: transparent;
   border: none;
   box-shadow: none;
@@ -37,33 +37,22 @@
   padding-left: var(--button-size);
   height: var(--button-size);
   max-width: 100%;
-  border: var(--input-border-size) solid var(--input-border-color);
-  border-radius: var(--input-border-radius);
-  background-color: var(--input-background);
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  background-color: var(--background);
+  color: var(--foreground);
   font-size: 16px; /* prevent zoom in on input focus on mobile devices */
   cursor: text;
-  transition: 0.1s ease-out;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input:hover:not(:focus) {
+  border-color: var(--input-hover);
 }
 
 .input:focus {
-  /* prevent the placeholder to move when increasing the border size*/
-  padding-left: calc(var(--button-size) - 1px);
-
-  border: var(--input-selected-border-size) solid
-    var(--input-selected-border-color);
-}
-
-.searchIcon {
-  fill: var(--input-placeholder-font-color);
-  transition: 0.1s ease-out;
-  width: var(--font-size-base);
-  height: var(--font-size-base);
-}
-
-.search:has(.input:focus) .searchIcon,
-.button:hover .searchIcon,
-.button:focus .searchIcon {
-  fill: var(--input-font-color);
+  border-color: var(--input-hover);
+  box-shadow: 0 0 0 3px var(--ring);
 }
 
 .searchBlock {
@@ -71,63 +60,99 @@
   flex-direction: column;
   gap: 16px;
   flex: 1;
-  /* width: 240px;
-  height: 92px; */
 }
 
 .searchContainer {
   width: 100%;
-  height: 55px;
-  background: white;
-  border-radius: 20px;
+  height: 52px;
+  background: var(--background);
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
-  box-shadow: 1px 4px 8px var(--black-alpha-15);
+  box-shadow: var(--shadow-soft);
   overflow: hidden;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.searchInput {
+.searchContainer:hover,
+.searchContainer:focus-within {
+  border-color: var(--input-hover);
+}
+
+.searchContainer:focus-within {
+  box-shadow: 0 0 0 3px var(--ring), var(--shadow-soft);
+}
+
+.searchInput,
+.searchInput:focus {
   flex: 1;
   border: none;
   outline: none;
+  box-shadow: none;
   font-size: 16px;
-  color: var(--gray-alpha-80);
-  padding: 0 20px;
+  color: var(--foreground);
+  padding: 0 16px;
   background: transparent;
-  border-radius: 20px 0 0 20px;
+  border-radius: var(--radius-lg) 0 0 var(--radius-lg);
   width: 565px;
+  min-width: 0;
   height: 50px;
 }
 
 .searchInput::placeholder {
-  color: var(--gray-alpha-50);
+  color: var(--placeholder);
 }
 
 .searchButton {
-  width: 80px;
-  height: 100%;
-  background: #fdd655;
+  width: 64px;
+  height: calc(100% - 8px);
+  margin: 4px;
+  background: var(--deck-blue);
   border: none;
-  border-radius: 0;
+  border-radius: calc(var(--radius-lg) - 3px);
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: background 0.2s;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
   position: relative;
+  box-shadow: 0 4px 12px var(--deck-blue-25);
 }
 
 .searchButton:hover {
-  background: var(--yellow-350);
+  background: var(--deck-blue-hover);
+}
+
+.searchButton:focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
 }
 
 .searchIcon {
-  width: 24px;
-  height: 24px;
-  fill: var(--navy-750);
+  width: 20px;
+  height: 20px;
+  fill: var(--brand-white);
   transition: transform 0.2s ease;
 }
 
+.button .searchIcon {
+  width: var(--font-size-base);
+  height: var(--font-size-base);
+  fill: var(--placeholder);
+}
+
+.search:has(.input:focus) .button .searchIcon,
+.button:hover .searchIcon {
+  fill: var(--deck-blue);
+}
+
 .searchButton:hover .searchIcon {
-  transform: scale(1.1);
+  transform: scale(1.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .searchButton:hover .searchIcon {
+    transform: none;
+  }
 }

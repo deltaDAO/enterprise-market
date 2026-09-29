@@ -1,6 +1,37 @@
 import { createRequire } from 'module'
 const require = createRequire(import.meta.url)
 
+// Search engines may only index the NEXT_PUBLIC_SITE_URL host (see
+// src/@utils/seo.ts). Statically optimized pages are rendered at build time and
+// assume that host, so every other host (e.g. Vercel preview URLs) gets a
+// noindex header. Both values are read at build time.
+function getNoindexHeaders() {
+  if (String(process.env.NEXT_PUBLIC_ALLOW_INDEXING).toLowerCase() === 'true') {
+    return []
+  }
+
+  let hostname
+  try {
+    hostname = new URL(process.env.NEXT_PUBLIC_SITE_URL).hostname
+  } catch {
+    return []
+  }
+  const pattern = hostname.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
+  return [
+    {
+      source: '/:path*',
+      // Not the site host, directly or behind a proxy that only sets
+      // X-Forwarded-Host
+      missing: [
+        { type: 'host', value: pattern },
+        { type: 'header', key: 'x-forwarded-host', value: `${pattern}(:\\d+)?` }
+      ],
+      headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }]
+    }
+  ]
+}
+
 const nextConfig = {
   output: 'standalone',
   // the markdown pages are read at request time, so they must survive tracing
@@ -62,6 +93,9 @@ const nextConfig = {
     )
 
     return config
+  },
+  async headers() {
+    return getNoindexHeaders()
   },
   async redirects() {
     return [

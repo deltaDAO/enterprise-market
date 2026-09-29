@@ -25,24 +25,41 @@
   margin: 0;
 }
 
+/* label motif for filter group titles */
 .filterTypeLabel {
   margin: calc(var(--spacer) / 4) 0;
-  font-weight: 700;
-  /* font-size: 14px; */
-  line-height: 171%;
-  color: var(--clr-slate-70);
+  font-family: var(--font-family-base);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.6;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted-foreground);
 }
 
 .filterType > div:not(:last-child) {
   margin-bottom: calc(var(--spacer) / 8);
 }
 
+/* compact (mobile/tablet) filter chips: white with --input (3:1 boundary), deck-blue when hovered or holding a selection */
 .compactFilterContainer {
   min-width: max-content;
   height: min-content;
-  padding: calc(var(--spacer) / 4);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
+  padding: calc(var(--spacer) / 4) calc(var(--spacer) / 2.5);
+  background: var(--card);
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-blue-5);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.compactFilterContainer:hover {
+  border-color: var(--input-hover);
+}
+
+.compactFilterContainer:has(input:checked) {
+  background: var(--deck-blue-8);
+  border-color: var(--deck-blue);
 }
 
 .compactOptionsContainer > div {

@@ -21,7 +21,6 @@
   min-height: 40px;
   font-family: var(--font-family-base);
   font-weight: var(--text-weight-bold);
-  border-radius: var(--radius-xl);
 }
 
 .actions button [class*='loaderWrap'],

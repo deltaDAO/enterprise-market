@@ -28,7 +28,7 @@
   min-width: 3rem;
   min-height: 3rem;
   margin: 0;
-  fill: var(--color-secondary);
+  fill: var(--deck-blue);
 }
 
 .title {

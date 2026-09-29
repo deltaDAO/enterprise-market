@@ -8,49 +8,40 @@
   cursor: help;
 }
 
-.free {
-  border: 1px solid #00adb2;
-  border-radius: 20px;
-  padding: 2px 8px;
+.free,
+.paid,
+.gpu {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  padding: 0 8px;
   width: fit-content;
-  height: fit-content;
-  box-shadow: 1px 2px 8px 0 var(--black-alpha-15);
-  background: var(--cyan-alpha-1);
-  font-weight: 700;
+  box-shadow: none;
+  font-weight: 500;
   font-size: 12px;
-  line-height: 100%;
+  line-height: 1;
   text-align: center;
-  color: #00adb2;
+  white-space: nowrap;
+}
+
+.free {
+  background: var(--success-soft);
+  color: var(--success);
+  border-color: rgba(4, 120, 87, 0.2);
 }
 
 .paid {
-  border: 1px solid var(--green-700);
-  border-radius: 20px;
-  padding: 2px 8px;
-  width: fit-content;
-  height: fit-content;
-  box-shadow: 1px 2px 8px 0 var(--black-alpha-15);
-  background: var(--green-alpha-1);
-  font-weight: 700;
-  font-size: 12px;
-  line-height: 100%;
-  text-align: center;
-  color: var(--green-700);
+  background: var(--deck-blue-8);
+  color: var(--deck-blue);
+  border-color: var(--deck-blue-25);
 }
 
 .gpu {
-  border: 1px solid #8b5cf6;
-  border-radius: 20px;
-  padding: 2px 8px;
-  width: fit-content;
-  height: fit-content;
-  box-shadow: 1px 2px 8px 0 var(--black-alpha-15);
-  background: rgba(139, 92, 246, 0.1);
-  font-weight: 700;
-  font-size: 12px;
-  line-height: 100%;
-  text-align: center;
-  color: #8b5cf6;
+  background: rgba(160, 81, 255, 0.08);
+  color: var(--brand-secondary-dark);
+  border-color: rgba(160, 81, 255, 0.4);
 }
 
 .tooltip {
@@ -63,15 +54,15 @@
 }
 
 .tooltipContent {
-  background: #1e293b;
-  color: white;
+  background: var(--deck-navy);
+  color: var(--brand-white);
   padding: 8px 12px;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   font-size: 12px;
   line-height: 1.5;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  border: 1px solid #334155;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   word-wrap: break-word;
 }
 
@@ -84,7 +75,7 @@
   height: 0;
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
-  border-top: 6px solid #1e293b;
+  border-top: 6px solid var(--deck-navy);
 }
 
 @keyframes fadeIn {
@@ -98,13 +89,8 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  .tooltipContent {
-    background: #0f172a;
-    border-color: #475569;
-  }
-
-  .tooltipArrow {
-    border-top-color: #0f172a;
+@media (prefers-reduced-motion: reduce) {
+  .tooltip {
+    animation: none;
   }
 }

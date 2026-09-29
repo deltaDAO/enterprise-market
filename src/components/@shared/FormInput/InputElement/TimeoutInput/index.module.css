@@ -1,0 +1,16 @@
+.timeout {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacer) / 4);
+}
+
+.custom {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacer) / 8);
+}
+
+.preview {
+  font-size: var(--font-size-small);
+  color: var(--muted-foreground);
+}

@@ -5,17 +5,24 @@
   justify-content: center;
   min-height: 0;
   padding: 24px 32px;
-  background: white;
+  background: var(--deck-surface-soft);
 }
 
 .card {
   display: flex;
   width: 100%;
   max-width: 1060px;
-  border-radius: 24px;
+  border-radius: var(--radius-2xl);
   overflow: hidden;
-  box-shadow: 0 -8px 24px rgba(15, 23, 42, 0.04),
-    0 22px 48px rgba(15, 23, 42, 0.1);
+  border: 1px solid transparent;
+  background: linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--deck-blue) 30%, var(--border)),
+        color-mix(in srgb, var(--deck-cyan) 35%, var(--border))
+      )
+      border-box;
+  box-shadow: var(--shadow-blue-10), var(--shadow-soft);
 }
 
 .formPanel {
@@ -25,13 +32,18 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: white;
+  background: var(--card);
+  color: var(--foreground);
   gap: 40px;
 }
 
 .pillTabs {
   display: flex;
-  gap: 10px;
+  gap: 4px;
+  padding: 4px;
+  background: var(--secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
 }
 
 .formContent {
@@ -44,36 +56,38 @@
 
 .pillTab {
   flex: 1;
-  padding: 12px 20px;
-  border-radius: 999px;
-  border: 1px solid #e2e8f0;
-  background: white;
+  height: 36px;
+  padding: 0 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  background: transparent;
+  font-family: var(--font-family-base);
   font-size: 14px;
-  font-weight: 700;
-  color: #64748b;
+  font-weight: 600;
+  color: var(--muted-foreground);
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(1, 32, 55, 0.04);
-  transition: all 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .pillTab:hover {
-  background: #f8fafc;
-  border-color: #cbd5e1;
-  color: var(--clr-navy);
+  color: var(--deck-blue);
+}
+
+.pillTab:focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
 }
 
 .pillTabActive {
-  background: var(--gradient-primary);
-  color: white;
-  border-color: transparent;
-  box-shadow: 1px 2px 8px var(--box-shadow-color);
+  background: var(--card);
+  color: var(--deck-blue);
+  border-color: var(--deck-blue-25);
+  box-shadow: var(--shadow-blue-5), 0 1px 3px rgba(36, 80, 236, 0.1);
 }
 
 .pillTabActive:hover {
-  background: var(--gradient-primary);
-  border-color: transparent;
-  color: white;
-  opacity: 0.95;
+  background: var(--card);
+  color: var(--deck-blue);
 }
 
 @media (min-width: 2560px) {

@@ -6,13 +6,14 @@
 
 .successMessage {
   font-size: var(--font-size-base);
-  color: var(--font-color-text);
+  color: var(--foreground);
   line-height: 1.5;
 }
 
 .jobDetails {
-  background: var(--background-highlight);
-  border-radius: var(--border-radius);
+  background: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
   padding: var(--spacer);
   display: flex;
   flex-direction: column;
@@ -27,13 +28,19 @@
 }
 
 .label {
-  font-weight: var(--font-weight-bold);
-  color: var(--font-color-heading);
+  font-weight: 600;
+  font-size: var(--font-size-label-motif);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-label);
+  color: var(--muted-foreground);
   min-width: 80px;
 }
 
 .value {
-  color: var(--font-color-text);
+  color: var(--foreground);
+  font-family: var(--font-family-monospace);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
   text-align: right;
   word-break: break-all;
 }

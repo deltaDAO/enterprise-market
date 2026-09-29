@@ -31,11 +31,11 @@
 }
 
 .dataInfo {
-  font-family: var(--font-family);
+  font-family: var(--font-family-base);
   font-weight: 700;
   font-size: 18px;
   line-height: 111%;
-  color: rgba(48, 48, 49, 0.7);
+  color: var(--muted-foreground);
   margin-bottom: 1.5rem;
 }
 
@@ -68,7 +68,7 @@ body .selectAllButton {
   display: flex;
   align-items: center;
   gap: var(--sp-4);
-  border-bottom: 1px solid rgba(48, 48, 49, 0.2);
+  border-bottom: 1px solid var(--border);
   padding: 0px 0px var(--sp-4) 0px;
   margin-bottom: var(--sp-4);
 }
@@ -89,7 +89,7 @@ body .selectAllButton {
   display: inline-block;
   vertical-align: middle;
   margin-top: 4px;
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
   flex-shrink: 0;
 }
 
@@ -103,7 +103,7 @@ body .selectAllButton {
   transition: transform 0.3s ease-out, opacity 0.2s;
   width: 6px;
   height: 9px;
-  border: 2px solid var(--input-background);
+  border: 2px solid #fff;
   border-top: 0;
   border-left: 0;
   left: 5px;
@@ -112,16 +112,17 @@ body .selectAllButton {
 }
 
 .inputField:checked {
-  border-color: var(--input-selected-background);
-  background: var(--input-selected-background);
+  border-color: var(--deck-blue);
+  background: var(--deck-blue);
 }
 
 .inputField:checked::after {
   opacity: 1;
 }
 
-.inputField:focus {
-  box-shadow: 0 0 0 var(--input-selected-background);
+.inputField:focus-visible {
+  box-shadow: 0 0 0 3px var(--ring);
+  border-color: var(--deck-blue);
 }
 
 .credentialContent {
@@ -133,10 +134,10 @@ body .selectAllButton {
 }
 
 .credentialName {
-  font-family: var(--font-family);
+  font-family: var(--font-family-base);
   font-weight: 700;
   font-size: 14px;
-  color: #303031;
+  color: var(--foreground);
   font-family: var(--font-family-base);
   display: flex;
   justify-content: flex-start;
@@ -158,9 +159,12 @@ body .selectAllButton {
 .fieldNames div {
   font-family: var(--font-family-base);
   font-weight: var(--text-weight-regular);
-  font-size: var(--text-sm);
-  line-height: 1.2;
-  color: var(--navy-650);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  line-height: 1.6;
+  color: var(--muted-foreground);
 }
 
 .fieldValues {
@@ -174,7 +178,8 @@ body .selectAllButton {
   font-weight: var(--text-weight-regular);
   font-size: var(--text-sm);
   line-height: 1.2;
-  color: var(--navy-650);
+  font-variant-numeric: tabular-nums;
+  color: var(--foreground);
 }
 
 .panelRow:last-child {
@@ -197,25 +202,25 @@ body .selectAllButton {
 }
 
 .scrollableList::-webkit-scrollbar-thumb {
-  background: var(--gradient-accent);
+  background: var(--deck-blue-12);
   border-radius: 3px;
 }
 
 .scrollableList::-webkit-scrollbar-thumb:hover {
-  background: var(--gradient-accent);
+  background: var(--deck-blue-25);
 }
 
 .valueWrapper {
   position: relative;
   cursor: pointer;
-  color: white;
+  color: inherit;
 }
 
 .valueWrapper:hover .fullValueTooltip {
   visibility: visible;
   opacity: 1;
   transform: translateY(0);
-  color: white;
+  color: #fff;
 }
 
 .fullValueTooltip {
@@ -225,16 +230,17 @@ body .selectAllButton {
   top: 100%;
   left: 0;
   z-index: 10;
-  background-color: #1e1e2e;
-  color: #ffffff;
+  background-color: var(--deck-navy);
+  color: #fff;
+  font-family: var(--font-family-monospace);
   padding: 8px 12px;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   font-size: 13px;
   line-height: 1.4;
   white-space: pre-wrap;
   max-width: 400px;
   word-break: break-all;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-soft);
   pointer-events: none;
   transform: translateY(6px);
   transition: all 0.18s ease;
@@ -248,6 +254,5 @@ body .selectAllButton {
   left: 12px;
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
-  border-bottom: 6px solid #1e1e2e;
-  color: white;
+  border-bottom: 6px solid var(--deck-navy);
 }

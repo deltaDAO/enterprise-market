@@ -83,10 +83,6 @@ export default function URLInput({
         field.value === '' ||
         (checkUrl && storageType === 'url' && !isUrl(field.value)) ||
         (checkUrl && storageType === 'ipfs' && !isCID(field.value)) ||
-        (checkUrl &&
-          storageType === 'graphql' &&
-          !isCID(field.value) &&
-          !inputValues[0]?.query) ||
         field.value.includes('javascript:') ||
         (storageType === 'smartcontract' && !inputValues[0]?.abi) ||
         meta?.error

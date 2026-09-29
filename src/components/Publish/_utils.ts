@@ -879,10 +879,10 @@ export async function transformPublishFormToDdo(
         orders: 0,
         price: {
           value: values?.pricing.type === 'free' ? 0 : values.pricing.price,
-          tokenSymbol: values.pricing?.baseToken?.symbol || 'OCEAN',
+          tokenSymbol: values.pricing?.baseToken?.symbol || '',
           tokenAddress:
             values.pricing?.baseToken?.address ||
-            getOceanConfig(chainId).oceanTokenAddress
+            getOceanConfig(chainId)?.oceanTokenAddress
         }
       }
     },
@@ -1059,6 +1059,14 @@ export async function createTokensAndPricing(
   config: Config,
   nftFactory: NftFactory
 ) {
+  // oceanTokenAddress is the first entry of the chain's ERC20 allowlist and is
+  // undefined for chains without one (see getOceanConfig).
+  if (!config.oceanTokenAddress) {
+    throw new Error(
+      `No base token configured for network ${values.user.chainId}. Add it to NEXT_PUBLIC_ALLOWED_ERC20_ADDRESSES.`
+    )
+  }
+
   const nftCreateData: NftCreateData = generateNftCreateData(
     values.metadata.nft,
     accountId,
@@ -1082,7 +1090,7 @@ export async function createTokensAndPricing(
   switch (values.pricing.type) {
     case 'fixed': {
       const baseTokenAddress =
-        values.pricing.baseToken.address ?? config.oceanTokenAddress
+        values.pricing.baseToken?.address || config.oceanTokenAddress
       const signer = await getDummySigner(values.user.chainId)
       const { provider } = signer
       const tokenInfo = await getTokenInfo(baseTokenAddress, provider)

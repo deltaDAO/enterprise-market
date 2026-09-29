@@ -1,9 +1,15 @@
 .preferences {
-  padding: calc(var(--spacer) / 4) calc(var(--spacer) / 3);
+  display: inline-flex;
+  align-items: center;
+  height: 38px;
+  padding: 0 10px;
+  border-radius: var(--radius-lg);
+  color: inherit;
   cursor: pointer;
+  transition: background-color 0.2s ease;
   /* border: var(--menu-border-size) solid var(--menu-border-color); */
   /* border-radius: var(--menu-border-radius); */
-  /* background-color: var(--background-content); */
+  /* background-color: var(--card); */
   white-space: nowrap;
 }
 
@@ -16,18 +22,24 @@
   composes: caret from '../Menu.module.css';
 }
 
+/* currentColor-based tint works on the light header and the navy home hero */
+.preferences:hover,
+.preferences[aria-expanded='true'] {
+  background: color-mix(in srgb, currentColor 10%, transparent);
+}
+
 .icon {
-  fill: var(--menu-icon-fill-color);
-  transition: 0.2s ease-out;
-  width: 1em;
-  height: 1em;
+  fill: currentColor;
+  transition: fill 0.2s ease-out;
+  width: 18px;
+  height: 18px;
 }
 
 .preferences:hover .icon,
 .preferences:focus .icon,
 .preferences:active .icon,
 .preferences[aria-expanded='true'] .icon {
-  fill: var(--menu-icon-fill-color-hover);
+  fill: currentColor;
 }
 
 .preferencesDetails {
@@ -56,5 +68,17 @@
 }
 
 .preferencesDetails input[type='checkbox'] + label {
-  font-weight: 700;
+  font-weight: 600;
+}
+
+@media screen and (max-width: 469px) {
+  .preferences {
+    padding: 0 6px;
+  }
+}
+
+/* the cog/caret SVGs ship with fill="white" on their paths */
+.icon path,
+.caret path {
+  fill: currentColor;
 }

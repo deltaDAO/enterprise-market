@@ -2,7 +2,6 @@ import { FileInfo, S3Object } from '@oceanprotocol/lib'
 
 export interface FormFileData extends FileInfo {
   url?: string
-  query?: string
   transactionId?: string
   address?: string
   abi?: string

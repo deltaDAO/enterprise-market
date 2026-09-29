@@ -1,7 +1,7 @@
 .teaser {
   margin-bottom: calc(var(--spacer) * 2);
   margin-top: -4rem;
-  border-radius: var(--border-radius);
+  border-radius: var(--radius-xl);
   overflow: hidden;
 }
 
@@ -10,7 +10,9 @@
   display: flex;
   flex-direction: column;
   gap: var(--sp-4);
-  border: var(--border-size-sm) solid var(--border-navy-soft);
+  border: 1px solid transparent;
+  background: var(--deck-card-background);
+  box-shadow: var(--shadow-blue-5);
   border-radius: var(--radius-xl);
   padding: var(--sp-10);
   margin-bottom: var(--spacer);
@@ -18,14 +20,79 @@
 
 .title {
   font-size: var(--font-size-h3);
-  color: var(--font-color-heading);
+  color: var(--deck-blue);
   margin: 0 0 calc(var(--spacer) / 2) 0;
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-display);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+/* the card opens with the mist header band (wave + hairline), like every
+ * other inner page; negative margins pull it to the card edges */
+.section > .title {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin: calc(-1 * var(--sp-10)) calc(-1 * var(--sp-10)) var(--sp-2);
+  padding: var(--sp-8) var(--sp-10) var(--sp-6);
+  background: var(--deck-surface);
+  border-radius: calc(var(--radius-xl) - 1px) calc(var(--radius-xl) - 1px) 0 0;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: var(--font-weight-display);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--deck-blue);
+}
+
+.section > .title::before {
+  content: '';
+  position: absolute;
+  inset: -1px 0 auto auto;
+  width: min(100%, 36rem);
+  height: 100%;
+  background: var(--wave-svg) no-repeat;
+  background-size: 100% 100%;
+  -webkit-mask-image: linear-gradient(to left, #000 35%, transparent);
+  mask-image: linear-gradient(to left, #000 35%, transparent);
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: -1;
+  animation: wave-drift 18s ease-in-out infinite alternate;
+}
+
+.section > .title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--brand-hairline);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section > .title::before {
+    animation: none;
+  }
+}
+
+@keyframes wave-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-2.5%, 2%, 0) scale(1.03);
+  }
 }
 
 .lastUpdated {
   margin: 0 0 calc(var(--spacer) / 2) 0;
-  color: var(--font-color-text);
+  font-size: var(--font-size-label-motif);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-label);
+  color: var(--muted-foreground);
 }
 
 .content {
@@ -47,21 +114,29 @@
 
 .content th,
 .content td {
-  border: 1px solid var(--border-color);
+  border: 0;
+  border-bottom: 1px solid var(--border);
   padding: calc(var(--spacer) / 4);
   text-align: left;
 }
 
-.content tr:nth-child(even) {
-  background: var(--background-highlight);
+.content tr:hover > td {
+  background: var(--muted);
 }
 
 .content h1,
 .content h2 {
   font-size: var(--font-size-h3);
-  color: var(--font-color-heading);
+  color: var(--foreground);
   margin-top: var(--spacer);
   margin-bottom: calc(var(--spacer) / 2);
+}
+
+/* a document h1 sits at h2 size; keep it at heading weight so it does not
+ * render lighter than the section h2s under the display-weight h1 default */
+.content h1 {
+  font-weight: var(--font-weight-heavy);
+  letter-spacing: -0.015em;
 }
 
 .content h2:first-of-type {
@@ -70,21 +145,21 @@
 
 .content h3 {
   font-size: var(--font-size-h4);
-  color: var(--font-color-heading);
+  color: var(--foreground);
   margin-top: var(--spacer);
   margin-bottom: calc(var(--spacer) / 3);
 }
 
 .content h4 {
   font-size: var(--font-size-h5);
-  color: var(--font-color-heading);
+  color: var(--foreground);
   margin-top: calc(var(--spacer) / 1.5);
   margin-bottom: calc(var(--spacer) / 3);
 }
 
 .content h5 {
   font-size: var(--font-size-base);
-  color: var(--font-color-heading);
+  color: var(--foreground);
   margin-top: calc(var(--spacer) / 2);
   margin-bottom: calc(var(--spacer) / 4);
 }
@@ -110,11 +185,15 @@
 }
 
 .content ul li:before {
-  content: '▪';
-  top: -2px;
+  content: '';
+  top: 0.62em;
   position: absolute;
-  left: -1.5rem;
-  color: var(--brand-grey-light);
+  left: -1.1rem;
+  width: 6px;
+  height: 6px;
+  border-radius: 1px;
+  transform: rotate(45deg);
+  background: linear-gradient(135deg, var(--deck-cyan), var(--deck-blue));
   user-select: none;
 }
 
@@ -134,7 +213,7 @@
   margin: calc(var(--spacer) * 2) auto;
   max-width: 90%;
   border: 0;
-  border-top: 2px solid var(--border-color);
+  border-top: 1px solid var(--border);
 }
 
 .content figure {
@@ -143,21 +222,21 @@
 
 .content figcaption {
   text-align: center;
-  color: var(--brand-grey-light);
+  color: var(--muted-foreground);
   margin-top: calc(var(--spacer) / 4);
   font-size: var(--font-size-small);
 }
 
 .content blockquote {
-  font-style: italic;
+  font-style: normal;
   font-size: var(--font-size-large);
   position: relative;
   margin-top: calc(var(--spacer) * 1.5);
   margin-bottom: calc(var(--spacer) * 1.5);
   padding: calc(var(--spacer) / 2) calc(var(--spacer) / 2);
-  border-left: 4px solid var(--color-primary);
-  background: var(--background-highlight);
-  border-radius: var(--border-radius);
+  border: 1px solid var(--info-border);
+  background: var(--info-bg);
+  border-radius: var(--radius-xl);
 }
 
 /* Remove decorative quotation mark for a cleaner look */
@@ -165,9 +244,14 @@
   content: '';
 }
 
+/* --brand-highlight is 4.45:1 on the --info-bg blockquote; deck-blue is 5.61 */
+.content blockquote a {
+  color: var(--deck-blue);
+}
+
 .content :global(.anchor) {
   opacity: 0;
-  color: var(--brand-grey-light);
+  color: var(--muted-foreground);
   font-family: var(--font-family-base);
   font-weight: var(--font-weight-base);
   margin-top: 0.2rem;
@@ -178,11 +262,22 @@
 }
 
 .content a {
-  color: var(--link-font-color);
+  color: var(--brand-highlight);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
 .content a:hover {
-  color: var(--color-highlight);
+  color: var(--deck-blue-hover);
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: var(--sp-6) var(--sp-4);
+  }
+
+  .section > .title {
+    margin: calc(-1 * var(--sp-6)) calc(-1 * var(--sp-4)) var(--sp-2);
+    padding: var(--sp-6) var(--sp-4) var(--sp-5);
+  }
 }

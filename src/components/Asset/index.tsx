@@ -5,6 +5,15 @@ import Alert from '@shared/atoms/Alert'
 import { useAsset } from '@context/Asset'
 import AssetContent from './AssetContent'
 import AssetDetailsSkeleton from './Skeleton'
+import { toMetaDescription } from '@utils/seo'
+
+function getAssetDescription(description: unknown): string {
+  if (typeof description === 'string') return toMetaDescription(description)
+  if (description && typeof description === 'object') {
+    return toMetaDescription((description as { '@value'?: string })['@value'])
+  }
+  return ''
+}
 
 export default function AssetDetails({ uri }: { uri: string }): ReactElement {
   const router = useRouter()
@@ -19,8 +28,13 @@ export default function AssetDetails({ uri }: { uri: string }): ReactElement {
     setPageTitle(isInPurgatory ? '' : title)
   }, [asset, error, isInPurgatory, router, title, uri])
 
+  const pageDescription = isInPurgatory
+    ? undefined
+    : getAssetDescription(asset?.credentialSubject?.metadata?.description) ||
+      undefined
+
   return asset && pageTitle !== undefined && !loading ? (
-    <Page title={pageTitle} uri={uri}>
+    <Page title={pageTitle} description={pageDescription} uri={uri}>
       <AssetContent asset={asset} />
     </Page>
   ) : error ? (

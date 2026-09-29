@@ -8,7 +8,8 @@
 .stats *,
 .statsList * {
   font-size: var(--font-size-small);
-  color: var(--color-secondary);
+  color: rgba(255, 255, 255, 0.7);
+  font-variant-numeric: tabular-nums;
   margin-left: 0;
 }
 

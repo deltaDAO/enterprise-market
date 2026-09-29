@@ -6,12 +6,12 @@
 .panelColumn h3 {
   font-weight: 700;
   font-size: 18px;
-  color: #303031;
+  color: var(--foreground);
 }
 .panelColumn label {
   font-weight: 700;
   font-size: 14px;
-  color: var(--clr-slate-70);
+  color: var(--muted-foreground);
 }
 .panelRow {
   display: flex;
@@ -31,21 +31,19 @@
 }
 
 .ssiPanel {
-  display: inline-flex;
-  align-items: center;
+  composes: button from '../../@shared/atoms/Button/index.module.css';
+  min-width: 0;
+  height: 38px;
+  padding: 0 14px;
   gap: 8px;
-  padding: 8px 16px;
-  font-family: var(--font-family);
-  font-weight: 700;
-  line-height: 137%;
-  text-align: center;
-  color: #fff;
-  transition: all 0.3s ease;
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-  font-size: 20px;
+  font-size: 14px;
 }
+
+.ssiPanel [class*='loader'] {
+  border-color: var(--deck-blue-12);
+  border-top-color: var(--deck-blue);
+}
+
 .text {
   white-space: nowrap;
   overflow: hidden;
@@ -65,8 +63,8 @@
 }
 @media screen and (max-width: 480px) {
   .ssiPanel {
-    padding: 0.1em 0.2em;
-    font-size: 14px;
+    padding: 0 10px;
+    font-size: 13px;
   }
 
   .marginRight2 {
@@ -92,42 +90,31 @@
 
 @media screen and (min-width: 481px) and (max-width: 768px) {
   .ssiPanel {
-    padding: 0.4em 0.8em;
+    padding: 0 12px;
   }
   .text {
     max-width: 80px;
   }
 }
 
-@media screen and (min-width: 768px) and (max-width: 1150px) {
-  .text {
-    font-size: 16px;
-  }
+.connected .icon {
+  fill: var(--success);
 }
 
-.connected {
-  color: var(--neutral-200);
-  background-color: transparent;
+.disconnected .icon {
+  fill: var(--muted-foreground);
 }
 
-.connected:hover {
-  transform: scale(1.05);
-}
-
-.connected:hover .icon {
-  transform: scale(1.2);
-}
-
-.disconnected {
-  background-color: transparent;
-}
-
-.disconnected:hover {
-  transform: scale(1.05);
-}
-
+.connected:hover .icon,
 .disconnected:hover .icon {
-  transform: scale(1.2);
+  transform: scale(1.1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .connected:hover .icon,
+  .disconnected:hover .icon {
+    transform: none;
+  }
 }
 
 .marginBottom7px {
@@ -161,52 +148,29 @@
 }
 
 .closeButton {
-  border-radius: 20px;
-  padding: 4px 20px;
-  width: 79px;
+  padding: 4px 16px;
+  min-width: 79px;
   height: 32px;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 114%;
-  text-align: center;
-  color: #0a4b70;
-  box-shadow: 1px 2px 8px 0 var(--black-alpha-15);
-  background: rgba(48, 48, 49, 0.12);
 }
 
 .resetButton {
-  border-radius: 20px;
-  padding: 4px 20px;
-  width: 169px;
+  padding: 4px 16px;
+  min-width: 169px;
   height: 32px;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 114%;
-  text-align: center;
-  color: #0a4b70;
-  box-shadow: 1px 2px 8px 0 var(--black-alpha-15);
-  background: linear-gradient(
-    135deg,
-    #fdd655 0%,
-    rgba(253, 214, 85, 0.8) 27.47%,
-    rgba(253, 214, 85, 0.7) 43.49%,
-    rgba(253, 214, 85, 0.8) 55.43%,
-    #fdd655 100%
-  );
 }
 
 .inputField {
-  border: 1px solid rgba(10, 75, 112, 0.5);
-  border-radius: 20px;
-  padding: 10px 30px;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  padding: 10px 12px;
   width: 500px;
   height: 40px;
   font-weight: 400;
   font-size: 14px;
-  color: #303031;
+  color: var(--foreground);
   font-family: var(--font-family-base);
   box-shadow: none;
-  background: var(--background-content);
+  background: var(--card);
 }
 
 .buttonStyles {
@@ -222,56 +186,16 @@
   .dialogBorder {
     width: 100%;
   }
-  .ssiPanel {
-    border: none;
-    box-shadow: 1px 2px 8px var(--black-alpha-15);
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: transform 0.2s;
-    border-radius: 20px;
-    padding: 12px 24px;
-    width: 200px;
-    height: 50px;
-    background: linear-gradient(
-      135deg,
-      #1f2c50 0%,
-      var(--navy-640) 27.47%,
-      var(--navy-620) 43.49%,
-      var(--navy-alpha-94) 55.43%,
-      #1e2e52 100%
-    );
-  }
   .inputField {
     height: 35px;
     font-size: var(--font-size-small);
-  }
-  .icon {
-    background: var(--green-450);
-    border-radius: 20px;
-  }
-  .closeButton {
-    border-radius: 20px;
-    padding: 4px 10px;
-    width: 20px;
-    font-size: 8px;
-  }
-
-  .resetButton {
-    border-radius: 20px;
-    padding: 4px 20px;
-    width: 160px;
-    height: 32px;
-    font-weight: 700;
-    font-size: 8px;
   }
 
   .inputField {
     width: 100%;
     height: 40px;
     font-weight: 400;
-    font-size: 8px;
+    font-size: 14px;
   }
   .buttonStyles {
     width: 200px;
@@ -290,24 +214,12 @@
   .dialogBorder {
     width: 85%;
   }
-  .closeButton {
-    border-radius: 20px;
-    padding: 4px 10px;
-    width: 20px;
-    font-size: 10px;
-  }
-
-  .resetButton {
-    border-radius: 20px;
-    width: 170px;
-    font-size: 10px;
-  }
 
   .inputField {
     width: 100%;
     height: 40px;
     font-weight: 400;
-    font-size: 10px;
+    font-size: 14px;
   }
   .buttonStyles {
     width: 300px;
@@ -315,28 +227,6 @@
 }
 
 @media screen and (min-width: 481px) and (max-width: 768px) and (height: 893px) {
-  .ssiPanel {
-    border: none;
-    box-shadow: 1px 2px 8px var(--black-alpha-15);
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: transform 0.2s;
-    border-radius: 20px;
-    padding: 12px 24px;
-    width: 200px;
-    height: 50px;
-    background: linear-gradient(
-      135deg,
-      #1f2c50 0%,
-      var(--navy-640) 27.47%,
-      var(--navy-620) 43.49%,
-      var(--navy-alpha-94) 55.43%,
-      #1e2e52 100%
-    );
-  }
-
   .panelRow {
     gap: 0.5em;
     align-items: center;
@@ -355,10 +245,6 @@
     vertical-align: middle;
     margin-top: auto;
     margin-bottom: auto;
-  }
-  .icon {
-    background: var(--green-450);
-    border-radius: 20px;
   }
 }
 

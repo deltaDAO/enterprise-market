@@ -12,16 +12,17 @@
   justify-content: flex-start;
   margin-bottom: 1rem;
   padding: 0.85rem 1rem;
-  border: 1px solid var(--border-color, var(--neutral-250));
-  border-radius: 0.75rem;
-  background-color: var(--neutral-110);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  background-color: var(--card);
   transition: all 0.25s ease-in-out;
   cursor: pointer;
 }
 
 .noDatasetOptionActive {
-  background-color: var(--yellow-200);
-  border-color: var(--yellow-700);
+  background-color: var(--deck-blue-8);
+  border-color: var(--deck-blue);
+  box-shadow: 0 0 0 3px var(--ring);
 }
 
 .noDatasetLabel {
@@ -29,7 +30,7 @@
   align-items: center;
   gap: 0.6rem;
   font-weight: 600;
-  color: var(--neutral-900);
+  color: var(--foreground);
   font-size: 0.95rem;
 }
 
@@ -37,6 +38,7 @@
   width: 18px;
   height: 18px;
   cursor: pointer;
+  accent-color: var(--deck-blue);
 }
 
 .datasetSelectionWrapper {

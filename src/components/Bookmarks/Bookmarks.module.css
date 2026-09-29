@@ -4,11 +4,11 @@
   border: none;
   cursor: pointer;
   padding: 4px;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--clr-slate-50);
+  color: var(--muted-foreground);
   transition: color 0.15s ease, background-color 0.15s ease;
 }
 
@@ -20,8 +20,13 @@
 }
 
 .removeButton:hover {
-  color: var(--brand-alert-red);
-  background-color: var(--red-80);
+  color: var(--destructive);
+  background-color: var(--destructive-soft);
+}
+
+.removeButton:focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
 }
 
 .bookmarks :global(.rdt_TableCell:last-child) {
@@ -44,14 +49,14 @@
 .serviceIcon {
   width: 16px;
   height: 16px;
-  fill: var(--clr-slate-70);
+  fill: var(--muted-foreground);
   display: block;
   flex-shrink: 0;
   margin: 0;
 }
 
 .serviceTypesEmpty {
-  color: var(--clr-slate-50);
+  color: var(--muted-foreground);
 }
 
 /* services column header — info icon trigger + hover legend */
@@ -77,7 +82,7 @@
 /* expandable row — services on their own card, nested under the asset */
 .expanded {
   padding: 0 var(--spacer) calc(var(--spacer) / 2) calc(var(--spacer));
-  background: var(--background-body);
+  background: var(--card);
 }
 
 .servicesCard {
@@ -86,8 +91,8 @@
   --service-duration-width: 5.5rem;
   --service-price-width: 7rem;
 
-  background: var(--navy-alpha-5);
-  border: var(--border-size-sm) solid var(--navy-alpha-10);
+  background: var(--deck-surface-soft);
+  border: 1px solid var(--border);
   border-top: none;
   border-radius: 0 0 var(--radius-xl) var(--radius-xl);
   padding: calc(var(--spacer) / 3) var(--spacer);
@@ -100,10 +105,10 @@
   justify-content: flex-start;
   gap: calc(var(--spacer) / 1.5);
   padding: calc(var(--spacer) / 4) 0;
-  border-bottom: var(--border-size-sm) solid var(--navy-alpha-10);
+  border-bottom: 1px solid var(--border);
   font-size: var(--font-size-small);
   font-weight: var(--font-weight-base);
-  color: var(--text-ink);
+  color: var(--foreground);
   margin-left: 8px;
 }
 
@@ -113,10 +118,12 @@
   justify-content: flex-start;
   gap: calc(var(--spacer) / 1.5);
   padding: calc(var(--spacer) / 5) 0 calc(var(--spacer) / 4);
-  border-bottom: var(--border-size-sm) solid var(--navy-alpha-10);
-  color: var(--color-secondary);
-  font-size: var(--font-size-mini);
-  font-weight: var(--font-weight-bold);
+  border-bottom: 1px solid var(--border);
+  /* label motif */
+  color: var(--muted-foreground);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   margin-left: 8px;
   text-transform: uppercase;
 }
@@ -150,7 +157,7 @@
   flex-shrink: 0;
   width: 14px;
   height: 14px;
-  color: var(--clr-slate-70);
+  color: var(--muted-foreground);
 }
 
 .serviceNameText {
@@ -179,6 +186,16 @@
   flex: 0 0 var(--service-price-width);
   width: var(--service-price-width);
   text-align: left;
+}
+
+.expandedRow .expandedPrice {
+  font-family: var(--font-family-monospace);
+  font-variant-numeric: tabular-nums;
+  color: var(--deck-blue);
+}
+
+.expandedRow .expandedDuration {
+  font-variant-numeric: tabular-nums;
 }
 
 .expanderIcon {
@@ -216,14 +233,16 @@
   gap: var(--spacer);
   margin-bottom: calc(var(--spacer) / 2);
   padding: calc(var(--spacer) / 3) calc(var(--spacer) / 1.5);
-  background: var(--navy-alpha-5);
-  border-radius: var(--radius-xl);
+  background: var(--deck-blue-8);
+  border: 1px solid var(--deck-blue-12);
+  border-radius: var(--radius-lg);
 }
 
 .bulkCount {
   font-size: var(--font-size-small);
-  font-weight: var(--font-weight-bold);
-  color: var(--font-color-heading);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--deck-blue);
 }
 
 /* loading skeleton — replaces the table spinner on a cold start */
@@ -237,7 +256,7 @@
   gap: calc(var(--spacer) / 1.5);
   align-items: center;
   padding: calc(var(--spacer) / 2.5) calc(var(--spacer) / 4);
-  border-bottom: var(--border-size-sm) solid var(--border-color);
+  border-bottom: 1px solid var(--border);
 }
 
 .skeletonHeaderRow {
@@ -259,21 +278,22 @@
   height: 18px;
   margin: 0;
   padding: 0;
-  border: var(--border-size-sm) solid var(--border-navy-soft);
-  border-radius: 2px;
-  background: var(--brand-white);
+  /* 3.5:1 against white so the control boundary stays visible */
+  border: 1px solid color-mix(in srgb, var(--muted-foreground) 70%, #fff);
+  border-radius: 4px;
+  background: #fff;
   cursor: pointer;
   transition: 0.2s ease-out;
 }
 
 .bookmarks :global(input[type='checkbox']:hover) {
-  border-color: var(--clr-navy);
+  border-color: var(--deck-blue);
 }
 
 .bookmarks :global(input[type='checkbox']:checked),
 .bookmarks :global(input[type='checkbox']:indeterminate) {
-  border-color: var(--clr-navy);
-  background: var(--clr-navy);
+  border-color: var(--deck-blue);
+  background: var(--deck-blue);
 }
 
 .bookmarks :global(input[type='checkbox']:checked)::after {
@@ -283,7 +303,7 @@
   top: 2px;
   width: 6px;
   height: 9px;
-  border: 2px solid var(--brand-white);
+  border: 2px solid #fff;
   border-top: 0;
   border-left: 0;
   transform: rotate(40deg);
@@ -296,12 +316,13 @@
   top: 7px;
   width: 8px;
   height: 2px;
-  background: var(--brand-white);
+  background: #fff;
 }
 
 .bookmarks :global(input[type='checkbox']:focus-visible) {
   outline: 0;
-  box-shadow: 0 0 0 2px var(--navy-alpha-20);
+  box-shadow: 0 0 0 3px var(--ring);
+  border-color: var(--deck-blue);
 }
 
 .bookmarks .bookmarkNetwork.bookmarkNetwork {
@@ -318,11 +339,18 @@
   height: 1em;
 }
 
+/* deck-card around the table */
 .bookmarks {
-  background-color: var(--background-body);
-  border: var(--border-size-sm) solid var(--border-navy-soft);
   border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-md);
+  border: 1px solid transparent;
+  background: linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--deck-blue) 30%, var(--border)),
+        color-mix(in srgb, var(--deck-cyan) 35%, var(--border))
+      )
+      border-box;
+  box-shadow: var(--shadow-blue-5);
   padding: calc(var(--spacer) / 1.5);
 }
 

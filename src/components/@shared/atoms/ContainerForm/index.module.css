@@ -6,8 +6,11 @@
 }
 
 .title {
-  font-size: var(--text-sm);
-  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-label-motif);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-label);
+  color: var(--muted-foreground);
   margin-bottom: var(--sp-2);
 }
 
@@ -15,17 +18,29 @@
   gap: var(--sp-8);
 }
 
-.container.border {
-  border: var(--border-size-sm) solid var(--border-navy-soft);
+/* form panels are deck-cards */
+.container.border,
+.container.accent {
+  border: 1px solid transparent;
+  background: var(--deck-card-background);
   border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-blue-5);
+}
+
+.container.border {
   padding: var(--sp-10);
 }
 
 .container.accent {
-  border: var(--border-size-sm) solid var(--border-navy-soft);
-  border-radius: var(--radius-xl);
   padding: var(--form-container-padding-top-extended);
   gap: var(--sp-8);
+}
+
+@media (max-width: 640px) {
+  .container.border,
+  .container.accent {
+    padding: var(--sp-6) var(--sp-4);
+  }
 }
 
 /* Publish-specific override for form input spacing */
@@ -38,35 +53,39 @@
   font-family: var(--font-family-base);
 }
 
-/* Override select arrows */
+/* Select arrows */
 .container.accent select {
   background-image: url('../../../../@images/chevron_down.svg');
-  border: var(--border-size-sm) solid var(--border-navy-soft);
-  border-radius: var(--radius-xl);
-  background-position: calc(100% - 15px) center;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  background-position: calc(100% - 14px) center;
   background-size: 12px 12px;
   background-repeat: no-repeat;
-  padding: 6px 36px 6px 10px;
+  padding: 6px 36px 6px 12px;
 }
 
 .container.accent
   :global([class*='FormInput_field'])
   select[name='services[0].description.language'] {
-  border: 1px solid rgba(10, 75, 112, 0.5);
-  border-radius: 20px;
-  padding: 10px 25px;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  padding: 8px 36px 8px 12px;
   min-height: 40px;
-  box-shadow: 1px 4px 8px 0 var(--black-alpha-15);
-
-  font-family: var(--font-family);
+  box-shadow: none;
+  font-family: var(--font-family-base);
   font-weight: 400;
   font-size: 14px;
-  color: #303031;
+  color: var(--foreground);
+}
+
+.container.accent select:focus {
+  border-color: var(--deck-blue);
+  box-shadow: 0 0 0 3px var(--ring);
 }
 
 .container.accent input[type='checkbox']:checked {
-  border-color: var(--clr-amber);
-  background: var(--clr-amber);
+  border-color: var(--deck-blue);
+  background: var(--deck-blue);
 }
 
 .container.accent input[type='checkbox']:checked::after {
@@ -75,27 +94,27 @@
 
 /* Publish-specific overrides for TagsAutoComplete (react-select) */
 .container.accent :global([class$='control']) {
-  border: var(--border-size-sm) solid var(--border-navy-soft);
-  border-radius: var(--radius-xl);
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
   min-height: var(--field-height);
   font-family: var(--font-family-base);
   font-weight: var(--text-weight-regular);
 }
 
 .container.accent :global([class$='control']:hover) {
-  border-color: var(--border-navy-soft);
+  border-color: var(--input-hover);
 }
 
 .container.accent :global([class$='control']:focus-within) {
-  border-color: var(--border-navy-soft);
-  box-shadow: none;
+  border-color: var(--deck-blue);
+  box-shadow: 0 0 0 3px var(--ring);
 }
 
 /* Publish-specific overrides for BoxSelection component */
 .container.accent :global(.boxSelection) {
-  border: 1px solid var(--border-navy-soft);
-  border-radius: var(--radius-xl);
-  padding: 8px 25px;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  padding: 8px 16px;
   height: 40px;
   min-height: 40px;
   max-height: 40px;
@@ -105,34 +124,4 @@
   font-family: var(--font-family-base);
   font-weight: var(--text-weight-regular);
   box-shadow: none;
-}
-
-/* ADD button (accent color) - target CSS class */
-.container.accent button.primary {
-  background: var(--gradient-accent);
-  color: var(--clr-navy);
-  border: none;
-  box-shadow: var(--shadow-sm);
-}
-
-.container.accent button.primary:hover,
-.container.accent button.primary:focus {
-  background: var(--gradient-accent);
-  transform: none;
-  box-shadow: var(--shadow-sm);
-}
-
-/* SUBMIT URL button (primary blue) - target CSS class */
-.container.accent button.accent {
-  background: var(--gradient-primary);
-  color: var(--brand-white);
-  border: none;
-  box-shadow: var(--shadow-sm);
-}
-
-.container.accent button.accent:hover,
-.container.accent button.accent:focus {
-  background: var(--gradient-primary);
-  transform: none;
-  box-shadow: var(--shadow-sm);
 }

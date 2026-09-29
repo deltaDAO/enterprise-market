@@ -82,8 +82,6 @@ export default function TokenSelector({
     )
 
     return Array.from(options.values()).sort((a, b) => {
-      if (a.symbol === 'OCEAN' && b.symbol !== 'OCEAN') return -1
-      if (b.symbol === 'OCEAN' && a.symbol !== 'OCEAN') return 1
       const symbolSort = a.symbol.localeCompare(b.symbol)
       if (symbolSort !== 0) return symbolSort
       return (a.chainId || '').localeCompare(b.chainId || '')

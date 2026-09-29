@@ -9,7 +9,8 @@
 .imageWrapper {
   border-radius: var(--radius-xl);
   overflow: hidden;
-  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-blue-5);
   width: 90px;
   height: 90px;
 }
@@ -44,6 +45,8 @@
 .actions svg {
   margin: 0;
   fill: var(--nft-refresh-icon-fill);
+  /* the white glyph sits on random NFT art; the halo keeps it legible on light palettes */
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.6));
 }
 
 .refresh svg {

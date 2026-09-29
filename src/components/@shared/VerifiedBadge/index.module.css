@@ -10,7 +10,7 @@
   justify-content: flex-start;
   align-items: flex-end;
   font-weight: var(--font-weight-bold) !important;
-  color: var(--brand-alert-red);
+  color: var(--destructive);
 }
 
 .mainLabel {
@@ -18,13 +18,13 @@
   align-items: center;
   gap: calc(var(--spacer) / 4);
   font-weight: 400;
-  color: var(--brand-alert-red);
+  color: var(--destructive);
 }
 
 .mainLabel svg,
 .verifiedBadge svg path {
   margin: auto 0;
-  fill: var(--brand-alert-red);
+  fill: var(--destructive);
 }
 
 .details {
@@ -36,9 +36,9 @@
 .apiVersion,
 .lastVerified {
   font-weight: var(--font-weight-base);
-  color: var(--color-secondary);
+  color: var(--deck-blue);
 }
 
 .isValid {
-  color: var(--clr-navy);
+  color: var(--success);
 }

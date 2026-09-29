@@ -70,70 +70,102 @@ export function getAssetAccessType(
   return getServiceByName(asset, 'compute') ? 'compute' : 'access'
 }
 
+export const CUSTOM_TIMEOUT_OPTION = 'Custom (seconds)'
+
+// '1 year' as stored in the DDO (365.2425 days). Also the custom maximum.
+const ONE_YEAR_SECONDS = 31556952
+
+// Service access duration presets. Values are stored in the DDO as
+// `service.timeout` (integer seconds, 0 = forever). Day, week, month and
+// year values must stay unchanged so existing assets keep matching their
+// preset; any other stored value is shown as a custom duration.
+export const TIMEOUT_PRESETS: { label: string; seconds: number }[] = [
+  { label: 'Forever', seconds: 0 },
+  { label: '1 minute', seconds: 60 },
+  { label: '10 minutes', seconds: 600 },
+  { label: '1 hour', seconds: 3600 },
+  { label: '1 day', seconds: 86400 },
+  { label: '1 week', seconds: 604800 },
+  { label: '1 month', seconds: 2630000 },
+  { label: '6 months', seconds: 15780000 },
+  { label: '1 year', seconds: ONE_YEAR_SECONDS }
+]
+
+export function isTimeoutPreset(timeout: string): boolean {
+  return TIMEOUT_PRESETS.some((preset) => preset.label === timeout)
+}
+
+// Upper bound for custom durations: 1 year. Anything longer should use
+// 'Forever'; the bound also keeps values far below Number.MAX_SAFE_INTEGER
+// so they survive the string -> number conversion.
+export const MAX_CUSTOM_TIMEOUT_SECONDS = ONE_YEAR_SECONDS
+
+export const TIMEOUT_VALIDATION_MESSAGE = `Enter a whole number of seconds between 1 and ${MAX_CUSTOM_TIMEOUT_SECONDS} (1 year), or choose 'Forever'`
+
+export function isCustomTimeoutValue(timeout: string): boolean {
+  return (
+    /^[1-9]\d*$/.test(timeout ?? '') &&
+    Number(timeout) <= MAX_CUSTOM_TIMEOUT_SECONDS
+  )
+}
+
+// Normalises what the user typed into the custom seconds field. Returns
+// `undefined` when the input contains anything but digits (e.g. "1.5", "1e5",
+// "-5") so the keystroke can be ignored instead of silently changing the
+// number. Leading zeros are stripped ("0100" -> "100"), a lone "0" is kept so
+// validation can flag it.
+export function normalizeCustomTimeoutInput(input: string): string | undefined {
+  if (!/^\d*$/.test(input ?? '')) return undefined
+  return input.replace(/^0+(?=\d)/, '')
+}
+
 export function mapTimeoutStringToSeconds(timeout: string): number {
-  switch (timeout) {
-    case 'Forever':
-      return 0
-    case '1 day':
-      return 86400
-    case '1 week':
-      return 604800
-    case '1 month':
-      return 2630000
-    case '1 year':
-      return 31556952
-    default:
-      return 0
+  const preset = TIMEOUT_PRESETS.find((preset) => preset.label === timeout)
+  if (preset) return preset.seconds
+  if (/^\d+$/.test(timeout ?? '')) return Number(timeout)
+  return 0
+}
+
+export function timeoutSecondsToFormValue(seconds: number): string {
+  const timeout = Number(seconds) || 0
+  const preset = TIMEOUT_PRESETS.find((preset) => preset.seconds === timeout)
+  return preset ? preset.label : String(timeout)
+}
+
+// Display units for custom durations. Year and month use whole days
+// (365 / 30) so e.g. 365 days reads "1 year" instead of "11 months 4 weeks".
+// The preset seconds above are unaffected.
+const DURATION_UNITS: { name: string; seconds: number }[] = [
+  { name: 'year', seconds: 31536000 },
+  { name: 'month', seconds: 2592000 },
+  { name: 'week', seconds: 604800 },
+  { name: 'day', seconds: 86400 },
+  { name: 'hour', seconds: 3600 },
+  { name: 'minute', seconds: 60 },
+  { name: 'second', seconds: 1 }
+]
+
+// Formats seconds with the two largest units, e.g. 5400 -> "1 hour 30 minutes"
+export function formatSecondsPrecise(numberOfSeconds: number): string {
+  let remaining = Math.floor(Number(numberOfSeconds) || 0)
+  if (remaining <= 0) return 'Forever'
+
+  const parts: string[] = []
+  for (const unit of DURATION_UNITS) {
+    if (parts.length === 2) break
+    const amount = Math.floor(remaining / unit.seconds)
+    if (amount > 0) {
+      parts.push(`${amount} ${unit.name}${amount === 1 ? '' : 's'}`)
+      remaining -= amount * unit.seconds
+    }
   }
+  return parts.join(' ')
 }
 
-export function formatServiceTimeout(timeout: number): string {
-  switch (timeout) {
-    case 0:
-      return 'Forever'
-    case 86400:
-      return '1 day'
-    case 604800:
-      return '1 week'
-    case 2630000:
-      return '1 month'
-    case 31556952:
-      return '1 year'
-    default:
-      return `${timeout} second${timeout === 1 ? '' : 's'}`
-  }
-}
-
-function numberEnding(number: number): string {
-  return number > 1 ? 's' : ''
-}
-
-export function secondsToString(numberOfSeconds: number): string {
-  if (numberOfSeconds === 0) return 'Forever'
-
-  const years = Math.floor(numberOfSeconds / 31536000)
-  const months = Math.floor((numberOfSeconds %= 31536000) / 2630000)
-  const weeks = Math.floor((numberOfSeconds %= 31536000) / 604800)
-  const days = Math.floor((numberOfSeconds %= 604800) / 86400)
-  const hours = Math.floor((numberOfSeconds %= 86400) / 3600)
-  const minutes = Math.floor((numberOfSeconds %= 3600) / 60)
-  const seconds = numberOfSeconds % 60
-
-  return years
-    ? `${years} year${numberEnding(years)}`
-    : months
-    ? `${months} month${numberEnding(months)}`
-    : weeks
-    ? `${weeks} week${numberEnding(weeks)}`
-    : days
-    ? `${days} day${numberEnding(days)}`
-    : hours
-    ? `${hours} hour${numberEnding(hours)}`
-    : minutes
-    ? `${minutes} minute${numberEnding(minutes)}`
-    : seconds
-    ? `${seconds} second${numberEnding(seconds)}`
-    : 'less than a second'
+export function formatServiceTimeout(timeout: number | string): string {
+  const seconds = Number(timeout) || 0
+  const preset = TIMEOUT_PRESETS.find((preset) => preset.seconds === seconds)
+  return preset ? preset.label : formatSecondsPrecise(seconds)
 }
 
 // this is required to make it work properly for preview/publish/edit/debug.

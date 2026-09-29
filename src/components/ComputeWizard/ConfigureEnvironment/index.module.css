@@ -15,19 +15,26 @@
 
 .container h2 {
   margin: 0;
-  color: var(--text-ink);
+  color: var(--foreground);
   font-size: var(--text-xl);
-  font-weight: var(--text-weight-bold);
+  font-weight: 700;
+  letter-spacing: -0.01em;
   text-align: left;
   width: 100%;
 }
 
 .environmentSummaryCard {
   width: 100%;
-  border: 1px solid var(--border-navy-soft);
-  border-radius: 18px;
-  background: var(--brand-white);
-  box-shadow: var(--shadow-sm);
+  border: 1px solid transparent;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--deck-blue) 30%, var(--border)),
+        color-mix(in srgb, var(--deck-cyan) 35%, var(--border))
+      )
+      border-box;
+  box-shadow: var(--shadow-blue-5);
   padding: 10px 14px;
 }
 
@@ -56,8 +63,8 @@
   line-height: 14px;
   font-weight: var(--text-weight-bold);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--clr-slate-50);
+  letter-spacing: 0.14em;
+  color: var(--muted-foreground);
 }
 
 .environmentSummaryContent {
@@ -73,14 +80,14 @@
   font-size: 15px;
   line-height: 1.2;
   font-weight: var(--text-weight-bold);
-  color: var(--text-ink);
+  color: var(--foreground);
 }
 
 .environmentSummaryDescription {
   margin: 0;
   font-size: 13px;
   line-height: 1.3;
-  color: var(--clr-slate-70);
+  color: var(--muted-foreground);
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -94,8 +101,14 @@
   flex-shrink: 0;
   font-size: 12px;
   line-height: 1.2;
-  font-weight: var(--text-weight-bold);
-  color: var(--clr-slate-50);
+  font-weight: 600;
+  color: var(--deck-blue);
+}
+
+.environmentSummaryToggle:focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
 }
 
 .environmentSummaryAction::after {
@@ -115,7 +128,7 @@
 .environmentSummaryDetails {
   padding-top: 6px;
   margin-top: 6px;
-  border-top: 1px solid var(--border-navy-soft);
+  border-top: 1px solid var(--border);
 }
 
 .environmentDetailsTable {
@@ -138,11 +151,11 @@
 
 .environmentDetailsTableRow {
   padding: 4px 6px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
 }
 
 .environmentDetailsTableRow:nth-child(odd) {
-  background: #f4f8fb;
+  background: var(--muted);
 }
 
 .environmentDetailsTableRow:nth-child(even) {
@@ -151,18 +164,19 @@
 
 .environmentDetailsTableLabel,
 .environmentDetailLabel {
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.2;
-  font-weight: var(--text-weight-bold);
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--clr-slate-50);
+  letter-spacing: 0.14em;
+  color: var(--muted-foreground);
 }
 
 .environmentDetailValue {
   font-size: 12px;
+  font-variant-numeric: tabular-nums;
   line-height: 1.2;
-  color: var(--text-ink);
+  color: var(--foreground);
   overflow-wrap: anywhere;
 }
 
@@ -214,10 +228,16 @@
   flex-direction: column;
   gap: 12px;
   padding: 16px 18px;
-  border: 1px solid var(--border-navy-soft);
-  border-radius: 20px;
-  background: var(--brand-white);
-  box-shadow: var(--shadow-sm);
+  border: 1px solid transparent;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--deck-blue) 30%, var(--border)),
+        color-mix(in srgb, var(--deck-cyan) 35%, var(--border))
+      )
+      border-box;
+  box-shadow: var(--shadow-blue-5);
 }
 
 .queueToggleRow {
@@ -232,7 +252,7 @@
   gap: 10px;
   font-size: 14px;
   line-height: 18px;
-  color: var(--text-ink);
+  color: var(--foreground);
   font-weight: var(--text-weight-bold);
   cursor: pointer;
 }
@@ -241,7 +261,7 @@
   width: 18px;
   height: 18px;
   margin: 0;
-  accent-color: var(--clr-amber);
+  accent-color: var(--deck-blue);
   cursor: pointer;
 }
 
@@ -255,7 +275,7 @@
 .queueInputLabel {
   font-size: 13px;
   line-height: 16px;
-  color: var(--clr-slate-70);
+  color: var(--muted-foreground);
   font-weight: var(--text-weight-bold);
 }
 
@@ -269,7 +289,7 @@
   margin: 0;
   font-size: 12px;
   line-height: 14px;
-  color: var(--clr-slate-70);
+  color: var(--muted-foreground);
 }
 
 .queueUnitSelect {
@@ -283,7 +303,7 @@
   margin: 0;
   font-size: 12px;
   line-height: 16px;
-  color: var(--red-500);
+  color: var(--destructive);
 }
 
 .queueTooltipContent {
@@ -305,18 +325,24 @@
 .radioButton {
   width: 18px;
   height: 18px;
-  border-radius: 100px;
-  border: 1px solid var(--clr-amber);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--muted-foreground);
   cursor: pointer;
   position: relative;
-  background: var(--brand-white);
+  background: #fff;
   appearance: none;
   -webkit-appearance: none;
   margin: 0;
 }
 
 .radioButton:checked {
-  background: var(--clr-amber);
+  background: var(--deck-blue);
+  border-color: var(--deck-blue);
+}
+
+.radioButton:focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
 }
 
 .radioButton:checked::after {
@@ -326,17 +352,17 @@
   height: 8px;
   left: calc(50% - 8px / 2);
   top: calc(50% - 8px / 2);
-  background: var(--brand-white);
-  border-radius: 20px;
+  background: #fff;
+  border-radius: var(--radius-pill);
 }
 
 .sectionTitle {
   font-family: var(--font-family-base);
   font-style: normal;
-  font-weight: var(--text-weight-bold);
+  font-weight: 700;
   font-size: 16px;
   line-height: 18px;
-  color: var(--clr-slate-70);
+  color: var(--foreground);
   margin: 0;
   cursor: pointer;
   user-select: none;
@@ -364,26 +390,30 @@
   min-height: 24px;
 }
 
+.resourceRowInactive {
+  opacity: 0.55;
+}
+
 .resourceRowInactive .labelText,
 .resourceRowInactive .infoIcon,
 .resourceRowInactive .minLabel,
 .resourceRowInactive .maxLabel,
 .resourceRowInactive .unit,
 .resourceRowInactive .priceLabel {
-  color: #9bb4c8;
+  color: var(--muted-foreground);
 }
 
 .resourceRowInactive .sliderLine {
-  background: #d7e3ec;
+  background: var(--border);
 }
 
 .resourceRowInactive .input {
-  color: #9bb4c8;
-  border-color: #9bb4c8;
+  color: var(--muted-foreground);
+  border-color: var(--border);
 }
 
 .resourceRowInactive .input::placeholder {
-  color: #9bb4c8;
+  color: var(--muted-foreground);
 }
 
 .resourceLabel {
@@ -391,11 +421,12 @@
   height: 16px;
   font-family: var(--font-family-base);
   font-style: normal;
-  font-weight: var(--text-weight-bold);
-  font-size: 14px;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.14em;
   line-height: 16px;
   text-transform: uppercase;
-  color: var(--text-ink);
+  color: var(--muted-foreground);
   flex-shrink: 0;
 }
 
@@ -429,7 +460,7 @@
   font-weight: var(--text-weight-regular);
   font-size: 12px;
   line-height: 14px;
-  color: var(--clr-slate-70);
+  color: var(--muted-foreground);
   flex-shrink: 0;
 }
 
@@ -445,8 +476,9 @@
 .sliderLine {
   position: absolute;
   width: 100%;
-  height: 1px;
-  background: var(--neutral-170);
+  height: 2px;
+  border-radius: var(--radius-pill);
+  background: var(--deck-blue-12);
   top: 50%;
   transform: translateY(-50%);
   z-index: 1;
@@ -467,6 +499,12 @@ body .customSlider {
   position: relative;
   z-index: 2;
   flex-shrink: 0;
+}
+
+body .customSlider:focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
 }
 
 body .customSlider:disabled {
@@ -497,19 +535,19 @@ body .customSlider:disabled {
   appearance: none;
   width: 16px;
   height: 16px;
-  background: #0a4b70;
+  background: var(--deck-blue);
   border-radius: 50%;
   cursor: pointer;
   border: none;
   outline: none;
-  box-shadow: 0 2px 4px var(--black-alpha-10);
+  box-shadow: 0 0 0 3px #fff, 0 2px 6px var(--deck-blue-25);
   transition: all 0.2s ease;
 }
 
 .customSlider::-webkit-slider-thumb:hover {
-  background: #0a4b70;
+  background: var(--deck-blue-hover);
   transform: scale(1.1);
-  box-shadow: 0 3px 6px var(--black-alpha-15);
+  box-shadow: 0 0 0 3px var(--ring);
 }
 
 .customSlider::-moz-range-track {
@@ -525,19 +563,19 @@ body .customSlider:disabled {
 .customSlider::-moz-range-thumb {
   width: 16px;
   height: 16px;
-  background: #0a4b70;
+  background: var(--deck-blue);
   border-radius: 50%;
   cursor: pointer;
   border: none;
   outline: none;
-  box-shadow: 0 2px 4px var(--black-alpha-10);
+  box-shadow: 0 0 0 3px #fff, 0 2px 6px var(--deck-blue-25);
   transition: all 0.2s ease;
 }
 
 .customSlider::-moz-range-thumb:hover {
-  background: #0a4b70;
+  background: var(--deck-blue-hover);
   transform: scale(1.1);
-  box-shadow: 0 3px 6px var(--black-alpha-15);
+  box-shadow: 0 0 0 3px var(--ring);
 }
 
 .customSlider::-ms-track {
@@ -554,19 +592,19 @@ body .customSlider:disabled {
 .customSlider::-ms-thumb {
   width: 16px;
   height: 16px;
-  background: #0a4b70;
+  background: var(--deck-blue);
   border-radius: 50%;
   cursor: pointer;
   border: none;
   outline: none;
-  box-shadow: 0 2px 4px var(--black-alpha-10);
+  box-shadow: 0 0 0 3px #fff, 0 2px 6px var(--deck-blue-25);
   transition: all 0.2s ease;
 }
 
 .customSlider::-ms-thumb:hover {
-  background: #0a4b70;
+  background: var(--deck-blue-hover);
   transform: scale(1.1);
-  box-shadow: 0 3px 6px var(--black-alpha-15);
+  box-shadow: 0 0 0 3px var(--ring);
 }
 
 .maxLabel {
@@ -577,20 +615,21 @@ body .customSlider:disabled {
   font-weight: var(--text-weight-regular);
   font-size: 12px;
   line-height: 14px;
-  color: var(--clr-slate-70);
+  color: var(--muted-foreground);
   flex-shrink: 0;
 }
 
 body .input {
   box-sizing: border-box;
-  border: 1px solid var(--border-navy-soft);
-  box-shadow: var(--shadow-md);
-  border-radius: var(--radius-xl);
-  background: var(--brand-white);
+  border: 1px solid var(--input);
+  box-shadow: none;
+  border-radius: var(--radius-lg);
+  background: #fff;
   font-family: var(--font-family-base);
   font-style: normal;
   font-weight: var(--text-weight-regular);
-  color: var(--clr-slate-70);
+  font-variant-numeric: tabular-nums;
+  color: var(--foreground);
   text-align: center;
   padding: 8px 16px;
   flex-shrink: 0;
@@ -598,14 +637,15 @@ body .input {
 
 .input:focus {
   outline: none;
-  border-color: var(--clr-navy);
+  border-color: var(--deck-blue);
+  box-shadow: 0 0 0 3px var(--ring);
 }
 
 /* Input size variants */
 body .inputSmall {
   width: 80px;
-  height: 24px !important;
-  padding: 5px 5px !important;
+  height: 28px !important;
+  padding: 4px 6px !important;
   font-size: 12px;
   line-height: 14px;
 }
@@ -620,7 +660,7 @@ body .inputSmall {
   height: 40px;
   font-size: 16px;
   line-height: 16px;
-  color: var(--text-ink);
+  color: var(--foreground);
 }
 
 .unit {
@@ -629,7 +669,7 @@ body .inputSmall {
   font-weight: var(--text-weight-regular);
   font-size: 12px;
   line-height: 14px;
-  color: var(--clr-slate-70);
+  color: var(--muted-foreground);
   margin-left: 4px;
   flex-shrink: 0;
 }
@@ -646,7 +686,7 @@ body .inputSmall {
   flex-shrink: 0;
 }
 .inputError {
-  border: 1px solid red;
+  border: 1px solid var(--destructive);
 }
 
 .errorOverlay {
@@ -655,7 +695,9 @@ body .inputSmall {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: var(--black-alpha-50); /* Semi-transparent backdrop */
+  background-color: var(
+    --modal-overlay-background
+  ); /* Semi-transparent backdrop */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -663,21 +705,21 @@ body .inputSmall {
 }
 
 .errorPopup {
-  background-color: var(--red-80);
-  border: 1px solid red;
-  border-radius: 8px;
+  border: 1px solid var(--destructive-border);
+  background: var(--destructive-bg);
+  border-radius: var(--radius-xl);
   padding: 20px;
   display: flex;
   align-items: center;
   gap: 15px;
-  box-shadow: 0 4px 8px var(--black-alpha-30);
+  box-shadow: var(--shadow-soft);
   width: 400px; /* Larger width */
   max-width: 90vw; /* Responsive max-width */
   min-height: 100px; /* Minimum height for larger appearance */
 }
 
 .errorMessage {
-  color: red;
+  color: var(--destructive);
   font-size: 1rem; /* Slightly larger font */
   flex: 1; /* Allow message to take available space */
 }
@@ -685,7 +727,7 @@ body .inputSmall {
 .closeButton {
   background: none;
   border: none;
-  color: red;
+  color: var(--muted-foreground);
   font-size: 1.5rem; /* Larger close button */
   cursor: pointer;
   line-height: 1;
@@ -693,17 +735,19 @@ body .inputSmall {
 }
 
 .closeButton:hover {
-  color: darkred;
+  color: var(--destructive);
 }
 .priceLabel {
   width: 105px;
   height: 14px;
   font-family: var(--font-family-base);
   font-style: normal;
-  font-weight: var(--text-weight-bold);
+  font-family: var(--font-family-monospace);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
   font-size: 12px;
   line-height: 14px;
-  color: var(--clr-slate-70);
+  color: var(--deck-blue);
   flex-shrink: 0;
 }
 
@@ -722,10 +766,16 @@ body .inputSmall {
 
 .outputStorageCard {
   width: 100%;
-  border: 1px solid var(--border-navy-soft);
-  border-radius: 24px;
-  background: var(--brand-white);
-  box-shadow: var(--shadow-md);
+  border: 1px solid transparent;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--deck-blue) 30%, var(--border)),
+        color-mix(in srgb, var(--deck-cyan) 35%, var(--border))
+      )
+      border-box;
+  box-shadow: var(--shadow-blue-5);
   padding: 24px;
   display: flex;
   flex-direction: column;
@@ -739,10 +789,12 @@ body .inputSmall {
 }
 
 .outputStorageTab {
-  border: 1px solid var(--border-navy-soft);
-  background: var(--brand-white);
-  color: var(--clr-slate-70);
-  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--foreground);
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: var(--radius-lg);
   padding: 10px 16px;
   display: inline-flex;
   align-items: center;
@@ -752,10 +804,22 @@ body .inputSmall {
     background 0.2s ease;
 }
 
-.outputStorageTabActive {
-  border-color: var(--clr-navy);
-  color: var(--clr-navy);
-  background: var(--blue-80);
+.outputStorageTab:hover {
+  border-color: var(--deck-blue-25);
+  background: var(--deck-blue-8);
+}
+
+.outputStorageTab:focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
+}
+
+.outputStorageTabActive,
+.outputStorageTabActive:hover {
+  border-color: var(--deck-blue);
+  color: var(--deck-blue);
+  background: var(--deck-blue-8);
+  box-shadow: 0 0 0 3px var(--ring);
 }
 
 .outputStorageTabIcon {
@@ -788,7 +852,7 @@ body .inputSmall {
   gap: 10px;
   font-size: 14px;
   line-height: 16px;
-  color: var(--clr-slate-70);
+  color: var(--muted-foreground);
   cursor: pointer;
 }
 
@@ -802,12 +866,12 @@ body .inputSmall {
   height: 18px;
   margin: 0;
   flex-shrink: 0;
-  accent-color: var(--clr-amber);
+  accent-color: var(--deck-blue);
   cursor: pointer;
 }
 
 .outputCheckbox:focus-visible {
-  outline: 2px solid var(--navy-alpha-20);
+  outline: 2px solid var(--deck-blue);
   outline-offset: 2px;
 }
 
@@ -829,14 +893,14 @@ body .inputSmall {
 }
 
 .encryptionActionButton {
-  border: 1px solid var(--border-navy-soft);
-  border-radius: 999px;
-  background: var(--brand-white);
-  color: var(--clr-navy);
-  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--deck-blue-25);
+  border-radius: var(--radius-lg);
+  background: #fff;
+  color: var(--deck-blue);
+  box-shadow: none;
   font-size: 13px;
   line-height: 1;
-  font-weight: var(--text-weight-bold);
+  font-weight: 600;
 }
 
 .encryptionActionButton {
@@ -849,16 +913,17 @@ body .inputSmall {
 
 .encryptionActionButton:hover,
 .encryptionActionButton:focus-visible {
-  border-color: var(--clr-navy);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-1px);
+  border-color: var(--deck-blue);
+  background: var(--deck-blue-8);
+  box-shadow: none;
+  transform: none;
 }
 
 .encryptionActionButton:disabled {
   cursor: not-allowed;
   opacity: 0.45;
   transform: none;
-  box-shadow: var(--shadow-sm);
+  box-shadow: none;
 }
 
 .encryptionStatus,
@@ -870,15 +935,15 @@ body .inputSmall {
 }
 
 .encryptionStatus {
-  color: var(--clr-navy);
+  color: var(--success);
 }
 
 .encryptionStatusError {
-  color: var(--red-500);
+  color: var(--destructive);
 }
 
 .encryptionKeyHint {
-  color: var(--clr-slate-70);
+  color: var(--muted-foreground);
 }
 
 /* Paid section specific styling */
@@ -903,10 +968,12 @@ body .inputSmall {
   height: 16px;
   font-family: var(--font-family-base);
   font-style: normal;
-  font-weight: var(--text-weight-bold);
-  font-size: 14px;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   line-height: 16px;
-  color: var(--clr-slate-70);
+  color: var(--muted-foreground);
   margin: 0;
 }
 
@@ -922,22 +989,15 @@ body .inputSmall {
 
 .priceInfo {
   width: 545px;
-  height: 34px;
-  background: var(--blue-80);
+  max-width: 100%;
+  min-height: 34px;
+  background: var(--info-bg);
+  border: 1px solid var(--info-border);
+  border-radius: var(--radius-lg);
   position: relative;
   display: flex;
   align-items: center;
-  padding-left: 16px;
-}
-
-.priceInfo::before {
-  content: '';
-  position: absolute;
-  width: 4px;
-  height: 34px;
-  left: 0;
-  top: 0;
-  background: var(--blue-500);
+  padding: 0 16px;
 }
 
 .priceInfo span {
@@ -946,7 +1006,7 @@ body .inputSmall {
   font-weight: var(--text-weight-regular);
   font-size: 14px;
   line-height: 18px;
-  color: var(--clr-slate-70);
+  color: var(--foreground);
   width: 513px;
   height: 18px;
   position: absolute;
@@ -971,12 +1031,13 @@ body .inputSmall {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding: 12px 24px;
+  padding: 0 20px;
+  height: 40px;
   gap: 8px;
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-lg);
   font-family: var(--font-family-base);
   font-style: normal;
-  font-weight: var(--text-weight-bold);
+  font-weight: 600;
   font-size: 14px;
   line-height: 16px;
   cursor: pointer;
@@ -985,22 +1046,34 @@ body .inputSmall {
 }
 
 .actions button:first-child {
-  background: var(--background-content);
-  color: var(--text-ink);
-  border: 1px solid var(--border-navy-soft);
+  background: #fff;
+  color: var(--deck-blue);
+  border: 1px solid var(--deck-blue-25);
 }
 
 .actions button:first-child:hover {
-  background: var(--surface-highlight);
+  background: var(--deck-blue-8);
+  border-color: var(--deck-blue);
 }
 
 .actions button:last-child {
-  background: var(--clr-navy);
-  color: var(--brand-white);
+  background: var(--deck-blue);
+  color: #fff;
+  box-shadow: 0 4px 12px var(--deck-blue-25);
+}
+
+.actions button:focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
+}
+
+.actions button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
 .actions button:last-child:hover {
-  background: var(--primary-hover);
+  background: var(--deck-blue-hover);
 }
 
 .escrowInfo {
@@ -1021,13 +1094,13 @@ body .inputSmall {
 }
 
 .queueNotice {
-  background: var(--surface-highlight);
-  border-left: 4px solid var(--clr-amber);
-  color: var(--clr-slate-70);
-  padding: 12px 16px;
+  border: 1px solid var(--info-border);
+  background: var(--info-bg);
+  color: var(--foreground);
+  padding: 14px 16px;
   line-height: 1.5;
   font-size: 14px;
-  border-radius: 0 12px 12px 0;
+  border-radius: var(--radius-xl);
 }
 
 .escrowValidation {
@@ -1035,7 +1108,7 @@ body .inputSmall {
 }
 
 .insufficientEscrow {
-  color: var(--clr-slate-70);
+  color: var(--muted-foreground);
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -1043,11 +1116,11 @@ body .inputSmall {
 }
 
 .sufficientEscrow {
-  background-color: var(--blue-80);
-  border: 1px solid var(--blue-90);
-  color: var(--teal-700);
-  padding: 16px 18px;
-  border-radius: 12px;
+  border: 1px solid var(--success-border);
+  background: var(--success-bg);
+  color: var(--success);
+  padding: 14px 16px;
+  border-radius: var(--radius-xl);
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -1068,7 +1141,7 @@ body .inputSmall {
 .escrowBreakdown {
   font-size: 0.9em;
   margin-top: 4px;
-  opacity: 0.8;
+  font-variant-numeric: tabular-nums;
 }
 
 .gpuWarning {
@@ -1076,10 +1149,10 @@ body .inputSmall {
   align-items: flex-start;
   gap: 12px;
   padding: 16px 18px;
-  background-color: #fffbeb;
-  border: 1px solid #fbbf24;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(251, 191, 36, 0.15);
+  border: 1px solid var(--warning-border);
+  background: var(--warning-bg);
+  border-radius: var(--radius-xl);
+  box-shadow: none;
   height: fit-content;
   animation: slideDown 0.3s ease-out;
 }
@@ -1093,12 +1166,12 @@ body .inputSmall {
 .gpuWarningContent {
   font-size: 14px;
   line-height: 1.5;
-  color: #92400e;
+  color: var(--foreground);
   flex: 1;
 }
 
 .gpuWarningContent strong {
-  color: #78350f;
+  color: var(--foreground);
   font-weight: 600;
   display: block;
   margin-bottom: 4px;
@@ -1117,11 +1190,12 @@ body .inputSmall {
 .labelText {
   font-family: var(--font-family-base);
   font-style: normal;
-  font-weight: var(--text-weight-bold);
-  font-size: 14px;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.14em;
   line-height: 16px;
   text-transform: uppercase;
-  color: var(--text-ink);
+  color: var(--muted-foreground);
 }
 
 .infoIcon {
@@ -1131,7 +1205,7 @@ body .inputSmall {
   width: 14px;
   height: 14px;
   font-size: 10px;
-  color: #94a3b8;
+  color: var(--muted-foreground);
   border-radius: 50%;
   transition: all 0.2s ease;
   line-height: 1;
@@ -1140,8 +1214,8 @@ body .inputSmall {
 }
 
 .infoIcon:hover {
-  color: #8b5cf6;
-  background-color: rgba(139, 92, 246, 0.1);
+  color: var(--deck-blue);
+  background-color: var(--deck-blue-8);
 }
 
 .resourceTooltip {
@@ -1158,15 +1232,15 @@ body .inputSmall {
 }
 
 .resourceTooltipContent {
-  background: #1e293b;
-  color: white;
+  background: var(--deck-navy);
+  color: #fff;
   padding: 8px 12px;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   font-size: 12px;
   line-height: 1.5;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  border: 1px solid #334155;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--deck-navy-2);
   word-wrap: break-word;
 }
 
@@ -1179,7 +1253,7 @@ body .inputSmall {
   height: 0;
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
-  border-top: 6px solid #1e293b;
+  border-top: 6px solid var(--deck-navy);
 }
 
 @keyframes fadeIn {
@@ -1438,5 +1512,12 @@ body .inputSmall {
   .messagesContainer {
     grid-template-columns: 1fr;
     gap: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gpuWarning,
+  .resourceTooltip {
+    animation: none;
   }
 }

@@ -24,17 +24,34 @@
   align-items: center;
   height: 40px;
   width: 100%;
-  border: var(--input-border-size) solid var(--input-border-color);
+  min-height: 40px;
+  padding: 8px 12px;
+  border: 1px dashed rgba(36, 80, 236, 0.4);
   box-shadow: none;
-  border-radius: var(--input-border-radius);
+  border-radius: var(--radius-xl);
+  background-color: var(--card);
+  color: var(--muted-foreground);
+  font-size: 14px;
+  transition: background-color 0.2s ease, border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.filedrop:hover {
+  border-color: var(--deck-blue);
+}
+
+.filedrop:focus-within {
+  border-color: var(--deck-blue);
+  box-shadow: 0 0 0 3px var(--ring);
 }
 
 .dragged {
-  background-color: white;
+  background-color: var(--card);
 }
 
 .dragover {
-  background-color: lightgray;
+  background-color: var(--deck-blue-8);
+  border-color: var(--deck-blue);
 }
 
 .applybutton {
@@ -42,5 +59,6 @@
 }
 
 .error {
-  color: red;
+  color: var(--destructive);
+  font-size: 13px;
 }

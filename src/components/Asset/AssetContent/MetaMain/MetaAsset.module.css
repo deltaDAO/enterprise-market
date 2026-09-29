@@ -11,18 +11,19 @@
 }
 
 .owner {
-  font-family: var(--font-family);
+  font-family: var(--font-family-monospace);
   font-weight: 400;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 157%;
-  color: var(--clr-slate-50);
+  font-variant-numeric: tabular-nums;
+  color: var(--muted-foreground);
   display: block;
   margin-left: var(--spacer);
 }
 
 .addWrap {
   padding-left: calc(var(--spacer) / 5);
-  border-left: 1px solid var(--border-color);
+  border-left: 1px solid var(--border);
   display: inline-block;
 }
 
@@ -31,5 +32,5 @@
 }
 
 .add svg path {
-  fill: var(--ocean-violet);
+  fill: var(--deck-blue);
 }

@@ -4,7 +4,8 @@
 
 .button {
   cursor: pointer;
-  background: var(--background-content);
+  background: var(--background);
+  border-radius: var(--radius-lg);
   border: none;
   box-shadow: none;
   padding: calc(var(--spacer) / 4);
@@ -19,11 +20,12 @@
 
 .button:hover,
 .button:focus {
-  color: var(--font-color-text);
+  color: var(--deck-blue);
+  background: var(--deck-blue-8);
 }
 
 .searchIcon {
-  fill: var(--menu-icon-fill-color);
+  fill: currentColor;
   transition: 0.2s ease-out;
   width: var(--font-size-base);
   height: var(--font-size-base);

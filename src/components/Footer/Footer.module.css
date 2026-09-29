@@ -1,185 +1,245 @@
+/* deltaDAO footer: the dark navy slide that bookends the site.
+ * Content sits on the same grid as the home sections: a 1160px box with 20px
+ * side padding (1120px of content), 1500px at >=1550px, 1900px at >=2550px. */
 .footer {
-  /* padding: var(--spacer); */
-  /* padding-bottom: calc(var(--spacer) / 2); */
-  text-align: center;
-  color: #fff;
-  background-color: #303031;
+  --footer-content-width: 1120px;
+  --footer-gutter: 20px;
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  text-align: left;
+  color: rgba(255, 255, 255, 0.7);
+  background-color: var(--deck-navy);
   font-size: var(--font-size-small);
+  padding: 3rem 0 1.5rem;
 }
 
+/* gradient hairline along the top edge */
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--brand-hairline);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* faint wave in the bottom-left corner, bled 2rem past the left edge and
+ * 1rem past the bottom so its drift never opens a gap along either edge */
+.footer::after {
+  content: '';
+  position: absolute;
+  inset: auto auto -1rem -2rem;
+  width: min(100% + 2rem, 42rem);
+  height: 11rem;
+  background: var(--wave-svg) no-repeat;
+  background-size: 100% 100%;
+  transform: rotate(180deg);
+  animation: wave-drift-flip 28s ease-in-out infinite alternate-reverse;
+  opacity: 0.55;
+  -webkit-mask-image: linear-gradient(to left, #000 35%, transparent);
+  mask-image: linear-gradient(to left, #000 35%, transparent);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.footer :focus-visible {
+  outline-color: var(--deck-cyan);
+}
+
+/* shared content edge for the top row and the bottom row */
+.container,
+.copyright {
+  width: min(100% - 2 * var(--footer-gutter), var(--footer-content-width));
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* phone + tablet: brand block stacked above the link columns */
 .container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: var(--spacer);
-  margin: auto;
-  margin-bottom: var(--spacer);
-  width: 1160px;
-  height: 136px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  row-gap: 2.5rem;
 }
 
 .logoSection {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 6px;
+  align-items: flex-start;
+  gap: 1rem;
+  color: var(--brand-white); /* white wordmark */
 }
+
+.logoSection > svg {
+  aspect-ratio: 1058 / 350; /* matches the cropped logo.svg viewBox */
+  width: auto;
+  height: var(--footer-logo-size-height);
+  margin: 0;
+}
+
 .logo {
-  width: 150px;
-  height: 100px;
+  aspect-ratio: 1058 / 350;
+  width: auto;
+  height: var(--footer-logo-size-height);
 }
 
 .taglineContainer {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  text-align: left;
-  gap: 2px;
+  gap: 0.25rem;
 }
 
 .tagline {
   font-weight: 400;
   font-size: 14px;
-  line-height: 143%;
-  text-align: left;
-  color: var(--white-alpha-70);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.7);
   max-width: 300px;
 }
 
 .websiteLink {
-  color: var(--white-alpha-70);
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.7);
   text-decoration: underline;
+  text-decoration-color: var(--deck-cyan);
+  text-underline-offset: 3px;
   text-decoration-skip-ink: none;
+  border-radius: var(--radius-sm);
 }
 
 body .websiteLink:hover {
-  color: #fdd655 !important;
+  color: var(--brand-white);
+  text-decoration-color: var(--deck-cyan);
 }
 
 .copyright {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 143%;
-  text-align: center;
-  color: var(--white-alpha-70);
-  font-weight: 700;
-  text-decoration: underline;
-  text-decoration-skip-ink: none;
-  margin-top: 5rem;
+  position: relative;
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: left;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+  margin-top: 3rem;
+  margin-bottom: 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-variant-numeric: tabular-nums;
 }
 
 .socialLinks {
   display: flex;
   justify-content: flex-start;
-  gap: 1.5rem; /* Adjust spacing between icons */
+  gap: 1rem;
   width: 100%;
 }
 
+.socialLinks a {
+  display: inline-flex;
+  border-radius: var(--radius-md);
+}
+
 .socialIcon {
-  width: 24px; /* Adjust size as needed */
-  height: 24px;
+  width: 22px;
+  height: 22px;
   transition: transform 0.2s ease, fill 0.2s ease;
-  fill: linear-gradient(
-    135deg,
-    #1f2c50 0%,
-    var(--navy-640) 27.47%,
-    var(--navy-620) 43.49%,
-    var(--navy-alpha-94) 55.43%,
-    #1e2e52 100%
-  ); /* This makes icons inherit parent color */
+  fill: rgba(255, 255, 255, 0.7);
 }
 
-.socialIcon:hover {
+.socialLinks a:hover .socialIcon,
+.socialLinks a:focus-visible .socialIcon {
   transform: translateY(-2px);
-  fill: var(--color-primary); /* Or any highlight color you prefer */
+  fill: var(--deck-cyan);
 }
 
-/* Optional: Different colors for different platforms */
-.socialLinks a[href*='x.com']:hover .socialIcon {
-  fill: #fdd655; /* Twitter/X blue */
+/* the icon SVGs hard-code a black tile path and a white glyph path; the
+ * attribute fills beat the svg-level fill, so recolor the paths directly:
+ * tile = white 70% (rest) / cyan (hover), glyph = navy (8.4:1 on cyan) */
+.socialIcon path {
+  transition: fill 0.2s ease;
 }
 
-.socialLinks a[href*='linkedin.com']:hover .socialIcon {
-  fill: #fdd655; /* LinkedIn blue */
+.socialIcon path[fill='#000'],
+.socialIcon path[fill='black'] {
+  fill: rgba(255, 255, 255, 0.7);
 }
 
-.socialLinks a[href*='medium.com']:hover .socialIcon {
-  fill: #fdd655; /* Medium black */
+.socialIcon path[fill='#fff'],
+.socialIcon path[fill='white'] {
+  fill: var(--deck-navy);
 }
 
-@media screen and (min-width: 55rem) {
+.socialLinks a:hover .socialIcon path[fill='#000'],
+.socialLinks a:hover .socialIcon path[fill='black'],
+.socialLinks a:focus-visible .socialIcon path[fill='#000'],
+.socialLinks a:focus-visible .socialIcon path[fill='black'] {
+  fill: var(--deck-cyan);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .socialLinks a:hover .socialIcon {
+    transform: none;
+  }
+}
+
+/* tablet: more air, same stacked layout */
+@media screen and (min-width: 768px) {
   .footer {
-    padding: calc(var(--spacer) * 2);
-    padding-bottom: 1rem;
-    /* padding-bottom: calc(var(--spacer) / 2); */
+    padding-top: 3.5rem;
   }
+
   .container {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: calc(var(--spacer) / 2);
-  }
-  .logoSection {
-    align-items: flex-start;
-    text-align: left;
-    gap: 18px;
-  }
-  .logo {
-    margin: 0;
+    row-gap: 3rem;
   }
 }
-@media screen and (min-width: 250px) and (max-width: 900px) {
+
+/* desktop: brand block on the left, link columns grouped on the right edge */
+@media screen and (min-width: 1024px) {
   .footer {
-    padding: calc(var(--spacer) * 1);
-    /* padding-bottom: calc(var(--spacer) / 2); */
+    padding-top: 4rem;
   }
+
   .container {
-    width: 100%;
-    height: 100%;
-    flex-direction: column;
+    grid-template-columns: minmax(0, 20rem) max-content;
     justify-content: space-between;
-    align-items: center;
-    gap: calc(var(--spacer) / 2);
+    column-gap: 4rem;
   }
-  .logoSection {
-    order: 2;
-    align-items: center;
-    margin-top: 2rem;
-    gap: 12px;
+
+  .copyright {
+    margin-top: 4rem;
   }
 }
 
-@media screen and (min-width: 901px) and (max-width: 1250px) {
-  .container {
-    width: 100%;
-    height: 100%;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: calc(var(--spacer) / 2);
-  }
-}
-
-@media screen and (min-width: 1550px) and (max-width: 2550px) {
-  .container {
-    width: 1500px;
-    height: 136px;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: calc(var(--spacer) / 2);
+@media screen and (min-width: 1550px) {
+  .footer {
+    --footer-content-width: 1460px;
   }
 }
 
 @media screen and (min-width: 2550px) {
-  .container {
-    width: 1900px;
-    height: 136px;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: calc(var(--spacer) / 2);
+  .footer {
+    --footer-content-width: 1860px;
+  }
+}
+
+/* bottom-left wave: same drift, keeps its 180deg flip */
+@keyframes wave-drift-flip {
+  from {
+    transform: rotate(180deg) translate3d(0, 0, 0);
+  }
+  to {
+    transform: rotate(180deg) translate3d(-2.5%, 2%, 0) scale(1.03);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer::after {
+    animation: none;
   }
 }

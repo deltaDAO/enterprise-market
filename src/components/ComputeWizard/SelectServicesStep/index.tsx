@@ -11,6 +11,7 @@ import External from '@images/external.svg'
 import { CopyToClipboard } from '@shared/CopyToClipboard'
 import Link from 'next/link'
 import { getBaseTokenSymbol } from '@utils/getBaseTokenSymbol'
+import { formatServiceTimeout } from '@utils/ddo'
 import { useMarketMetadata } from '@context/MarketMetadata'
 import { resolveServiceTokenSymbol } from '@utils/priceToken'
 import Tooltip from '@shared/atoms/Tooltip'
@@ -462,12 +463,7 @@ function List({
                         </div>
                         <div className={styles.typeColumn}>{service.type}</div>
                         <div className={styles.durationColumn}>
-                          {Number(service.duration) === 0 ||
-                          Number.isNaN(Number(service.duration))
-                            ? 'Forever'
-                            : `${Math.floor(
-                                Number(service.duration) / (60 * 60 * 24)
-                              )} days`}
+                          {formatServiceTimeout(service.duration)}
                         </div>
                         <div className={styles.priceColumn}>
                           {service.price}{' '}

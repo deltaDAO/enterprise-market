@@ -11,7 +11,7 @@
 
 .title {
   margin: 0;
-  color: var(--text-ink);
+  color: var(--foreground);
   font-size: var(--text-lg);
   line-height: 1.2;
   font-weight: var(--text-weight-bold);
@@ -21,7 +21,7 @@
 
 .noParamsText {
   text-align: left;
-  color: var(--clr-slate-70);
+  color: var(--muted-foreground);
   font-size: var(--text-sm);
   font-family: var(--font-family-base);
 }
@@ -34,11 +34,17 @@
 }
 
 .card {
-  background: var(--brand-white);
-  border: 1px solid rgba(48, 48, 49, 0.2);
-  border-radius: 20px;
   padding: 20px 24px 24px;
-  box-shadow: 1px 4px 8px 0 var(--black-alpha-15);
+  border: 1px solid transparent;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--deck-blue) 30%, var(--border)),
+        color-mix(in srgb, var(--deck-cyan) 35%, var(--border))
+      )
+      border-box;
+  box-shadow: var(--shadow-blue-5);
   margin-bottom: 0;
   width: 100%;
   display: flex;
@@ -64,10 +70,10 @@
 .cardHeaderLabel {
   font-size: 11px;
   line-height: 13px;
-  font-weight: var(--text-weight-bold);
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--clr-slate-50);
+  letter-spacing: 0.14em;
+  color: var(--muted-foreground);
 }
 
 .cardHeaderValue {
@@ -76,14 +82,14 @@
   font-weight: var(--text-weight-bold);
   font-size: 16px;
   line-height: 1.35;
-  color: var(--text-ink);
+  color: var(--foreground);
   overflow-wrap: anywhere;
 }
 
 .cardHeaderDivider {
   width: 1px;
-  background: rgba(48, 48, 49, 0.16);
-  border-radius: 999px;
+  background: var(--border);
+  border-radius: var(--radius-pill);
 }
 
 @media (max-width: 768px) {
@@ -122,7 +128,7 @@
   font-weight: var(--text-weight-bold);
   font-size: 16px;
   line-height: 18px;
-  color: var(--text-ink);
+  color: var(--foreground);
   margin: 0;
 }
 
@@ -148,34 +154,41 @@
   gap: 6px;
   font-family: var(--font-family-base);
   font-style: normal;
-  font-weight: var(--text-weight-bold);
-  font-size: 14px;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   line-height: 16px;
-  color: var(--clr-slate-70);
+  color: var(--muted-foreground);
 }
 
 .paramInput {
   box-sizing: border-box;
   width: 100%;
   height: 40px;
-  border: 1px solid var(--border-navy-soft);
-  box-shadow: var(--shadow-md);
-  border-radius: var(--radius-xl);
-  background: var(--brand-white);
+  border: 1px solid var(--input);
+  box-shadow: none;
+  border-radius: var(--radius-lg);
+  background: #fff;
   font-family: var(--font-family-base);
   font-style: normal;
   font-weight: var(--text-weight-regular);
   font-size: var(--text-sm);
   line-height: var(--text-line-base);
-  color: var(--text-ink);
-  padding: 0px 30px;
+  color: var(--foreground);
+  padding: 8px 12px;
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .paramInput:focus {
   outline: none;
-  border-color: var(--clr-navy);
+  border-color: var(--deck-blue);
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+.paramInput::placeholder {
+  color: #6b6b6b;
 }
 
 .paramInput[type='number'] {
@@ -194,15 +207,19 @@ select.paramInput {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background-image: linear-gradient(45deg, transparent 50%, #303031 50%),
-    linear-gradient(135deg, #303031 50%, transparent 50%);
-  background-position: calc(100% - 30px) calc(1rem + 5px),
-    calc(100% - 25px) calc(1rem + 5px);
+  background-image: linear-gradient(
+      45deg,
+      transparent 50%,
+      var(--foreground) 50%
+    ),
+    linear-gradient(135deg, var(--foreground) 50%, transparent 50%);
+  background-position: calc(100% - 17px) calc(1rem + 3px),
+    calc(100% - 12px) calc(1rem + 3px);
   background-size: 5px 5px, 5px 5px;
   background-repeat: no-repeat;
-  background-color: var(--brand-white);
+  background-color: #fff;
 }
 
 .requiredMark {
-  color: var(--brand-error-red);
+  color: var(--destructive);
 }

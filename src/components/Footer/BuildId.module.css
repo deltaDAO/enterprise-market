@@ -4,4 +4,5 @@
   margin-bottom: var(--spacer);
   font-family: var(--font-family-monospace);
   text-align: center;
+  color: rgba(255, 255, 255, 0.6);
 }

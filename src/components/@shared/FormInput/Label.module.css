@@ -1,9 +1,11 @@
 .label {
   font-family: var(--font-family-base);
-  font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-label);
-  color: var(--font-color-label);
-  line-height: 1.2;
+  font-weight: 600;
+  font-size: var(--font-size-label-motif);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-label);
+  color: var(--muted-foreground);
+  line-height: 1.4;
   display: block;
   margin-bottom: calc(var(--spacer) / 4);
 }

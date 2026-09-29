@@ -1,4 +1,11 @@
 {
+  "name": "deltaDAO Marketplace",
+  "short_name": "deltaDAO",
+  "description": "Publish, discover and monetize data and AI assets with full data sovereignty, privacy-preserving Compute-to-Data and built-in GDPR compliance.",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#2450ec",
+  "background_color": "#ffffff",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",

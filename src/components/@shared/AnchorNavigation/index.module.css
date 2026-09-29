@@ -12,33 +12,38 @@
   align-items: center;
   gap: 0.25rem;
   padding: 9px 14px;
-  height: 40px;
-  background: transparent;
-  border: 1px solid var(--clr-navy);
-  border-radius: 20px;
-  color: var(--clr-navy);
-  font-size: var(--text-sm);
-  font-weight: var(--text-weight-bold);
+  height: 36px;
+  background: #fff;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-lg);
+  color: var(--deck-blue);
+  font-size: 14px;
+  font-weight: 600;
   font-family: var(--font-family-base);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
   text-decoration: none;
   text-transform: none;
-  box-shadow: var(--shadow-sm);
+  box-shadow: none;
   min-width: unset;
 }
 
 .button:hover,
 .button:focus {
-  border-color: var(--clr-navy-darker, var(--navy-900));
-  color: var(--clr-navy-darker, var(--navy-900));
-  background: transparent;
-  transform: scale(1.02);
-  box-shadow: 1px 2px 8px var(--box-shadow-color);
+  border-color: var(--control-border-hover);
+  color: var(--deck-blue);
+  background: var(--deck-blue-8);
+  text-decoration: none;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
 }
 
 .number {
-  font-weight: var(--text-weight-bold);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
 }
 
 .label {

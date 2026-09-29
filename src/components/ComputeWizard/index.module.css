@@ -6,6 +6,30 @@
   padding: var(--sp-10);
 }
 
+/* step panel = deck-card */
+.form .container {
+  border: 1px solid transparent;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--deck-blue) 30%, var(--border)),
+        color-mix(in srgb, var(--deck-cyan) 35%, var(--border))
+      )
+      border-box;
+  box-shadow: var(--shadow-blue-5);
+}
+
+@media (max-width: 768px) {
+  .containerOuter {
+    padding: var(--sp-4) 0;
+  }
+
+  .container {
+    padding: var(--sp-6);
+  }
+}
+
 .form {
   width: 100%;
   display: flex;
@@ -14,7 +38,7 @@
 }
 
 .error {
-  color: red;
+  color: var(--destructive);
   margin: 1rem 0;
 }
 
@@ -37,26 +61,29 @@
 
 .successDetails h3 {
   margin: 1rem 0;
-  color: var(--font-color-heading);
+  color: var(--deck-blue);
+  font-weight: var(--font-weight-display);
+  letter-spacing: -0.02em;
   font-size: 1.5rem;
 }
 
 .successDetails p {
   margin: 0.5rem 0;
-  color: var(--font-color-text);
+  color: var(--foreground);
 }
 
 .jobIdContainer {
-  background: var(--background-highlight);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
+  background: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
   padding: 1rem;
   margin: 1rem 0;
 }
 
 .jobIdContainer p {
   margin: 0;
-  font-family: monospace;
+  font-family: var(--font-family-monospace);
+  font-variant-numeric: tabular-nums;
   font-size: 0.9rem;
 }
 
@@ -68,7 +95,8 @@
 }
 
 .jobIdValue {
-  font-family: monospace;
+  font-family: var(--font-family-monospace);
+  font-variant-numeric: tabular-nums;
   font-size: 0.9rem;
   max-width: 100%;
   overflow: hidden;

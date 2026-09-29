@@ -14,7 +14,7 @@ export default function Network(): ReactElement {
   return chainId ? (
     <div className={styles.network}>
       {!isSupportedOceanNetwork && (
-        <Tooltip content="No Ocean Protocol contracts are deployed to this network.">
+        <Tooltip content="The marketplace smart contracts are not deployed to this network.">
           <Status state="error" className={styles.warning} />
         </Tooltip>
       )}

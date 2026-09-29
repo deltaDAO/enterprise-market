@@ -43,15 +43,6 @@ const mockFieldArwave = {
   name: 'arweave'
 }
 
-const mockFieldGraphQL = {
-  value:
-    'https://v4.subgraph.mumbai.oceanprotocol.com/subgraphs/name/oceanprotocol/ocean-subgraph',
-  checked: false,
-  onChange: jest.fn(),
-  onBlur: jest.fn(),
-  name: 'graphql'
-}
-
 const mockFieldSM = {
   value: '0x564955E9d25B49afE5Abd66966Ab4Bc9Ad55Fedb',
   checked: false,
@@ -193,24 +184,21 @@ describe('@shared/FormInput/InputElement/FilesInput', () => {
     ).toBeInTheDocument()
   })
 
-  it('renders fileinfo when graphql is valid', () => {
+  it('renders an unsupported file type without crashing', () => {
     ;(useField as jest.Mock).mockReturnValue([
       {
         value: [
           {
-            type: 'graphql',
-            valid: true,
-            url: 'https://v4.subgraph.mumbai.oceanprotocol.com/subgraphs/name/oceanprotocol/ocean-subgraph',
-            query:
-              'query{\n            nfts(orderBy: createdTimestamp,orderDirection:desc){\n                 id\n                 symbol\n                 createdTimestamp\n            }\n           }',
-            checksum: false
+            type: 'unsupported',
+            url: 'https://hello.com'
           }
         ]
       },
       mockMeta,
       mockHelpers
     ])
-    render(<FilesInput {...props} field={mockFieldGraphQL} />)
+    render(<FilesInput {...props} field={mockFieldUrl} />)
+    expect(screen.getByText('Validate')).toBeInTheDocument()
   })
 
   it('renders fileinfo when smart contract is valid', () => {

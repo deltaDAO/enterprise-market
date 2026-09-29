@@ -1,34 +1,18 @@
-/* Updated to remove all boxes while keeping functionality */
 .button {
+  composes: button from '../../@shared/atoms/Button/index.module.css';
   font-family: var(--font-family-base);
-  font-size: 20px;
-  text-transform: uppercase;
-  padding: 0;
+  font-size: 14px;
+  text-transform: none;
+  min-width: 0;
+  height: 38px;
+  padding: 0 12px;
   white-space: nowrap;
   margin: 0;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  height: auto;
-  display: flex;
-  align-items: center;
-  color: var(--menu-font-color);
-}
-
-.button:hover,
-.button:focus {
-  transform: none;
-  outline: 0;
-  /* text-decoration: underline; */
+  gap: 6px;
 }
 
 .initial {
-  font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 137%;
-  text-align: center;
-  color: #fff;
+  font-weight: var(--font-weight-bold);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -40,21 +24,23 @@
 }
 
 .address {
-  font-family: var(--font-family);
+  font-family: var(--font-family-monospace);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
   display: none;
   text-transform: none;
-  padding-right: calc(var(--spacer) / 3);
-  padding-left: calc(var(--spacer) / 8);
-  color: #fff;
+  padding-right: 2px;
+  padding-left: 2px;
+  color: var(--foreground);
 }
 
 .button svg {
   width: var(--menu-caret-size);
   height: var(--menu-caret-size);
-  fill: var(--menu-icon-fill-color);
+  fill: currentColor;
   display: inline-block;
   vertical-align: middle;
-  margin-left: calc(var(--spacer) / 3);
+  margin: 0;
   transition: transform 0.2s ease-out;
 }
 
@@ -80,7 +66,7 @@ svg.caret {
   .caret,
   svg.caret {
     display: inline-block;
-    fill: var(--menu-icon-fill-color);
+    fill: currentColor;
   }
 }
 @media screen and (min-width: 47rem) {
@@ -90,25 +76,10 @@ svg.caret {
   /* ... */
 }
 
-@media screen and (min-width: 481px) and (max-width: 1150px) {
+@media screen and (max-width: 480px) {
   .button {
-    font-size: 16px;
-  }
-  .initial {
-    font-size: 16px;
-  }
-}
-
-@media screen and (min-width: 150px) and (max-width: 480px) {
-  .initial {
-    font-size: 14px;
-    /* max-width: 50%; */
-  }
-  .button {
-    font-size: 14px;
-  }
-  .initialLabel {
-    display: inline;
+    font-size: 13px;
+    padding: 0 10px;
   }
 }
 
@@ -132,21 +103,21 @@ svg.caret {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background: white;
-  border: 1px solid var(--neutral-250);
+  background: var(--card);
+  border: 1px solid var(--border);
   padding: 1rem;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   z-index: 9999;
   position: relative;
   max-width: 400px;
   width: max-content;
-  box-shadow: 0 4px 12px var(--black-alpha-10);
+  box-shadow: var(--shadow-soft);
 }
 
 .inputWrapper label {
   font-size: 0.85rem;
   margin-bottom: 0.5rem;
-  color: var(--neutral-900);
+  color: var(--muted-foreground);
 }
 
 .inputWrapper input {
@@ -154,7 +125,12 @@ svg.caret {
   min-width: 200px;
   padding: 0.5rem;
   font-size: 0.9rem;
-  border: 1px solid var(--neutral-250);
-  border-radius: 6px;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
   margin-bottom: 0.5rem;
+}
+
+/* caret.svg ships with fill="white" on its path */
+.button svg path {
+  fill: currentColor;
 }

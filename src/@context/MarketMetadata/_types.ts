@@ -24,14 +24,12 @@ export interface AppConfig {
   allowFixedPricing: string
   allowDynamicPricing: string
   allowFreePricing: string
-  defaultPrivacyPolicySlug: string
   privacyPreferenceCenter: string
   darkModeConfig: {
     classNameDark: string
     classNameLight: string
     storageKey: string
   }
-  defaultAccessTerms: string
   purgatoryUrl: string
   dockerHubProxyUrl: string
   showPreviewAlert: string
@@ -41,6 +39,8 @@ export interface AppConfig {
   persistJsonWalletSession: boolean
   assetDescriptionExpandedByDefault: boolean
   pontusXRegistryUrl: string | null
+  siteUrl: string | null
+  allowIndexing: string
 }
 export interface SiteContent {
   siteTitle: string
@@ -49,7 +49,7 @@ export interface SiteContent {
   taglineContinuation: string
   siteUrl: string
   siteImage: string
-  copyright: string
+  siteImageAlt?: string
   menu: {
     name: string
     link?: string

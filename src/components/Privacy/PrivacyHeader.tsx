@@ -28,31 +28,37 @@ export default function PrivacyPolicyHeader({
     dateFormat: 'MMMM dd, yyyy.'
   }
 
+  // Only keep an `anchor` where the target renders that id: the terms,
+  // privacy and cookie pages have no matching heading id, so their tabs just
+  // open the page. rehype-slug gives the lifecycle policy H1 its id, and the
+  // deltaDAO imprint page has an element with id="imprint".
   const navItems = [
     {
       label: 'Imprint',
       anchor: 'imprint',
-      href: '/privacy/imprint'
+      href: 'https://www.delta-dao.com/imprint'
     },
     {
       label: 'Terms and Conditions',
-      anchor: 'terms-and-conditions',
       href: '/privacy/terms'
     },
     {
       label: 'Privacy Policy',
-      anchor: 'privacy-policy',
       href: '/privacy/privacy-policy'
     },
-    {
-      label: 'Data Portal Usage Agreement',
-      anchor: 'data-portal-usage-agreement',
-      href: '/privacy/data-portal-usage-agreement'
-    },
+    // No Data Portal Usage Agreement tab: the upstream document (naming Ocean
+    // Enterprise Collective e.V. as the Portal Operator) was removed, so
+    // /privacy/data-portal-usage-agreement returns 404 unless
+    // NEXT_PUBLIC_DPUA_URL points at an external document. Add the tab back
+    // once a deltaDAO version exists.
     {
       label: 'Cookie Policy',
-      anchor: 'cookie-policy',
       href: '/privacy/cookie-policy'
+    },
+    {
+      label: 'Lifecycle State Policy',
+      anchor: 'lifecycle-state-policy',
+      href: '/privacy/lifecycle-state-policy'
     }
   ]
 

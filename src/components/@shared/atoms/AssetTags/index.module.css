@@ -1,36 +1,49 @@
 .tags {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
   max-width: 100%;
 }
 
 .tag {
-  font-family: var(--font-family);
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 129%;
-  color: #4ca3d3;
-  padding: 0.1rem 0.2rem 0.1rem 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-medium);
+  font-size: 12px;
+  line-height: 1;
+  color: var(--foreground);
+  background: var(--secondary);
+  border-radius: var(--radius-pill);
+  padding: 0 10px;
   margin-bottom: calc(var(--spacer) / 10);
   text-align: center;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  text-decoration: none;
 }
 
 .tag:hover:not(span),
-.tag:focus:not(span) {
-  color: var(--color-highlight);
+.tag:focus-visible:not(span) {
+  color: var(--deck-blue);
+  background: var(--deck-blue-8);
+  text-decoration: none;
 }
 
 .more {
-  font-size: var(--font-size-mini);
+  font-size: 12px;
+  color: var(--muted-foreground);
   margin-left: calc(var(--spacer) / 8);
 }
 
 .title {
-  font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 14px;
-  color: #303031;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-label-motif);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-label);
+  color: var(--muted-foreground);
 }

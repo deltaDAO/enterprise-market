@@ -1,21 +1,33 @@
 .container {
   display: block;
-  color: var(--box-template-font-color);
-  background: var(--box-template-background);
-  border-radius: var(--box-template-border-radius);
-  border: var(--box-template-border-size) solid var(--box-template-border-color);
-  box-shadow: var(--box-template-box-shadow);
+  color: var(--foreground);
+  border: 1px solid transparent;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--deck-blue) 30%, var(--border)),
+        color-mix(in srgb, var(--deck-cyan) 35%, var(--border))
+      )
+      border-box;
+  box-shadow: var(--shadow-blue-5);
   padding: 0;
   position: relative;
 }
 
 /* Publish flow container styling */
 .containerPublish {
-  border: var(--border-size-sm) solid var(--border-navy-soft);
-  border-radius: var(--radius-xl);
   padding: var(--form-container-padding-top-extended);
-  background: var(--brand-white);
-  box-shadow: var(--shadow-md);
+  border: 1px solid transparent;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--deck-blue) 30%, var(--border)),
+        color-mix(in srgb, var(--deck-cyan) 35%, var(--border))
+      )
+      border-box;
+  box-shadow: var(--shadow-blue-5);
   max-width: none !important;
   width: 100% !important;
 }
@@ -71,6 +83,9 @@
 
 .titleForm {
   font-size: var(--font-size-h4);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
   margin-bottom: calc(var(--spacer) / 8);
   max-width: 50rem;
 }
@@ -180,13 +195,13 @@ body .addAddressButton {
   justify-content: center;
   align-items: center;
   gap: 4px;
-  background: var(--gradient-primary);
-  box-shadow: 1px 2px 8px var(--box-shadow-color);
-  border-radius: 20px;
-  font-family: 'Helvetica';
-  font-weight: 700;
+  background: var(--deck-blue);
+  box-shadow: 0 4px 12px var(--deck-blue-25);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-family-base);
+  font-weight: 600;
   font-size: 14px;
-  color: #ffffff;
+  color: #fff;
   border: none;
   cursor: pointer;
   transition: 0.2s ease-out;
@@ -199,9 +214,13 @@ body .addAddressButton {
   height: var(--field-height);
   min-width: 105px;
   transform: none;
-  background: var(--gradient-primary);
-  opacity: 0.9;
-  box-shadow: 1px 2px 8px var(--box-shadow-color);
+  background: var(--deck-blue-hover);
+  box-shadow: 0 6px 16px var(--deck-blue-25);
+}
+
+.addAddressButton:focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
 }
 
 .addAddressButton svg {
@@ -210,33 +229,33 @@ body .addAddressButton {
 
 .addressInput {
   width: 100%;
-  height: var(--field-height);
-  border: var(--border-size-sm) solid var(--border-navy-soft);
-  border-radius: var(--radius-xl);
-  padding: var(--field-padding);
+  height: 40px;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  padding: 8px 12px;
   font-family: var(--font-family-base);
   font-size: var(--text-sm);
   font-weight: var(--text-weight-regular);
   line-height: var(--text-line-base);
-  color: var(--clr-slate-70);
-  background: var(--brand-white);
-  box-shadow: var(--shadow-md);
+  color: var(--foreground);
+  background: #fff;
+  box-shadow: none;
   transition: 0.2s ease-out;
 }
 
 .addressInput:focus {
-  border-color: var(--clr-navy);
-  box-shadow: 0 0 0 2px var(--navy-alpha-20);
+  border-color: var(--deck-blue);
+  box-shadow: 0 0 0 3px var(--ring);
   outline: 0;
 }
 
 .addressInput::placeholder {
   font-family: var(--font-family-base);
   font-size: var(--text-sm);
-  color: var(--clr-slate-70);
+  color: #6b6b6b;
   font-weight: var(--text-weight-regular);
   transition: 0.2s ease-out;
-  opacity: 0.7;
+  opacity: 1;
 }
 
 .addressListContainer {
@@ -255,17 +274,18 @@ body .addAddressButton {
 
 .addressDisplay {
   flex: 1;
-  height: var(--field-height);
-  border: var(--border-size-sm) solid var(--border-navy-soft);
-  border-radius: var(--radius-xl);
-  padding: var(--field-padding);
-  font-family: var(--font-family-base);
+  height: 40px;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  padding: 8px 12px;
+  font-family: var(--font-family-monospace);
+  font-variant-numeric: tabular-nums;
   font-size: var(--text-sm);
   font-weight: var(--text-weight-regular);
   line-height: var(--text-line-base);
-  color: var(--clr-slate-70);
-  background: var(--surface-neutral);
-  box-shadow: var(--shadow-md);
+  color: var(--foreground);
+  background: var(--muted);
+  box-shadow: none;
 }
 
 .addressItem {
@@ -315,8 +335,8 @@ body .addAddressButton {
   display: block;
   font-family: var(--font-family-base);
   font-weight: var(--font-weight-bold);
-  font-size: 10px;
-  color: var(--input-error-text-color);
+  font-size: 12px;
+  color: var(--destructive);
   line-height: 1.2;
   margin-top: var(--sp-1);
   margin-left: var(--sp-1);
@@ -374,6 +394,6 @@ body .addAddressButton {
 }
 
 .required {
-  color: var(--clr-alert);
+  color: var(--destructive);
   margin-left: 4px;
 }

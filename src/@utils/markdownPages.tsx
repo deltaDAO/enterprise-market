@@ -16,6 +16,8 @@ export interface PageData {
   frontmatter: { [key: string]: any }
   content: string
   fileLastUpdated: string
+  /** Set when no document backs this slug, so pages can return a real 404. */
+  notFound?: boolean
 }
 
 let hasGitBinary: boolean | undefined
@@ -213,7 +215,8 @@ export async function getPageBySlug(
         description: ''
       },
       content: `# Content Not Found\n\nThe requested content could not be found.`,
-      fileLastUpdated: new Date().toISOString().split('T')[0]
+      fileLastUpdated: new Date().toISOString().split('T')[0],
+      notFound: true
     }
   }
 

@@ -60,6 +60,18 @@ function validateAndChecksumAddresses(addresses: string[]): string[] {
   }, [])
 }
 
+const chainsWarnedWithoutAllowedErc20 = new Set<string>()
+
+// getOceanConfig runs from many effects (e.g. while a wallet sits on an
+// unsupported network), so only warn once per chain.
+function warnNoAllowedErc20Once(networkKey: string): void {
+  if (chainsWarnedWithoutAllowedErc20.has(networkKey)) return
+  chainsWarnedWithoutAllowedErc20.add(networkKey)
+  console.warn(
+    `[getOceanConfig] No valid NEXT_PUBLIC_ALLOWED_ERC20_ADDRESSES entry for network: ${networkKey}. No base token is available on this network.`
+  )
+}
+
 export function getOceanConfig(
   network: string | number
 ): ConfigEnterprise | null {
@@ -84,16 +96,18 @@ export function getOceanConfig(
   // Override nodeUri with value from RPC map if it exists
   const networkKey = network.toString()
   if (rpcMap[networkKey]) config.nodeUri = rpcMap[networkKey]
-  if (erc20Map[networkKey]) {
-    const validAddresses = validateAndChecksumAddresses(erc20Map[networkKey])
-
-    config.tokenAddresses = validAddresses
-  } else {
-    // Fallback if no map entry exists: use the default config ocean token as a single-item array
-    config.tokenAddresses = config?.oceanTokenAddress
-      ? [config.oceanTokenAddress]
-      : []
-  }
+  const validAddresses = erc20Map[networkKey]
+    ? validateAndChecksumAddresses(erc20Map[networkKey])
+    : []
+  config.tokenAddresses = validAddresses
+  // The configured ERC20 allowlist is the source of truth for the chain's
+  // base token: oceanTokenAddress resolves to its first valid entry (e.g.
+  // devEURAU on OP Sepolia, or OCEAN where OCEAN is the configured token).
+  // ocean.js ships OCEAN as a built-in default; a chain without a (valid)
+  // allowlist entry must not silently fall back to it, so it gets no base
+  // token at all and callers that need one must handle `undefined`.
+  config.oceanTokenAddress = validAddresses[0]
+  if (validAddresses.length === 0) warnNoAllowedErc20Once(networkKey)
   const enterpriseContracts = getOceanArtifactsAddressesByChainId(
     Number(network)
   )

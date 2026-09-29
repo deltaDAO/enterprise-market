@@ -13,17 +13,19 @@
   gap: calc(var(--spacer) / 4);
 }
 
-/* outlined navy pill hugging its content, external icon to the right of the title */
+/* outlined deck-blue pill hugging its content, external icon to the right of the title */
 .chip {
   display: inline-flex;
   align-items: center;
   gap: calc(var(--spacer) / 3);
   max-width: 100%;
   padding: calc(var(--spacer) / 6) calc(var(--spacer) / 2);
-  border: 1px solid var(--clr-navy);
-  border-radius: 20px;
-  color: var(--clr-navy);
-  font-weight: var(--font-weight-bold);
+  border: 1px solid var(--deck-blue-25);
+  border-radius: var(--radius-pill);
+  background: #fff;
+  color: var(--deck-blue);
+  font-size: 13px;
+  font-weight: 500;
   text-decoration: none;
   line-height: 1.4;
   transition: 0.2s ease-out;
@@ -32,13 +34,18 @@
 /* fill-on-hover, mirroring the project's outlined (`.ocean`) button */
 .chip:hover,
 .chip:focus {
-  background: var(--clr-navy);
-  color: var(--brand-white);
+  background: var(--deck-blue-8);
+  border-color: var(--deck-blue);
+  color: var(--deck-blue);
 }
 
-.chip:hover .icon path,
-.chip:focus .icon path {
-  stroke: var(--brand-white);
+.chip:focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
+}
+
+.chip .icon path {
+  stroke: currentColor;
 }
 
 .text {

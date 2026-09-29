@@ -1,17 +1,20 @@
 .results {
-  border: 1px solid var(--ink-alpha-10);
-  border-radius: 20px;
+  border: 1px solid rgba(22, 22, 22, 0.05);
+  border-radius: var(--radius-xl);
   padding: 20px;
-  box-shadow: 1px 4px 8px 0 var(--black-alpha-15);
-  background: #fff;
+  box-shadow: var(--shadow-blue-5);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(4px);
   margin-top: 1.5rem;
 }
 
 .title {
-  font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 14px;
-  color: #303031;
+  font-family: var(--font-family-base);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
   margin-bottom: 1rem;
 }
 
@@ -19,7 +22,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  font-family: var(--font-family);
+  font-family: var(--font-family-base);
   font-size: 14px;
   line-height: 100%;
   margin-bottom: 0.5rem;
@@ -27,7 +30,7 @@
 
 .resultLabel {
   font-weight: 400;
-  color: #303031;
+  color: var(--foreground);
 }
 
 .resultRow .tooltipWrap {
@@ -45,7 +48,7 @@
   background: none;
   box-shadow: none;
   font: inherit;
-  color: var(--clr-navy);
+  color: var(--deck-blue);
   cursor: pointer;
   transition: color 0.15s ease-out, opacity 0.15s ease-out;
 }
@@ -69,13 +72,13 @@
 }
 
 .downloadButton:hover {
-  color: var(--ocean-blue);
+  color: var(--deck-blue-hover);
 }
 
 .downloadButton:focus-visible {
-  outline: 2px solid var(--clr-navy);
+  outline: 2px solid var(--deck-blue);
   outline-offset: 2px;
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
 }
 
 .downloadButton:disabled {
@@ -89,19 +92,19 @@
 }
 .rightAlert {
   margin-top: 1rem;
-  width: 4px;
-  background: #fdd655;
+  width: 3px;
+  background: var(--deck-blue);
 }
 
 .help {
   width: 222px;
-  height: 34px;
+  min-height: 34px;
   margin-top: 1rem;
-  background: var(--yellow-120);
+  background: var(--deck-blue-8);
   padding: 0.5rem 1rem;
-  font-family: var(--font-family);
+  font-family: var(--font-family-base);
   font-weight: 400;
   font-size: 14px;
   line-height: 129%;
-  color: var(--black-1000);
+  color: var(--foreground);
 }

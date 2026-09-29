@@ -2,12 +2,12 @@
   display: block;
   text-align: right;
   font-size: var(--font-size-mini);
-  color: var(--color-secondary);
+  color: var(--muted-foreground);
 }
 
 .priceRow {
   width: 100%;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border);
   padding-top: calc(var(--spacer) / 7);
   padding-bottom: calc(var(--spacer) / 7);
   display: grid;
@@ -17,13 +17,13 @@
 
 .priceRow:last-child {
   border-bottom: none;
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid var(--border);
 }
 
 .sign {
   display: inline-block;
   text-align: left;
-  color: var(--color-secondary);
+  color: var(--muted-foreground);
   font-size: var(--font-size-base);
 
   margin-top: -10px;
@@ -32,12 +32,15 @@
 .type {
   display: inline-block;
   text-align: left;
-  color: var(--color-secondary);
+  color: var(--muted-foreground);
   font-size: var(--font-size-mini);
 }
 
 .priceColumn {
   display: grid;
+  font-family: var(--font-family-monospace);
+  font-variant-numeric: tabular-nums;
+  color: var(--deck-blue);
   text-align: right;
   width: 100%;
 }

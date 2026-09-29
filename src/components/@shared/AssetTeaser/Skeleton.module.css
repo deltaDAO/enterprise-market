@@ -1,19 +1,19 @@
 .card {
-  background: var(--teaser-background);
-  border-radius: 20px;
-  border: var(--teaser-border-size) solid var(--overlay-light-60);
-  box-shadow: 1px 4px 8px 0 var(--black-alpha-15);
-  padding: calc(var(--spacer) / 1.5);
+  border-radius: var(--radius-xl);
+  border: 1px solid transparent;
+  background: linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--deck-blue) 30%, var(--border)),
+        color-mix(in srgb, var(--deck-cyan) 35%, var(--border))
+      )
+      border-box;
+  box-shadow: var(--shadow-blue-5);
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
   gap: calc(var(--spacer) / 4);
   min-height: 11rem;
-}
-
-@media (min-width: 40rem) {
-  .card {
-    padding: var(--spacer);
-  }
 }
 
 .titleFirst {

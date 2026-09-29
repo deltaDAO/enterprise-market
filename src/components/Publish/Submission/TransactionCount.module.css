@@ -1,11 +1,16 @@
 .txHash {
   display: inline-block;
-  font-size: var(--font-size-small);
-  font-family: var(--font-family-base);
-  font-weight: var(--font-weight-base);
-  color: var(--color-secondary);
+  font-size: 12px;
+  font-family: var(--font-family-monospace);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  color: var(--muted-foreground);
 }
 
 a.txHash {
-  color: var(--clr-navy);
+  color: var(--brand-highlight);
+}
+
+a.txHash:hover {
+  text-decoration: underline;
 }

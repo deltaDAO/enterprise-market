@@ -1,23 +1,31 @@
 .banner {
   text-align: center;
   padding: calc(var(--spacer) / 5) calc(var(--spacer) / 2);
-  border-bottom: 1px solid var(--border-color);
-  background-color: var(--background-content);
+  border-bottom: 1px solid var(--info-border);
+  background-color: var(--info-bg);
+  color: var(--foreground);
+}
+
+.banner .text strong {
+  color: var(--deck-blue);
 }
 
 .banner.error {
-  background-color: var(--brand-alert-red);
-  color: var(--brand-white);
+  background-color: var(--destructive-bg);
+  border-bottom-color: var(--destructive-border);
+  color: var(--destructive-strong);
 }
 
 .banner.warning {
-  background-color: var(--brand-alert-yellow);
-  color: var(--brand-white);
+  background-color: var(--warning-bg);
+  border-bottom-color: var(--warning-border);
+  color: var(--warning-strong);
 }
 
 .banner.success {
-  background-color: var(--brand-alert-green);
-  color: var(--brand-white);
+  background-color: var(--success-bg);
+  border-bottom-color: var(--success-border);
+  color: var(--success);
 }
 
 .banner > div {

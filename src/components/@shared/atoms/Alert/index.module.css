@@ -1,3 +1,4 @@
+/* deltaDAO alert: soft tinted card, full 1px tinted border, no accent bar */
 .root {
   display: flex;
   flex-direction: row;
@@ -13,18 +14,28 @@
 }
 
 .infoBox {
+  --alert-title: var(--deck-blue);
+  position: relative;
   display: flex;
   flex-direction: column;
-
+  gap: 8px;
   font-size: var(--text-sm);
-  line-height: var(--text-line-xl);
-
-  border: 0 transparent;
-  border-left: 5px solid #fdd655;
-  border-radius: 0;
-  padding: 8px 11px;
-  background: var(--background-detail-box);
+  line-height: 1.5;
+  color: var(--foreground);
+  border: 1px solid var(--info-border);
+  border-radius: var(--radius-xl);
+  padding: 14px 16px;
+  background: var(--info-bg);
   width: fit-content;
+}
+
+.infoBox strong {
+  font-weight: 600;
+  color: var(--alert-title);
+}
+
+.infoBox a {
+  color: var(--brand-highlight);
 }
 
 .header {
@@ -32,19 +43,10 @@
   color: inherit;
 }
 
-.header strong {
-  font-weight: var(--text-weight-bold);
-}
-
+/* the action is a Button atom; only spacing here */
 .action,
 button.action {
-  background: var(--clr-navy);
-  color: var(--brand-white);
-  border: 1px solid var(--clr-navy);
-  border-radius: var(--radius-xl);
-  padding: var(--sp-2) var(--sp-4);
-  font-size: var(--text-sm);
-  font-weight: var(--text-weight-bold);
+  align-self: flex-start;
 }
 
 .close {
@@ -53,37 +55,51 @@ button.action {
   background: none;
   border: 0;
   box-shadow: none;
-  outline: 0;
-  top: 0;
-  right: 0;
+  top: 6px;
+  right: 8px;
+  padding: 0 4px;
+  line-height: 1;
   font-size: var(--font-size-large);
-  color: var(--brand-grey);
+  color: var(--muted-foreground);
+  border-radius: var(--radius-sm);
 }
 
-.close:hover,
-.close:focus {
-  opacity: 0.7;
+.close:hover {
+  color: var(--foreground);
 }
 
-/* Alert state variations - only change border and background, keep original text color */
-.error {
-  border-color: var(--brand-alert-red);
-  background: var(--red-alpha-15);
+.close:focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
+}
+
+/* state variations: tint + title color only, body text stays foreground */
+.info {
+  --alert-title: var(--deck-blue);
+  border-color: var(--info-border);
+  background: var(--info-bg);
 }
 
 .success {
-  border-color: var(--green-500);
-  background: var(--green-bright-alpha-15);
+  --alert-title: var(--success);
+  border-color: var(--success-border);
+  background: var(--success-bg);
 }
 
-.info {
-  border-color: #fdd655;
-  background: var(--surface-warning);
+.warning {
+  --alert-title: var(--warning-strong);
+  border-color: var(--warning-border);
+  background: var(--warning-bg);
+}
+
+.error {
+  --alert-title: var(--destructive-strong);
+  border-color: var(--destructive-border);
+  background: var(--destructive-bg);
 }
 
 @media screen and (max-width: 640px) {
   .infoBox {
-    padding: var(--sp-4);
     margin-bottom: var(--sp-4);
   }
 }

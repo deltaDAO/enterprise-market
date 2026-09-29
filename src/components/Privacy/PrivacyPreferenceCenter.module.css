@@ -7,11 +7,17 @@
   max-width: 24rem;
   max-height: calc(100vh - (var(--spacer) * 2));
   overflow: hidden;
-  background: var(--background-body-transparent);
-  backdrop-filter: blur(4px);
-  border: 1px solid var(--border-color);
+  color: var(--foreground);
+  border: 1px solid transparent;
   border-radius: var(--radius-xl);
-  box-shadow: 0 6px 17px var(--box-shadow-color);
+  background: linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--deck-blue) 30%, var(--border)),
+        color-mix(in srgb, var(--deck-cyan) 35%, var(--border))
+      )
+      border-box;
+  box-shadow: var(--shadow-blue-10), var(--shadow-soft);
   opacity: 1;
   transform: translateY(0);
   transition: opacity 400ms ease-out,
@@ -34,7 +40,7 @@
 }
 
 .content {
-  padding: calc(var(--spacer) / 2);
+  padding: 16px 18px;
   transition: opacity 160ms ease;
 }
 
@@ -44,18 +50,22 @@
 
 .title {
   margin: 0 0 calc(var(--spacer) / 6);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-bold);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--foreground);
 }
 
 .text p {
   margin: 0;
-  font-size: var(--font-size-small);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--muted-foreground);
 }
 
 .text a {
-  color: var(--brand-blue);
+  color: var(--brand-highlight);
   text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .buttons {
@@ -80,8 +90,8 @@
 }
 
 .buttons button.manageButton {
-  color: var(--brand-blue);
-  font-weight: var(--font-weight-bold);
+  color: var(--brand-highlight);
+  font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 3px;
   padding: 0;
@@ -89,7 +99,10 @@
 
 .buttons button.manageButton:hover,
 .buttons button.manageButton:focus {
-  opacity: 0.75;
+  /* darker blue instead of fading, so hover text stays >= 4.5:1 */
+  color: var(--deck-blue-hover);
+  background: transparent;
+  opacity: 1;
   padding: 0;
 }
 
@@ -105,7 +118,17 @@
   background: none;
   cursor: pointer;
   line-height: 0;
-  color: var(--font-color-text);
+  color: var(--muted-foreground);
+  border-radius: var(--radius-sm);
+}
+
+.collapseButton:hover {
+  color: var(--deck-blue);
+}
+
+.collapseButton:focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
 }
 
 .collapseButton svg {
@@ -121,24 +144,32 @@
   gap: calc(var(--spacer) / 3);
   padding: calc(var(--spacer) / 4) 0;
   margin-top: calc(var(--spacer) / 4);
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid var(--border);
 }
 
 .rowTitle {
   margin: 0;
-  font-size: var(--font-size-small);
-  font-weight: var(--font-weight-bold);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--foreground);
 }
 
 .rowDescription {
   margin: 0;
-  font-size: var(--font-size-mini);
-  color: var(--font-color-text);
+  font-size: 12px;
+  color: var(--muted-foreground);
 }
 
 .alwaysOn {
-  font-size: var(--font-size-mini);
-  color: var(--font-color-text);
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 8px;
+  border-radius: var(--radius-pill);
+  background: var(--success-soft);
+  color: var(--success);
+  font-size: 12px;
+  font-weight: 500;
   white-space: nowrap;
 }
 
@@ -147,17 +178,22 @@
   width: 36px;
   height: 20px;
   padding: 0;
-  border: 1px solid var(--brand-grey-light);
-  border-radius: 10px;
-  background: var(--brand-grey-lighter);
+  border: 1px solid var(--muted-foreground);
+  border-radius: var(--radius-pill);
+  background: var(--border);
   position: relative;
   cursor: pointer;
   transition: background 180ms ease, border-color 180ms ease;
 }
 
+.switch:focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
+}
+
 .switchOn {
-  background: var(--yellow-500);
-  border-color: var(--yellow-500);
+  background: var(--deck-blue);
+  border-color: var(--deck-blue);
 }
 
 .switchKnob {
@@ -168,14 +204,14 @@
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: var(--yellow-500);
-  box-shadow: 0 1px 2px var(--box-shadow-color);
+  background: var(--muted-foreground);
+  box-shadow: 0 1px 2px rgba(11, 19, 34, 0.2);
   transition: left 180ms ease, background 180ms ease;
 }
 
 .switchOn .switchKnob {
   left: 18px;
-  background: var(--brand-white);
+  background: #fff;
 }
 
 .footer {
@@ -185,5 +221,43 @@
   align-items: center;
   padding-top: calc(var(--spacer) / 3);
   margin-top: calc(var(--spacer) / 4);
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid var(--border);
+}
+
+/* cookie banner floats over every page, so it never carries the hero tier.
+ * Demoted from the hero tier to the solid primary tier: only one gradient
+ * (hero) button per view (the page's final action). */
+body .buttons > .actionButton:first-child,
+body .footer > .actionButton {
+  background: var(--deck-blue);
+  color: var(--brand-white);
+  border: 1px solid var(--deck-blue);
+  box-shadow: 0 4px 12px var(--deck-blue-25);
+  filter: none;
+}
+
+body .buttons > .actionButton:first-child:hover,
+body .footer > .actionButton:hover,
+body .buttons > .actionButton:first-child:focus-visible,
+body .footer > .actionButton:focus-visible {
+  background: var(--deck-blue-hover);
+  border-color: var(--deck-blue-hover);
+  color: var(--brand-white);
+  box-shadow: 0 6px 18px var(--deck-blue-25);
+  filter: none;
+  transform: none;
+}
+
+body .buttons > .actionButton:first-child:active,
+body .footer > .actionButton:active {
+  background: var(--deck-blue-hover);
+  box-shadow: 0 2px 6px var(--deck-blue-25);
+  filter: none;
+  transform: translateY(1px);
+}
+
+/* App's `.app > * { width: 100% }` would otherwise win and push the fixed
+ * banner 1 spacer past the right edge on phones */
+.wrapper.wrapper {
+  width: calc(100vw - (var(--spacer) * 2));
 }

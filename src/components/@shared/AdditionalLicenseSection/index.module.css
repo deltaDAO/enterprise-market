@@ -9,17 +9,17 @@
   flex-direction: column;
   gap: 4px;
   width: 100%;
-  border-top: 1px solid var(--border-navy-soft);
+  border-top: 1px solid var(--border);
   padding-top: 16px;
 }
 
 .headerLabel {
   font-family: var(--font-family-base);
   font-style: normal;
-  font-weight: var(--text-weight-bold);
+  font-weight: 700;
   font-size: var(--text-base);
   line-height: var(--text-line-base);
-  color: var(--clr-navy);
+  color: var(--foreground);
   margin-bottom: 0;
 }
 
@@ -29,16 +29,18 @@
   font-weight: var(--text-weight-regular);
   font-size: var(--text-sm);
   line-height: var(--text-line-base);
-  color: var(--clr-slate-70);
+  color: var(--muted-foreground);
 }
 
 .additionalLicenseItem {
   display: block;
   width: 100%;
   padding: 14px;
-  border: 1px solid var(--border-navy-soft);
+  border: 1px solid rgba(22, 22, 22, 0.05);
   border-radius: var(--radius-xl);
-  background: var(--surface-neutral);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(4px);
+  box-shadow: var(--shadow-blue-5);
 }
 
 .items {
@@ -71,10 +73,12 @@
 .itemTitleLabel {
   font-family: var(--font-family-base);
   font-style: normal;
-  font-weight: var(--text-weight-bold);
-  font-size: var(--text-sm);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   line-height: var(--text-line-base);
-  color: var(--clr-slate-70);
+  color: var(--muted-foreground);
   margin-bottom: 0;
   white-space: nowrap;
 }
@@ -82,13 +86,13 @@
 .infoIcon {
   width: 16px;
   height: 16px;
-  fill: var(--clr-slate-70);
+  fill: var(--muted-foreground);
   cursor: help;
   flex-shrink: 0;
 }
 
 .infoIcon:hover {
-  fill: var(--clr-navy);
+  fill: var(--deck-blue);
 }
 
 .additionalFileSourceWrapper {
@@ -105,27 +109,37 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 6px 10px;
+  padding: 8px 32px 8px 12px;
   gap: 10px;
   min-width: 190px;
   width: fit-content;
-  height: fit-content;
-  background: var(--surface-neutral);
-  border: 1px solid var(--clr-navy);
-  border-radius: var(--radius-xl);
+  height: 40px;
+  background-color: #fff;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
   font-family: var(--font-family-base);
   font-style: normal;
   font-weight: var(--text-weight-regular);
   font-size: var(--text-sm);
   line-height: var(--text-line-base);
-  color: var(--clr-navy);
+  color: var(--foreground);
   appearance: none;
-  background-image: linear-gradient(45deg, transparent 50%, var(--clr-navy) 50%),
-    linear-gradient(135deg, var(--clr-navy) 50%, transparent 50%);
+  background-image: linear-gradient(
+      45deg,
+      transparent 50%,
+      var(--deck-blue) 50%
+    ),
+    linear-gradient(135deg, var(--deck-blue) 50%, transparent 50%);
   background-position: calc(100% - 15px) calc(50% + 2px),
     calc(100% - 10px) calc(50% + 2px);
   background-size: 5px 5px, 5px 5px;
   background-repeat: no-repeat;
+}
+
+.additionalFileSourceWrapper select:focus {
+  outline: none;
+  border-color: var(--deck-blue);
+  box-shadow: 0 0 0 3px var(--ring);
 }
 
 .licenseUrlContainer {
@@ -141,7 +155,7 @@
 }
 
 .required {
-  color: var(--input-error-text-color);
+  color: var(--destructive);
   margin-left: 0.1rem;
 }
 
@@ -164,10 +178,10 @@
   padding: 9px 16px;
   gap: 8px;
   width: fit-content;
-  min-height: var(--field-height);
-  border-radius: var(--radius-xl);
+  min-height: 38px;
+  border-radius: var(--radius-lg);
   font-family: var(--font-family-base);
-  font-weight: var(--text-weight-bold);
+  font-weight: 600;
   font-size: var(--text-sm);
   line-height: var(--text-line-base);
   transition: border-color 0.2s ease, background-color 0.2s ease,
@@ -179,7 +193,7 @@
 }
 
 .addLicenseButton:disabled {
-  opacity: 0.55;
+  opacity: 0.45;
   cursor: not-allowed;
 }
 

@@ -1,7 +1,6 @@
 import { Fragment, ReactElement } from 'react'
 import styles from './PrivacyLanguages.module.css'
 import { usePrivacyMetadata } from '@hooks/usePrivacyMetadata'
-import { useUserPreferences } from '@context/UserPreferences'
 import Link from 'next/link'
 
 export default function PrivacyLanguages({
@@ -10,7 +9,6 @@ export default function PrivacyLanguages({
   label?: string
 }): ReactElement {
   const { policies } = usePrivacyMetadata()
-  const { setPrivacyPolicySlug } = useUserPreferences()
 
   return (
     <div className={styles.langSelect}>
@@ -21,14 +19,7 @@ export default function PrivacyLanguages({
           return (
             <Fragment key={policy.policy}>
               {i > 0 && ' — '}
-              <Link
-                href={slug}
-                onClick={() => {
-                  setPrivacyPolicySlug(slug)
-                }}
-              >
-                {policy.language}
-              </Link>
+              <Link href={slug}>{policy.language}</Link>
             </Fragment>
           )
         })}

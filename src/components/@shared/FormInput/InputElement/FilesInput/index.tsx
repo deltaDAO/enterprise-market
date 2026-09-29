@@ -49,7 +49,6 @@ export default function FilesInput(props: FilesInputProps): ReactElement {
     asset?.credentialSubject?.services?.[0]?.serviceEndpoint
   const storageType: StorageType = field.value?.[0]?.type || 'url'
   const urlValue = field.value?.[0]?.url?.toString().trim() || ''
-  const query = field.value?.[0]?.query || undefined
   const abi = field.value?.[0]?.abi || undefined
   const headers = field.value?.[0]?.headers || undefined
   const method = field.value?.[0]?.method || 'get'
@@ -173,7 +172,6 @@ export default function FilesInput(props: FilesInputProps): ReactElement {
           s3Url,
           providerUrl,
           's3',
-          query,
           headers,
           abi,
           chainId,
@@ -185,7 +183,6 @@ export default function FilesInput(props: FilesInputProps): ReactElement {
           url,
           providerUrl,
           storageType,
-          query,
           headers,
           abi,
           chainId,
@@ -398,11 +395,6 @@ export default function FilesInput(props: FilesInputProps): ReactElement {
   useEffect(() => {
     if (!storageType) return
 
-    if (storageType === 'graphql') {
-      setDisabledButton(!providerUrl || !query || !urlValue)
-      return
-    }
-
     if (storageType === 'smartcontract') {
       setDisabledButton(!providerUrl || !abi || !checkJson(abi) || !urlValue)
       return
@@ -439,7 +431,6 @@ export default function FilesInput(props: FilesInputProps): ReactElement {
     storageType,
     providerUrl,
     headers,
-    query,
     abi,
     meta,
     urlValue,
@@ -473,9 +464,7 @@ export default function FilesInput(props: FilesInputProps): ReactElement {
               {...inputProps}
               name={`${field.name}[0].url`}
               isLoading={isLoading}
-              hideButton={
-                storageType === 'graphql' || storageType === 'smartcontract'
-              }
+              hideButton={storageType === 'smartcontract'}
               hideError={true}
               checkUrl={true}
               handleButtonClick={handleValidation}
@@ -684,11 +673,7 @@ export default function FilesInput(props: FilesInputProps): ReactElement {
                       <PublishButton
                         icon="validate"
                         text={`Submit ${
-                          storageType === 'graphql'
-                            ? 'query'
-                            : storageType === 'smartcontract'
-                            ? 'abi'
-                            : 'URL'
+                          storageType === 'smartcontract' ? 'abi' : 'URL'
                         }`}
                         buttonStyle="gradient"
                         onClick={(e: React.SyntheticEvent) => {

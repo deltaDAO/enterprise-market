@@ -12,7 +12,7 @@
 
 .info {
   padding: calc(var(--spacer) / 2);
-  color: var(--color-secondary);
+  color: var(--muted-foreground);
 }
 
 .info h5 {
@@ -21,6 +21,8 @@
 
 .address {
   word-break: break-all;
+  font-family: var(--font-family-monospace);
+  font-variant-numeric: tabular-nums;
 }
 
 .address button::after {

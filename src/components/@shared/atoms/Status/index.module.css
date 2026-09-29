@@ -4,7 +4,7 @@
   height: 40px;
   border-radius: 50%;
   display: inline-block;
-  background: var(--brand-alert-green);
+  background: var(--success);
 }
 
 /* yellow triangle */
@@ -15,12 +15,12 @@
   height: 0;
   border-left: calc(var(--font-size-small) / 1.7) solid transparent;
   border-right: calc(var(--font-size-small) / 1.7) solid transparent;
-  border-bottom: var(--font-size-small) solid var(--brand-alert-yellow);
+  border-bottom: var(--font-size-small) solid var(--warning);
 }
 
 /* red square */
 .error {
   border-radius: 0;
-  background: #fdd655;
+  background: var(--destructive);
   text-transform: capitalize;
 }

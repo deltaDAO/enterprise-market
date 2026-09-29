@@ -7,8 +7,9 @@
 }
 
 .titleText {
-  font-family: var(--font-family);
+  font-family: var(--font-family-base);
   font-weight: 700;
   font-size: 22px;
-  color: #303031;
+  letter-spacing: -0.015em;
+  color: var(--foreground);
 }

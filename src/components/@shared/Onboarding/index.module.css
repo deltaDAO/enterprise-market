@@ -10,6 +10,21 @@
   width: 100%;
 }
 
+/* deck-card body attached below the mist header */
+.cardWrapper .cardContainer {
+  border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+  border: 1px solid transparent;
+  border-top: 0;
+  background: linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--deck-blue) 30%, var(--border)),
+        color-mix(in srgb, var(--deck-cyan) 35%, var(--border))
+      )
+      border-box;
+  box-shadow: var(--shadow-blue-5);
+}
+
 .wrapper {
   margin-bottom: calc(var(--spacer) * 2);
 }

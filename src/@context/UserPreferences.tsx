@@ -22,14 +22,12 @@ interface UserPreferencesValue {
   debug: boolean
   setDebug: (value: boolean) => void
   chainIds: number[]
-  privacyPolicySlug: string
   showPPC: boolean
   setChainIds: (chainIds: number[]) => void
   bookmarks: string[]
   addBookmark: (did: string) => void
   removeBookmark: (did: string) => void
   removeBookmarks: (dids: string[]) => void
-  setPrivacyPolicySlug: (slug: string) => void
   setShowPPC: (value: boolean) => void
   allowExternalContent: boolean
   setAllowExternalContent: (value: boolean) => void
@@ -113,7 +111,7 @@ function UserPreferencesProvider({
 }): ReactElement {
   const { appConfig, validatedSupportedChains, isValidatingSupportedChains } =
     useMarketMetadata()
-  const { defaultPrivacyPolicySlug, showOnboardingModuleByDefault } = appConfig
+  const { showOnboardingModuleByDefault } = appConfig
 
   const [debug, setDebug] = useState<boolean>(
     readPreference(preferenceCookies.debug, isBoolean) ?? false
@@ -132,10 +130,6 @@ function UserPreferencesProvider({
   const [showSsiWalletModule, setShowSsiWalletModule] = useState<boolean>(false)
   const [onboardingStep, setOnboardingStep] = useState<number>(
     readPreference(preferenceCookies.onboardingStep, isNumber) ?? 0
-  )
-
-  const [privacyPolicySlug, setPrivacyPolicySlug] = useState<string>(
-    defaultPrivacyPolicySlug
   )
 
   const [showPPC, setShowPPCState] = useState<boolean>(() =>
@@ -290,14 +284,12 @@ function UserPreferencesProvider({
           locale,
           chainIds,
           bookmarks,
-          privacyPolicySlug,
           showPPC,
           setChainIds,
           setDebug,
           addBookmark,
           removeBookmark,
           removeBookmarks,
-          setPrivacyPolicySlug,
           setShowPPC,
           allowExternalContent,
           setAllowExternalContent,

@@ -1,13 +1,18 @@
 .badge {
-  display: inline-block;
-  font-size: var(--font-size-mini);
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  font-size: 11px;
   font-family: var(--font-family-base);
   font-weight: var(--font-weight-bold);
+  letter-spacing: 0.04em;
   line-height: 1 !important;
   text-transform: uppercase;
-  padding: 0.2rem;
-  border-radius: var(--border-radius);
-  color: var(--brand-white);
-  background: var(--badge-background-color);
-  vertical-align: top;
+  padding: 0 8px;
+  border-radius: var(--radius-pill);
+  color: var(--deck-blue);
+  background: var(--deck-blue-8);
+  border: 1px solid var(--deck-blue-25);
+  vertical-align: middle;
+  white-space: nowrap;
 }

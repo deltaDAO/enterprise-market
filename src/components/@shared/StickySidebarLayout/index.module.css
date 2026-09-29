@@ -23,10 +23,10 @@
 
 .sidebar {
   position: sticky;
-  top: 20px;
+  top: calc(var(--menu-height) + 16px);
   align-self: start;
   height: fit-content;
-  max-height: calc(100vh - 40px);
+  max-height: calc(100vh - var(--menu-height) - 32px);
 }
 
 .mainContent {

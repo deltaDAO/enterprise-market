@@ -1,6 +1,6 @@
 import { assetStateToString } from '@utils/assetState'
 import { FileInfo, LoggerInstance } from '@oceanprotocol/lib'
-import { parseConsumerParameters, secondsToString } from '@utils/ddo'
+import { parseConsumerParameters, timeoutSecondsToFormValue } from '@utils/ddo'
 import {
   ComputeEditForm,
   MetadataEditForm,
@@ -553,7 +553,7 @@ export const getServiceInitialValues = (
     files: processedFiles,
     links: linksFormValue,
     state: assetStateToString(service.state),
-    timeout: secondsToString(service.timeout),
+    timeout: timeoutSecondsToFormValue(service.timeout),
     usesConsumerParameters: service.consumerParameters
       ? Object.assign(service.consumerParameters).length > 0
       : undefined,

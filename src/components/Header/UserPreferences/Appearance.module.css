@@ -8,15 +8,15 @@
 .button {
   width: auto;
   padding: calc(var(--spacer) / 3) calc(var(--spacer) / 4) !important;
-  border-radius: var(--border-radius);
+  border-radius: var(--radius-lg);
   text-transform: none;
 }
 
 .button,
 .button:hover,
 .button:active {
-  color: var(--color-secondary);
-  border: 1px solid var(--border-color);
+  color: var(--foreground);
+  border: 1px solid var(--border);
 }
 
 .button svg {
@@ -27,8 +27,9 @@
 }
 
 .button.selected {
-  color: var(--font-color-text);
-  border-color: var(--color-secondary);
+  color: var(--deck-blue);
+  background: var(--deck-blue-8);
+  border-color: var(--deck-blue);
 }
 
 .appearances div[class*='boxSelectionsWrapper'] {

@@ -1,0 +1,723 @@
+.section {
+  padding: 4rem 0 6.5rem;
+  background: var(--background);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  margin: 0;
+}
+
+.card {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: calc(var(--radius) * 2.2);
+  border: 1px solid var(--border);
+  background: var(--card);
+  box-shadow: 0 1px 2px rgba(11, 19, 34, 0.04),
+    0 24px 48px -32px rgba(11, 19, 34, 0.18);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-blue-10), 0 0 0 4px var(--deck-blue-4);
+}
+
+/* ---------- visual header ---------- */
+.visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 170px;
+  padding: 1rem;
+  overflow: hidden;
+  background: radial-gradient(
+      circle at 20% 0%,
+      var(--deck-blue-8),
+      transparent 60%
+    ),
+    radial-gradient(circle at 100% 100%, var(--deck-cyan-13), transparent 55%),
+    var(--deck-surface);
+  border-bottom: 1px solid var(--border);
+}
+
+/* network */
+.network {
+  width: 100%;
+  max-width: 300px;
+  height: 100%;
+  overflow: visible;
+}
+
+/* peer links carry data both ways and light up in turn */
+.peerLink {
+  stroke: var(--deck-blue-40);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 7;
+  animation: stream 1.6s linear infinite, handshake 5.1s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -0.23s), calc(var(--i) * 0.3s);
+}
+
+.peerLink:nth-child(2n) {
+  animation-direction: reverse, normal;
+}
+
+.nodeDot {
+  fill: var(--card);
+  stroke: var(--deck-blue);
+  stroke-width: 2;
+}
+
+.nodeRing {
+  fill: var(--deck-cyan-25);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ping 3.2s ease-out infinite;
+  animation-delay: calc(var(--i) * 0.45s);
+}
+
+/* compute-to-data flow */
+.compute {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 320px;
+}
+
+.computeNode {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.computeIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  border: 1px solid var(--deck-blue-25);
+  box-shadow: var(--shadow-blue-10);
+  font-family: var(--font-family-monospace);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--deck-blue);
+}
+
+.computeIcon svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.vault .computeIcon {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  background: var(--button-hero-gradient);
+  border: 0;
+  color: #fff;
+}
+
+/* the data stays put: a shield ring breathes around the vault */
+.vault .computeIcon::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: calc(var(--radius-lg) + 8px);
+  border: 2px solid var(--deck-cyan);
+  opacity: 0;
+  animation: shield 2.8s ease-out infinite;
+}
+
+.computeLabel {
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--muted-foreground);
+}
+
+.wire {
+  position: relative;
+  flex: 1;
+  height: 2px;
+  margin: 0 0.5rem 1.6rem;
+  background: repeating-linear-gradient(
+    to right,
+    var(--deck-blue-25) 0 4px,
+    transparent 4px 8px
+  );
+}
+
+/* travelling packet: algorithm goes in, only results come out */
+.wire::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  margin-top: -5px;
+  border-radius: 50%;
+  animation: travel 2.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+.wireIn::after {
+  background: var(--deck-cyan);
+  box-shadow: 0 0 10px var(--deck-cyan);
+}
+
+.wireOut::after {
+  background: var(--brand-highlight);
+  box-shadow: 0 0 10px var(--brand-highlight);
+  animation-delay: 1.4s;
+}
+
+/* marketplace catalogue rows */
+.market {
+  display: grid;
+  gap: 0.6rem;
+  width: 100%;
+  max-width: 260px;
+}
+
+.marketRow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.75rem;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  border: 1px solid var(--deck-blue-12);
+  box-shadow: var(--shadow-blue-10);
+  animation: bob 4s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -1.3s);
+}
+
+.marketRow:nth-child(2) {
+  margin-left: 1.5rem;
+}
+
+/* shimmer sweep across each listing */
+.marketRow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 30%,
+    var(--deck-blue-8) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  animation: shimmer 3.6s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 0.4s);
+}
+
+.marketDot {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--deck-blue);
+}
+
+.marketRow:nth-child(2) .marketDot {
+  background: var(--brand-highlight);
+}
+
+.marketRow:nth-child(3) .marketDot {
+  background: var(--deck-cyan);
+}
+
+.marketName {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.marketBar {
+  flex: 1;
+  height: 6px;
+  margin-left: auto;
+  border-radius: 3px;
+  background: var(--deck-blue-8);
+}
+
+/* ---------- card body ---------- */
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 1.75rem 2rem 1.25rem;
+}
+
+.cardTitle {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-family-heading);
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  color: var(--foreground);
+}
+
+.cardText {
+  margin: 0 0 1.25rem;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+}
+
+/* footer rows: label left, round arrow button right */
+.links {
+  display: grid;
+  margin-top: auto;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.8rem 0;
+  border-top: 1px solid var(--border);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--foreground);
+  text-decoration: none;
+}
+
+.link:hover,
+.link:focus-visible {
+  color: var(--deck-blue);
+  text-decoration: none;
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* underline the label only, never the arrow */
+.link:hover .linkLabel,
+.link:focus-visible .linkLabel {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  font-size: 14px;
+  line-height: 1;
+  transition: background-color 0.25s ease, border-color 0.25s ease,
+    color 0.25s ease, transform 0.25s ease;
+}
+
+.link:hover .arrow,
+.link:focus-visible .arrow {
+  border-color: var(--deck-blue);
+  background: var(--deck-blue);
+  color: #fff;
+  transform: rotate(-45deg);
+}
+
+.ctaButton:hover .arrow,
+.ctaButton:focus-visible .arrow {
+  transform: translateX(3px);
+}
+
+/* ---------- closing call to action ---------- */
+.cta {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-top: 3rem;
+  padding: 3rem 2.75rem;
+  overflow: hidden;
+  border-radius: calc(var(--radius) * 2.2);
+  border: 1px solid var(--border);
+  background: var(--card);
+  box-shadow: 0 1px 2px rgba(11, 19, 34, 0.04),
+    0 24px 48px -32px rgba(11, 19, 34, 0.18);
+}
+
+/* the brand wave spans the whole card and drifts slowly. The layer is
+ * oversized on every side (12% of the height, 6% of the width) so the drift
+ * (max -4% x, +6% y of its own size) never pulls an edge into view; the mask
+ * only thins it out behind the title and buttons, it never ends in a gap */
+.cta::before {
+  content: '';
+  position: absolute;
+  inset: -12% -6%;
+  z-index: -1;
+  background: var(--wave-svg) no-repeat;
+  background-size: 100% 100%;
+  -webkit-mask-image: linear-gradient(
+    to left,
+    #000 25%,
+    rgba(0, 0, 0, 0.35) 75%
+  );
+  mask-image: linear-gradient(to left, #000 25%, rgba(0, 0, 0, 0.35) 75%);
+  pointer-events: none;
+  animation: wave-drift 16s ease-in-out infinite alternate;
+}
+
+.ctaTitle {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-family-heading);
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+  color: var(--foreground);
+}
+
+.ctaTitleMuted {
+  color: #767a82;
+}
+
+.ctaText {
+  margin: 0;
+  font-size: 18px;
+  color: var(--muted-foreground);
+}
+
+/* same CI treatment as the hero search button: brand gradient + cyan glow */
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 0.5rem;
+  max-width: 100%;
+  min-height: 48px;
+  box-sizing: border-box;
+  padding: 0 1.5rem;
+  border-radius: var(--radius-lg);
+  background: var(--button-hero-gradient);
+  box-shadow: var(--button-hero-shadow);
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  transition: box-shadow 0.25s ease;
+}
+
+/* the two closing actions: contact (outline) beside onboarding (primary) */
+.ctaActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.ctaSecondary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  box-sizing: border-box;
+  padding: 0 1.4rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--control-border);
+  background: var(--card);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--foreground);
+  text-decoration: none;
+  transition: border-color 0.25s ease, color 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.ctaSecondary:hover,
+.ctaSecondary:focus-visible {
+  border-color: var(--deck-blue);
+  background: var(--deck-blue-4);
+  color: var(--deck-blue);
+  text-decoration: none;
+}
+
+.ctaSecondary:focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
+}
+
+.ctaButton:hover,
+.ctaButton:focus-visible {
+  color: #fff;
+  text-decoration: none;
+  box-shadow: var(--button-hero-shadow-hover);
+}
+
+.ctaButton:focus-visible {
+  outline: 2px solid var(--deck-cyan);
+  outline-offset: 2px;
+}
+
+/* plain arrow inside the gradient button, no tile */
+.ctaButton .arrow {
+  width: auto;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  font-size: 15px;
+}
+
+/* ---------- keyframes ---------- */
+@keyframes stream {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+@keyframes ping {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.9;
+  }
+  70%,
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
+@keyframes handshake {
+  0%,
+  20%,
+  100% {
+    stroke: var(--deck-blue-40);
+  }
+  10% {
+    stroke: var(--deck-cyan);
+  }
+}
+
+@keyframes shield {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.25);
+    opacity: 0;
+  }
+}
+
+@keyframes travel {
+  0% {
+    left: 0;
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  15% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  85% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    left: calc(100% - 10px);
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+@keyframes bob {
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes shimmer {
+  60%,
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes wave-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-4%, 6%, 0) scale(1.05);
+  }
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 1023px) {
+  .cta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* tablet: two columns, an odd last card centred beneath them */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .item:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc(50% - 0.75rem);
+  }
+}
+
+@media (max-width: 767px) {
+  .section {
+    padding: 2.5rem 0 3.5rem;
+  }
+
+  .grid,
+  .cta {
+    max-width: 36rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .body {
+    padding: 1.5rem 1.5rem 1rem;
+  }
+
+  .cta {
+    margin-top: 2rem;
+    padding: 1.75rem 1.5rem;
+  }
+
+  .ctaTitle {
+    font-size: 26px;
+  }
+
+  /* phone: the two actions share the row, or stack full width once they
+   * no longer fit side by side, instead of wrapping to ragged widths */
+  .ctaActions {
+    width: 100%;
+  }
+
+  .ctaSecondary,
+  .ctaButton {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+}
+
+/* 4K: type scales ~1.375x, matching the section headers */
+@media screen and (min-width: 2550px) {
+  .visual {
+    height: 220px;
+  }
+
+  .cardTitle {
+    font-size: 33px;
+  }
+
+  .cardText {
+    font-size: 23px;
+  }
+
+  .link,
+  .ctaButton {
+    font-size: 22px;
+  }
+
+  .arrow {
+    width: 44px;
+    height: 44px;
+    font-size: 19px;
+  }
+
+  .ctaTitle {
+    font-size: 47px;
+  }
+
+  .ctaText {
+    font-size: 25px;
+  }
+
+  .ctaButton {
+    min-height: 64px;
+    padding: 0 2rem;
+  }
+
+  .ctaSecondary {
+    min-height: 64px;
+    padding: 0 2rem;
+    font-size: 22px;
+  }
+
+  .ctaButton .arrow {
+    font-size: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .peerLink,
+  .nodeRing,
+  .vault .computeIcon::after,
+  .marketRow,
+  .marketRow::after,
+  .cta::before {
+    animation: none;
+  }
+
+  .wire::after {
+    display: none;
+  }
+
+  .card,
+  .ctaButton,
+  .arrow {
+    transition: none;
+  }
+
+  .card:hover,
+  .ctaButton:hover .arrow,
+  .ctaButton:focus-visible .arrow {
+    transform: none;
+  }
+}

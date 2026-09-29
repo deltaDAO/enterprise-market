@@ -22,7 +22,6 @@ import useBalance from '@hooks/useBalance'
 import { useSsiWallet } from '@context/SsiWallet'
 import { useCancelToken } from '@hooks/useCancelToken'
 import { useAsset } from '@context/Asset'
-import { useUserPreferences } from '@context/UserPreferences'
 import { useMarketMetadata } from '@context/MarketMetadata'
 import { getAccessDetails } from '@utils/accessDetailsAndPricing'
 import { getFixedBuyPrice } from '@utils/ocean/fixedRateExchange'
@@ -37,6 +36,7 @@ import { requiresSsi } from '@utils/credentials'
 import { getFeeTooltip } from '@utils/feeTooltips'
 import { getAsset } from '@utils/aquarius'
 import { getBaseTokenSymbol } from '@utils/getBaseTokenSymbol'
+import { formatServiceTimeout } from '@utils/ddo'
 import { AssetExtended } from 'src/@types/AssetExtended'
 import { Service } from 'src/@types/ddo/Service'
 import { ComputeEnvironment, ProviderFees } from '@oceanprotocol/lib'
@@ -268,7 +268,6 @@ export default function Review({
   const { lookupVerifierSessionId } = useSsiWallet()
   const newCancelToken = useCancelToken()
   const { isAssetNetwork } = useAsset()
-  const { privacyPolicySlug } = useUserPreferences()
   const { approvedBaseTokens } = useMarketMetadata()
 
   const [symbol, setSymbol] = useState('')
@@ -455,7 +454,8 @@ export default function Review({
   ])
 
   const errorMessages: string[] = []
-  const formatDuration = (seconds: number): string => {
+  // Compute job (C2D resources) duration, not the service access duration
+  const formatJobDuration = (seconds: number): string => {
     const d = Math.floor(seconds / 86400)
     const h = Math.floor((seconds % 86400) / 3600)
     const m = Math.floor((seconds % 3600) / 60)
@@ -472,8 +472,11 @@ export default function Review({
     const effectiveProvider = signer?.provider
     const effectiveChainId = asset?.credentialSubject?.chainId
     if (!effectiveProvider || !effectiveChainId) return
+    // Undefined on chains without an ERC20 allowlist entry (see getOceanConfig)
+    const oceanTokenAddress =
+      getOceanConfig(effectiveChainId)?.oceanTokenAddress
+    if (!oceanTokenAddress) return
     const fetchTokenDetails = async () => {
-      const { oceanTokenAddress } = getOceanConfig(effectiveChainId)
       const tokenDetails = await getTokenInfo(
         oceanTokenAddress,
         effectiveProvider
@@ -877,7 +880,7 @@ export default function Review({
           status: isVerified ? ('verified' as const) : ('unverified' as const),
           index: 0,
           price: rawPrice,
-          duration: formatDuration(service.timeout || 0),
+          duration: formatServiceTimeout(service.timeout),
           name: service.name,
           symbol: resolveSymbol(
             accessDetails?.baseToken?.symbol ||
@@ -917,7 +920,7 @@ export default function Review({
           status: isVerified ? ('verified' as const) : ('unverified' as const),
           index: queue.length,
           price: rawPrice,
-          duration: '1 day',
+          duration: formatServiceTimeout(algoService.timeout),
           name:
             selectedAlgorithmAsset.credentialSubject?.services?.[serviceIndex]
               ?.name || 'Algorithm',
@@ -954,7 +957,7 @@ export default function Review({
               : ('unverified' as const),
             index,
             price: rawPrice,
-            duration: '1 day',
+            duration: formatServiceTimeout(dsService?.timeout),
             name:
               ds.credentialSubject?.services?.[ds.serviceIndex || 0]?.name ||
               `Dataset ${queue.length + 1}`,
@@ -986,7 +989,7 @@ export default function Review({
           status: isVerified ? ('verified' as const) : ('unverified' as const),
           index: queue.length,
           price: rawPrice,
-          duration: formatDuration(service.timeout || 0),
+          duration: formatServiceTimeout(service.timeout),
           name: service.name,
           symbol: resolveSymbol(
             accessDetails?.baseToken?.symbol ||
@@ -1571,7 +1574,7 @@ export default function Review({
     {
       name: 'C2D RESOURCES',
       value: values.jobPrice || '0',
-      duration: formatDuration(
+      duration: formatJobDuration(
         currentMode === 'paid'
           ? (paidResources?.jobDuration || 0) * 60
           : (freeResources?.jobDuration || 0) * 60
@@ -2447,7 +2450,7 @@ export default function Review({
               type="checkbox"
               options={['Terms and Conditions']}
               prefixes={['I agree to the']}
-              actions={[`${privacyPolicySlug}#terms-and-conditions`]}
+              actions={['/privacy/terms']}
               onChange={handleTermsChange}
               disabled={false}
               hideLabel={true}

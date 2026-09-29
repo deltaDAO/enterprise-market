@@ -21,3 +21,31 @@
   display: block;
   line-height: 1;
 }
+
+/* inline form actions (Add / Validate / Submit URL).
+ * Demoted from the hero tier to the solid primary tier: only one gradient
+ * (hero) button per view (the page's final action). */
+body .publishButton.publishButton {
+  background: var(--deck-blue);
+  color: var(--brand-white);
+  border: 1px solid var(--deck-blue);
+  box-shadow: 0 4px 12px var(--deck-blue-25);
+  filter: none;
+}
+
+body .publishButton.publishButton:hover,
+body .publishButton.publishButton:focus-visible {
+  background: var(--deck-blue-hover);
+  border-color: var(--deck-blue-hover);
+  color: var(--brand-white);
+  box-shadow: 0 6px 18px var(--deck-blue-25);
+  filter: none;
+  transform: none;
+}
+
+body .publishButton.publishButton:active {
+  background: var(--deck-blue-hover);
+  box-shadow: 0 2px 6px var(--deck-blue-25);
+  filter: none;
+  transform: translateY(1px);
+}

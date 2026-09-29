@@ -8,6 +8,11 @@ import { FormUrlFileInfo } from './_types'
 import { additionalLicenseSourceOptions } from './_license'
 import { isS3File } from 'src/@types/S3File'
 import { normalizeDockerImageReference } from '@utils/docker'
+import {
+  TIMEOUT_VALIDATION_MESSAGE,
+  isCustomTimeoutValue,
+  isTimeoutPreset
+} from '@utils/ddo'
 
 // TODO: conditional validation
 // e.g. when algo is selected, Docker image is required
@@ -461,7 +466,13 @@ const validationService = {
     name: Yup.string(),
     symbol: Yup.string()
   }),
-  timeout: Yup.string().required('Required'),
+  timeout: Yup.string()
+    .required('Required')
+    .test(
+      'valid-timeout',
+      TIMEOUT_VALIDATION_MESSAGE,
+      (value) => isTimeoutPreset(value) || isCustomTimeoutValue(value)
+    ),
   access: Yup.string()
     .matches(/compute|access/g)
     .required('Required'),

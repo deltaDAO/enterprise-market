@@ -1,20 +1,21 @@
 .stats {
   display: flex;
   flex-wrap: wrap;
-  gap: calc(var(--spacer) * 2);
+  gap: calc(var(--spacer) / 2);
   margin-top: var(--spacer);
   min-width: 0;
 }
 
 .stats [class^='PriceUnit_symbol'] {
-  color: var(--color-secondary);
+  color: var(--muted-foreground);
+  font-family: var(--font-family-monospace);
   font-weight: var(--font-weight-base);
   font-size: var(--font-size-small);
 }
 
 .stats .link,
 .stats .link:hover {
-  color: var(--color-highlight);
+  color: var(--brand-highlight);
   font-size: var(--font-size-small);
   text-decoration: none;
   padding: 0;
@@ -22,7 +23,9 @@
 }
 
 .stats [class^='PriceUnit_price'] {
-  color: var(--color-secondary);
+  color: var(--deck-blue);
+  font-family: var(--font-family-monospace);
+  font-variant-numeric: tabular-nums;
   font-weight: var(--font-weight-base);
   font-size: var(--font-size-small);
 }

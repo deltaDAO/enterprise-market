@@ -34,12 +34,12 @@
 }
 
 .metaMenu {
-  border: 1px solid var(--ink-alpha-10);
-  border-radius: 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
   min-height: 40px;
   width: 100%;
-  box-shadow: 1px 4px 8px 0 var(--black-alpha-15);
-  background: #fff;
+  box-shadow: var(--shadow-blue-5);
+  background: var(--deck-surface);
   overflow: hidden;
   display: flex;
   align-items: stretch;
@@ -48,9 +48,9 @@
 .nftPlaceholder {
   flex-shrink: 0;
   width: calc(var(--spacer) * 1.335);
-  border-right: 1px solid var(--border-color);
-  background: var(--background-highlight);
-  border-radius: 10px 0 0 10px;
+  border-right: 1px solid var(--border);
+  background: var(--deck-blue-8);
+  border-radius: var(--radius-xl) 0 0 var(--radius-xl);
 }
 
 .metaMenuContent {
@@ -68,10 +68,16 @@
 
 .content {
   margin-top: var(--spacer);
-  background: #fff;
-  border: 1px solid var(--ink-alpha-10);
-  border-radius: 20px;
-  box-shadow: 1px 4px 8px 0 var(--black-alpha-15);
+  border: 1px solid transparent;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--deck-blue) 30%, var(--border)),
+        color-mix(in srgb, var(--deck-cyan) 35%, var(--border))
+      )
+      border-box;
+  box-shadow: var(--shadow-blue-5);
   padding: calc(var(--spacer) * 0.75) var(--spacer) var(--spacer);
   display: flex;
   flex-direction: column;
@@ -130,17 +136,23 @@
   flex-direction: column;
   gap: calc(var(--spacer) / 4);
   padding-top: calc(var(--spacer) / 2);
-  border-top: 1px solid var(--ink-alpha-10);
+  border-top: 1px solid var(--border);
   grid-column: 1 / -1;
 }
 
 .computeJobs {
   margin-top: 3rem;
-  border: 1px solid var(--ink-alpha-10);
-  border-radius: 20px;
   padding: 20px;
-  box-shadow: 1px 4px 8px 0 var(--black-alpha-15);
-  background: #fff;
+  border: 1px solid transparent;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--deck-blue) 30%, var(--border)),
+        color-mix(in srgb, var(--deck-cyan) 35%, var(--border))
+      )
+      border-box;
+  box-shadow: var(--shadow-blue-5);
 }
 
 .computeJobsHeader {
@@ -160,7 +172,7 @@
   display: flex;
   gap: 0;
   padding-bottom: 16px;
-  border-bottom: 1px solid var(--ink-alpha-10);
+  border-bottom: 1px solid var(--border);
 }
 
 .computeJobsColumns > * {
@@ -171,7 +183,7 @@
   display: flex;
   align-items: center;
   height: 40px;
-  border-bottom: 1px solid var(--ink-alpha-10);
+  border-bottom: 1px solid var(--border);
   gap: 0;
 }
 
@@ -198,10 +210,16 @@
 }
 
 .serviceCard {
-  background: #fff;
-  border: 1px solid var(--ink-alpha-10);
-  border-radius: 20px;
-  box-shadow: 1px 4px 8px 0 var(--black-alpha-15);
+  border: 1px solid transparent;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--deck-blue) 30%, var(--border)),
+        color-mix(in srgb, var(--deck-cyan) 35%, var(--border))
+      )
+      border-box;
+  box-shadow: var(--shadow-blue-5);
   padding: calc(var(--spacer) * 0.5) var(--spacer);
   min-height: 145px;
   display: flex;

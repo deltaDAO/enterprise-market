@@ -86,7 +86,10 @@ export function isAnalyticsConfigured(): boolean {
  * the runtime config so they work on both the Vercel build and the self-hosted
  * Docker image (env injected at boot).
  */
-export function initAnalytics(): void {
+export function initAnalytics({
+  posthog: enablePostHog = true,
+  plausible: enablePlausible = true
+}: { posthog?: boolean; plausible?: boolean } = {}): void {
   if (typeof window === 'undefined') return
 
   const {
@@ -97,7 +100,7 @@ export function initAnalytics(): void {
 
   if (!NEXT_PUBLIC_POSTHOG_KEY && !NEXT_PUBLIC_PLAUSIBLE_DOMAIN) return
 
-  if (NEXT_PUBLIC_POSTHOG_KEY) {
+  if (enablePostHog && NEXT_PUBLIC_POSTHOG_KEY) {
     if (!initialized) {
       posthog.init(NEXT_PUBLIC_POSTHOG_KEY, {
         api_host: NEXT_PUBLIC_POSTHOG_HOST || DEFAULT_POSTHOG_HOST,
@@ -119,7 +122,11 @@ export function initAnalytics(): void {
     if (wasOptedOut) posthog.opt_in_capturing({ captureEventName: false })
   }
 
-  if (NEXT_PUBLIC_PLAUSIBLE_DOMAIN && !plausibleInitialized) {
+  if (
+    enablePlausible &&
+    NEXT_PUBLIC_PLAUSIBLE_DOMAIN &&
+    !plausibleInitialized
+  ) {
     plausibleInitialized = true
     import('@plausible-analytics/tracker').then(({ init }) =>
       init({ domain: NEXT_PUBLIC_PLAUSIBLE_DOMAIN })
@@ -147,11 +154,22 @@ export function disableAnalytics(): void {
 }
 
 export function maybeInitAnalytics(): void {
-  const consentRequired = appConfig?.privacyPreferenceCenter === 'true'
-  if (!isAnalyticsConfigured() || (consentRequired && !hasAnalyticsConsent())) {
+  if (!isAnalyticsConfigured()) {
     disableAnalytics()
     return
   }
 
-  initAnalytics()
+  const hasConsent = hasAnalyticsConsent()
+  // PostHog persists to cookies and localStorage, so it always needs consent,
+  // whether or not the privacy preference center is enabled. With the banner
+  // off there is no way to give it, so PostHog stays off. Plausible is
+  // cookieless and only needs consent when the banner asks for it.
+  const allowPostHog = hasConsent
+  const allowPlausible =
+    hasConsent || appConfig?.privacyPreferenceCenter !== 'true'
+
+  if (!allowPostHog) disableAnalytics()
+  if (!allowPostHog && !allowPlausible) return
+
+  initAnalytics({ posthog: allowPostHog, plausible: allowPlausible })
 }

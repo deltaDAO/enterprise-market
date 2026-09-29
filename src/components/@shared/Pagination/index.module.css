@@ -21,40 +21,40 @@
   margin-left: -1px;
   margin-top: -1px;
   cursor: pointer;
-  min-width: 3rem;
-  height: 100%;
+  min-width: 2.5rem;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--pagination-font-color);
-  border-radius: var(--radius-xl);
+  color: var(--foreground);
+  border-radius: var(--radius-lg);
 }
 
 .control {
   composes: number;
   border: none;
   background: transparent;
-  font-size: calc(var(--font-size-base) * 1.1);
+  font-size: var(--font-size-base);
   font-weight: var(--text-weight-bold);
-  min-width: 3.5rem;
+  min-width: 2.5rem;
   padding: calc(var(--spacer) / 3) calc(var(--spacer) / 1.8);
 }
 
 .control:disabled {
   cursor: default;
   pointer-events: none;
-  opacity: 0.7;
+  opacity: 0.45;
 }
 
 li:first-child .number,
 :global(li.selected):nth-child(2) .number {
-  border-top-left-radius: var(--radius-xl);
-  border-bottom-left-radius: var(--radius-xl);
+  border-top-left-radius: var(--radius-lg);
+  border-bottom-left-radius: var(--radius-lg);
 }
 
 li:last-child .number {
-  border-top-right-radius: var(--radius-xl);
-  border-bottom-right-radius: var(--radius-xl);
+  border-top-right-radius: var(--radius-lg);
+  border-bottom-right-radius: var(--radius-lg);
 }
 
 .number,
@@ -63,11 +63,22 @@ li:last-child .number {
 .number:active {
   transform: none;
   outline: 0;
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-lg);
+}
+
+.number {
+  font-variant-numeric: tabular-nums;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .number:hover {
-  color: var(--pagination-hover-font-color);
+  color: var(--deck-blue);
+  background: var(--deck-blue-8);
+}
+
+.number:focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
 }
 
 .current,
@@ -81,23 +92,23 @@ li:last-child .number {
 }
 
 :global(li.selected) .number {
-  background: var(--gradient-primary);
+  background: var(--deck-blue);
   color: var(--brand-white);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 12px var(--deck-blue-25);
 }
 
 .current,
 .current:hover,
 .current:focus,
 .current:active {
-  background: var(--gradient-primary);
+  background: var(--deck-blue);
   color: var(--brand-white);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 12px var(--deck-blue-25);
 }
 
 .current,
 :global(li.selected) .number {
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-lg);
 }
 
 .hiddenControl {

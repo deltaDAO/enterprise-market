@@ -1,15 +1,16 @@
 .wrapper {
   padding: calc(var(--spacer) / 2) 0;
-  font-family: var(--font-family);
-  font-weight: 400;
-  font-size: 14px;
+  font-family: var(--font-family-base);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--clr-slate-70);
+  color: var(--muted-foreground);
 }
 
 .assetType {
   display: inline-flex;
-  border-right: 1px solid var(--border-color);
+  border-right: 1px solid var(--border);
   padding-right: calc(var(--spacer) / 3.5);
   margin-right: calc(var(--spacer) / 4);
 }
@@ -17,6 +18,9 @@
 .byline {
   display: inline-block;
   text-transform: none;
+  letter-spacing: 0;
+  font-size: 13px;
+  font-weight: 400;
 }
 
 .updated {

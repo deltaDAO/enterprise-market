@@ -70,12 +70,7 @@ export default function HistoryTable({
       ([symbol, amount]) =>
         !!symbol && symbol !== 'UNKNOWN' && Number(amount || 0) !== 0
     )
-    .sort(([symbolA], [symbolB]) => {
-      // Sort with OCEAN first, then alphabetically
-      if (symbolA === 'OCEAN') return -1
-      if (symbolB === 'OCEAN') return 1
-      return symbolA.localeCompare(symbolB)
-    })
+    .sort(([symbolA], [symbolB]) => symbolA.localeCompare(symbolB))
   const totalRevenueValue =
     revenueTotal ??
     revenueEntries.reduce((acc, [, amount]) => acc + Number(amount || 0), 0)
@@ -86,11 +81,7 @@ export default function HistoryTable({
           ([symbol, amount]) =>
             !!symbol && symbol !== 'UNKNOWN' && Number(amount || 0) !== 0
         )
-        .sort(([symbolA], [symbolB]) => {
-          if (symbolA === 'OCEAN') return -1
-          if (symbolB === 'OCEAN') return 1
-          return symbolA.localeCompare(symbolB)
-        })
+        .sort(([symbolA], [symbolB]) => symbolA.localeCompare(symbolB))
 
       return {
         chainId: Number(chainId),

@@ -12,11 +12,11 @@
 
 .body p {
   margin-bottom: 0;
-  color: var(--brand-grey);
+  color: var(--muted-foreground);
 }
 
 .body div {
-  border-color: var(--brand-grey);
+  border-color: var(--border);
 }
 
 .image {
@@ -33,6 +33,7 @@
 .title {
   text-align: center;
   margin-bottom: 0;
+  color: var(--deck-blue);
 }
 
 .buttonsWrapper {

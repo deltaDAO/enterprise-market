@@ -25,7 +25,7 @@ export default function AuthLogin(): ReactElement {
 
   return (
     <Page
-      title={title}
+      title={initialTab === 'signup' ? 'Create account' : 'Sign in'}
       description={description}
       uri={router.route}
       noPageHeader

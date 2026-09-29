@@ -1,5 +1,11 @@
+/* technical detail box: frosted sub-card */
 .metaFull {
   margin-top: var(--spacer);
+  padding: calc(var(--spacer) * 0.75);
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(22, 22, 22, 0.05);
+  backdrop-filter: blur(4px);
+  border-radius: var(--radius-xl);
   display: grid;
   gap: var(--spacer);
   grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
@@ -16,12 +22,13 @@
 }
 
 .metaFull code {
-  /* magic number cause the code font has a bigger visual weight */
-  font-family: var(--font-family);
+  font-family: var(--font-family-monospace);
   font-weight: 400;
-  font-size: 14px;
-  line-height: 129%;
-  color: var(--clr-slate-70);
+  font-size: 13px;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+  color: var(--foreground);
+  background: none;
   overflow-wrap: break-word;
   word-wrap: break-word;
   word-break: break-all;
@@ -32,13 +39,11 @@
 .metaFull + div {
   margin-top: 10px;
 }
+/* MetaItem styles its own label; uppercase/tracking here would leak into the
+   author value (e.g. turning "deltaDAO" into "DELTADAO") */
 .dataAuther {
-  font-family: var(--font-family);
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 129%;
-  color: var(--clr-slate-70);
-  text-transform: uppercase;
+  font-family: var(--font-family-base);
+  line-height: 1.5;
 }
 
 .licenseRow {
@@ -59,11 +64,12 @@
   word-break: break-word;
 }
 .licenceTitle {
-  font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 14px;
+  font-family: var(--font-family-base);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #303031;
+  color: var(--muted-foreground);
 }
 .didContainer {
   margin-top: 1rem;

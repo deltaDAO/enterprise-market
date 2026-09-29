@@ -13,7 +13,7 @@ body .radioWrap > label {
   font-weight: 400;
   font-size: 14px;
   line-height: 157%;
-  color: var(--black-alpha-85);
+  color: var(--foreground);
 }
 
 /* RADIO BUTTON SPECIFIC STYLES */
@@ -29,13 +29,10 @@ body .radioWrap > label {
   margin-top: -2px;
   appearance: none;
   -webkit-appearance: none;
-  border: 1px solid #fdd655;
-  background: white;
+  border: 1px solid var(--input-strong);
+  background: var(--background);
   border-radius: 50%;
-}
-
-.radio:focus {
-  box-shadow: 0 0 0 2px var(--yellow-alpha-30);
+  cursor: pointer;
 }
 
 .radio::after {
@@ -47,22 +44,22 @@ body .radioWrap > label {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #fdd655;
+  background: var(--deck-blue);
   border-radius: 50%;
   opacity: 0;
   transition: opacity 0.2s;
 }
 
 .radio:checked {
-  border-color: #fdd655;
-  background: white;
+  border-color: var(--deck-blue);
+  background: var(--background);
 }
 
 .radio:checked::after {
   opacity: 1;
 }
 
-/* CHECKBOX STYLES (remain unchanged) */
+/* CHECKBOX STYLES */
 .checkbox {
   composes: input from '../index.module.css';
   position: relative;
@@ -73,41 +70,48 @@ body .radioWrap > label {
   display: inline-block;
   vertical-align: middle;
   margin-top: -2px;
+  border: 1px solid var(--input-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
 }
 
-.checkbox {
-  border-radius: 2px;
+.radio:hover:not(:checked):not([disabled]),
+.checkbox:hover:not(:checked):not([disabled]) {
+  border-color: var(--deck-blue);
+  background-color: var(--deck-blue-4);
 }
 
 .radio:focus,
 .checkbox:focus {
-  box-shadow: 0 0 0 var(--input-selected-background);
+  box-shadow: none;
+}
+
+.radio:focus-visible,
+.checkbox:focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px var(--ring);
 }
 
 .checkbox::after {
   content: '';
   display: block;
-  left: 0;
-  top: 0;
   position: absolute;
   opacity: 0;
-  transition: transform 0.3s ease-out, opacity 0.2s;
-}
-
-.checkbox::after {
   width: 6px;
   height: 9px;
-  border: 2px solid var(--input-background);
+  border: 2px solid var(--brand-white);
   border-top: 0;
   border-left: 0;
   left: 5px;
   top: 2px;
   transform: rotate(40deg);
+  transition: transform 0.3s ease-out, opacity 0.2s;
 }
 
 .checkbox:checked {
-  border-color: var(--input-selected-background);
-  background: var(--input-selected-background);
+  border-color: var(--deck-blue);
+  background: var(--deck-blue);
 }
 
 .checkbox:checked::after {
@@ -115,18 +119,23 @@ body .radioWrap > label {
 }
 
 body .accentRadio {
-  border: 1px solid var(--clr-navy) !important;
-  border-radius: var(--radius-xl);
-  background-color: var(--brand-white);
+  border: 1px solid var(--input-strong) !important;
+  border-radius: 50%;
+  background-color: var(--background);
 }
 
-.accentRadio:checked {
-  border-color: var(--brand-white);
-  background: var(--brand-white);
+body .accentRadio:checked {
+  border-color: var(--deck-blue) !important;
+  background: var(--background);
+}
+
+body .accentRadio:hover:not(:checked):not([disabled]) {
+  border-color: var(--deck-blue) !important;
+  background-color: var(--deck-blue-4);
 }
 
 .accentRadio:checked::after {
-  background: var(--clr-navy);
-  width: 10px;
-  height: 10px;
+  background: var(--deck-blue);
+  width: 8px;
+  height: 8px;
 }

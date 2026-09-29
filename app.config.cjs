@@ -104,23 +104,21 @@ module.exports = {
     process.env.NEXT_PUBLIC_ALLOW_FREE_PRICING ||
     'true',
 
-  // Set the default privacy policy to initially display
-  // this should be the slug of your default policy markdown file
-  defaultPrivacyPolicySlug: '/privacy/en',
-
   // This enables / disables the use of a GDPR compliant
   // privacy preference center to manage cookies on the market
   // If set to true a gdpr.json file inside the content directory
   // is used to create and show a privacy preference center / cookie banner
   // To learn more about how to configure and use this, please refer to the readme
+  // Off by default: this portal sets only strictly necessary cookies, and
+  // Plausible is cookieless, so no consent is required and no banner is shown.
+  // PostHog (NEXT_PUBLIC_POSTHOG_KEY) always requires consent, so with the
+  // banner off it never starts. To use PostHog, set this to 'true', add an
+  // analytics entry to optionalCookies in content/gdpr.json, and cover PostHog
+  // in the privacy and cookie policies.
   privacyPreferenceCenter:
     getEnv('NEXT_PUBLIC_PRIVACY_PREFERENCE_CENTER') ||
     process.env.NEXT_PUBLIC_PRIVACY_PREFERENCE_CENTER ||
-    'true',
-
-  // Default terms to be used for service offerings made on this marketplace
-  defaultAccessTerms:
-    'https://raw.githubusercontent.com/OceanProtocolEnterprise/market/main/content/pages/terms.md',
+    'false',
 
   // Purgatory URI, leave as an empty string to disable the API call
   purgatoryUrl:
@@ -204,6 +202,22 @@ module.exports = {
           process.env.NEXT_PUBLIC_ASSET_DESCRIPTION_EXPANDED_BY_DEFAULT) ===
         'true'
       : true,
+
+  // Public origin of this marketplace, e.g. https://market.example.com (no
+  // trailing slash). Used for canonical URLs, og:url/og:image, the robots
+  // indexing decision, robots.txt and sitemap.xml. When unset, the browser
+  // falls back to window.location.origin and the server to the request host,
+  // then to siteUrl in content/site.json.
+  siteUrl:
+    getEnv('NEXT_PUBLIC_SITE_URL') || process.env.NEXT_PUBLIC_SITE_URL || null,
+
+  // Search engines may index this instance when it is served from the
+  // configured siteUrl host, or on any host when this is set to 'true'.
+  // Every other host gets <meta name="robots" content="noindex,nofollow">.
+  allowIndexing:
+    getEnv('NEXT_PUBLIC_ALLOW_INDEXING') ||
+    process.env.NEXT_PUBLIC_ALLOW_INDEXING ||
+    'false',
 
   // Base URL of the Pontus-X registry used to resolve wallet addresses to legal
   // names. Leave unset to never query the registry.

@@ -422,7 +422,12 @@ async function approveProviderFee(
     typeof freeBaseTokenAddress === 'string' &&
     freeBaseTokenAddress.trim().length > 0
       ? freeBaseTokenAddress
-      : config.oceanTokenAddress
+      : config?.oceanTokenAddress
+  if (!baseToken) {
+    throw new Error(
+      `No base token configured for network ${asset.credentialSubject?.chainId}. Add it to NEXT_PUBLIC_ALLOWED_ERC20_ADDRESSES.`
+    )
+  }
   const txApproveWei = await approveWei(
     signer as any,
     config,

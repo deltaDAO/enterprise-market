@@ -1,4 +1,4 @@
-/* Navigation Container - Figma Design */
+/* Step navigation: numbered circles joined by hairline connectors */
 .navigation {
   display: flex;
   flex-direction: column;
@@ -6,193 +6,196 @@
   padding: 0;
   gap: 16px;
   width: 100%;
-  height: 66px;
+  min-height: 56px;
   border: none;
   background: transparent;
   position: relative;
   overflow: hidden;
+  font-family: var(--font-family-base);
 }
 
 /* Single Steps Row */
 .stepsRow {
+  position: relative;
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 80px;
+  gap: 64px;
   width: 100%;
-  height: 100%;
+  min-height: 52px;
+  padding-bottom: 8px;
   overflow-x: auto;
   overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--deck-blue-25) transparent;
 }
 
-/* Custom Yellow Scrollbar */
+/* progress track under the steps */
+.stepsRow::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2px;
+  height: 2px;
+  border-radius: var(--radius-pill);
+  background: var(--deck-blue-12);
+  pointer-events: none;
+}
+
 .stepsRow::-webkit-scrollbar {
-  height: 8px;
-  border: 1px solid var(--brand-grey);
+  height: 6px;
 }
 
 .stepsRow::-webkit-scrollbar-track {
-  background: var(--neutral-170);
-  border-radius: 4px;
-  border: 1px solid var(--brand-grey);
+  background: transparent;
 }
 
 .stepsRow::-webkit-scrollbar-thumb {
-  background: #fdd655;
-  border-radius: 4px;
-  border: 1px solid var(--brand-grey);
+  background: var(--deck-blue-25);
+  border-radius: var(--radius-pill);
 }
 
 .stepsRow::-webkit-scrollbar-thumb:hover {
-  background: var(--yellow-550);
-  border: 1px solid var(--brand-grey);
-}
-
-/* Firefox scrollbar */
-.stepsRow {
-  scrollbar-width: thin;
-  scrollbar-color: #fdd655 var(--neutral-170);
+  background: var(--deck-blue);
 }
 
 /* Individual Step */
 .step {
+  position: relative;
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 0;
+  gap: 10px;
+  padding: 4px 0;
   cursor: pointer;
   flex: none;
-  flex-grow: 0;
-  flex-shrink: 0;
+  border-radius: var(--radius-lg);
+  transition: color 0.2s ease;
 }
 
-/* Active Step - Frame 1000003227 */
-.activeStep {
-  gap: 10px;
-  width: auto;
-  height: 38px;
+/* connector line between steps */
+.step + .step::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: calc(100% + 8px);
+  width: 48px;
+  height: 1px;
+  background: var(--border);
+  pointer-events: none;
 }
 
-/* Inactive Step - Frame 1000003229 */
+.step:has(.completed) + .step::before {
+  background: var(--deck-blue-25);
+}
+
+.activeStep,
 .inactiveStep {
-  gap: 5px;
   width: auto;
-  height: 30px;
+  height: auto;
 }
 
-/* Active Step Circle - Frame 1000003226 */
-.activeStepCircle {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 6px 11px;
-  gap: 10px;
-  width: 38px;
-  height: 38px;
-  background: #fdd655;
-  border-radius: 19px;
-  font-family: 'Helvetica';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 18px;
-  color: #0a4b70;
-  border: none;
-  flex: none;
-  flex-grow: 0;
-  flex-shrink: 0;
-  text-align: center;
-}
-
-/* Active Step Label */
-.activeStepLabel {
-  height: 21px;
-  font-family: 'Helvetica';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 21px;
-  color: #303031;
-  flex: none;
-  flex-grow: 0;
-  flex-shrink: 0;
-  white-space: nowrap;
-}
-
-/* Inactive Step Circle - Frame 1000003227 */
+/* shared circle */
+.activeStepCircle,
 .inactiveStepCircle {
   box-sizing: border-box;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 6px 9px;
-  gap: 10px;
-  width: 30px;
-  height: 30px;
-  border: 1px solid #757575;
-  border-radius: 19px;
-  font-family: 'Helvetica';
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 50%;
+  font-family: var(--font-family-base);
   font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 18px;
-  color: #757575;
-  background: transparent;
+  font-size: 14px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
   flex: none;
-  align-self: stretch;
-  flex-grow: 0;
-  flex-shrink: 0;
   text-align: center;
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease,
+    color 0.2s ease;
 }
 
-/* Inactive Step Label */
+/* Active step: solid deck-blue */
+.activeStepCircle {
+  background: var(--deck-blue);
+  border: 1px solid var(--deck-blue);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 0 0 4px var(--deck-blue-12), 0 4px 12px var(--deck-blue-25);
+}
+
+/* Upcoming step: white with neutral border */
+.inactiveStepCircle {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--muted-foreground);
+  font-weight: 600;
+}
+
+/* Completed step: tinted with deck-blue check */
+.inactiveStepCircle.completed,
+.activeStepCircle.completed {
+  background: var(--deck-blue-12);
+  border-color: transparent;
+  color: var(--deck-blue);
+}
+
+.activeStepCircle.completed {
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+.activeStepCircle svg,
+.inactiveStepCircle svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+.activeStepCircle svg path,
+.inactiveStepCircle svg path {
+  fill: currentColor;
+}
+
+/* Labels */
+.activeStepLabel,
 .inactiveStepLabel {
-  height: 16px;
-  font-family: 'Helvetica';
+  font-family: var(--font-family-base);
   font-style: normal;
-  font-weight: 400;
   font-size: 14px;
-  line-height: 16px;
-  color: #303031;
+  line-height: 20px;
   flex: none;
-  flex-grow: 0;
-  flex-shrink: 0;
   white-space: nowrap;
 }
 
-/* Completed Step Circle */
-.inactiveStepCircle.completed {
-  background: #0a4b70;
-  border: 1px solid #0a4b70;
-  color: #ffffff;
-  font-weight: 700;
+.activeStepLabel {
+  font-weight: 600;
+  color: var(--deck-blue);
 }
 
-.step:hover,
-.step:focus-within {
-  opacity: 0.8;
-  transform: translateY(-1px);
-  transition: all 0.2s ease;
+.inactiveStepLabel {
+  font-weight: 500;
+  color: var(--muted-foreground);
+}
+
+.step:has(.completed) .inactiveStepLabel {
+  color: var(--foreground);
+}
+
+.step:hover .inactiveStepLabel {
+  color: var(--deck-blue);
+}
+
+.step:hover .inactiveStepCircle {
+  border-color: var(--deck-blue);
+  color: var(--deck-blue);
 }
 
 .step:focus-visible {
-  outline: 2px solid var(--clr-navy);
-  outline-offset: 2px;
-  border-radius: 4px;
-}
-
-.activeStepCircle:hover,
-.activeStepCircle:focus {
-  transform: scale(1.05);
-}
-
-.inactiveStepCircle:hover,
-.inactiveStepCircle:focus {
-  border-color: #0a4b70;
-  transform: scale(1.05);
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 4px;
 }
 
 /* Responsive Design */
@@ -200,15 +203,17 @@
   .navigation {
     width: 100%;
     max-width: 1160px;
-    padding: 0 var(--sp-4);
+    padding: 0;
   }
 
   .stepsRow {
     width: 100%;
-    gap: 60px;
-    overflow-x: auto;
-    overflow-y: hidden;
+    gap: 56px;
     -webkit-overflow-scrolling: touch;
+  }
+
+  .step + .step::before {
+    width: 40px;
   }
 }
 
@@ -219,37 +224,23 @@
 
   .stepsRow {
     gap: 40px;
-    padding: 0 var(--sp-4);
+    padding: 0 0 8px;
   }
 
-  .activeStep {
-    width: auto;
-  }
-
-  .activeStepLabel {
-    font-size: 16px;
-  }
-
-  .inactiveStep {
-    width: auto;
-  }
-
-  .inactiveStepLabel {
-    font-size: 12px;
-  }
-
-  .activeStepCircle {
-    width: 32px;
-    height: 32px;
-    font-size: 20px;
-    padding: 4px 8px;
-  }
-
-  .inactiveStepCircle {
+  .step + .step::before {
     width: 24px;
-    height: 24px;
-    font-size: 14px;
-    padding: 3px 6px;
+  }
+
+  .activeStepLabel,
+  .inactiveStepLabel {
+    font-size: 13px;
+  }
+
+  .activeStepCircle,
+  .inactiveStepCircle {
+    width: 28px;
+    height: 28px;
+    font-size: 13px;
   }
 
   .step {
@@ -261,13 +252,12 @@
   position: absolute;
   left: 0;
   bottom: 2px;
-  height: 5px;
-  background: #fdd655;
-  border-radius: 999px;
+  height: 2px;
+  background: var(--deck-blue);
+  border-radius: var(--radius-pill);
   pointer-events: none;
   z-index: 1;
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 1px 6px 0 var(--surface-warning);
   min-width: 0;
   /* Width set by JavaScript based on actual step measurements */
 }
@@ -279,4 +269,14 @@
   transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
     height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   top: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progressBar,
+  .progressConnector,
+  .step,
+  .activeStepCircle,
+  .inactiveStepCircle {
+    transition: none;
+  }
 }

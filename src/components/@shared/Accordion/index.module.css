@@ -7,7 +7,7 @@
   margin-bottom: 0;
   font-weight: 700;
   /* font-size: 22px; */
-  color: #303031;
+  color: var(--foreground);
 }
 
 .compactTitle {
@@ -40,27 +40,26 @@
   display: inline-flex;
   align-items: baseline;
   gap: calc(var(--spacer) / 4);
-  color: var(--text-ink);
+  color: var(--foreground);
   font-weight: 600;
   font-size: 0.9rem;
 }
 
 .headerLeader {
   flex: 1;
-  border-bottom: 1px dotted var(--border-color-light, var(--neutral-165));
+  border-bottom: 1px dashed var(--border);
   margin: 0 12px;
   align-self: center;
 }
 
 .badge {
   margin: 0;
-  background-color: var(--menu-border-color);
-  color: var(--menu-network-badge-font-color);
-  font-size: var(--font-size-base);
+  font-size: 11px;
   vertical-align: middle;
 }
 
 .toggle {
+  color: var(--deck-blue);
   margin-left: calc(var(--spacer) / 4);
   transform: none !important;
 }
@@ -69,9 +68,14 @@
   display: inline-block;
   width: var(--font-size-base);
   height: var(--font-size-base);
-  fill: var(--font-color-title);
+  fill: currentColor;
   vertical-align: middle;
   transition: 0.2s ease-out;
+}
+
+/* ArrowIcon hard-codes fill="#246790" on its path; follow the toggle color */
+.toggle svg path {
+  fill: currentColor;
 }
 
 .open .toggle svg {
@@ -94,4 +98,12 @@
 
 .open .compactContent {
   max-height: 15rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .actions .content,
+  .open .content,
+  .toggle svg {
+    transition: none;
+  }
 }

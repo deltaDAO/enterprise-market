@@ -24,13 +24,22 @@
   width: var(--icon-size);
 }
 
+.viewSelector {
+  border-radius: var(--radius-md);
+}
+
+.viewSelector:focus-visible {
+  outline: 2px solid var(--deck-blue);
+  outline-offset: 2px;
+}
+
 .viewSelector svg path {
-  fill: var(--teaser-border-color);
+  fill: var(--muted-foreground);
   transition: 0.2s ease-in-out;
 }
 
 .viewSelector:hover svg path,
 .selected svg path {
-  fill: var(--teaser-title-font-color);
+  fill: var(--deck-blue);
   transition: 0.2s ease-in-out;
 }

@@ -1,6 +1,5 @@
 export const CONSUMER_PARAMETERS_COMPATIBLE_TYPES = [
   'url',
-  'graphql',
   'smartcontract'
 ] as const
 
