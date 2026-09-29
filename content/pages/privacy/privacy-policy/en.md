@@ -47,7 +47,7 @@ There is no adequacy decision for the USA from the European Commission. Our coop
 Further information about the **purpose, legal basis, and retention period** can be found in chapter 4.
 
 **Exoscale**  
-When using our portal demonstrator functionalities, your Usage Data is processed by our portal demonstrator backend. Portal demonstrator backend components are managed by deltaDAO and hosted hosted on Exoscale servers located in Frankfurt, **Germany** by our hosting provider Akenes SAE. Akenes SAE is headquartered in Boulevard de Grancy 19A, 1006 – Lausanne, **Switzerland**. There is an adequacy decision for Switzerland from the European Commission. Our cooperation with Akenes SAE is based on a Data Processing Agreement (DPA). Here you can find Akenes SAE&#39;s current [**DPA** &#8599;](https://www.exoscale.com/dpa/).
+When using our portal demonstrator functionalities, your Usage Data is processed by our portal demonstrator backend. Portal demonstrator backend components are managed by deltaDAO and hosted on Exoscale servers located in Frankfurt, **Germany** by our hosting provider Akenes SAE. Akenes SAE is headquartered in Boulevard de Grancy 19A, 1006 – Lausanne, **Switzerland**. There is an adequacy decision for Switzerland from the European Commission. Our cooperation with Akenes SAE is based on a Data Processing Agreement (DPA). Here you can find Akenes SAE&#39;s current [**DPA** &#8599;](https://www.exoscale.com/dpa/).
 
 Further information about the **purpose, legal basis, and retention period** can be found in chapter 4.
 

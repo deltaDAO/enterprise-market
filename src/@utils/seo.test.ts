@@ -79,7 +79,9 @@ describe('robots.txt and sitemap.xml', () => {
     )
     const sitemap = buildSitemap()
     expect(sitemap).toContain('<loc>https://market.example.com</loc>')
-    expect(sitemap).toContain('<loc>https://market.example.com/publish/1</loc>')
+    expect(sitemap).toContain('<loc>https://market.example.com/search</loc>')
+    expect(sitemap).not.toContain('/publish/1')
+    expect(sitemap).not.toContain('/bookmarks')
     expect(sitemap).toContain(
       '<loc>https://market.example.com/privacy/terms</loc>'
     )

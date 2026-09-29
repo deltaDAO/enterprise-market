@@ -46,10 +46,11 @@ export default function PrivacyPolicyHeader({
       label: 'Privacy Policy',
       href: '/privacy/privacy-policy'
     },
-    // Deliberately not listed: /privacy/data-portal-usage-agreement. That page
-    // is upstream boilerplate naming Ocean Enterprise Collective e.V. as the
-    // Portal Operator rather than deltaDAO, and it is not linked from the
-    // footer either. Leave it unreachable until the entity is corrected.
+    // No Data Portal Usage Agreement tab: the upstream document (naming Ocean
+    // Enterprise Collective e.V. as the Portal Operator) was removed, so
+    // /privacy/data-portal-usage-agreement returns 404 unless
+    // NEXT_PUBLIC_DPUA_URL points at an external document. Add the tab back
+    // once a deltaDAO version exists.
     {
       label: 'Cookie Policy',
       href: '/privacy/cookie-policy'

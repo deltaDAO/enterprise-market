@@ -76,7 +76,6 @@ export default function Web3Feedback({
                   <>
                     This asset is published on {ddoNetworkName} but your wallet
                     is connected to {walletNetworkName}. Connect to{' '}
-                    {ddoNetworkName}
                     {ddoNetworkName} to interact with this asset.
                   </>
                 }

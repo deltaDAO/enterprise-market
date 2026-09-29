@@ -15,6 +15,10 @@ interface AnchorNavigationProps {
   items: AnchorItem[]
 }
 
+function isExternalUrl(href?: string): boolean {
+  return /^https?:\/\//i.test(href || '')
+}
+
 export default function AnchorNavigation({
   items
 }: AnchorNavigationProps): ReactElement {
@@ -33,16 +37,30 @@ export default function AnchorNavigation({
 
   return (
     <div className={styles.container}>
-      {items.map((item) => (
-        <button
-          key={item.label}
-          className={styles.button}
-          onClick={() => handleClick(item)}
-          type="button"
-        >
-          <span className={styles.label}>{item.label}</span>
-        </button>
-      ))}
+      {items.map((item) =>
+        // External pages (e.g. the imprint) open in a new tab, like the
+        // footer links to them.
+        isExternalUrl(item.href) ? (
+          <a
+            key={item.label}
+            className={styles.button}
+            href={item.anchor ? `${item.href}#${item.anchor}` : item.href}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span className={styles.label}>{item.label}</span>
+          </a>
+        ) : (
+          <button
+            key={item.label}
+            className={styles.button}
+            onClick={() => handleClick(item)}
+            type="button"
+          >
+            <span className={styles.label}>{item.label}</span>
+          </button>
+        )
+      )}
     </div>
   )
 }

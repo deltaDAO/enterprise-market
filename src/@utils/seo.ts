@@ -111,12 +111,13 @@ export function getPageTitle(title?: string | null, isHome = false): string {
   return `${cleanTitle} - ${siteTitle}`
 }
 
-/** Paths listed in /sitemap.xml. */
+/**
+ * Paths listed in /sitemap.xml. Pages without indexable content (bookmarks are
+ * per-browser state, publishing needs a wallet) are left out.
+ */
 export const SITEMAP_PATHS = [
   '/',
   '/search',
-  '/publish/1',
-  '/bookmarks',
   '/privacy/terms',
   '/privacy/privacy-policy',
   '/privacy/cookie-policy',
