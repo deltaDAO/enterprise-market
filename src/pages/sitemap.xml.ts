@@ -1,5 +1,10 @@
 import type { GetServerSideProps } from 'next'
-import { getAbsoluteUrl, getRequestOrigin, SITEMAP_PATHS } from '@utils/seo'
+import {
+  getAbsoluteUrl,
+  getRequestOrigin,
+  isSiteUrlConfigured,
+  SITEMAP_PATHS
+} from '@utils/seo'
 
 function escapeXml(value: string): string {
   return value
@@ -25,7 +30,12 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const { origin } = getRequestOrigin(req.headers)
 
   res.setHeader('Content-Type', 'application/xml; charset=utf-8')
-  res.setHeader('Cache-Control', 'public, max-age=3600')
+  // Without NEXT_PUBLIC_SITE_URL the URLs come from request headers, which a
+  // client can set, so keep the response out of shared caches.
+  res.setHeader(
+    'Cache-Control',
+    isSiteUrlConfigured() ? 'public, max-age=3600' : 'private, no-store'
+  )
   res.write(buildSitemap(origin))
   res.end()
 

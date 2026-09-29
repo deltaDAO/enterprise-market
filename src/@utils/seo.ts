@@ -84,6 +84,25 @@ export function isIndexingAllowed(hostname?: string | null): boolean {
   }
 }
 
+/** Whether NEXT_PUBLIC_SITE_URL is set to a valid origin. */
+export function isSiteUrlConfigured(): boolean {
+  return Boolean(normalizeOrigin(configuredSiteUrl))
+}
+
+/**
+ * robots value for the server-rendered document. Statically optimized pages
+ * are rendered at build time without a request, so they assume they are served
+ * from the NEXT_PUBLIC_SITE_URL host. Any other host (e.g. a preview URL) gets
+ * `X-Robots-Tag: noindex` from next.config.js, and the client <Seo /> sets
+ * noindex once the page mounts.
+ */
+export function getServerRobots(requestHostname?: string | null): string {
+  const envOrigin = normalizeOrigin(configuredSiteUrl)
+  const hostname =
+    requestHostname || (envOrigin ? new URL(envOrigin).hostname : null)
+  return isIndexingAllowed(hostname) ? 'index,follow' : 'noindex,nofollow'
+}
+
 /** Plain-text meta description, truncated on a word boundary. */
 export function toMetaDescription(
   text?: string | null,
@@ -133,7 +152,9 @@ function firstHeaderValue(value: HeaderValue): string | undefined {
 
 /**
  * Origin and hostname of an incoming request, honouring reverse-proxy headers.
- * Only used as a fallback when NEXT_PUBLIC_SITE_URL is not set.
+ * Only used as a fallback when NEXT_PUBLIC_SITE_URL is not set, in which case
+ * responses built from it must not be cached publicly (the headers may come
+ * from the client).
  */
 export function getRequestOrigin(headers?: Record<string, HeaderValue>): {
   origin: string | null

@@ -9,8 +9,8 @@ import loginContent from '../../../../../content/auth/login.json'
 import {
   getAbsoluteUrl,
   getPageTitle,
+  getServerRobots,
   getSiteOrigin,
-  isIndexingAllowed,
   SHARE_IMAGE_HEIGHT,
   SHARE_IMAGE_WIDTH,
   THEME_COLOR,
@@ -93,9 +93,7 @@ export default function DocumentHead({
     ? getAbsoluteUrl(siteContent.siteImage, requestOrigin)
     : ''
   const imageAlt = siteContent.siteImageAlt || siteContent.siteTitle
-  const robots = isIndexingAllowed(requestHostname)
-    ? 'index,follow'
-    : 'noindex,nofollow'
+  const robots = getServerRobots(requestHostname)
 
   return (
     <>

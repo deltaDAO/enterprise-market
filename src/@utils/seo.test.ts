@@ -44,6 +44,22 @@ describe('seo utils', () => {
     expect(forced.isIndexingAllowed('anything.example.com')).toBe(true)
   })
 
+  it('assumes the configured host for pages rendered without a request', () => {
+    const configured = loadSeo({ siteUrl: 'https://market.example.com' })
+    expect(configured.getServerRobots(null)).toBe('index,follow')
+    expect(configured.getServerRobots('market.example.com')).toBe(
+      'index,follow'
+    )
+    expect(configured.getServerRobots('preview.example.com')).toBe(
+      'noindex,nofollow'
+    )
+
+    const unconfigured = loadSeo({ siteUrl: null })
+    expect(unconfigured.getServerRobots(null)).toBe('noindex,nofollow')
+    expect(unconfigured.isSiteUrlConfigured()).toBe(false)
+    expect(configured.isSiteUrlConfigured()).toBe(true)
+  })
+
   it('builds plain-text descriptions of at most 160 characters', () => {
     const { toMetaDescription } = loadSeo({})
     expect(toMetaDescription('**Bold** and [a link](https://x.y)')).toBe(
