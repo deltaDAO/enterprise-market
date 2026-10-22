@@ -105,6 +105,8 @@ For local development, you can use a `.env` file:
 cp .env.example .env
 ```
 
+Some features run server-side in Next.js API routes (`src/pages/api`), e.g. IPFS uploads, OIDC login and the Gaia-X credential verification (`GAIAX_*` variables). They require a Node.js deployment (`npm run build` + `next start`, or the Docker image) and are not available in a static export.
+
 ## 🦀 Data Sources
 
 All displayed data in the app is presented around the concept of one asset, which is a combination of:

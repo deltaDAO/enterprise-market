@@ -1,0 +1,23 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/did/v1",
+    "https://w3id.org/security/jwk/v1"
+  ],
+  "id": "did:web:www.delta-dao.com:compliance:v2",
+  "verificationMethod": [
+    {
+      "id": "did:web:www.delta-dao.com:compliance:v2#X509-JWK",
+      "type": "JsonWebKey",
+      "controller": "did:web:www.delta-dao.com:compliance:v2",
+      "publicKeyJwk": {
+        "kty": "RSA",
+        "n": "ua_HmwQ7K5o1hCwtXQwyjLE7uLHqhu-IUm94EjYWt5wB4EpuCGbdyxKq6CCjZMClMFQ5xn-U_kwRmJGEvT4CAbEjIAacqVFDEaUCIxFQCk53jDXgaNVgO1HLrpAZBQnSS2cQX_cXRyKZB3VN2ctaNBOQPIBYx680xOmSnsCdJr7CYYX-vbY2pdZEe0gYZ0jOOVzoXMM4m7Hx96dmS952SQpoEWc2pZ6zztEADxFOkPqzcq8BzURsUcFdyIz9MUa0AnwRNOH2hekECx6iPhPBhRvu1iTSRQWBj6AphWlVjHn-E-ENVAtkaW1wphoMuEw5oSOQVvpCravKkLACoe4YB8YBdk6fPBQyBB5OC_wiaLUTsQGGsFDL_A28_KmBnGU3ptRPulOtqjvByYIW896NPI5PdSPatZcpdoQnNxIn3X1eRvTA-NjMgleEcagQzFDfyBQBHPhpUg-C_YR2OIs4nosFl3BQbba6k-r48I7__h1IhZceRfHoUwNoqln3-F51n6cz_GxuXPNNogC7Ju9I3pSZLB62lejmi12VF_oUWkMMcvnr2bq6r4XcgqCyPpbqfJbU_aBYBbOJIK-ciy_Nd7pgxWWyVsGfMc8fvM0USB48k1ZAfdeUoYNjIlI4nxZYPQ5tWgOTMHcYQzYBn4q6Yv8qIHDUCsPQHkGzk7YK5CE",
+        "e": "AQAB",
+        "kid": "X509-JWK",
+        "alg": "PS256",
+        "x5u": "https://www.delta-dao.com/compliance/v2/.well-known/x509CertificateChain.pem"
+      }
+    }
+  ],
+  "assertionMethod": ["did:web:www.delta-dao.com:compliance:v2#X509-JWK"]
+}

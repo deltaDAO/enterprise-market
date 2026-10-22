@@ -1,0 +1,115 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/did/v1",
+    "https://w3id.org/security/suites/jws-2020/v1"
+  ],
+  "id": "did:web:delta-dao.com",
+  "verificationMethod": [
+    {
+      "id": "did:web:delta-dao.com#JWK2020-RSA",
+      "type": "JsonWebKey2020",
+      "controller": "did:web:delta-dao.com",
+      "publicKeyJwk": {
+        "kty": "RSA",
+        "n": "ua_HmwQ7K5o1hCwtXQwyjLE7uLHqhu-IUm94EjYWt5wB4EpuCGbdyxKq6CCjZMClMFQ5xn-U_kwRmJGEvT4CAbEjIAacqVFDEaUCIxFQCk53jDXgaNVgO1HLrpAZBQnSS2cQX_cXRyKZB3VN2ctaNBOQPIBYx680xOmSnsCdJr7CYYX-vbY2pdZEe0gYZ0jOOVzoXMM4m7Hx96dmS952SQpoEWc2pZ6zztEADxFOkPqzcq8BzURsUcFdyIz9MUa0AnwRNOH2hekECx6iPhPBhRvu1iTSRQWBj6AphWlVjHn-E-ENVAtkaW1wphoMuEw5oSOQVvpCravKkLACoe4YB8YBdk6fPBQyBB5OC_wiaLUTsQGGsFDL_A28_KmBnGU3ptRPulOtqjvByYIW896NPI5PdSPatZcpdoQnNxIn3X1eRvTA-NjMgleEcagQzFDfyBQBHPhpUg-C_YR2OIs4nosFl3BQbba6k-r48I7__h1IhZceRfHoUwNoqln3-F51n6cz_GxuXPNNogC7Ju9I3pSZLB62lejmi12VF_oUWkMMcvnr2bq6r4XcgqCyPpbqfJbU_aBYBbOJIK-ciy_Nd7pgxWWyVsGfMc8fvM0USB48k1ZAfdeUoYNjIlI4nxZYPQ5tWgOTMHcYQzYBn4q6Yv8qIHDUCsPQHkGzk7YK5CE",
+        "e": "AQAB",
+        "alg": "PS256",
+        "x5u": "https://www.delta-dao.com/.well-known/certificate-chain-eIDAS-2026.crt"
+      }
+    }
+  ],
+  "assertionMethod": ["did:web:delta-dao.com#JWK2020-RSA"],
+  "authentication": ["did:web:delta-dao.com#JWK2020-RSA"],
+  "service": [
+    {
+      "id": "did:web:delta-dao.com#participant",
+      "type": "LinkedDomains",
+      "serviceEndpoint": "https://www.delta-dao.com/.well-known/2210_gx_participant.json"
+    },
+    {
+      "id": "did:web:delta-dao.com#registration",
+      "type": "LinkedDomains",
+      "serviceEndpoint": "https://www.delta-dao.com/.well-known/2210_gx_registrationnumber.json"
+    },
+    {
+      "id": "did:web:delta-dao.com#terms",
+      "type": "LinkedDomains",
+      "serviceEndpoint": "https://www.delta-dao.com/.well-known/2210_gx_tandc.json"
+    },
+    {
+      "id": "did:web:delta-dao.com#portal",
+      "type": "LinkedDomains",
+      "serviceEndpoint": "https://portal.pontus-x.eu"
+    },
+    {
+      "id": "did:web:delta-dao.com#gxdchcompliancev1",
+      "type": "LinkedDomains",
+      "serviceEndpoint": "https://www.delta-dao.com/compliance/v1"
+    },
+    {
+      "id": "did:web:delta-dao.com#gxdchregistryv1",
+      "type": "LinkedDomains",
+      "serviceEndpoint": "https://www.delta-dao.com/registry/v1"
+    },
+    {
+      "id": "did:web:delta-dao.com#gxdchnotaryv1",
+      "type": "LinkedDomains",
+      "serviceEndpoint": "https://www.delta-dao.com/notary/v1"
+    },
+    {
+      "id": "did:web:delta-dao.com#website",
+      "type": "LinkedDomains",
+      "serviceEndpoint": "https://www.delta-dao.com"
+    },
+    {
+      "id": "did:web:delta-dao.com#explorer",
+      "type": "LinkedDomains",
+      "serviceEndpoint": "https://explorer.pontus-x.eu"
+    },
+    {
+      "id": "did:web:delta-dao.com#cataloguecache",
+      "type": "LinkedDomains",
+      "serviceEndpoint": "https://aquarius.pontus-x.eu"
+    },
+    {
+      "id": "did:web:delta-dao.com#devtransactioncache",
+      "type": "LinkedDomains",
+      "serviceEndpoint": "https://subgraph.dev.pontus-x.eu/"
+    },
+    {
+      "id": "did:web:delta-dao.com#testtransactioncache",
+      "type": "LinkedDomains",
+      "serviceEndpoint": "https://subgraph.test.pontus-x.eu/"
+    },
+    {
+      "id": "did:web:delta-dao.com#devconnector1",
+      "type": "LinkedDomains",
+      "serviceEndpoint": "https://provider.dev.pontus-x.eu"
+    },
+    {
+      "id": "did:web:delta-dao.com#devconnector2",
+      "type": "LinkedDomains",
+      "serviceEndpoint": "https://dd1.provider.dev.pontus-x.eu/"
+    },
+    {
+      "id": "did:web:delta-dao.com#testconnector1",
+      "type": "LinkedDomains",
+      "serviceEndpoint": "https://provider.test.pontus-x.eu"
+    },
+    {
+      "id": "did:web:delta-dao.com#testconnector2",
+      "type": "LinkedDomains",
+      "serviceEndpoint": "https://dd1.provider.test.pontus-x.eu/"
+    },
+    {
+      "id": "did:web:delta-dao.com#devrpc",
+      "type": "LinkedDomains",
+      "serviceEndpoint": "https://rpc.dev.pontus-x.eu/"
+    },
+    {
+      "id": "did:web:delta-dao.com#testrpc",
+      "type": "LinkedDomains",
+      "serviceEndpoint": "https://rpc.test.pontus-x.eu/"
+    }
+  ]
+}
