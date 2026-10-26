@@ -29,7 +29,9 @@
   font-size: var(--text-sm);
   line-height: 1.5;
   min-width: 0;
-  overflow-wrap: anywhere;
+  /* break only words that don't fit (URLs, DIDs), never shrink text to
+     one character per line */
+  overflow-wrap: break-word;
 }
 
 .card h5 {
@@ -110,15 +112,41 @@
   color: var(--destructive-strong);
 }
 
+/* label and value side by side only where there is room for both */
+.fieldsContainer,
+.nestedFields {
+  container-type: inline-size;
+}
+
 .fields {
   display: grid;
-  grid-template-columns: minmax(8rem, max-content) 1fr;
-  gap: 4px var(--sp-4);
+  grid-template-columns: 1fr;
+  gap: 0 var(--sp-4);
   margin: 0;
 }
 
 .field {
   display: contents;
+}
+
+.field dd {
+  margin-bottom: 6px;
+}
+
+@container (min-width: 30rem) {
+  .fields {
+    grid-template-columns: minmax(8rem, 12rem) minmax(0, 1fr);
+    row-gap: 4px;
+  }
+  .field dd {
+    margin-bottom: 0;
+  }
+}
+
+.field dd a,
+.meta dd a,
+.source {
+  overflow-wrap: anywhere;
 }
 
 .field dt,
@@ -133,15 +161,28 @@
   min-width: 0;
 }
 
+.nested > summary {
+  cursor: pointer;
+  overflow-wrap: anywhere;
+  list-style-position: outside;
+  margin-left: 1em;
+}
+
+.nested > summary:hover {
+  color: var(--brand-highlight);
+}
+
+.nested[open] > summary {
+  margin-bottom: 4px;
+}
+
 .nestedFields {
-  padding: 6px 10px;
+  padding: 6px 0 6px 10px;
   border-left: 2px solid var(--border);
 }
 
 .nestedType {
-  font-size: 12px;
   font-weight: 600;
-  margin-bottom: 2px;
 }
 
 .source {

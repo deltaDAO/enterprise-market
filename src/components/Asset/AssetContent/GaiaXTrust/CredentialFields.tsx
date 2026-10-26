@@ -2,6 +2,7 @@ import { ReactElement, ReactNode } from 'react'
 import { getNodeId, isObject } from '@utils/gaiaX/jwt'
 import {
   getFieldLabel,
+  getNodeSummary,
   getTypeLabel,
   HIDDEN_KEYS,
   sortFields
@@ -59,6 +60,33 @@ function SourceInfo({ source }: { source: CredentialSource }): ReactElement {
   )
 }
 
+// Nested subjects start collapsed with a one-line summary, so deeply linked
+// credentials (addresses, registration numbers, the participant repeated in
+// a service offering) don't flood the card
+function NestedNode({
+  node,
+  depth
+}: {
+  node: JsonObject
+  depth: number
+}): ReactElement {
+  const source = node[SOURCE_KEY] as CredentialSource | undefined
+  const typeLabel = getTypeLabel((node.type as string) ?? source?.types)
+  const summary = getNodeSummary(node)
+
+  return (
+    <details className={styles.nested}>
+      <summary>
+        {typeLabel && <span className={styles.nestedType}>{typeLabel}</span>}
+        {typeLabel && summary && ' · '}
+        {summary && <span>{summary}</span>}
+      </summary>
+      {/* eslint-disable-next-line @typescript-eslint/no-use-before-define */}
+      <CredentialFields node={node} depth={depth + 1} nested />
+    </details>
+  )
+}
+
 function renderValue(value: unknown, depth: number): ReactNode {
   if (value === null || value === undefined || value === '') return '—'
   if (Array.isArray(value)) {
@@ -90,20 +118,21 @@ function renderValue(value: unknown, depth: number): ReactNode {
     const id = getNodeId(value)
     // An unresolved reference, e.g. a link to a document or website
     if (keys.length === 0) return id ? <ExternalLink href={id} /> : '—'
-    // Fields and values render each other recursively for nested subjects
-    // eslint-disable-next-line @typescript-eslint/no-use-before-define
-    return <CredentialFields node={value} depth={depth + 1} nested />
+    return <NestedNode node={value} depth={depth} />
   }
   if (typeof value === 'string' && /^https?:\/\//.test(value)) {
     return <ExternalLink href={value} />
+  }
+  if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(value)) {
+    return <time dateTime={value}>{formatDate(value)}</time>
   }
   return String(value)
 }
 
 /**
  * Renders every attribute of a resolved credentialSubject with readable
- * labels. Referenced subjects are shown inline with their own type, issuer
- * and notary evidence.
+ * labels. Referenced subjects are shown as collapsible sections with their
+ * own type, issuer and notary evidence.
  */
 export default function CredentialFields({
   node,
@@ -115,9 +144,6 @@ export default function CredentialFields({
   nested?: boolean
 }): ReactElement {
   const source = node[SOURCE_KEY] as CredentialSource | undefined
-  const typeLabel = nested
-    ? getTypeLabel((node.type as string) ?? source?.types)
-    : undefined
   const keys = sortFields(
     Object.keys(node).filter(
       (key) => !HIDDEN_KEYS.includes(key) && key !== SOURCE_KEY
@@ -125,8 +151,7 @@ export default function CredentialFields({
   )
 
   return (
-    <div className={nested ? styles.nestedFields : undefined}>
-      {typeLabel && <div className={styles.nestedType}>{typeLabel}</div>}
+    <div className={nested ? styles.nestedFields : styles.fieldsContainer}>
       <dl className={styles.fields}>
         {keys.map((key) => (
           <div key={key} className={styles.field}>

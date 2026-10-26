@@ -19,13 +19,34 @@ const participantOnly: GaiaXVerification = {
 }
 
 describe('GaiaXTrustView', () => {
+  it('collapses nested credentials behind a one-line summary', () => {
+    render(<GaiaXTrustView result={participantOnly} stale={false} />)
+    const summary = (text: string) =>
+      screen.getAllByText(
+        (_, element) =>
+          element?.tagName === 'SUMMARY' && element.textContent === text
+      )
+
+    const summaries = [
+      ...summary('VAT ID · DE346013532'),
+      ...summary('LEI code · 391200FJBNU0YW987L26'),
+      ...summary('Address · Katharinenstraße 30a, 20457 Hamburg, DE')
+    ]
+    expect(summaries).toHaveLength(4)
+    summaries.forEach((element) =>
+      expect(element.parentElement).not.toHaveAttribute('open')
+    )
+  })
+
   it('renders the participant with resolved registration numbers', () => {
     render(<GaiaXTrustView result={participantOnly} stale={false} />)
 
     expect(screen.getByText('Gaia-X Trust Information')).toBeInTheDocument()
     expect(screen.getAllByText('deltaDAO AG').length).toBeGreaterThan(0)
-    expect(screen.getByText('DE346013532')).toBeInTheDocument()
-    expect(screen.getByText('391200FJBNU0YW987L26')).toBeInTheDocument()
+    expect(screen.getAllByText('DE346013532').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('391200FJBNU0YW987L26').length).toBeGreaterThan(
+      0
+    )
     expect(screen.getAllByText('Legal address').length).toBeGreaterThan(0)
     expect(
       screen.getAllByText(/Issued by did:web:www.delta-dao.com:notary:v2/)

@@ -1,4 +1,5 @@
 import { ReactElement } from 'react'
+import Accordion from '@shared/Accordion'
 import Time from '@shared/atoms/Time'
 import { LABEL_LEVELS } from '@utils/gaiaX/compliance'
 import { getTypeLabel } from '@utils/gaiaX/labels'
@@ -112,8 +113,14 @@ export default function ComplianceCard({
       )}
 
       {compliance.compliantCredentials?.length > 0 && (
-        <>
-          <h5>Compliant credentials</h5>
+        <Accordion
+          compact
+          titleClassName={styles.accordionTitle}
+          title={`Compliant credentials (${
+            compliance.compliantCredentials.filter((entry) => entry.matched)
+              .length
+          }/${compliance.compliantCredentials.length} digests match)`}
+        >
           <ul className={styles.checks}>
             {compliance.compliantCredentials.map((entry) => (
               <li key={entry.id}>
@@ -125,7 +132,7 @@ export default function ComplianceCard({
               </li>
             ))}
           </ul>
-        </>
+        </Accordion>
       )}
 
       {compliance.checks.some((check) => check.status !== 'pass') && (
