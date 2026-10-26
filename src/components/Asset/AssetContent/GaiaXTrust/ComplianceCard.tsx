@@ -13,19 +13,30 @@ function getCriterionLabel(url: string): string {
   return url.split('#').pop() || url
 }
 
+export const NOT_BOUND_MESSAGE =
+  'Not shown as compliant: the credentials are not bound to the publisher of this asset.'
+
 export default function ComplianceCard({
   compliance,
-  stale
+  stale,
+  blocked = false
 }: {
   compliance: ComplianceReport
   stale: boolean
+  // A blocking failure (e.g. DID mismatch) hides all trust badges
+  blocked?: boolean
 }): ReactElement {
   const state: TrustState =
-    compliance.status === 'pass' && !stale
-      ? 'verified'
-      : compliance.status === 'fail'
+    compliance.status === 'fail'
       ? 'failed'
+      : compliance.status === 'pass' && !stale && !blocked
+      ? 'verified'
       : 'unverified'
+  const showLabel = compliance.labelLevel && state === 'verified'
+  const message =
+    blocked && compliance.status === 'pass'
+      ? NOT_BOUND_MESSAGE
+      : compliance.message
 
   return (
     <article className={styles.card}>
@@ -37,14 +48,14 @@ export default function ComplianceCard({
             Live check by the Gaia-X Digital Clearing House
           </span>
         </div>
-        {compliance.labelLevel && (
+        {showLabel && (
           <span className={styles.label}>
             {LABEL_LEVELS[compliance.labelLevel] ?? compliance.labelLevel}
           </span>
         )}
       </header>
 
-      <p className={styles[`message_${state}`]}>{compliance.message}</p>
+      <p className={styles[`message_${state}`]}>{message}</p>
 
       {compliance.status !== 'skipped' && (
         <dl className={styles.meta}>

@@ -51,7 +51,11 @@ export default function GaiaXTrustView({
             trust={getCredentialTrust(result, result.serviceOffering, stale)}
           />
         )}
-        <ComplianceCard compliance={result.compliance} stale={stale} />
+        <ComplianceCard
+          compliance={result.compliance}
+          stale={stale}
+          blocked={result.blocking}
+        />
         <BindingChecks checks={result.binding} />
       </div>
     </section>

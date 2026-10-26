@@ -5,6 +5,7 @@ import { useGaiaXVerification } from '@hooks/useGaiaXVerification'
 import { Asset } from 'src/@types/Asset'
 import GaiaXTrustView, { isLegacyProvidedBy } from './GaiaXTrustView'
 import ProvidedBy from './ProvidedBy'
+import { NOT_BOUND_MESSAGE } from './ComplianceCard'
 
 jest.mock('@hooks/useGaiaXVerification', () => ({
   useGaiaXVerification: jest.fn()
@@ -61,6 +62,38 @@ describe('GaiaXTrustView', () => {
         'Verified by the Gaia-X Digital Clearing House (CD4.0.0).'
       )
     ).not.toBeInTheDocument()
+  })
+
+  it('hides every trust badge on a DID mismatch', () => {
+    render(
+      <GaiaXTrustView
+        result={{
+          ...participantOnly,
+          status: 'failed',
+          blocking: true,
+          binding: [
+            {
+              id: 'Participant-vp-issuer',
+              status: 'fail',
+              blocking: true,
+              message: 'DID mismatch: credential not issued by the publisher.'
+            }
+          ]
+        }}
+        stale={false}
+      />
+    )
+
+    expect(screen.queryByText('Standard Compliance')).not.toBeInTheDocument()
+    expect(
+      screen.queryByText('Compliant with the Gaia-X Trust Framework.')
+    ).not.toBeInTheDocument()
+    expect(screen.getByText(NOT_BOUND_MESSAGE)).toBeInTheDocument()
+    expect(
+      screen.getAllByText(
+        'DID mismatch: credential not issued by the publisher.'
+      ).length
+    ).toBeGreaterThan(0)
   })
 
   it('reports a service offering presentation without DSO credential', () => {
