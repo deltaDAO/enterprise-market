@@ -34,6 +34,7 @@ import ComputeJobs from '@components/@shared/ComputeJobs'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'
+import GaiaXTrust from './GaiaXTrust'
 
 export default function AssetContent({
   asset
@@ -291,6 +292,7 @@ export default function AssetContent({
               </>
             )}
             <MetaFull ddo={asset} />
+            <GaiaXTrust ddo={asset} />
             {debug === true ? (
               <DebugOutput title="DDO" output={asset} />
             ) : (

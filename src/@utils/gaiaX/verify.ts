@@ -13,6 +13,7 @@ import { checkTermsHashes, FetchBytes } from './termsHash'
 import {
   CheckResult,
   ComplianceReport,
+  CredentialEntry,
   CredentialReport,
   GaiaXError,
   GaiaXVerification,
@@ -47,18 +48,32 @@ function memoize<T>(fn: (key: string) => Promise<T>) {
   }
 }
 
+// Groups failures by message, e.g. "gx:LeiCode, gx:VatID: Expired on …"
 function summarize(
   id: string,
-  results: CheckResult[],
+  credentials: CredentialEntry[],
+  pick: (credential: CredentialEntry) => CheckResult,
   passMessage: string
 ): CheckResult {
-  const failed = results.filter((result) => result.status === 'fail')
+  const failed = credentials.filter(
+    (credential) => pick(credential).status === 'fail'
+  )
   if (failed.length === 0) return { id, status: 'pass', message: passMessage }
+
+  const byMessage = new Map<string, string[]>()
+  failed.forEach((credential) => {
+    const { message } = pick(credential)
+    const type = credential.types[credential.types.length - 1]
+    byMessage.set(message, [...(byMessage.get(message) ?? []), type])
+  })
+
   return {
     id,
     status: 'fail',
-    blocking: failed.some((result) => result.blocking),
-    message: failed.map((result) => result.message).join(' ')
+    blocking: failed.some((credential) => pick(credential).blocking),
+    message: Array.from(byMessage)
+      .map(([message, types]) => `${types.join(', ')}: ${message}`)
+      .join(' ')
   }
 }
 
@@ -132,12 +147,14 @@ async function loadCredential(
     checkValidity('vp-validity', vp.validFrom, vp.validUntil, now),
     summarize(
       'vc-signatures',
-      report.credentials.map((vc) => vc.signature),
+      report.credentials,
+      (vc) => vc.signature,
       `All ${report.credentials.length} credential signatures are valid.`
     ),
     summarize(
       'vc-validity',
-      report.credentials.map((vc) => vc.validity),
+      report.credentials,
+      (vc) => vc.validity,
       `All ${report.credentials.length} credentials are within their validity period.`
     )
   )

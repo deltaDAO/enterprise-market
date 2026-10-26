@@ -1,0 +1,122 @@
+import { fireEvent, render, screen } from '@testing-library/react'
+import verification from '../../../../../.jest/__fixtures__/gaiaX/verification.json'
+import { GaiaXVerification } from '@utils/gaiaX/types'
+import { useGaiaXVerification } from '@hooks/useGaiaXVerification'
+import { Asset } from 'src/@types/Asset'
+import GaiaXTrustView, { isLegacyProvidedBy } from './GaiaXTrustView'
+import ProvidedBy from './ProvidedBy'
+
+jest.mock('@hooks/useGaiaXVerification', () => ({
+  useGaiaXVerification: jest.fn()
+}))
+
+const result = verification as unknown as GaiaXVerification
+const participantOnly: GaiaXVerification = {
+  ...result,
+  status: 'verified',
+  serviceOffering: undefined
+}
+
+describe('GaiaXTrustView', () => {
+  it('renders the participant with resolved registration numbers', () => {
+    render(<GaiaXTrustView result={participantOnly} stale={false} />)
+
+    expect(screen.getByText('Gaia-X Trust Information')).toBeInTheDocument()
+    expect(screen.getAllByText('deltaDAO AG').length).toBeGreaterThan(0)
+    expect(screen.getByText('DE346013532')).toBeInTheDocument()
+    expect(screen.getByText('391200FJBNU0YW987L26')).toBeInTheDocument()
+    expect(screen.getAllByText('Legal address').length).toBeGreaterThan(0)
+    expect(
+      screen.getAllByText(/Issued by did:web:www.delta-dao.com:notary:v2/)
+    ).toHaveLength(3)
+    expect(
+      screen.getByText(
+        'All Gaia-X credentials are verified and bound to the publisher.'
+      )
+    ).toBeInTheDocument()
+  })
+
+  it('renders the live compliance result', () => {
+    render(<GaiaXTrustView result={participantOnly} stale={false} />)
+
+    expect(screen.getByText('Standard Compliance')).toBeInTheDocument()
+    expect(screen.getByText(/Rules CD4.0.0/)).toBeInTheDocument()
+    expect(screen.getByText('PA1.1')).toBeInTheDocument()
+    expect(screen.getAllByText(/digest matches/)).toHaveLength(5)
+  })
+
+  it('shows the amber state for a stale result', () => {
+    render(<GaiaXTrustView result={participantOnly} stale />)
+
+    expect(
+      screen.queryByText(
+        'All Gaia-X credentials are verified and bound to the publisher.'
+      )
+    ).not.toBeInTheDocument()
+    expect(screen.getAllByText(/older than 10 minutes/).length).toBeGreaterThan(
+      0
+    )
+    expect(
+      screen.queryByText(
+        'Verified by the Gaia-X Digital Clearing House (CD4.0.0).'
+      )
+    ).not.toBeInTheDocument()
+  })
+
+  it('reports a service offering presentation without DSO credential', () => {
+    render(<GaiaXTrustView result={result} stale={false} />)
+
+    expect(
+      screen.getAllByText(
+        'The presentation does not contain a service offering credential (gx:DigitalServiceOffering).'
+      ).length
+    ).toBeGreaterThan(0)
+  })
+
+  it('shows the raw credential on demand', () => {
+    render(<GaiaXTrustView result={participantOnly} stale={false} />)
+
+    fireEvent.click(screen.getAllByText('Show raw credential')[0])
+    expect(screen.getByText('Decoded')).toBeInTheDocument()
+    expect(screen.getByText('JWT')).toBeInTheDocument()
+  })
+
+  it('treats a non-credential providedBy URL as legacy metadata', () => {
+    expect(
+      isLegacyProvidedBy({
+        ...result,
+        serviceOffering: undefined,
+        participant: {
+          ...result.participant,
+          error: { code: 'NOT_JWT', message: '' }
+        }
+      })
+    ).toBe(true)
+    expect(isLegacyProvidedBy(result)).toBe(false)
+  })
+})
+
+describe('ProvidedBy', () => {
+  const url = 'https://delta-dao.com/.well-known/40_gx_legalperson_deltaDAO.jwt'
+  const ddo = {
+    id: 'did:ope:123',
+    issuer: 'did:web:delta-dao.com',
+    credentialSubject: { metadata: { providedBy: url } }
+  } as unknown as Asset
+  const mockHook = useGaiaXVerification as jest.Mock
+
+  it('shows the verified legal name', () => {
+    mockHook.mockReturnValue({ data: participantOnly, freshness: 'fresh' })
+    render(<ProvidedBy ddo={ddo} />)
+
+    expect(screen.getByText('deltaDAO AG')).toHaveAttribute('href', url)
+    expect(screen.getByLabelText('Verified')).toBeInTheDocument()
+  })
+
+  it('falls back to the raw URL while loading', () => {
+    mockHook.mockReturnValue({ data: undefined, freshness: 'stale' })
+    render(<ProvidedBy ddo={ddo} />)
+
+    expect(screen.getByText(url)).toBeInTheDocument()
+  })
+})
