@@ -12,6 +12,7 @@ import { Credential } from 'src/@types/ddo/Credentials'
 import { AssetExtended } from 'src/@types/AssetExtended'
 import { keyValuePairsToRecord } from '@utils/links'
 import { State } from 'src/@types/ddo/State'
+import { withServiceOfferingCredential } from '@utils/gaiaX/metadata'
 
 export default function DebugEditMetadata({
   values,
@@ -39,16 +40,20 @@ export default function DebugEditMetadata({
         copyrightHolder: values.copyrightHolder || '',
         tags: values.tags,
         license: values.license,
-        additionalInformation: {
-          ...asset?.credentialSubject?.metadata?.additionalInformation,
-          ...(asset?.credentialSubject?.metadata?.additionalInformation?.saas &&
-            values.saas?.redirectUrl && {
-              saas: {
-                redirectUrl: values.saas.redirectUrl,
-                paymentMode: 'Subscription' as const
-              }
-            })
-        }
+        additionalInformation: withServiceOfferingCredential(
+          {
+            ...asset?.credentialSubject?.metadata?.additionalInformation,
+            ...(asset?.credentialSubject?.metadata?.additionalInformation
+              ?.saas &&
+              values.saas?.redirectUrl && {
+                saas: {
+                  redirectUrl: values.saas.redirectUrl,
+                  paymentMode: 'Subscription' as const
+                }
+              })
+          },
+          values.gaiaXServiceOfferingCredential
+        )
       }
 
       if (asset.credentialSubject?.metadata.type === 'algorithm') {

@@ -80,6 +80,7 @@ import { getOceanConfig } from '@utils/ocean'
 import { getDummySigner, getTokenInfo } from '@utils/wallet'
 import { inferNameFromUrl } from './_license'
 import { getOpaServerUrl } from '@utils/wallet/policyServer'
+import { withServiceOfferingCredential } from '@utils/gaiaX/metadata'
 
 function cleanupVpPolicies(value: any): void {
   if (!value.vp_policies || value.vp_policies.length === 0) {
@@ -712,15 +713,18 @@ export async function transformPublishFormToDdo(
     author,
     links: keyValuePairsToRecord(metadata.links),
     license,
-    additionalInformation: {
-      termsAndConditions,
-      ...(isSaas && {
-        saas: {
-          redirectUrl: sanitizeUrl(files[0].url || ''),
-          paymentMode: 'Subscription' as const
-        }
-      })
-    },
+    additionalInformation: withServiceOfferingCredential(
+      {
+        termsAndConditions,
+        ...(isSaas && {
+          saas: {
+            redirectUrl: sanitizeUrl(files[0].url || ''),
+            paymentMode: 'Subscription' as const
+          }
+        })
+      },
+      metadata.gaiaXServiceOfferingCredential
+    ),
     ...(type === 'algorithm' &&
       dockerImage !== '' && {
         algorithm: {

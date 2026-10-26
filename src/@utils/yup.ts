@@ -25,6 +25,17 @@ export function testOptionalUrl(message = 'Must be a valid URL.') {
   )
 }
 
+// Optional credential URL, e.g. a Gaia-X VP-JWT: empty or an https URL
+export function testOptionalHttpsUrl(message = 'Must be an https URL.') {
+  return Yup.string().test(
+    'optional-https-url',
+    message,
+    (value) =>
+      !value?.trim() ||
+      (value.trim().startsWith('https://') && isValidWebUrl(value))
+  )
+}
+
 export function testLinks(_isEdit?: boolean) {
   return Yup.string().test((value, context) => {
     const { type } = context.parent

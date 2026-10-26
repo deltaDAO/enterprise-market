@@ -35,6 +35,7 @@ import {
   normalizeDockerImageReference
 } from '@utils/docker'
 import DockerRegistryChecksum from '@shared/DockerRegistryChecksum'
+import GaiaXCredentialPreview from '@shared/GaiaXCredentialPreview'
 
 const { data } = content.form
 const assetTypeOptionsTitles = getFieldContent('type', data).options
@@ -202,6 +203,7 @@ export default function FormEditMetadata(): ReactElement {
   const primaryUploadedLicenseDocument =
     values.uploadedLicense?.licenseDocuments?.[0]
   const linksFieldContent = getFieldContent('links', data)
+  const gaiaXFieldContent = getFieldContent('gaiaXCredentials', data)
 
   return (
     <Form>
@@ -255,11 +257,28 @@ export default function FormEditMetadata(): ReactElement {
           component={Input}
           name="copyrightHolder"
         />
-        <Field
-          {...getFieldContent('providedBy', data)}
-          component={Input}
-          name="providedBy"
-        />
+        <SectionContainer
+          title={gaiaXFieldContent.label}
+          help={gaiaXFieldContent.help}
+        >
+          <Field
+            {...getFieldContent('providedBy', data)}
+            component={Input}
+            name="providedBy"
+          />
+          <Field
+            {...getFieldContent('gaiaXServiceOfferingCredential', data)}
+            component={Input}
+            name="gaiaXServiceOfferingCredential"
+          />
+          <GaiaXCredentialPreview
+            participantUrl={values.providedBy}
+            serviceOfferingUrl={values.gaiaXServiceOfferingCredential}
+            publisherDid={asset?.issuer}
+            assetDid={asset?.id}
+            blockingFieldName="gaiaXBlocking"
+          />
+        </SectionContainer>
         {Boolean(
           asset?.credentialSubject?.metadata?.additionalInformation?.saas
         ) && (

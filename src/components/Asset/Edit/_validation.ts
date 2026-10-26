@@ -2,7 +2,11 @@ import * as Yup from 'yup'
 import { isAddress } from 'ethers'
 import { MAX_DECIMALS } from '@utils/constants'
 import { getMaxDecimalsValidation } from '@utils/numbers'
-import { getOriginalValue, testOptionalUrl } from '@utils/yup'
+import {
+  getOriginalValue,
+  testOptionalHttpsUrl,
+  testOptionalUrl
+} from '@utils/yup'
 import { validationConsumerParameters } from '@shared/FormInput/InputElement/ConsumerParameters/_validation'
 import { isS3File } from 'src/@types/S3File'
 import {
@@ -175,7 +179,15 @@ export const metadataValidationSchema = Yup.object().shape({
     .required('Required'),
   description: Yup.string().required('Required').min(10),
   copyrightHolder: Yup.string().nullable(),
-  providedBy: testOptionalUrl('Provided By must be a valid URL.'),
+  providedBy: testOptionalUrl('Participant credential must be a valid URL.'),
+  gaiaXServiceOfferingCredential: testOptionalHttpsUrl(
+    'Service offering credential must be an https URL.'
+  ),
+  gaiaXBlocking: Yup.boolean().test(
+    'gaiaX-not-blocking',
+    'Fix the Gaia-X credentials before saving.',
+    (value) => value !== true
+  ),
   links: Yup.array()
     .of(
       Yup.object().shape({

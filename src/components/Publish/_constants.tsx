@@ -84,6 +84,8 @@ export const initialValues: FormPublishData = {
     descriptionDirection: 'ltr',
     author: '',
     providedBy: '',
+    gaiaXServiceOfferingCredential: '',
+    gaiaXBlocking: false,
     copyrightHolder: '',
     links: [],
     termsAndConditions: false,

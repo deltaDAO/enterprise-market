@@ -32,6 +32,7 @@ import { State } from 'src/@types/ddo/State'
 import { useEthersSigner } from '@hooks/useEthersSigner'
 import { getOpaServerUrl } from '@utils/wallet/policyServer'
 import { useOpaServerChangeNotification } from './useOpaServerChangeNotification'
+import { withServiceOfferingCredential } from '@utils/gaiaX/metadata'
 
 export default function Edit({
   asset
@@ -132,16 +133,20 @@ export default function Edit({
         copyrightHolder: values.copyrightHolder || '',
         tags: values.tags,
         license,
-        additionalInformation: {
-          ...asset.credentialSubject?.metadata?.additionalInformation,
-          ...(asset.credentialSubject?.metadata?.additionalInformation?.saas &&
-            values.saas?.redirectUrl && {
-              saas: {
-                redirectUrl: values.saas.redirectUrl,
-                paymentMode: 'Subscription' as const
-              }
-            })
-        }
+        additionalInformation: withServiceOfferingCredential(
+          {
+            ...asset.credentialSubject?.metadata?.additionalInformation,
+            ...(asset.credentialSubject?.metadata?.additionalInformation
+              ?.saas &&
+              values.saas?.redirectUrl && {
+                saas: {
+                  redirectUrl: values.saas.redirectUrl,
+                  paymentMode: 'Subscription' as const
+                }
+              })
+          },
+          values.gaiaXServiceOfferingCredential
+        )
       }
 
       if (asset.credentialSubject?.metadata.type === 'algorithm') {
