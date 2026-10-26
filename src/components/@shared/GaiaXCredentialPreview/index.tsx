@@ -227,15 +227,15 @@ export default function GaiaXCredentialPreview({
         <div className={styles.heading}>
           <TrustIcon
             state={
-              compliance.status === 'pass'
-                ? 'verified'
-                : compliance.status === 'fail'
+              compliance.status === 'fail'
                 ? 'failed'
+                : compliance.status === 'pass' && !data.blocking
+                ? 'verified'
                 : 'unverified'
             }
           />
           <strong>Gaia-X compliance</strong>
-          {compliance.status === 'pass' && (
+          {compliance.status === 'pass' && !data.blocking && (
             <span>
               · {LABEL_LEVELS[compliance.labelLevel] ?? compliance.labelLevel} ·
               rules {compliance.rulesVersion}

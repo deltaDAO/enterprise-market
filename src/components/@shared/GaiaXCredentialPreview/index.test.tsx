@@ -92,6 +92,7 @@ describe('GaiaXCredentialPreview', () => {
       )
     ).toBeInTheDocument()
     expect(screen.getByTestId('blocking')).toHaveTextContent('true')
+    expect(screen.queryByText(/Standard Compliance/)).not.toBeInTheDocument()
   })
 
   it('only warns when the verification service fails', async () => {
