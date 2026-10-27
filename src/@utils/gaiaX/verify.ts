@@ -235,6 +235,25 @@ async function loadCredential(
   return { report, vp }
 }
 
+// True if the compliance result lists every credential by id and digest
+export function isCovered(
+  credentials: CredentialEntry[],
+  compliance?: ComplianceReport
+): boolean {
+  const entries = compliance?.compliantCredentials ?? []
+  return (
+    credentials.length > 0 &&
+    credentials.every((credential) =>
+      entries.some(
+        (entry) =>
+          entry.matched &&
+          entry.id === credential.id &&
+          entry.digestSRI === credential.digest
+      )
+    )
+  )
+}
+
 function getStatus(
   reports: CredentialReport[],
   binding: CheckResult[],
@@ -316,6 +335,32 @@ export async function verifyGaiaXCredentials(
     trustedNotaries: deps.trustedNotaries
   })
 
+  // GXDCH check of one presentation, cached by its content
+  async function checkCompliance(
+    vp: ParsedVp
+  ): Promise<{ report: ComplianceReport; lastSuccess?: string }> {
+    const vpHash = await sha256Hex(vp.jwt)
+    const key = `gxdch:${deps.compliance.baseUrl}:${deps.compliance.label}:${vpHash}`
+    const report = await cache.memo(
+      key,
+      () =>
+        requestCompliance(vp.jwt, vp.credentials, deps.compliance, {
+          postVp: deps.postVp,
+          fetchJson,
+          randomId: deps.randomId,
+          now: deps.now
+        }),
+      (result) =>
+        result.status === 'unreachable'
+          ? TRANSIENT_TTL_MS
+          : deps.maxAgeSeconds * 1000 - REFRESH_MARGIN_MS
+    )
+    if (report.status === 'pass') {
+      cache.set(`gxdch-success:${key}`, report.checkedAt, LAST_SUCCESS_TTL_MS)
+    }
+    return { report, lastSuccess: cache.get<string>(`gxdch-success:${key}`) }
+  }
+
   // One GXDCH call with the service offering VP covers the participant as
   // well, since the DSO presentation contains the full participant set
   const submitted = !serviceOffering?.report.error
@@ -329,46 +374,55 @@ export async function verifyGaiaXCredentials(
     message: 'No readable credential to submit for compliance.',
     checks: []
   }
-  let lastSuccessfulCheckAt: string | undefined
+  let participantCompliance: ComplianceReport | undefined
+  const lastSuccesses: (string | undefined)[] = []
+
   if (compliantVp) {
-    const vpHash = await sha256Hex(compliantVp.jwt)
-    const key = `gxdch:${deps.compliance.baseUrl}:${deps.compliance.label}:${vpHash}`
-    compliance = await cache.memo(
-      key,
-      () =>
-        requestCompliance(
-          compliantVp.jwt,
-          compliantVp.credentials,
-          deps.compliance,
-          {
-            postVp: deps.postVp,
-            fetchJson,
-            randomId: deps.randomId,
-            now: deps.now
-          }
-        ),
-      (result) =>
-        result.status === 'unreachable'
-          ? TRANSIENT_TTL_MS
-          : deps.maxAgeSeconds * 1000 - REFRESH_MARGIN_MS
-    )
-    if (compliance.status === 'pass') {
-      cache.set(
-        `gxdch-success:${key}`,
-        compliance.checkedAt,
-        LAST_SUCCESS_TTL_MS
-      )
+    const main = await checkCompliance(compliantVp)
+    compliance = main.report
+    lastSuccesses.push(main.lastSuccess)
+
+    // If the separately linked participant VP holds other versions of the
+    // participant VCs than the DSO VP (e.g. re-issued), the DSO result does
+    // not certify what the participant card shows: check that VP on its own
+    const participantVp = participant?.report.error
+      ? undefined
+      : participant?.vp
+    if (
+      participantVp &&
+      compliantVp !== participantVp &&
+      !isCovered(participant.report.credentials, compliance)
+    ) {
+      const own = await checkCompliance(participantVp)
+      participantCompliance = own.report
+      lastSuccesses.push(own.lastSuccess)
     }
-    lastSuccessfulCheckAt = cache.get<string>(`gxdch-success:${key}`)
   }
 
   const reports = [participant?.report, serviceOffering?.report].filter(Boolean)
+  const complianceReports = [compliance, participantCompliance].filter(Boolean)
+  // Freshness is measured from the oldest GXDCH check, not this request
+  const checkedAt = complianceReports
+    .map((report) => report.checkedAt)
+    .filter(Boolean)
+    .sort()[0]
+  const lastSuccessfulCheckAt = lastSuccesses.includes(undefined)
+    ? undefined
+    : lastSuccesses.sort()[0]
+
+  const status = getStatus(reports, binding, compliance)
+  const participantStatus = participantCompliance
+    ? getStatus([], [], participantCompliance)
+    : undefined
 
   return {
-    ...getStatus(reports, binding, compliance),
-    // Freshness is measured from the GXDCH check, not from this request
-    checkedAt: compliance.checkedAt ?? deps.now().toISOString(),
+    ...(participantStatus?.status === 'failed' ||
+    (participantStatus?.status === 'warning' && status.status === 'verified')
+      ? { ...status, status: participantStatus.status }
+      : status),
+    checkedAt: checkedAt ?? deps.now().toISOString(),
     lastSuccessfulCheckAt,
+    participantCompliance,
     maxAgeSeconds: deps.maxAgeSeconds,
     publisherDid: input.publisherDid,
     participant: participant?.report,

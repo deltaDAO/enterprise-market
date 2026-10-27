@@ -149,6 +149,9 @@ export interface GaiaXVerification {
   serviceOffering?: CredentialReport
   binding: CheckResult[]
   compliance: ComplianceReport
+  // Separate GXDCH check of the participant VP, when the service offering
+  // result does not cover the participant VCs that are displayed
+  participantCompliance?: ComplianceReport
 }
 
 export interface GaiaXVerifyRequest {
