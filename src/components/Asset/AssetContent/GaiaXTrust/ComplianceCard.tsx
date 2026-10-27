@@ -19,25 +19,27 @@ export const NOT_BOUND_MESSAGE =
 
 export default function ComplianceCard({
   compliance,
-  stale,
-  blocked = false
+  trusted,
+  staleMessage
 }: {
   compliance: ComplianceReport
-  stale: boolean
-  // A blocking failure (e.g. DID mismatch) hides all trust badges
-  blocked?: boolean
+  // False on a DID mismatch or for publishers without did:web: then no trust
+  // badge, label or certification detail is shown, whatever the GXDCH said
+  trusted: boolean
+  // Set when the result is older than the max age
+  staleMessage?: string
 }): ReactElement {
+  const passed = compliance.status === 'pass'
   const state: TrustState =
     compliance.status === 'fail'
       ? 'failed'
-      : compliance.status === 'pass' && !stale && !blocked
+      : passed && trusted && !staleMessage
       ? 'verified'
       : 'unverified'
-  const showLabel = compliance.labelLevel && state === 'verified'
   const message =
-    blocked && compliance.status === 'pass'
-      ? NOT_BOUND_MESSAGE
-      : compliance.message
+    passed && !trusted ? NOT_BOUND_MESSAGE : staleMessage ?? compliance.message
+  // Certification details are trust signals too
+  const showDetails = trusted && compliance.status !== 'skipped'
 
   return (
     <article className={styles.card}>
@@ -49,7 +51,7 @@ export default function ComplianceCard({
             Live check by the Gaia-X Digital Clearing House
           </span>
         </div>
-        {showLabel && (
+        {state === 'verified' && compliance.labelLevel && (
           <span className={styles.label}>
             {LABEL_LEVELS[compliance.labelLevel] ?? compliance.labelLevel}
           </span>
@@ -58,7 +60,7 @@ export default function ComplianceCard({
 
       <p className={styles[`message_${state}`]}>{message}</p>
 
-      {compliance.status !== 'skipped' && (
+      {showDetails ? (
         <dl className={styles.meta}>
           {compliance.rulesVersion && (
             <div>
@@ -91,15 +93,24 @@ export default function ComplianceCard({
             <dd>{compliance.issuer ?? compliance.expectedIssuer ?? '—'}</dd>
           </div>
         </dl>
+      ) : (
+        compliance.expectedIssuer && (
+          <dl className={styles.meta}>
+            <div>
+              <dt>Clearing house</dt>
+              <dd>{compliance.expectedIssuer}</dd>
+            </div>
+          </dl>
+        )
       )}
 
-      {compliance.validatedCriteria?.length > 0 && (
+      {showDetails && compliance.validatedCriteria?.length > 0 && (
         <div className={styles.criteria}>
           <h5>Validated criteria</h5>
           <span className={styles.chips}>
-            {compliance.validatedCriteria.map((criterion) => (
+            {compliance.validatedCriteria.map((criterion, index) => (
               <a
-                key={criterion}
+                key={`${criterion}-${index}`}
                 className={styles.chip}
                 href={safeExternalWebUrl(criterion)}
                 target="_blank"
@@ -112,7 +123,7 @@ export default function ComplianceCard({
         </div>
       )}
 
-      {compliance.compliantCredentials?.length > 0 && (
+      {showDetails && compliance.compliantCredentials?.length > 0 && (
         <Accordion
           compact
           titleClassName={styles.accordionTitle}
@@ -122,8 +133,8 @@ export default function ComplianceCard({
           }/${compliance.compliantCredentials.length} digests match)`}
         >
           <ul className={styles.checks}>
-            {compliance.compliantCredentials.map((entry) => (
-              <li key={entry.id}>
+            {compliance.compliantCredentials.map((entry, index) => (
+              <li key={`${entry.id}-${index}`}>
                 <TrustIcon status={entry.matched ? 'pass' : 'fail'} />
                 <span>
                   <strong>{getTypeLabel(entry.type) ?? entry.type}</strong> ·{' '}

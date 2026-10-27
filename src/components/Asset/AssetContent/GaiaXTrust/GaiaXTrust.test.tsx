@@ -173,4 +173,95 @@ describe('ProvidedBy', () => {
 
     expect(screen.getByText(url)).toBeInTheDocument()
   })
+
+  it('never shows the legal name of an unverified credential', () => {
+    mockHook.mockReturnValue({
+      data: { ...participantOnly, blocking: true },
+      freshness: 'fresh'
+    })
+    render(<ProvidedBy ddo={ddo} />)
+
+    expect(screen.queryByText('deltaDAO AG')).not.toBeInTheDocument()
+    expect(screen.getByText(url)).toBeInTheDocument()
+    expect(screen.getByLabelText('Failed')).toBeInTheDocument()
+  })
+})
+
+describe('GaiaXTrustView review fixes', () => {
+  it('shows no compliance badge for a publisher without did:web', () => {
+    render(
+      <GaiaXTrustView
+        result={{
+          ...participantOnly,
+          status: 'warning',
+          binding: [
+            {
+              id: 'publisher-did',
+              status: 'warn',
+              message: 'Publisher has no did:web.'
+            }
+          ]
+        }}
+        stale={false}
+      />
+    )
+
+    expect(screen.queryByText('Standard Compliance')).not.toBeInTheDocument()
+    expect(screen.queryByText(/digest matches/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/Rules CD4.0.0/)).not.toBeInTheDocument()
+    expect(screen.getByText(NOT_BOUND_MESSAGE)).toBeInTheDocument()
+  })
+
+  it('does not claim compliance in the stale state', () => {
+    render(<GaiaXTrustView result={participantOnly} stale />)
+
+    expect(
+      screen.queryByText('Compliant with the Gaia-X Trust Framework.')
+    ).not.toBeInTheDocument()
+    expect(screen.queryByText('Standard Compliance')).not.toBeInTheDocument()
+  })
+
+  it('renders messages from credentials as plain text, not markdown', () => {
+    const message =
+      'DID mismatch: x [Re-verify your wallet](https://phish.example) ![](https://track.example/p.png)'
+    render(
+      <GaiaXTrustView
+        result={{
+          ...participantOnly,
+          blocking: true,
+          binding: [
+            {
+              id: 'Participant-vp-issuer',
+              status: 'fail',
+              blocking: true,
+              message
+            }
+          ]
+        }}
+        stale={false}
+      />
+    )
+
+    expect(
+      screen.queryByRole('link', { name: 'Re-verify your wallet' })
+    ).not.toBeInTheDocument()
+    expect(screen.queryByRole('img', { name: '' })).not.toBeInTheDocument()
+    expect(screen.getAllByText(message).length).toBeGreaterThan(0)
+  })
+
+  it('hides dead legacy providedBy links', () => {
+    expect(
+      isLegacyProvidedBy({
+        ...result,
+        serviceOffering: undefined,
+        participant: {
+          ...result.participant,
+          error: {
+            code: 'UNREACHABLE',
+            message: 'Could not load the credential.'
+          }
+        }
+      })
+    ).toBe(true)
+  })
 })

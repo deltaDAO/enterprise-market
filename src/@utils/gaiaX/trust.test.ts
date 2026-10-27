@@ -1,11 +1,47 @@
 import verification from '../../../.jest/__fixtures__/gaiaX/verification.json'
 import { getGaiaXVerifyRequest } from './metadata'
-import { getCredentialTrust, getOverallTrust } from './trust'
+import {
+  getCredentialTrust,
+  getOverallTrust,
+  isBoundToPublisher
+} from './trust'
 import { GaiaXVerification } from './types'
 import { Asset } from 'src/@types/Asset'
 
 // Live result: verified participant, service offering VP without a DSO VC
 const result = verification as unknown as GaiaXVerification
+
+describe('trust review fixes', () => {
+  it('requires every displayed credential to match by id and digest', () => {
+    // Same id as the certified LegalPerson, different content
+    const swapped: GaiaXVerification = {
+      ...result,
+      participant: {
+        ...result.participant,
+        credentials: result.participant.credentials.map((credential) =>
+          credential.types.includes('gx:LegalPerson')
+            ? { ...credential, digest: 'sha256-not-what-the-gxdch-saw' }
+            : credential
+        )
+      }
+    }
+    expect(getCredentialTrust(swapped, swapped.participant, false)).toEqual({
+      state: 'unverified',
+      message:
+        'Not verified: credential is not covered by the compliance result.'
+    })
+  })
+
+  it('never trusts credentials of a publisher without did:web', () => {
+    const unbound: GaiaXVerification = {
+      ...result,
+      binding: [{ id: 'publisher-did', status: 'warn', message: 'No did:web.' }]
+    }
+    expect(isBoundToPublisher(unbound)).toBe(false)
+    expect(isBoundToPublisher({ ...result, blocking: true })).toBe(false)
+    expect(isBoundToPublisher(result)).toBe(true)
+  })
+})
 
 describe('getCredentialTrust', () => {
   it('verifies a fresh participant covered by the compliance credential', () => {

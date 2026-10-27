@@ -70,8 +70,8 @@ export default function CredentialCard({
 
       {report.terms?.length > 0 && (
         <ul className={styles.checks}>
-          {report.terms.map((terms) => (
-            <li key={terms.type}>
+          {report.terms.map((terms, index) => (
+            <li key={`${terms.type}-${index}`}>
               <TrustIcon status={terms.result.status} />
               <span>
                 {getTypeLabel(terms.type)}: {terms.result.message}
@@ -88,12 +88,12 @@ export default function CredentialCard({
           title={`Credentials in this presentation (${report.credentials.length})`}
         >
           <ul className={styles.checks}>
-            {report.credentials.map((credential) => {
+            {report.credentials.map((credential, index) => {
               const failed = [credential.signature, credential.validity].find(
                 (check) => check.status !== 'pass'
               )
               return (
-                <li key={credential.id ?? credential.jwt}>
+                <li key={`${credential.id}-${index}`}>
                   <TrustIcon status={failed?.status ?? 'pass'} />
                   <span>
                     <strong>{getTypeLabel(credential.types)}</strong> ·{' '}

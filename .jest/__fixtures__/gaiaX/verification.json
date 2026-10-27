@@ -1,7 +1,8 @@
 {
   "status": "failed",
   "blocking": false,
-  "checkedAt": "2026-10-22T15:22:11.469Z",
+  "checkedAt": "2026-10-22T16:00:00.000Z",
+  "lastSuccessfulCheckAt": "2026-10-22T16:00:00.000Z",
   "maxAgeSeconds": 600,
   "publisherDid": "did:web:delta-dao.com",
   "participant": {
@@ -46,6 +47,7 @@
           "status": "pass",
           "message": "Valid until 2026-12-27T19:56:42.475+00:00."
         },
+        "digest": "sha256-1aef7686bfdeec30b8629026ef72ca0bbc8f8f1e68afbafd4d257495fc4f6e94",
         "payload": {},
         "jwt": "<omitted>"
       },
@@ -65,6 +67,7 @@
           "status": "pass",
           "message": "Valid until 2026-12-27T20:26:04.857+00:00."
         },
+        "digest": "sha256-8b2509e7e5a3057db9a05abcc969936716835b6c25f1aff0799353d078077b14",
         "payload": {},
         "jwt": "<omitted>"
       },
@@ -84,6 +87,7 @@
           "status": "pass",
           "message": "Valid until 2026-10-22T23:59:59.000+00:00."
         },
+        "digest": "sha256-e34fd40d7dfdb4d223c3e1830ec2b6b01528e4816779f5abc945ba986fe9fbdf",
         "payload": {},
         "jwt": "<omitted>"
       },
@@ -103,6 +107,7 @@
           "status": "pass",
           "message": "Valid until 2026-10-22T23:59:59.000+00:00."
         },
+        "digest": "sha256-f40bc218a1a4fa69383464ffe5c32f399bac8c7b25e125639fa1aaa5fea5cb9c",
         "payload": {},
         "jwt": "<omitted>"
       },
@@ -122,6 +127,7 @@
           "status": "pass",
           "message": "Valid until 2026-10-22T23:59:59.000+00:00."
         },
+        "digest": "sha256-5aa167f2115528afdc97b1597ad730e62f21165c833549d8533ea67139cf2309",
         "payload": {},
         "jwt": "<omitted>"
       }
@@ -292,6 +298,7 @@
           "status": "pass",
           "message": "Valid until 2026-12-27T20:17:13.573+00:00."
         },
+        "digest": "sha256-423af17af67abbd82eb435393900329026efcc54bfdca044add4be2412be3948",
         "payload": {},
         "jwt": "<omitted>"
       },
@@ -311,6 +318,7 @@
           "status": "pass",
           "message": "Valid until 2026-12-27T19:55:12.995+00:00."
         },
+        "digest": "sha256-982887360a1b5709da88549c70e5b7c5beac9bcb854adc83480211b0b9410963",
         "payload": {},
         "jwt": "<omitted>"
       },
@@ -330,6 +338,7 @@
           "status": "pass",
           "message": "Valid until 2026-12-27T19:55:35.943+00:00."
         },
+        "digest": "sha256-a964d0befa8dba9badba226d4ed2e7f1452b4e2534e2db1c515aabc3880ad1d9",
         "payload": {},
         "jwt": "<omitted>"
       },
@@ -349,6 +358,7 @@
           "status": "pass",
           "message": "Valid until 2026-12-27T20:12:24.741+00:00."
         },
+        "digest": "sha256-5cf199d1d511dc2a4a9e35288700ba257317ffc9f139918490850b426959259f",
         "payload": {},
         "jwt": "<omitted>"
       },
@@ -371,6 +381,7 @@
           "status": "pass",
           "message": "Valid until 2026-12-27T19:55:55.306+00:00."
         },
+        "digest": "sha256-c6059b65286e8deaed5832a1500406a9bd35cceb050486c70aaf3aab09760202",
         "payload": {},
         "jwt": "<omitted>"
       },
@@ -390,6 +401,7 @@
           "status": "pass",
           "message": "Valid until 2026-10-22T23:59:59.000+00:00."
         },
+        "digest": "sha256-5aa167f2115528afdc97b1597ad730e62f21165c833549d8533ea67139cf2309",
         "payload": {},
         "jwt": "<omitted>"
       },
@@ -409,6 +421,7 @@
           "status": "pass",
           "message": "Valid until 2026-12-27T19:56:42.475+00:00."
         },
+        "digest": "sha256-1aef7686bfdeec30b8629026ef72ca0bbc8f8f1e68afbafd4d257495fc4f6e94",
         "payload": {},
         "jwt": "<omitted>"
       },
@@ -428,6 +441,7 @@
           "status": "pass",
           "message": "Valid until 2026-12-27T19:57:01.266+00:00."
         },
+        "digest": "sha256-cc36dffddaed36366fd6a4805dba096ddccac9213acae7951b34bf7bfafccbbe",
         "payload": {},
         "jwt": "<omitted>"
       },
@@ -447,6 +461,7 @@
           "status": "pass",
           "message": "Valid until 2026-12-27T20:26:04.857+00:00."
         },
+        "digest": "sha256-8b2509e7e5a3057db9a05abcc969936716835b6c25f1aff0799353d078077b14",
         "payload": {},
         "jwt": "<omitted>"
       },
@@ -466,6 +481,7 @@
           "status": "pass",
           "message": "Valid until 2026-10-22T23:59:59.000+00:00."
         },
+        "digest": "sha256-e34fd40d7dfdb4d223c3e1830ec2b6b01528e4816779f5abc945ba986fe9fbdf",
         "payload": {},
         "jwt": "<omitted>"
       },
@@ -485,6 +501,7 @@
           "status": "pass",
           "message": "Valid until 2026-12-27T19:57:51.234+00:00."
         },
+        "digest": "sha256-e31ef6bee7711090f4f7a2e5990bb03258fc7fcbc0f35e15f582cbbc56cd3eb1",
         "payload": {},
         "jwt": "<omitted>"
       },
@@ -504,6 +521,7 @@
           "status": "pass",
           "message": "Valid until 2026-12-27T19:58:03.218+00:00."
         },
+        "digest": "sha256-68e6c90c896c204331c4626b1459c8887db322be29c24eeb807b7a226016ec21",
         "payload": {},
         "jwt": "<omitted>"
       },
@@ -523,6 +541,7 @@
           "status": "pass",
           "message": "Valid until 2026-10-22T23:59:59.000+00:00."
         },
+        "digest": "sha256-f40bc218a1a4fa69383464ffe5c32f399bac8c7b25e125639fa1aaa5fea5cb9c",
         "payload": {},
         "jwt": "<omitted>"
       }
@@ -629,13 +648,14 @@
     "status": "pass",
     "message": "Compliant with the Gaia-X Trust Framework.",
     "endpoint": "https://www.delta-dao.com/compliance/v2/api/credential-offers/standard-compliance",
+    "checkedAt": "2026-10-22T16:00:00.000Z",
     "issuer": "did:web:www.delta-dao.com:compliance:v2",
     "expectedIssuer": "did:web:www.delta-dao.com:compliance:v2",
     "labelLevel": "SC",
     "engineVersion": "2.15.0",
     "rulesVersion": "CD4.0.0",
-    "issuedAt": "2026-10-22T15:22:11.509Z",
-    "validUntil": "2027-01-20T15:22:11.506Z",
+    "issuedAt": "2026-10-22T15:10:54.610Z",
+    "validUntil": "2027-01-20T15:10:54.608Z",
     "validatedCriteria": [
       "https://docs.gaia-x.eu/policy-rules-committee/compliance-document/4.0.0/criteria_participant/#PA1.1"
     ],
@@ -688,6 +708,16 @@
         "message": "gx:LabelCredential"
       },
       {
+        "id": "compliance-id",
+        "status": "pass",
+        "message": "Issued for urn:uuid:3b1f0c2e-ddao-906-spike-participant."
+      },
+      {
+        "id": "compliance-validity",
+        "status": "pass",
+        "message": "Valid until 2027-01-20T15:10:54.608Z."
+      },
+      {
         "id": "compliance-digests",
         "status": "pass",
         "message": "All 5 credential digests match."
@@ -700,12 +730,12 @@
         "https://w3id.org/gaia-x/development#"
       ],
       "type": ["VerifiableCredential", "gx:LabelCredential"],
-      "id": "urn:uuid:0f09fba5-e7ff-4763-8c95-3c15d1315f7a",
+      "id": "urn:uuid:3b1f0c2e-ddao-906-spike-participant",
       "issuer": "did:web:www.delta-dao.com:compliance:v2",
-      "validFrom": "2026-10-22T15:22:11.509Z",
-      "validUntil": "2027-01-20T15:22:11.506Z",
+      "validFrom": "2026-10-22T15:10:54.610Z",
+      "validUntil": "2027-01-20T15:10:54.608Z",
       "credentialSubject": {
-        "id": "urn:uuid:0f09fba5-e7ff-4763-8c95-3c15d1315f7a#cs",
+        "id": "urn:uuid:3b1f0c2e-ddao-906-spike-participant#cs",
         "gx:labelLevel": "SC",
         "gx:engineVersion": "2.15.0",
         "gx:rulesVersion": "CD4.0.0",
@@ -741,6 +771,5 @@
         ]
       }
     }
-  },
-  "lastSuccessfulCheckAt": "2026-10-22T15:22:11.469Z"
+  }
 }

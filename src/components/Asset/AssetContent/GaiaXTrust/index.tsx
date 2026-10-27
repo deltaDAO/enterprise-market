@@ -24,12 +24,11 @@ export default function GaiaXTrust({ ddo }: { ddo: Asset }): ReactElement {
     return (
       <section className={styles.trust}>
         <h3 className={styles.title}>Gaia-X Trust Information</h3>
-        <Alert
-          state="warning"
-          text={`Not verified: ${
-            error?.message ?? 'verification service unavailable'
-          }`}
-        />
+        <Alert state="warning">
+          <p>
+            Not verified: {error?.message ?? 'verification service unavailable'}
+          </p>
+        </Alert>
       </section>
     )
   }

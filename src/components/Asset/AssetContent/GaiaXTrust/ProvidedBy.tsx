@@ -8,15 +8,18 @@ import TrustIcon from './TrustIcon'
 import styles from './index.module.css'
 
 /**
- * "Provided By" value: the participant's legal name with its trust state once
- * the Gaia-X participant credential is verified, the raw URL otherwise.
- * Shares the verification query with the Gaia-X Trust Information section.
+ * "Provided By" value: the participant's legal name with a checkmark, but
+ * only once the Gaia-X participant credential is verified. In every other
+ * state (loading, unverified, DID mismatch) it shows the raw URL with the
+ * trust icon, so an unverified name never appears as the provider.
  */
 export default function ProvidedBy({ ddo }: { ddo: Asset }): ReactElement {
   const url = ddo.credentialSubject?.metadata?.providedBy
   const { data, freshness } = useGaiaXVerification(getGaiaXVerifyRequest(ddo))
   const report = data?.participant
-  const name = report?.subject?.['schema:name']
+  const subject = report?.subject
+  // gx:legalName is the older ontology's property for the same value
+  const name = subject?.['schema:name'] ?? subject?.['gx:legalName']
 
   const link = (label: string) => (
     <a href={safeExternalWebUrl(url)} target="_blank" rel="noreferrer">
@@ -24,12 +27,15 @@ export default function ProvidedBy({ ddo }: { ddo: Asset }): ReactElement {
     </a>
   )
 
-  if (!report || report.error || typeof name !== 'string') return link(url)
+  if (!report) return link(url)
 
   const trust = getCredentialTrust(data, report, freshness === 'stale')
+  const label =
+    trust.state === 'verified' && typeof name === 'string' ? name : url
+
   return (
     <span className={styles.providedBy} title={trust.message}>
-      {link(name)}
+      {link(label)}
       <TrustIcon state={trust.state} />
     </span>
   )

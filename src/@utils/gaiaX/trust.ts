@@ -11,7 +11,21 @@ function formatTime(iso?: string): string | undefined {
   return iso ? new Date(iso).toLocaleString() : undefined
 }
 
-function getUnverifiedReason(
+/**
+ * True if the credentials are bound to a publisher identified by did:web and
+ * nothing blocking failed. Without that, no trust badge may be shown at all,
+ * not even for a passing GXDCH result: anyone can link public credentials.
+ */
+export function isBoundToPublisher(result: GaiaXVerification): boolean {
+  return (
+    !result.blocking &&
+    !result.binding.some(
+      (check) => check.id === 'publisher-did' && check.status === 'warn'
+    )
+  )
+}
+
+export function getUnverifiedReason(
   result: GaiaXVerification,
   stale: boolean
 ): string | undefined {
@@ -36,10 +50,32 @@ function getUnverifiedReason(
     : undefined
 }
 
+// Every credential shown for this report must be in the compliance result
+// with the same id and the same digest: matching by id alone would let a
+// publisher show content the GXDCH never saw
+function isCoveredByCompliance(
+  result: GaiaXVerification,
+  report: CredentialReport
+): boolean {
+  const entries = result.compliance.compliantCredentials ?? []
+  return (
+    report.credentials.length > 0 &&
+    report.credentials.every((credential) =>
+      entries.some(
+        (entry) =>
+          entry.matched &&
+          entry.id === credential.id &&
+          entry.digestSRI === credential.digest
+      )
+    )
+  )
+}
+
 /**
  * Trust badge of a single credential. A green checkmark requires a fresh,
- * passing GXDCH result that lists this credential with a matching digest, and
- * no blocking failure anywhere (e.g. a DID mismatch hides all badges).
+ * passing GXDCH result that covers every displayed credential by id and
+ * digest, a publisher bound by did:web, and no blocking failure anywhere
+ * (e.g. a DID mismatch hides all badges).
  */
 export function getCredentialTrust(
   result: GaiaXVerification,
@@ -51,6 +87,13 @@ export function getCredentialTrust(
   )
   if (blockingFailure)
     return { state: 'failed', message: blockingFailure.message }
+  // A blocking failure elsewhere (e.g. the other credential) hides all badges
+  if (result.blocking) {
+    return {
+      state: 'failed',
+      message: 'Not verified: a blocking check failed for these credentials.'
+    }
+  }
   if (report.error) return { state: 'failed', message: report.error.message }
 
   const failure = [
@@ -65,10 +108,7 @@ export function getCredentialTrust(
   const reason = getUnverifiedReason(result, stale)
   if (reason) return { state: 'unverified', message: reason }
 
-  const covered = result.compliance.compliantCredentials?.find(
-    (entry) => entry.id === report.source?.id
-  )
-  if (!covered?.matched) {
+  if (!isCoveredByCompliance(result, report)) {
     return {
       state: 'unverified',
       message:

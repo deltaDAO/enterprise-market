@@ -3,8 +3,11 @@ import { useQuery } from '@tanstack/react-query'
 import { GaiaXVerification, GaiaXVerifyRequest } from '@utils/gaiaX/types'
 
 const DEFAULT_MAX_AGE_MS = 10 * 60 * 1000
-// Re-verify slightly before a result reaches its max age
+// Re-verify this long before a result reaches its max age. The server keeps
+// results for max age minus 60 s, so this refresh always gets a new check.
 const REFRESH_MARGIN_MS = 30 * 1000
+// Lower bound between refetches, e.g. while a result is already stale
+const MIN_REFETCH_MS = 5 * 1000
 const CLOCK_INTERVAL_MS = 15 * 1000
 
 export type GaiaXFreshness = 'fresh' | 'stale'
@@ -15,14 +18,42 @@ function getMaxAgeMs(result?: GaiaXVerification): number {
     : DEFAULT_MAX_AGE_MS
 }
 
+// Time until a result turns stale, measured from the GXDCH check
+// (`checkedAt`), not from when this client fetched it
+export function getMsUntilStale(
+  result: GaiaXVerification | undefined,
+  now: number
+): number {
+  if (!result) return 0
+  return Date.parse(result.checkedAt) + getMaxAgeMs(result) - now
+}
+
 export function getFreshness(
   result: GaiaXVerification | undefined,
   now: number
 ): GaiaXFreshness {
   if (!result) return 'stale'
-  return now - Date.parse(result.checkedAt) > getMaxAgeMs(result)
-    ? 'stale'
-    : 'fresh'
+  return getMsUntilStale(result, now) < 0 ? 'stale' : 'fresh'
+}
+
+// How long React Query may reuse a result (e.g. on window focus)
+export function getStaleTime(
+  result: GaiaXVerification | undefined,
+  now: number
+): number {
+  return Math.max(getMsUntilStale(result, now) - REFRESH_MARGIN_MS, 0)
+}
+
+// When to re-verify while the page stays open: just before the result
+// turns stale, so a visible checkmark never outlives its max age
+export function getRefetchInterval(
+  result: GaiaXVerification | undefined,
+  now: number
+): number {
+  return Math.max(
+    getMsUntilStale(result, now) - REFRESH_MARGIN_MS,
+    MIN_REFETCH_MS
+  )
 }
 
 async function fetchVerification(
@@ -69,9 +100,9 @@ export function useGaiaXVerification(request?: GaiaXVerifyRequest) {
     enabled: Boolean(request),
     retry: 1,
     staleTime: (query) =>
-      getMaxAgeMs(query.state.data as GaiaXVerification) - REFRESH_MARGIN_MS,
+      getStaleTime(query.state.data as GaiaXVerification, Date.now()),
     refetchInterval: (query) =>
-      getMaxAgeMs(query.state.data as GaiaXVerification) - REFRESH_MARGIN_MS,
+      getRefetchInterval(query.state.data as GaiaXVerification, Date.now()),
     refetchOnWindowFocus: true
   })
 

@@ -95,8 +95,8 @@ function renderValue(value: unknown, depth: number): ReactNode {
     ) {
       return (
         <span className={styles.chips}>
-          {value.map((item) => (
-            <span key={item as string} className={styles.chip}>
+          {value.map((item, index) => (
+            <span key={`${item}-${index}`} className={styles.chip}>
               {item as string}
             </span>
           ))}
@@ -106,7 +106,9 @@ function renderValue(value: unknown, depth: number): ReactNode {
     return (
       <ul className={styles.list}>
         {value.map((item, index) => (
-          <li key={getNodeId(item) ?? index}>{renderValue(item, depth)}</li>
+          <li key={`${getNodeId(item) ?? ''}-${index}`}>
+            {renderValue(item, depth)}
+          </li>
         ))}
       </ul>
     )
