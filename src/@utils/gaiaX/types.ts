@@ -16,6 +16,7 @@ export type GaiaXErrorCode =
   | 'NOT_VP'
   | 'WRONG_TYPE'
   | 'INVALID_URL'
+  | 'TOO_LARGE'
 
 export class GaiaXError extends Error {
   code: GaiaXErrorCode
@@ -77,6 +78,8 @@ export interface CredentialEntry {
   validUntil?: string
   signature: CheckResult
   validity: CheckResult
+  // digestSRI of the payload, compared with the GXDCH compliance result
+  digest: string
   payload: JsonObject
   jwt: string
 }
@@ -116,6 +119,8 @@ export interface CompliantCredential {
 export interface ComplianceReport {
   status: 'pass' | 'fail' | 'unreachable' | 'skipped'
   message: string
+  // When the GXDCH was asked; the freshness of a result is measured from here
+  checkedAt?: string
   endpoint?: string
   issuer?: string
   expectedIssuer?: string

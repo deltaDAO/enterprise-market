@@ -85,6 +85,9 @@ function getEnvelopedJwt(entry: unknown): string | undefined {
   return undefined
 }
 
+// Real presentations hold ~15 VCs; the cap bounds the work per request
+export const MAX_CREDENTIALS_PER_VP = 50
+
 export function parseVp(jwt: string): ParsedVp {
   const { header, payload } = decodeParts(jwt.trim())
 
@@ -95,7 +98,15 @@ export function parseVp(jwt: string): ParsedVp {
     )
   }
 
-  const credentials = asArray(payload.verifiableCredential).map((entry) => {
+  const entries = asArray(payload.verifiableCredential)
+  if (entries.length > MAX_CREDENTIALS_PER_VP) {
+    throw new GaiaXError(
+      'TOO_LARGE',
+      `The presentation contains more than ${MAX_CREDENTIALS_PER_VP} credentials.`
+    )
+  }
+
+  const credentials = entries.map((entry) => {
     const vcJwt = getEnvelopedJwt(entry)
     if (!vcJwt) {
       throw new GaiaXError(

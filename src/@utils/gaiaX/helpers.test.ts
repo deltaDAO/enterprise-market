@@ -1,14 +1,14 @@
 /**
  * @jest-environment node
  */
-import { createVerificationCache } from './cache'
+import { createMemoCache, createRateLimiter } from './cache'
+import { compareVersions } from './compliance'
 import { getGaiaXServerConfig } from './config'
 import { didWebToUrl, urlToDidWeb } from './didWeb'
 import { canonicalJson } from './digest'
-import { isPrivateAddress } from './fetch'
+import { createGuardedLookup, isPrivateAddress } from './fetch'
 import { numericDateToIso } from './jwt'
 import { getFieldLabel, getNodeSummary, getTypeLabel } from './labels'
-import { GaiaXVerification } from './types'
 
 describe('did:web', () => {
   it('maps DIDs to DID document URLs', () => {
@@ -60,19 +60,60 @@ describe('isPrivateAddress', () => {
     '100.64.0.1',
     '0.0.0.0',
     '::1',
+    '::',
     'fd00::1',
     'fe80::1',
-    '::ffff:127.0.0.1'
+    'fec0::1',
+    'ff02::1',
+    '::ffff:127.0.0.1',
+    // WHATWG URL normalizes [::ffff:127.0.0.1] to this form
+    '::ffff:7f00:1',
+    '::ffff:a9fe:a9fe',
+    // IPv4-compatible and NAT64
+    '::7f00:1',
+    '64:ff9b::7f00:1',
+    '2001:db8::1',
+    'not-an-ip'
   ])('rejects %s', (address) => {
     expect(isPrivateAddress(address)).toBe(true)
   })
 
-  it.each(['1.1.1.1', '76.76.21.21', '2606:4700::1111'])(
+  it.each(['1.1.1.1', '76.76.21.21', '2606:4700::1111', '::ffff:4c4c:1515'])(
     'allows %s',
     (address) => {
       expect(isPrivateAddress(address)).toBe(false)
     }
   )
+
+  it('normalizes bracketed URL hosts the same way', () => {
+    const { hostname } = new URL('https://[::ffff:127.0.0.1]/')
+    expect(isPrivateAddress(hostname.replace(/^\[|\]$/g, ''))).toBe(true)
+  })
+})
+
+describe('createGuardedLookup', () => {
+  const lookupWith = (addresses: { address: string; family: number }[]) =>
+    new Promise<{ error: Error | null; address?: unknown }>((resolve) =>
+      createGuardedLookup((_host, callback) => callback(null, addresses))(
+        'example.com',
+        {},
+        (error, address) => resolve({ error, address })
+      )
+    )
+
+  it('connects to the checked public address', async () => {
+    await expect(
+      lookupWith([{ address: '76.76.21.21', family: 4 }])
+    ).resolves.toEqual({ error: null, address: '76.76.21.21' })
+  })
+
+  it('rejects hosts that resolve to a private address', async () => {
+    const { error } = await lookupWith([
+      { address: '76.76.21.21', family: 4 },
+      { address: '10.0.0.1', family: 4 }
+    ])
+    expect(error?.message).toBe('blocked')
+  })
 })
 
 describe('labels', () => {
@@ -123,55 +164,97 @@ describe('getGaiaXServerConfig', () => {
   })
 })
 
-describe('createVerificationCache', () => {
-  const result = (
-    status: GaiaXVerification['compliance']['status'],
-    checkedAt: string
-  ): GaiaXVerification => ({
-    status: status === 'pass' ? 'verified' : 'warning',
-    blocking: false,
-    checkedAt,
-    maxAgeSeconds: 600,
-    binding: [],
-    compliance: { status, message: '', checks: [] }
+describe('getGaiaXServerConfig trusted notaries', () => {
+  it('derives the notary next to the clearing house', () => {
+    expect(
+      getGaiaXServerConfig({
+        GAIAX_COMPLIANCE_URL: 'https://www.delta-dao.com/compliance/v2'
+      }).trustedNotaries
+    ).toEqual(['did:web:www.delta-dao.com:notary:v2'])
+    expect(getGaiaXServerConfig({}).trustedNotaries).toEqual([])
   })
-  const input = { participantUrl: 'https://example.com/vp.jwt' }
 
-  it('serves results until their max age and shares concurrent requests', async () => {
+  it('prefers an explicit list', () => {
+    expect(
+      getGaiaXServerConfig({
+        GAIAX_COMPLIANCE_URL: 'https://compliance.lab.gaia-x.eu/development',
+        GAIAX_TRUSTED_NOTARIES:
+          'did:web:registrationnumber.notary.lab.gaia-x.eu:development, did:web:notary.example'
+      }).trustedNotaries
+    ).toEqual([
+      'did:web:registrationnumber.notary.lab.gaia-x.eu:development',
+      'did:web:notary.example'
+    ])
+  })
+})
+
+describe('compareVersions', () => {
+  it('compares rules versions numerically', () => {
+    expect(compareVersions('CD4.0.0', 'CD3.1.0')).toBeGreaterThan(0)
+    expect(compareVersions('CD3.1.0', 'CD3.1.0')).toBe(0)
+    expect(compareVersions('CD3.10.0', 'CD3.9.0')).toBeGreaterThan(0)
+    expect(compareVersions('CD3', 'CD3.0.1')).toBeLessThan(0)
+  })
+})
+
+describe('createMemoCache', () => {
+  it('shares concurrent computations and expires per value', async () => {
     let time = 0
-    const cache = createVerificationCache(() => time)
-    const verify = jest.fn(async () => result('pass', `t${time}`))
+    const cache = createMemoCache({ now: () => time })
+    const compute = jest.fn(async () => 'value')
 
     const [first, second] = await Promise.all([
-      cache(input, verify),
-      cache(input, verify)
+      cache.memo('key', compute, () => 1000),
+      cache.memo('key', compute, () => 1000)
     ])
-    expect(verify).toHaveBeenCalledTimes(1)
+    expect(compute).toHaveBeenCalledTimes(1)
     expect(second).toBe(first)
 
-    time = 599_000
-    await cache(input, verify)
-    expect(verify).toHaveBeenCalledTimes(1)
+    time = 999
+    await cache.memo('key', compute, () => 1000)
+    expect(compute).toHaveBeenCalledTimes(1)
 
-    time = 600_001
-    await cache(input, verify)
-    expect(verify).toHaveBeenCalledTimes(2)
+    time = 1000
+    await cache.memo('key', compute, () => 1000)
+    expect(compute).toHaveBeenCalledTimes(2)
   })
 
-  it('remembers the last successful check and retries outages sooner', async () => {
+  it('does not cache failures or zero TTLs', async () => {
+    const cache = createMemoCache()
+    const failing = jest.fn(async () => {
+      throw new Error('offline')
+    })
+    await expect(cache.memo('a', failing, () => 1000)).rejects.toThrow()
+    await expect(cache.memo('a', failing, () => 1000)).rejects.toThrow()
+    expect(failing).toHaveBeenCalledTimes(2)
+
+    const uncached = jest.fn(async () => 'x')
+    await cache.memo('b', uncached, () => 0)
+    await cache.memo('b', uncached, () => 0)
+    expect(uncached).toHaveBeenCalledTimes(2)
+  })
+
+  it('evicts the oldest entry beyond its capacity', () => {
+    const cache = createMemoCache({ maxEntries: 2 })
+    cache.set('a', 1, 1000)
+    cache.set('b', 2, 1000)
+    cache.set('c', 3, 1000)
+    expect(cache.get('a')).toBeUndefined()
+    expect(cache.get('c')).toBe(3)
+  })
+})
+
+describe('createRateLimiter', () => {
+  it('limits requests per client and window', () => {
     let time = 0
-    const cache = createVerificationCache(() => time)
-    await cache(input, async () => result('pass', 'first'))
+    const hit = createRateLimiter({ limit: 2, windowMs: 1000, now: () => time })
 
-    time = 700_000
-    const outage = await cache(input, async () =>
-      result('unreachable', 'second')
-    )
-    expect(outage.lastSuccessfulCheckAt).toBe('first')
+    expect(hit('a').allowed).toBe(true)
+    expect(hit('a').allowed).toBe(true)
+    expect(hit('a')).toEqual({ allowed: false, retryAfterSeconds: 1 })
+    expect(hit('b').allowed).toBe(true)
 
-    const verify = jest.fn(async () => result('pass', 'third'))
-    time = 731_000
-    await cache(input, verify)
-    expect(verify).toHaveBeenCalledTimes(1)
+    time = 1000
+    expect(hit('a').allowed).toBe(true)
   })
 })

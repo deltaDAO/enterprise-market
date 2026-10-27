@@ -39,7 +39,12 @@ const realDeps = (overrides = {}) =>
         [serviceOfferingVp]: { status: 201, body: serviceOfferingCompliance }
       }
     },
-    overrides
+    {
+      // The recorded GXDCH responses were issued for this request id
+      randomId: () => '3b1f0c2e-ddao-906-spike-participant',
+      trustedNotaries: ['did:web:www.delta-dao.com:notary:v2'],
+      ...overrides
+    }
   )
 
 const failed = (checks: CheckResult[]) =>

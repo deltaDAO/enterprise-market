@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto'
 import { LoggerInstance } from '@oceanprotocol/lib'
-import { createVerificationCache } from '@utils/gaiaX/cache'
+import { createMemoCache, createRateLimiter } from '@utils/gaiaX/cache'
 import { getGaiaXServerConfig } from '@utils/gaiaX/config'
 import { fetchBytes, fetchJson, fetchText, postVp } from '@utils/gaiaX/fetch'
 import { GaiaXVerifyRequest } from '@utils/gaiaX/types'
@@ -10,8 +10,14 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 const DID_PATTERN = /^did:[a-z0-9]+:[A-Za-z0-9._:%-]+$/
 const MAX_URL_LENGTH = 2048
+const MAX_DID_LENGTH = 512
+// An asset page verifies about every 10 minutes and the publish form is
+// debounced, so this only limits automated use
+const RATE_LIMIT = { limit: 30, windowMs: 60_000 }
 
-const getVerification = createVerificationCache()
+// Shared by all requests of this server instance; keyed by content
+const cache = createMemoCache()
+const rateLimit = createRateLimiter(RATE_LIMIT)
 
 export const config = {
   api: {
@@ -37,12 +43,19 @@ function readUrl(value: unknown): string | undefined | null {
 
 function readDid(value: unknown): string | undefined | null {
   if (value === undefined || value === null || value === '') return undefined
-  if (typeof value === 'string' && DID_PATTERN.test(value)) return value
+  if (typeof value !== 'string' || value.length > MAX_DID_LENGTH) return null
+  if (DID_PATTERN.test(value)) return value
   // Publishers without SSI are identified by their wallet address
-  if (typeof value === 'string' && /^0x[0-9a-fA-F]{40}$/.test(value)) {
-    return value
-  }
+  if (/^0x[0-9a-fA-F]{40}$/.test(value)) return value
   return null
+}
+
+function getClient(req: NextApiRequest): string {
+  const forwarded = req.headers['x-forwarded-for']
+  const first = (Array.isArray(forwarded) ? forwarded[0] : forwarded)
+    ?.split(',')[0]
+    ?.trim()
+  return first || req.socket?.remoteAddress || 'unknown'
 }
 
 export default async function handler(
@@ -54,6 +67,14 @@ export default async function handler(
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST')
     return res.status(405).json({ success: false, error: 'Method not allowed' })
+  }
+
+  const { allowed, retryAfterSeconds } = rateLimit(getClient(req))
+  if (!allowed) {
+    res.setHeader('Retry-After', String(retryAfterSeconds))
+    return res
+      .status(429)
+      .json({ success: false, error: 'Too many verification requests.' })
   }
 
   let body: Record<string, unknown>
@@ -82,21 +103,21 @@ export default async function handler(
       .json({ success: false, error: 'No credential URL given.' })
   }
 
-  const { compliance, maxAgeSeconds } = getGaiaXServerConfig()
+  const { compliance, maxAgeSeconds, trustedNotaries } = getGaiaXServerConfig()
 
   try {
-    const result = await getVerification(input, () =>
-      verifyGaiaXCredentials(input, {
-        fetchText,
-        fetchJson,
-        fetchBytes,
-        postVp,
-        now: () => new Date(),
-        randomId: randomUUID,
-        compliance,
-        maxAgeSeconds
-      })
-    )
+    const result = await verifyGaiaXCredentials(input, {
+      fetchText,
+      fetchJson,
+      fetchBytes,
+      postVp,
+      now: () => new Date(),
+      randomId: randomUUID,
+      compliance,
+      maxAgeSeconds,
+      trustedNotaries,
+      cache
+    })
     return res.status(200).json({ success: true, result })
   } catch (error) {
     LoggerInstance.error('[gaiax] verification failed', error)
