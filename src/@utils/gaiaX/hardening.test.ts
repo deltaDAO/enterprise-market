@@ -18,7 +18,11 @@ import { buildGraph, MAX_RESOLVED_NODES, resolveReferences } from './graph'
 import { MAX_CREDENTIALS_PER_VP, parseVc, parseVp } from './jwt'
 import { MAX_TERMS_DOCUMENTS } from './termsHash'
 import { JsonObject, ParsedVc } from './types'
-import { MAX_DIDS_PER_VERIFICATION, verifyGaiaXCredentials } from './verify'
+import {
+  isCovered,
+  MAX_DIDS_PER_VERIFICATION,
+  verifyGaiaXCredentials
+} from './verify'
 
 const GXDCH = {
   baseUrl: 'https://gxdch.example/v2',
@@ -393,6 +397,99 @@ describe('verifyGaiaXCredentials hardening', () => {
     expect(fetchBytes).not.toHaveBeenCalledWith(
       'https://victim.example/huge.bin'
     )
+  })
+
+  it('checks a participant VP on its own when the DSO result does not cover it', async () => {
+    const PARTICIPANT_URL = 'https://provider.example/participant.jwt'
+    const dso = await sign(
+      vc(
+        'https://provider.example/dso.json',
+        'gx:DigitalServiceOffering',
+        publisher.did,
+        {
+          'gx:providedBy': { id: 'https://provider.example/lp.json#cs' }
+        }
+      ),
+      publisher
+    )
+    // Same id, different content: a re-issued LegalPerson
+    const dsoVp = await vp(publisher, [await legalPerson(), dso])
+    const participantJwt = await vp(publisher, [
+      await legalPerson({ 'schema:description': 'Re-issued' })
+    ])
+    const postVp = jest.fn(async (_url: string, body: string) => ({
+      status: 201,
+      body: await complianceFor(body)
+    }))
+
+    const result = await verifyGaiaXCredentials(
+      {
+        participantUrl: PARTICIPANT_URL,
+        serviceOfferingUrl: URL,
+        publisherDid: publisher.did
+      },
+      createDeps(
+        {
+          texts: { [URL]: dsoVp, [PARTICIPANT_URL]: participantJwt },
+          documents: {
+            [publisher.didDocumentUrl]: publisher.didDocument,
+            [gxdch.didDocumentUrl]: gxdch.didDocument
+          }
+        },
+        { compliance: GXDCH, postVp }
+      )
+    )
+
+    expect(postVp).toHaveBeenCalledTimes(2)
+    expect(isCovered(result.participant.credentials, result.compliance)).toBe(
+      false
+    )
+    expect(
+      isCovered(result.participant.credentials, result.participantCompliance)
+    ).toBe(true)
+    expect(result.status).toBe('verified')
+  })
+
+  it('needs one GXDCH call when the DSO VP covers the participant', async () => {
+    const PARTICIPANT_URL = 'https://provider.example/participant.jwt'
+    const lp = await legalPerson()
+    const dso = await sign(
+      vc(
+        'https://provider.example/dso.json',
+        'gx:DigitalServiceOffering',
+        publisher.did,
+        {
+          'gx:providedBy': { id: 'https://provider.example/lp.json#cs' }
+        }
+      ),
+      publisher
+    )
+    const dsoVp = await vp(publisher, [lp, dso])
+    const postVp = jest.fn(async (_url: string, body: string) => ({
+      status: 201,
+      body: await complianceFor(body)
+    }))
+
+    const result = await verifyGaiaXCredentials(
+      {
+        participantUrl: PARTICIPANT_URL,
+        serviceOfferingUrl: URL,
+        publisherDid: publisher.did
+      },
+      createDeps(
+        {
+          texts: { [URL]: dsoVp, [PARTICIPANT_URL]: await vp(publisher, [lp]) },
+          documents: {
+            [publisher.didDocumentUrl]: publisher.didDocument,
+            [gxdch.didDocumentUrl]: gxdch.didDocument
+          }
+        },
+        { compliance: GXDCH, postVp }
+      )
+    )
+
+    expect(postVp).toHaveBeenCalledTimes(1)
+    expect(result.participantCompliance).toBeUndefined()
   })
 
   it('caches the GXDCH result by presentation, not by request', async () => {
