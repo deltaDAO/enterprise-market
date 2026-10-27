@@ -1,6 +1,6 @@
 import { findCredentialByType } from './graph'
 import { asArray, getNodeId } from './jwt'
-import { CheckResult, ParsedVp } from './types'
+import { CheckResult, ParsedVc, ParsedVp } from './types'
 
 export const LEGAL_PERSON = 'gx:LegalPerson'
 export const SERVICE_OFFERING = 'gx:DigitalServiceOffering'
@@ -23,18 +23,53 @@ interface BindingInput {
   assetDid?: string
   participant?: ParsedVp
   serviceOffering?: ParsedVp
+  // DIDs of the notaries allowed to issue registration number VCs. Empty
+  // means not configured: any notary is accepted, with a warning.
+  trustedNotaries?: string[]
+}
+
+// Registration numbers the participant (LegalPerson) of a VP refers to
+function getRegistrationNumberIds(vp: ParsedVp): Set<string> {
+  const legalPerson = findCredentialByType(vp.credentials, LEGAL_PERSON)
+  return new Set(
+    asArray(legalPerson?.subject['gx:registrationNumber'])
+      .map(getNodeId)
+      .filter(Boolean)
+  )
+}
+
+/**
+ * A notary VC is exempt from the publisher-issuer rule only if it is purely a
+ * registration number (no other Gaia-X type), issued by a trusted notary, and
+ * referenced from the participant's gx:registrationNumber.
+ */
+function isTrustedNotaryCredential(
+  vc: ParsedVc,
+  registrationNumbers: Set<string>,
+  trustedNotaries: string[]
+): boolean {
+  const types = vc.types.filter((type) => type !== 'VerifiableCredential')
+  return (
+    types.length > 0 &&
+    types.every((type) => NOTARY_CREDENTIAL_TYPES.includes(type)) &&
+    (trustedNotaries.length === 0 || trustedNotaries.includes(vc.issuer)) &&
+    Boolean(vc.subjectId) &&
+    registrationNumbers.has(vc.subjectId)
+  )
 }
 
 function checkIssuers(
   label: string,
   vp: ParsedVp,
-  publisherDid: string
+  publisherDid: string,
+  trustedNotaries: string[]
 ): CheckResult[] {
   const results: CheckResult[] = []
+  const registrationNumbers = getRegistrationNumberIds(vp)
   const foreignVcs = vp.credentials.filter(
     (vc) =>
-      !vc.types.some((type) => NOTARY_CREDENTIAL_TYPES.includes(type)) &&
-      vc.issuer !== publisherDid
+      vc.issuer !== publisherDid &&
+      !isTrustedNotaryCredential(vc, registrationNumbers, trustedNotaries)
   )
 
   results.push(
@@ -72,6 +107,14 @@ function checkIssuers(
   return results
 }
 
+function hasNotaryCredentials(vp?: ParsedVp): boolean {
+  return Boolean(
+    vp?.credentials.some((vc) =>
+      vc.types.some((type) => NOTARY_CREDENTIAL_TYPES.includes(type))
+    )
+  )
+}
+
 /**
  * Anti-hijacking checks: credentials linked to an asset must be issued by
  * the asset's publisher, and the service offering must be provided by the
@@ -81,7 +124,8 @@ export function checkBinding({
   publisherDid,
   assetDid,
   participant,
-  serviceOffering
+  serviceOffering,
+  trustedNotaries = []
 }: BindingInput): CheckResult[] {
   const results: CheckResult[] = []
 
@@ -95,12 +139,36 @@ export function checkBinding({
     })
   } else {
     if (participant) {
-      results.push(...checkIssuers('Participant', participant, publisherDid))
+      results.push(
+        ...checkIssuers(
+          'Participant',
+          participant,
+          publisherDid,
+          trustedNotaries
+        )
+      )
     }
     if (serviceOffering) {
       results.push(
-        ...checkIssuers('Service offering', serviceOffering, publisherDid)
+        ...checkIssuers(
+          'Service offering',
+          serviceOffering,
+          publisherDid,
+          trustedNotaries
+        )
       )
+    }
+    if (
+      trustedNotaries.length === 0 &&
+      (hasNotaryCredentials(participant) ||
+        hasNotaryCredentials(serviceOffering))
+    ) {
+      results.push({
+        id: 'notary-allowlist',
+        status: 'warn',
+        message:
+          'No trusted notaries configured: registration number issuers are not checked against an allowlist.'
+      })
     }
   }
 

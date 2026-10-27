@@ -28,8 +28,12 @@ export async function verifyJwtSignature(
     return fail(`Unsupported signature algorithm ${header.alg}.`)
   }
 
+  // Without a claimed issuer, any did:web could sign; there is nothing to
+  // bind the signature to
+  if (!claimedIssuer) return fail('Credential has no issuer.')
+
   const signerDid = getDidFromKid(header.kid)
-  if (claimedIssuer && signerDid !== claimedIssuer) {
+  if (signerDid !== claimedIssuer) {
     return fail(
       `Signed by ${signerDid}, but the credential claims ${claimedIssuer} as issuer.`
     )

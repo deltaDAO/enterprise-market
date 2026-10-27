@@ -41,43 +41,78 @@ function isReference(node: JsonObject): boolean {
   return keys.length === 1 && (keys[0] === '@id' || keys[0] === 'id')
 }
 
+// Upper bound of nodes visited per resolution, whatever the input looks like
+export const MAX_RESOLVED_NODES = 500
+
+interface ResolveState {
+  budget: number
+  expanded: Set<string>
+}
+
+// Scalar fields only, used for repeated references (no further expansion)
+function shallow(subject: JsonObject): JsonObject {
+  return Object.fromEntries(
+    Object.entries(subject).filter(
+      ([, child]) => !isObject(child) && !Array.isArray(child)
+    )
+  )
+}
+
+function resolve(
+  value: unknown,
+  graph: CredentialGraph,
+  state: ResolveState,
+  depth: number
+): unknown {
+  if (state.budget <= 0 || depth > MAX_DEPTH) return value
+  state.budget -= 1
+
+  if (Array.isArray(value)) {
+    return value.map((item) => resolve(item, graph, state, depth))
+  }
+  if (!isObject(value)) return value
+
+  const id = getNodeId(value)
+  if (id && isReference(value)) {
+    const target = graph.subjects.get(id)
+    if (!target) return value
+    const source = { [SOURCE_KEY]: getCredentialSource(target.vc) }
+    // Each subject is expanded once; later references (and cycles) only get
+    // its scalar fields, which keeps the output linear in the input size
+    if (state.expanded.has(id)) {
+      return { ...shallow(target.subject), ...source }
+    }
+    state.expanded.add(id)
+    return {
+      ...(resolve(target.subject, graph, state, depth + 1) as JsonObject),
+      ...source
+    }
+  }
+
+  if (id) state.expanded.add(id)
+  return Object.fromEntries(
+    Object.entries(value).map(([key, child]) => [
+      key,
+      resolve(child, graph, state, depth + 1)
+    ])
+  )
+}
+
 /**
  * Replaces `{ "@id": … }` references with the credentialSubject they point
  * to, so the UI can show values instead of URIs. Resolved nodes carry the
  * metadata of their source VC under SOURCE_KEY (issuer, evidence, validity).
  * References that are not part of the presentation (e.g. plain URLs) are kept.
+ * The work is bounded by MAX_RESOLVED_NODES and MAX_DEPTH.
  */
 export function resolveReferences(
   value: unknown,
-  graph: CredentialGraph,
-  path: string[] = [],
-  depth = 0
+  graph: CredentialGraph
 ): unknown {
-  if (Array.isArray(value)) {
-    return value.map((item) => resolveReferences(item, graph, path, depth))
-  }
-  if (!isObject(value) || depth > MAX_DEPTH) return value
-
-  const id = getNodeId(value)
-  if (id && isReference(value)) {
-    const target = graph.subjects.get(id)
-    if (!target || path.includes(id)) return value
-    return {
-      ...(resolveReferences(
-        target.subject,
-        graph,
-        [...path, id],
-        depth + 1
-      ) as JsonObject),
-      [SOURCE_KEY]: getCredentialSource(target.vc)
-    }
-  }
-
-  const nextPath = id ? [...path, id] : path
-  return Object.fromEntries(
-    Object.entries(value).map(([key, child]) => [
-      key,
-      resolveReferences(child, graph, nextPath, depth + 1)
-    ])
+  return resolve(
+    value,
+    graph,
+    { budget: MAX_RESOLVED_NODES, expanded: new Set() },
+    0
   )
 }

@@ -1,5 +1,7 @@
 import { checkBinding, LEGAL_PERSON, SERVICE_OFFERING } from './binding'
+import { MemoCache, noCache } from './cache'
 import { ComplianceConfig, PostVp, requestCompliance } from './compliance'
+import { digestSri, sha256Hex } from './digest'
 import { FetchJson } from './didWeb'
 import {
   buildGraph,
@@ -9,10 +11,11 @@ import {
 } from './graph'
 import { parseVp } from './jwt'
 import { verifyJwtSignature } from './signature'
-import { checkTermsHashes, FetchBytes } from './termsHash'
+import { checkTermsHashes } from './termsHash'
 import {
   CheckResult,
   ComplianceReport,
+  CredentialEntry,
   CredentialReport,
   GaiaXError,
   GaiaXVerification,
@@ -26,39 +29,80 @@ import { checkValidity } from './validity'
 export interface VerifyDeps {
   fetchText: (url: string) => Promise<string>
   fetchJson: FetchJson
-  fetchBytes: FetchBytes
+  fetchBytes: (url: string) => Promise<Uint8Array>
   postVp: PostVp
   now: () => Date
   randomId: () => string
   compliance: ComplianceConfig
   maxAgeSeconds: number
+  trustedNotaries?: string[]
+  // Shared across requests on the server; results are keyed by content
+  cache?: MemoCache
 }
+
+// A VP references the publisher, notaries and the GXDCH; more is suspicious
+export const MAX_DIDS_PER_VERIFICATION = 10
+// Failed fetches and outages are retried soon, never kept for the max age
+export const TRANSIENT_TTL_MS = 30_000
+// Results expire this long before the client considers them stale, so a
+// client refresh always gets a new check instead of the same old entry
+export const REFRESH_MARGIN_MS = 60_000
+const LAST_SUCCESS_TTL_MS = 24 * 60 * 60 * 1000
 
 const TYPE_LABELS: Record<string, string> = {
   [LEGAL_PERSON]: 'participant credential (gx:LegalPerson)',
   [SERVICE_OFFERING]: 'service offering credential (gx:DigitalServiceOffering)'
 }
 
-function memoize<T>(fn: (key: string) => Promise<T>) {
-  const cache = new Map<string, Promise<T>>()
-  return (key: string) => {
-    if (!cache.has(key)) cache.set(key, fn(key))
-    return cache.get(key)
+/**
+ * DID document resolution for one verification: shared across requests via
+ * the cache (successes only) and limited to MAX_DIDS_PER_VERIFICATION
+ * distinct documents.
+ */
+function createDidResolver(deps: VerifyDeps, cache: MemoCache): FetchJson {
+  const requested = new Map<string, Promise<unknown>>()
+  const ttl = deps.maxAgeSeconds * 1000
+  return (url) => {
+    if (requested.has(url)) return requested.get(url)
+    if (requested.size >= MAX_DIDS_PER_VERIFICATION) {
+      return Promise.reject(new Error('Too many DID documents to resolve.'))
+    }
+    const document = cache.memo(
+      `did:${url}`,
+      () => deps.fetchJson(url),
+      () => ttl
+    )
+    requested.set(url, document)
+    return document
   }
 }
 
+// Groups failures by message, e.g. "gx:LeiCode, gx:VatID: Expired on …"
 function summarize(
   id: string,
-  results: CheckResult[],
+  credentials: CredentialEntry[],
+  pick: (credential: CredentialEntry) => CheckResult,
   passMessage: string
 ): CheckResult {
-  const failed = results.filter((result) => result.status === 'fail')
+  const failed = credentials.filter(
+    (credential) => pick(credential).status === 'fail'
+  )
   if (failed.length === 0) return { id, status: 'pass', message: passMessage }
+
+  const byMessage = new Map<string, string[]>()
+  failed.forEach((credential) => {
+    const { message } = pick(credential)
+    const type = credential.types[credential.types.length - 1]
+    byMessage.set(message, [...(byMessage.get(message) ?? []), type])
+  })
+
   return {
     id,
     status: 'fail',
-    blocking: failed.some((result) => result.blocking),
-    message: failed.map((result) => result.message).join(' ')
+    blocking: failed.some((credential) => pick(credential).blocking),
+    message: Array.from(byMessage)
+      .map(([message, types]) => `${types.join(', ')}: ${message}`)
+      .join(' ')
   }
 }
 
@@ -66,6 +110,7 @@ async function loadCredential(
   url: string,
   expectedType: string,
   deps: VerifyDeps,
+  cache: MemoCache,
   fetchJson: FetchJson
 ): Promise<{ report: CredentialReport; vp?: ParsedVp }> {
   const report: CredentialReport = {
@@ -75,6 +120,8 @@ async function loadCredential(
     credentials: []
   }
 
+  // Fetched on every call (not cached): the verification is keyed by the
+  // content, so a credential replaced at the same URL is picked up at once
   let vp: ParsedVp
   try {
     vp = parseVp(await deps.fetchText(url))
@@ -84,15 +131,13 @@ async function loadCredential(
         ? { code: error.code, message: error.message }
         : {
             code: 'UNREACHABLE',
-            message: `Could not load the credential: ${
-              (error as Error).message
-            }`
+            // No connection details: they would reveal internal hosts
+            message: 'Could not load the credential.'
           }
     return { report }
   }
 
   const now = deps.now()
-  const main = findCredentialByType(vp.credentials, expectedType)
   Object.assign(report, {
     issuer: vp.issuer,
     validFrom: vp.validFrom,
@@ -101,6 +146,13 @@ async function loadCredential(
     payload: vp.payload
   })
 
+  const vpSignature = await verifyJwtSignature(
+    'vp-signature',
+    vp.jwt,
+    vp.header,
+    vp.issuer,
+    fetchJson
+  )
   report.credentials = await Promise.all(
     vp.credentials.map(async (vc) => ({
       id: vc.id,
@@ -116,48 +168,68 @@ async function loadCredential(
         fetchJson
       ),
       validity: checkValidity('validity', vc.validFrom, vc.validUntil, now),
+      digest: await digestSri(vc.payload),
       payload: vc.payload,
       jwt: vc.jwt
     }))
   )
 
   report.checks.push(
-    await verifyJwtSignature(
-      'vp-signature',
-      vp.jwt,
-      vp.header,
-      vp.issuer,
-      fetchJson
-    ),
+    vpSignature,
     checkValidity('vp-validity', vp.validFrom, vp.validUntil, now),
     summarize(
       'vc-signatures',
-      report.credentials.map((vc) => vc.signature),
+      report.credentials,
+      (vc) => vc.signature,
       `All ${report.credentials.length} credential signatures are valid.`
     ),
     summarize(
       'vc-validity',
-      report.credentials.map((vc) => vc.validity),
+      report.credentials,
+      (vc) => vc.validity,
       `All ${report.credentials.length} credentials are within their validity period.`
     )
   )
 
+  // Only content with a verified signature is resolved, displayed in detail
+  // or used to trigger further downloads
+  const verified = vp.credentials.filter(
+    (_, index) => report.credentials[index].signature.status === 'pass'
+  )
+  const main = findCredentialByType(verified, expectedType)
+
   if (!main) {
-    report.error = {
-      code: 'WRONG_TYPE',
-      message: `The presentation does not contain a ${TYPE_LABELS[expectedType]}.`
-    }
+    const unsigned = findCredentialByType(vp.credentials, expectedType)
+    report.error = unsigned
+      ? {
+          code: 'WRONG_TYPE',
+          message: `The ${TYPE_LABELS[expectedType]} has no valid signature.`
+        }
+      : {
+          code: 'WRONG_TYPE',
+          message: `The presentation does not contain a ${TYPE_LABELS[expectedType]}.`
+        }
     return { report, vp }
   }
 
   report.subject = resolveReferences(
     main.subject,
-    buildGraph(vp.credentials)
+    buildGraph(verified)
   ) as JsonObject
   report.source = getCredentialSource(main)
 
-  if (expectedType === SERVICE_OFFERING) {
-    report.terms = await checkTermsHashes(vp.credentials, deps.fetchBytes)
+  if (expectedType === SERVICE_OFFERING && vpSignature.status === 'pass') {
+    const ttl = deps.maxAgeSeconds * 1000 - REFRESH_MARGIN_MS
+    // Only the hash is cached, never the (up to 5 MB) document itself
+    report.terms = await checkTermsHashes(
+      verified.filter((vc) => vc.issuer === vp.issuer),
+      (documentUrl) =>
+        cache.memo(
+          `terms:${documentUrl}`,
+          async () => sha256Hex(await deps.fetchBytes(documentUrl)),
+          () => ttl
+        )
+    )
   }
 
   return { report, vp }
@@ -201,22 +273,34 @@ function getStatus(
  * Loads, decodes and verifies the Gaia-X participant and service offering
  * credentials linked to an asset: local signature and validity checks,
  * binding to the publisher DID, and a live compliance check at the GXDCH.
+ *
+ * Expensive results are cached by content (the GXDCH result by the hash of
+ * the submitted VP), never by the request, so varying publisher or asset DIDs
+ * can't bypass the cache. Binding is cheap and computed on every call.
  */
 export async function verifyGaiaXCredentials(
   input: GaiaXVerifyRequest,
   deps: VerifyDeps
 ): Promise<GaiaXVerification> {
-  const fetchJson = memoize(deps.fetchJson)
+  const cache = deps.cache ?? noCache
+  const fetchJson = createDidResolver(deps, cache)
 
   const [participant, serviceOffering] = await Promise.all([
     input.participantUrl
-      ? loadCredential(input.participantUrl, LEGAL_PERSON, deps, fetchJson)
+      ? loadCredential(
+          input.participantUrl,
+          LEGAL_PERSON,
+          deps,
+          cache,
+          fetchJson
+        )
       : undefined,
     input.serviceOfferingUrl
       ? loadCredential(
           input.serviceOfferingUrl,
           SERVICE_OFFERING,
           deps,
+          cache,
           fetchJson
         )
       : undefined
@@ -228,7 +312,8 @@ export async function verifyGaiaXCredentials(
     participant: participant?.report.error ? undefined : participant?.vp,
     serviceOffering: serviceOffering?.report.error
       ? undefined
-      : serviceOffering?.vp
+      : serviceOffering?.vp,
+    trustedNotaries: deps.trustedNotaries
   })
 
   // One GXDCH call with the service offering VP covers the participant as
@@ -239,24 +324,51 @@ export async function verifyGaiaXCredentials(
   const compliantVp =
     submitted ?? (!participant?.report.error ? participant?.vp : undefined)
 
-  const compliance: ComplianceReport = compliantVp
-    ? await requestCompliance(
-        compliantVp.jwt,
-        compliantVp.credentials,
-        deps.compliance,
-        { postVp: deps.postVp, fetchJson, randomId: deps.randomId }
+  let compliance: ComplianceReport = {
+    status: 'skipped',
+    message: 'No readable credential to submit for compliance.',
+    checks: []
+  }
+  let lastSuccessfulCheckAt: string | undefined
+  if (compliantVp) {
+    const vpHash = await sha256Hex(compliantVp.jwt)
+    const key = `gxdch:${deps.compliance.baseUrl}:${deps.compliance.label}:${vpHash}`
+    compliance = await cache.memo(
+      key,
+      () =>
+        requestCompliance(
+          compliantVp.jwt,
+          compliantVp.credentials,
+          deps.compliance,
+          {
+            postVp: deps.postVp,
+            fetchJson,
+            randomId: deps.randomId,
+            now: deps.now
+          }
+        ),
+      (result) =>
+        result.status === 'unreachable'
+          ? TRANSIENT_TTL_MS
+          : deps.maxAgeSeconds * 1000 - REFRESH_MARGIN_MS
+    )
+    if (compliance.status === 'pass') {
+      cache.set(
+        `gxdch-success:${key}`,
+        compliance.checkedAt,
+        LAST_SUCCESS_TTL_MS
       )
-    : {
-        status: 'skipped',
-        message: 'No readable credential to submit for compliance.',
-        checks: []
-      }
+    }
+    lastSuccessfulCheckAt = cache.get<string>(`gxdch-success:${key}`)
+  }
 
   const reports = [participant?.report, serviceOffering?.report].filter(Boolean)
 
   return {
     ...getStatus(reports, binding, compliance),
-    checkedAt: deps.now().toISOString(),
+    // Freshness is measured from the GXDCH check, not from this request
+    checkedAt: compliance.checkedAt ?? deps.now().toISOString(),
+    lastSuccessfulCheckAt,
     maxAgeSeconds: deps.maxAgeSeconds,
     publisherDid: input.publisherDid,
     participant: participant?.report,

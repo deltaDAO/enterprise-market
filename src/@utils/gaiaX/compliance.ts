@@ -2,6 +2,7 @@ import { digestSri } from './digest'
 import { FetchJson, urlToDidWeb } from './didWeb'
 import { asArray, getNodeId, isObject, numericDateToIso, parseVc } from './jwt'
 import { verifyJwtSignature } from './signature'
+import { checkValidity } from './validity'
 import {
   CheckResult,
   CompliantCredential,
@@ -36,7 +37,7 @@ export function getComplianceEndpoint(config: ComplianceConfig): string {
   }`
 }
 
-function compareVersions(left: string, right: string): number {
+export function compareVersions(left: string, right: string): number {
   const parse = (version: string) => (version.match(/\d+/g) ?? []).map(Number)
   const [a, b] = [parse(left), parse(right)]
   for (let index = 0; index < Math.max(a.length, b.length); index++) {
@@ -62,10 +63,13 @@ export async function matchDigests(
   entries: unknown[],
   submitted: ParsedVc[]
 ): Promise<CompliantCredential[]> {
-  const digests = new Map<string, string>()
+  // A VP may contain several VCs with the same id; each has its own digest
+  const digests = new Map<string, Set<string>>()
   await Promise.all(
     submitted.map(async (vc) => {
-      if (vc.id) digests.set(vc.id, await digestSri(vc.payload))
+      if (!vc.id) return
+      const digest = await digestSri(vc.payload)
+      digests.set(vc.id, (digests.get(vc.id) ?? new Set()).add(digest))
     })
   )
 
@@ -80,7 +84,7 @@ export async function matchDigests(
           ? entry['gx:credentialType']
           : undefined,
       digestSRI: digest,
-      matched: Boolean(digest) && digests.get(id) === digest
+      matched: Boolean(digest) && Boolean(digests.get(id)?.has(digest))
     }
   })
 }
@@ -94,7 +98,12 @@ export async function requestCompliance(
   vpJwt: string,
   submitted: ParsedVc[],
   config: ComplianceConfig,
-  deps: { postVp: PostVp; fetchJson: FetchJson; randomId: () => string }
+  deps: {
+    postVp: PostVp
+    fetchJson: FetchJson
+    randomId: () => string
+    now: () => Date
+  }
 ): Promise<ComplianceReport> {
   if (!config.baseUrl) {
     return {
@@ -107,6 +116,8 @@ export async function requestCompliance(
   const endpoint = getComplianceEndpoint(config)
   const expectedIssuer = urlToDidWeb(config.baseUrl)
   const vcid = `urn:uuid:${deps.randomId()}`
+  const checkedAt = deps.now().toISOString()
+  const base = { endpoint, expectedIssuer, checkedAt, checks: [] }
 
   let response: { status: number; body: string }
   try {
@@ -116,32 +127,26 @@ export async function requestCompliance(
     )
   } catch (error) {
     return {
+      ...base,
       status: 'unreachable',
       message: `Gaia-X Digital Clearing House unreachable: ${
         (error as Error).message
-      }`,
-      endpoint,
-      expectedIssuer,
-      checks: []
+      }`
     }
   }
 
   if (response.status === 400 || response.status === 409) {
     return {
+      ...base,
       status: 'fail',
-      message: `Not compliant: ${getErrorMessage(response.body)}`,
-      endpoint,
-      expectedIssuer,
-      checks: []
+      message: `Not compliant: ${getErrorMessage(response.body)}`
     }
   }
   if (response.status < 200 || response.status >= 300) {
     return {
+      ...base,
       status: 'unreachable',
-      message: `Gaia-X Digital Clearing House returned HTTP ${response.status}.`,
-      endpoint,
-      expectedIssuer,
-      checks: []
+      message: `Gaia-X Digital Clearing House returned HTTP ${response.status}.`
     }
   }
 
@@ -150,11 +155,9 @@ export async function requestCompliance(
     vc = parseVc(response.body)
   } catch {
     return {
+      ...base,
       status: 'unreachable',
-      message: 'Gaia-X Digital Clearing House returned an unreadable response.',
-      endpoint,
-      expectedIssuer,
-      checks: []
+      message: 'Gaia-X Digital Clearing House returned an unreadable response.'
     }
   }
 
@@ -194,6 +197,20 @@ export async function requestCompliance(
           status: 'fail',
           message: 'Response is not a gx:LabelCredential.'
         },
+    // The response must answer this request, not a cached or replayed one
+    vc.id === vcid
+      ? { id: 'compliance-id', status: 'pass', message: `Issued for ${vcid}.` }
+      : {
+          id: 'compliance-id',
+          status: 'fail',
+          message: `Issued for ${vc.id ?? 'unknown'}, requested ${vcid}.`
+        },
+    checkValidity(
+      'compliance-validity',
+      vc.validFrom,
+      vc.validUntil,
+      deps.now()
+    ),
     compliantCredentials.length > 0 &&
     compliantCredentials.every((entry) => entry.matched)
       ? {
@@ -232,6 +249,7 @@ export async function requestCompliance(
       ? 'Compliant with the Gaia-X Trust Framework.'
       : 'Compliance credential could not be verified.',
     endpoint,
+    checkedAt,
     issuer: vc.issuer,
     expectedIssuer,
     labelLevel:
