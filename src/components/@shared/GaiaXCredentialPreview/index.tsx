@@ -5,7 +5,7 @@ import TrustIcon from '@components/Asset/AssetContent/GaiaXTrust/TrustIcon'
 import { useGaiaXVerification } from '@hooks/useGaiaXVerification'
 import { LABEL_LEVELS } from '@utils/gaiaX/compliance'
 import { isObject } from '@utils/gaiaX/jwt'
-import { getCredentialTrust } from '@utils/gaiaX/trust'
+import { getCredentialTrust, isBoundToPublisher } from '@utils/gaiaX/trust'
 import {
   CheckResult,
   CredentialReport,
@@ -21,7 +21,8 @@ const ERROR_TITLES: Record<string, string> = {
   NOT_JWT: 'Not a VP-JWT',
   NOT_VP: 'Not a VP-JWT',
   WRONG_TYPE: 'Wrong credential type',
-  INVALID_URL: 'Invalid URL'
+  INVALID_URL: 'Invalid URL',
+  TOO_LARGE: 'Too large'
 }
 
 function useDebounced<T>(value: T): T {
@@ -135,17 +136,21 @@ export default function GaiaXCredentialPreview({
   serviceOfferingUrl,
   publisherDid,
   assetDid,
-  blockingFieldName
+  blockingFieldName,
+  action = 'Publishing'
 }: {
   participantUrl?: string
   serviceOfferingUrl?: string
   publisherDid?: string
   assetDid?: string
   blockingFieldName: string
+  // What a blocking result prevents, e.g. "Publishing" or "Saving"
+  action?: 'Publishing' | 'Saving'
 }): ReactElement {
   const { setFieldValue } = useFormikContext()
   const debouncedParticipant = useDebounced(toHttpsUrl(participantUrl))
   const debouncedServiceOffering = useDebounced(toHttpsUrl(serviceOfferingUrl))
+  const [confirmedKey, setConfirmedKey] = useState<string>()
 
   const request: GaiaXVerifyRequest | undefined =
     debouncedParticipant || debouncedServiceOffering
@@ -156,19 +161,44 @@ export default function GaiaXCredentialPreview({
           assetDid: assetDid || undefined
         }
       : undefined
-  const { data, error, isFetching, freshness } = useGaiaXVerification(request)
+  const requestKey = JSON.stringify(request ?? null)
+  const { data, error, isFetching, freshness, refetch } =
+    useGaiaXVerification(request)
   const pending =
     toHttpsUrl(participantUrl) !== debouncedParticipant ||
     toHttpsUrl(serviceOfferingUrl) !== debouncedServiceOffering ||
     (Boolean(request) && isFetching && !data)
+  // If the check itself fails, the user has to retry or explicitly continue
+  // without verification for these exact credentials
+  const failedToVerify = Boolean(request) && !pending && !data
+  const confirmed = confirmedKey === requestKey
   // Block while a check is pending, so a mismatch can't slip through
-  const blocking = Boolean(request) && (pending || Boolean(data?.blocking))
+  const blocking =
+    Boolean(request) &&
+    (pending || Boolean(data?.blocking) || (failedToVerify && !confirmed))
 
   useEffect(() => {
     setFieldValue(blockingFieldName, blocking)
   }, [blocking, blockingFieldName, setFieldValue])
 
-  if (!request && !pending) return null
+  const participantNotHttps =
+    Boolean(participantUrl?.trim()) && !toHttpsUrl(participantUrl)
+  const httpHint = participantNotHttps && (
+    <Problems
+      checks={[
+        {
+          id: 'participant-https',
+          status: 'warn',
+          message:
+            'Only https credential URLs are verified. This participant link will be shown as a plain link.'
+        }
+      ]}
+    />
+  )
+
+  if (!request && !pending) {
+    return httpHint ? <div className={styles.preview}>{httpHint}</div> : null
+  }
 
   if (pending) {
     return (
@@ -192,6 +222,31 @@ export default function GaiaXCredentialPreview({
             }
           ]}
         />
+        <div className={styles.actions}>
+          <button
+            type="button"
+            className={styles.retry}
+            onClick={() => refetch()}
+          >
+            Retry verification
+          </button>
+          <label className={styles.confirm}>
+            <input
+              type="checkbox"
+              checked={confirmed}
+              onChange={(event) =>
+                setConfirmedKey(event.target.checked ? requestKey : undefined)
+              }
+            />
+            Continue without Gaia-X verification
+          </label>
+        </div>
+        {!confirmed && (
+          <p className={styles.blocking}>
+            {action} is blocked until the credentials are verified or you
+            confirm to continue without verification.
+          </p>
+        )}
       </div>
     )
   }
@@ -203,9 +258,12 @@ export default function GaiaXCredentialPreview({
     ...data.binding
   ].find((check) => check.status === 'fail' && check.blocking)
   const { compliance } = data
+  // Same rule as the asset page: no green compliance for unbound publishers
+  const trusted = isBoundToPublisher(data)
 
   return (
     <div className={styles.preview} aria-live="polite">
+      {httpHint}
       {data.participant && (
         <CredentialPreview
           title="Participant credential"
@@ -229,13 +287,13 @@ export default function GaiaXCredentialPreview({
             state={
               compliance.status === 'fail'
                 ? 'failed'
-                : compliance.status === 'pass' && !data.blocking
+                : compliance.status === 'pass' && trusted
                 ? 'verified'
                 : 'unverified'
             }
           />
           <strong>Gaia-X compliance</strong>
-          {compliance.status === 'pass' && !data.blocking && (
+          {compliance.status === 'pass' && trusted && (
             <span>
               · {LABEL_LEVELS[compliance.labelLevel] ?? compliance.labelLevel} ·
               rules {compliance.rulesVersion}
@@ -245,13 +303,19 @@ export default function GaiaXCredentialPreview({
         {compliance.status !== 'pass' && (
           <p className={styles.warning}>{compliance.message}</p>
         )}
+        {compliance.status === 'pass' && !trusted && (
+          <p className={styles.warning}>
+            Not shown as compliant: the credentials are not bound to the
+            publisher DID.
+          </p>
+        )}
       </div>
 
       <Problems checks={data.binding} />
 
       {blockingCheck && (
         <p className={styles.blocking}>
-          Publishing is blocked: {blockingCheck.message}
+          {action} is blocked: {blockingCheck.message}
         </p>
       )}
     </div>

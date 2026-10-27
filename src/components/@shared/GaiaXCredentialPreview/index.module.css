@@ -76,3 +76,31 @@
   margin: 0;
   color: var(--warning-strong);
 }
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+}
+
+.retry {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 2px 12px;
+  font-size: var(--text-sm);
+  color: var(--brand-highlight);
+  cursor: pointer;
+}
+
+.retry:hover {
+  border-color: var(--brand-highlight);
+}
+
+.confirm {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}

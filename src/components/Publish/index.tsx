@@ -28,6 +28,8 @@ import { Signer, toBeHex } from 'ethers'
 import { useSsiWallet } from '@context/SsiWallet'
 import ContainerForm from '../@shared/atoms/ContainerForm'
 import { useEthersSigner } from '@hooks/useEthersSigner'
+import { toast } from 'react-toastify'
+import { getGaiaXBlockingReason, getPublisherDid } from '@utils/gaiaX/publisher'
 
 export default function PublishPage({
   content
@@ -274,6 +276,26 @@ export default function PublishPage({
     let _ddo = ddo
     let _ipfsUpload = ipfsUpload
     let _did = did
+
+    // Re-check the Gaia-X credentials with the DID the DDO is signed with:
+    // it may have changed since the metadata step. Before any transaction.
+    const providedBy = values.metadata.providedBy?.trim()
+    const gaiaXBlockingReason = await getGaiaXBlockingReason({
+      participantUrl: providedBy?.startsWith('https://')
+        ? providedBy
+        : undefined,
+      serviceOfferingUrl:
+        values.metadata.gaiaXServiceOfferingCredential?.trim() || undefined,
+      publisherDid: getPublisherDid({
+        ssiEnabled: appConfig.ssiEnabled,
+        selectedDid: ssiWalletContext?.selectedDid,
+        walletAddress: values.user.accountId
+      })
+    })
+    if (gaiaXBlockingReason) {
+      toast.error(`Publishing is blocked: ${gaiaXBlockingReason}`)
+      return
+    }
 
     if (!_erc721Address || !_datatokenAddress) {
       const result = await create(values)

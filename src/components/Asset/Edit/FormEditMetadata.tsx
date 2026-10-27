@@ -36,6 +36,9 @@ import {
 } from '@utils/docker'
 import DockerRegistryChecksum from '@shared/DockerRegistryChecksum'
 import GaiaXCredentialPreview from '@shared/GaiaXCredentialPreview'
+import { getPublisherDid } from '@utils/gaiaX/publisher'
+import { useSsiWallet } from '@context/SsiWallet'
+import { useAccount } from 'wagmi'
 
 const { data } = content.form
 const assetTypeOptionsTitles = getFieldContent('type', data).options
@@ -44,6 +47,15 @@ export default function FormEditMetadata(): ReactElement {
   const { asset } = useAsset()
   const { values, setFieldTouched, setFieldValue } =
     useFormikContext<MetadataEditForm>()
+  const { address: walletAddress } = useAccount()
+  const { selectedDid } = useSsiWallet()
+  // Saving re-signs the DDO with the current signer, which becomes the new
+  // issuer; check the credentials against that DID, not the old issuer
+  const publisherDid = getPublisherDid({
+    ssiEnabled: appConfig.ssiEnabled,
+    selectedDid,
+    walletAddress
+  })
   const firstPageLoad = useRef<boolean>(true)
   const previousContainerReference = useRef({
     image: values.containerImage,
@@ -274,9 +286,10 @@ export default function FormEditMetadata(): ReactElement {
           <GaiaXCredentialPreview
             participantUrl={values.providedBy}
             serviceOfferingUrl={values.gaiaXServiceOfferingCredential}
-            publisherDid={asset?.issuer}
+            publisherDid={publisherDid}
             assetDid={asset?.id}
             blockingFieldName="gaiaXBlocking"
+            action="Saving"
           />
         </SectionContainer>
         {Boolean(

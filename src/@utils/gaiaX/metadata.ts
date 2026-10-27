@@ -24,19 +24,29 @@ export function getServiceOfferingCredentialUrl(
 
 /**
  * Sets the service offering credential URL in additionalInformation, or
- * removes the reserved key when the URL is cleared (a plain spread of the
- * existing metadata would otherwise keep the old value).
+ * removes it when the URL is cleared (a plain spread of the existing metadata
+ * would otherwise keep the old value). Other keys under `gaiaX` (from later
+ * versions or other tools) are kept; `gaiaX` is dropped only when empty.
  */
 export function withServiceOfferingCredential(
   additionalInformation: AdditionalInformation | undefined,
   url: string | undefined
 ): AdditionalInformation {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { [GAIAX_METADATA_KEY]: _previous, ...rest } =
+  const { [GAIAX_METADATA_KEY]: previous, ...rest } =
     additionalInformation ?? {}
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { serviceOfferingCredential: _old, ...otherGaiaXKeys } = isObject(
+    previous
+  )
+    ? previous
+    : {}
   const trimmed = url?.trim()
-  return trimmed
-    ? { ...rest, [GAIAX_METADATA_KEY]: { serviceOfferingCredential: trimmed } }
+  const gaiaX = trimmed
+    ? { ...otherGaiaXKeys, serviceOfferingCredential: trimmed }
+    : otherGaiaXKeys
+
+  return Object.keys(gaiaX).length > 0
+    ? { ...rest, [GAIAX_METADATA_KEY]: gaiaX as AdditionalInformation[string] }
     : rest
 }
 

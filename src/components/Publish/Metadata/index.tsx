@@ -13,6 +13,7 @@ import styles from './index.module.css'
 import DockerRegistryChecksum from '@shared/DockerRegistryChecksum'
 import { FormPublishData } from '../_types'
 import GaiaXCredentialPreview from '@shared/GaiaXCredentialPreview'
+import { getPublisherDid } from '@utils/gaiaX/publisher'
 import { useMarketMetadata } from '@context/MarketMetadata'
 import { useSsiWallet } from '@context/SsiWallet'
 
@@ -49,8 +50,11 @@ export default function MetadataFields(): ReactElement {
     content.metadata.fields
   )
   // The DDO is issued by the selected SSI DID, otherwise by the wallet
-  const publisherDid =
-    appConfig.ssiEnabled && selectedDid ? selectedDid : values.user?.accountId
+  const publisherDid = getPublisherDid({
+    ssiEnabled: appConfig.ssiEnabled,
+    selectedDid,
+    walletAddress: values.user?.accountId
+  })
 
   return (
     <>
