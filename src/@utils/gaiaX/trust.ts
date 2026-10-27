@@ -1,4 +1,4 @@
-import { CredentialReport, GaiaXVerification } from './types'
+import { ComplianceReport, CredentialReport, GaiaXVerification } from './types'
 
 export type TrustState = 'verified' | 'unverified' | 'failed'
 
@@ -53,11 +53,12 @@ export function getUnverifiedReason(
 // Every credential shown for this report must be in the compliance result
 // with the same id and the same digest: matching by id alone would let a
 // publisher show content the GXDCH never saw
-function isCoveredByCompliance(
-  result: GaiaXVerification,
+function isCoveredBy(
+  compliance: ComplianceReport | undefined,
   report: CredentialReport
 ): boolean {
-  const entries = result.compliance.compliantCredentials ?? []
+  if (compliance?.status !== 'pass') return false
+  const entries = compliance.compliantCredentials ?? []
   return (
     report.credentials.length > 0 &&
     report.credentials.every((credential) =>
@@ -108,17 +109,30 @@ export function getCredentialTrust(
   const reason = getUnverifiedReason(result, stale)
   if (reason) return { state: 'unverified', message: reason }
 
-  if (!isCoveredByCompliance(result, report)) {
-    return {
-      state: 'unverified',
-      message:
-        'Not verified: credential is not covered by the compliance result.'
-    }
+  // The participant may be certified by its own GXDCH check, when the
+  // service offering result covers other versions of its credentials
+  const certifiedBy = [
+    result.compliance,
+    report === result.participant ? result.participantCompliance : undefined
+  ].find((compliance) => isCoveredBy(compliance, report))
+  if (!certifiedBy) {
+    const own =
+      report === result.participant ? result.participantCompliance : undefined
+    return own && own.status !== 'pass'
+      ? {
+          state: own.status === 'fail' ? 'failed' : 'unverified',
+          message: `Not verified: ${own.message}`
+        }
+      : {
+          state: 'unverified',
+          message:
+            'Not verified: credential is not covered by the compliance result.'
+        }
   }
 
   return {
     state: 'verified',
-    message: `Verified by the Gaia-X Digital Clearing House (${result.compliance.rulesVersion}).`
+    message: `Verified by the Gaia-X Digital Clearing House (${certifiedBy.rulesVersion}).`
   }
 }
 

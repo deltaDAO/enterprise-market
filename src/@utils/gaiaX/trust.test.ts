@@ -32,6 +32,45 @@ describe('trust review fixes', () => {
     })
   })
 
+  it('accepts a participant certified by its own GXDCH check', () => {
+    const reissued = result.participant.credentials.map((credential) =>
+      credential.types.includes('gx:LegalPerson')
+        ? { ...credential, digest: 'sha256-reissued' }
+        : credential
+    )
+    const ownCompliance = {
+      ...result.compliance,
+      compliantCredentials: reissued.map((credential) => ({
+        id: credential.id,
+        digestSRI: credential.digest,
+        matched: true
+      }))
+    }
+    const withOwnCheck: GaiaXVerification = {
+      ...result,
+      participant: { ...result.participant, credentials: reissued },
+      participantCompliance: ownCompliance
+    }
+    expect(
+      getCredentialTrust(withOwnCheck, withOwnCheck.participant, false).state
+    ).toBe('verified')
+
+    const failedOwnCheck: GaiaXVerification = {
+      ...withOwnCheck,
+      participantCompliance: {
+        status: 'fail',
+        message: 'Not compliant: VC expired',
+        checks: []
+      }
+    }
+    expect(
+      getCredentialTrust(failedOwnCheck, failedOwnCheck.participant, false)
+    ).toEqual({
+      state: 'failed',
+      message: 'Not verified: Not compliant: VC expired'
+    })
+  })
+
   it('never trusts credentials of a publisher without did:web', () => {
     const unbound: GaiaXVerification = {
       ...result,
