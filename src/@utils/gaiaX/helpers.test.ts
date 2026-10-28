@@ -9,6 +9,7 @@ import { canonicalJson } from './digest'
 import { createGuardedLookup, isPrivateAddress } from './fetch'
 import { numericDateToIso } from './jwt'
 import { getFieldLabel, getTypeLabel } from './labels'
+import { checkValidity } from './validity'
 
 describe('did:web', () => {
   it('maps DIDs to DID document URLs', () => {
@@ -145,13 +146,25 @@ describe('getGaiaXServerConfig', () => {
 })
 
 describe('getGaiaXServerConfig trusted notaries', () => {
-  it('derives the notary next to the clearing house', () => {
+  it.each([
+    'https://www.delta-dao.com/compliance/v2',
+    'https://compliance.lab.gaia-x.eu/development',
+    // A host containing "compliance" must never be rewritten
+    'https://compliance-gxdch.io/v2'
+  ])('is not derived from the clearing house URL %s', (url) => {
     expect(
-      getGaiaXServerConfig({
-        GAIAX_COMPLIANCE_URL: 'https://www.delta-dao.com/compliance/v2'
-      }).trustedNotaries
-    ).toEqual(['did:web:www.delta-dao.com:notary:v2'])
-    expect(getGaiaXServerConfig({}).trustedNotaries).toEqual([])
+      getGaiaXServerConfig({ GAIAX_COMPLIANCE_URL: url }).trustedNotaries
+    ).toEqual([])
+  })
+
+  it('reads the number of trusted proxy hops', () => {
+    expect(getGaiaXServerConfig({}).trustedProxyHops).toBe(0)
+    expect(
+      getGaiaXServerConfig({ GAIAX_TRUSTED_PROXY_HOPS: '1' }).trustedProxyHops
+    ).toBe(1)
+    expect(
+      getGaiaXServerConfig({ GAIAX_TRUSTED_PROXY_HOPS: '-2' }).trustedProxyHops
+    ).toBe(0)
   })
 
   it('prefers an explicit list', () => {
@@ -165,6 +178,25 @@ describe('getGaiaXServerConfig trusted notaries', () => {
       'did:web:registrationnumber.notary.lab.gaia-x.eu:development',
       'did:web:notary.example'
     ])
+  })
+})
+
+describe('checkValidity', () => {
+  const now = new Date('2026-10-28T12:00:00Z')
+
+  it('tolerates issuer clocks running ahead, but not too far', () => {
+    expect(
+      checkValidity('v', '2026-10-28T12:00:30Z', undefined, now).status
+    ).toBe('pass')
+    expect(
+      checkValidity('v', '2026-10-28T12:10:00Z', undefined, now).status
+    ).toBe('fail')
+  })
+
+  it('treats expiry strictly', () => {
+    expect(
+      checkValidity('v', undefined, '2026-10-28T11:59:59Z', now).status
+    ).toBe('fail')
   })
 })
 

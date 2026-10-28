@@ -3,7 +3,7 @@
  */
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { verifyGaiaXCredentials } from '@utils/gaiaX/verify'
-import handler from './verify'
+import handler, { getClient } from './verify'
 
 jest.mock('@oceanprotocol/lib', () => ({
   LoggerInstance: { error: jest.fn() }
@@ -17,7 +17,11 @@ let client = 0
 
 function call(
   body: unknown,
-  { method = 'POST', ip }: { method?: string; ip?: string } = {}
+  {
+    method = 'POST',
+    ip,
+    forwardedFor
+  }: { method?: string; ip?: string; forwardedFor?: string } = {}
 ) {
   const res = {
     statusCode: 200,
@@ -33,13 +37,17 @@ function call(
     json(payload: unknown) {
       this.body = payload
       return this
+    },
+    send(payload: string) {
+      this.body = JSON.parse(payload)
+      return this
     }
   }
   const req = {
     method,
     body,
-    headers: { 'x-forwarded-for': ip ?? `10.0.0.${++client}` },
-    socket: {}
+    headers: forwardedFor ? { 'x-forwarded-for': forwardedFor } : {},
+    socket: { remoteAddress: ip ?? `10.0.0.${++client}` }
   }
   return handler(
     req as unknown as NextApiRequest,
@@ -82,6 +90,7 @@ describe('POST /api/gaiax/verify', () => {
         'did:ope:99d96c60d45714df1e333fccc019aa7592e111013db80a30306bca9f50e8caad'
     })
     expect(res.statusCode).toBe(200)
+    expect(res.body).toEqual({ success: true, result: { status: 'verified' } })
     expect(res.headers['Cache-Control']).toBe('no-store')
     expect(verifyGaiaXCredentials).toHaveBeenLastCalledWith(
       expect.objectContaining({ participantUrl: URL }),
@@ -89,7 +98,15 @@ describe('POST /api/gaiax/verify', () => {
     )
   })
 
-  it('rate limits clients', async () => {
+  it('refuses oversized results', async () => {
+    ;(verifyGaiaXCredentials as jest.Mock).mockResolvedValueOnce({
+      huge: 'x'.repeat(6 * 1024 * 1024)
+    })
+    const res = await call({ participantUrl: URL })
+    expect(res.statusCode).toBe(502)
+  })
+
+  it('rate limits clients by socket address', async () => {
     const statuses = []
     for (let index = 0; index < 32; index++) {
       statuses.push(
@@ -98,5 +115,53 @@ describe('POST /api/gaiax/verify', () => {
     }
     expect(statuses.slice(0, 30).every((status) => status === 200)).toBe(true)
     expect(statuses.slice(30)).toEqual([429, 429])
+  })
+
+  it('ignores forged X-Forwarded-For headers by default', async () => {
+    const statuses = []
+    for (let index = 0; index < 31; index++) {
+      statuses.push(
+        (
+          await call(
+            { participantUrl: URL },
+            { ip: '203.0.113.8', forwardedFor: `198.51.100.${index}` }
+          )
+        ).statusCode
+      )
+    }
+    expect(statuses[30]).toBe(429)
+  })
+})
+
+describe('getClient', () => {
+  const req = (headers: Record<string, string>, remoteAddress = '10.1.1.1') =>
+    ({ headers, socket: { remoteAddress } } as unknown as NextApiRequest)
+
+  afterEach(() => {
+    delete process.env.VERCEL
+  })
+
+  it('uses the socket address without trusted proxies', () => {
+    expect(getClient(req({ 'x-forwarded-for': '1.2.3.4' }), 0)).toBe('10.1.1.1')
+  })
+
+  it('takes the entry added by the outermost trusted proxy', () => {
+    const forged = req({ 'x-forwarded-for': 'forged, 203.0.113.9' })
+    expect(getClient(forged, 1)).toBe('203.0.113.9')
+    expect(getClient(forged, 2)).toBe('forged')
+    expect(getClient(forged, 3)).toBe('10.1.1.1')
+  })
+
+  it('uses the platform header on Vercel', () => {
+    process.env.VERCEL = '1'
+    expect(
+      getClient(
+        req({
+          'x-vercel-forwarded-for': '203.0.113.10',
+          'x-forwarded-for': 'forged'
+        }),
+        0
+      )
+    ).toBe('203.0.113.10')
   })
 })

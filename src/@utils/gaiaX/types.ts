@@ -66,6 +66,8 @@ export interface CredentialSource {
   validFrom?: string
   validUntil?: string
   evidence?: unknown
+  // Set on references to a subject that is expanded elsewhere in the result
+  repeated?: boolean
 }
 
 export const SOURCE_KEY = '$credential'
@@ -142,6 +144,8 @@ export interface GaiaXVerification {
   status: VerificationStatus
   blocking: boolean
   checkedAt: string
+  // Server clock at response time, to correct client clock skew
+  serverTime?: string
   maxAgeSeconds: number
   lastSuccessfulCheckAt?: string
   publisherDid?: string
