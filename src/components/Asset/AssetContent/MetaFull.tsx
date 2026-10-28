@@ -11,6 +11,7 @@ import { safeExternalWebUrl } from '@utils/url'
 import AdditionalLicenseFiles from './AdditionalLicenseFiles'
 import MetaLinks from './MetaLinks'
 import TruncatedMetaValue from './TruncatedMetaValue'
+import ProvidedBy from './GaiaXTrust/ProvidedBy'
 
 export default function MetaFull({ ddo }: { ddo: Asset }): ReactElement {
   const { isInPurgatory, assetState, asset } = useAsset()
@@ -60,18 +61,7 @@ export default function MetaFull({ ddo }: { ddo: Asset }): ReactElement {
           />
         )}
         {metadata?.providedBy && (
-          <MetaItem
-            title="Provided By"
-            content={
-              <a
-                href={safeExternalWebUrl(metadata.providedBy)}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {metadata.providedBy}
-              </a>
-            }
-          />
+          <MetaItem title="Provided By" content={<ProvidedBy ddo={ddo} />} />
         )}
         <MetaItem
           title="Owner"

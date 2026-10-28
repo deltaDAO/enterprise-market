@@ -8,7 +8,7 @@ import { didWebToUrl, urlToDidWeb } from './didWeb'
 import { canonicalJson } from './digest'
 import { createGuardedLookup, isPrivateAddress } from './fetch'
 import { numericDateToIso } from './jwt'
-import { getFieldLabel, getTypeLabel } from './labels'
+import { getFieldLabel, getNodeSummary, getTypeLabel } from './labels'
 import { checkValidity } from './validity'
 
 describe('did:web', () => {
@@ -123,6 +123,26 @@ describe('labels', () => {
     expect(getFieldLabel('gx:someNewProperty')).toBe('Some new property')
     expect(getTypeLabel(['VerifiableCredential', 'gx:VatID'])).toBe('VAT ID')
     expect(getTypeLabel('gx:BrandNewThing')).toBe('Brand new thing')
+  })
+
+  it('summarizes nested nodes in one line', () => {
+    expect(getNodeSummary({ 'schema:name': 'deltaDAO AG' })).toBe('deltaDAO AG')
+    expect(
+      getNodeSummary({
+        'vcard:street-address': 'Katharinenstraße 30a',
+        'vcard:postal-code': '20457',
+        'vcard:locality': 'Hamburg',
+        'gx:countryCode': 'DE'
+      })
+    ).toBe('Katharinenstraße 30a, 20457 Hamburg, DE')
+    expect(
+      getNodeSummary({
+        'gx:url': { '@id': 'https://delta-dao.com/assets/terms.pdf' },
+        'gx:hash':
+          '39bb3dc7787a812a008225f871f2a7368cb3794412b1b764061c2fc44f905da7'
+      })
+    ).toBe('delta-dao.com · terms.pdf')
+    expect(getNodeSummary({ 'gx:requestType': 'email' })).toBe('email')
   })
 })
 

@@ -1,0 +1,775 @@
+{
+  "status": "failed",
+  "blocking": false,
+  "checkedAt": "2026-10-22T16:00:00.000Z",
+  "lastSuccessfulCheckAt": "2026-10-22T16:00:00.000Z",
+  "maxAgeSeconds": 600,
+  "publisherDid": "did:web:delta-dao.com",
+  "participant": {
+    "url": "https://delta-dao.com/.well-known/40_gx_legalperson_deltaDAO.jwt",
+    "expectedType": "gx:LegalPerson",
+    "checks": [
+      {
+        "id": "vp-signature",
+        "status": "pass",
+        "message": "Valid RS256 signature by did:web:delta-dao.com."
+      },
+      {
+        "id": "vp-validity",
+        "status": "pass",
+        "message": "Valid until 2027-01-10T19:28:37.020+00:00."
+      },
+      {
+        "id": "vc-signatures",
+        "status": "pass",
+        "message": "All 5 credential signatures are valid."
+      },
+      {
+        "id": "vc-validity",
+        "status": "pass",
+        "message": "All 5 credentials are within their validity period."
+      }
+    ],
+    "credentials": [
+      {
+        "id": "https://delta-dao.com/.well-known/40_gx_issuer_deltaDAO.json",
+        "types": ["VerifiableCredential", "gx:Issuer"],
+        "issuer": "did:web:delta-dao.com",
+        "validFrom": "2026-09-28T19:56:42.475+00:00",
+        "validUntil": "2026-12-27T19:56:42.475+00:00",
+        "signature": {
+          "id": "signature",
+          "status": "pass",
+          "message": "Valid RS256 signature by did:web:delta-dao.com."
+        },
+        "validity": {
+          "id": "validity",
+          "status": "pass",
+          "message": "Valid until 2026-12-27T19:56:42.475+00:00."
+        },
+        "digest": "sha256-1aef7686bfdeec30b8629026ef72ca0bbc8f8f1e68afbafd4d257495fc4f6e94",
+        "payload": {},
+        "jwt": "<omitted>"
+      },
+      {
+        "id": "https://delta-dao.com/.well-known/40_gx_legalperson_deltaDAO.jwt",
+        "types": ["VerifiableCredential", "gx:LegalPerson"],
+        "issuer": "did:web:delta-dao.com",
+        "validFrom": "2026-09-28T20:26:04.857+00:00",
+        "validUntil": "2026-12-27T20:26:04.857+00:00",
+        "signature": {
+          "id": "signature",
+          "status": "pass",
+          "message": "Valid RS256 signature by did:web:delta-dao.com."
+        },
+        "validity": {
+          "id": "validity",
+          "status": "pass",
+          "message": "Valid until 2026-12-27T20:26:04.857+00:00."
+        },
+        "digest": "sha256-8b2509e7e5a3057db9a05abcc969936716835b6c25f1aff0799353d078077b14",
+        "payload": {},
+        "jwt": "<omitted>"
+      },
+      {
+        "id": "https://delta-dao.com/.well-known/40_gx_leicode_deltaDAO.json",
+        "types": ["VerifiableCredential", "gx:LeiCode"],
+        "issuer": "did:web:www.delta-dao.com:notary:v2",
+        "validFrom": "2026-10-12T19:11:22.602+00:00",
+        "validUntil": "2026-10-22T23:59:59.000+00:00",
+        "signature": {
+          "id": "signature",
+          "status": "pass",
+          "message": "Valid PS256 signature by did:web:www.delta-dao.com:notary:v2."
+        },
+        "validity": {
+          "id": "validity",
+          "status": "pass",
+          "message": "Valid until 2026-10-22T23:59:59.000+00:00."
+        },
+        "digest": "sha256-e34fd40d7dfdb4d223c3e1830ec2b6b01528e4816779f5abc945ba986fe9fbdf",
+        "payload": {},
+        "jwt": "<omitted>"
+      },
+      {
+        "id": "https://delta-dao.com/.well-known/40_gx_vatid_deltaDAO.json",
+        "types": ["VerifiableCredential", "gx:VatID"],
+        "issuer": "did:web:www.delta-dao.com:notary:v2",
+        "validFrom": "2026-10-12T19:10:27.637+00:00",
+        "validUntil": "2026-10-22T23:59:59.000+00:00",
+        "signature": {
+          "id": "signature",
+          "status": "pass",
+          "message": "Valid PS256 signature by did:web:www.delta-dao.com:notary:v2."
+        },
+        "validity": {
+          "id": "validity",
+          "status": "pass",
+          "message": "Valid until 2026-10-22T23:59:59.000+00:00."
+        },
+        "digest": "sha256-f40bc218a1a4fa69383464ffe5c32f399bac8c7b25e125639fa1aaa5fea5cb9c",
+        "payload": {},
+        "jwt": "<omitted>"
+      },
+      {
+        "id": "https://delta-dao.com/.well-known/40_gx_eori_deltaDAO.json",
+        "types": ["VerifiableCredential", "gx:EORI"],
+        "issuer": "did:web:www.delta-dao.com:notary:v2",
+        "validFrom": "2026-10-12T19:12:01.831+00:00",
+        "validUntil": "2026-10-22T23:59:59.000+00:00",
+        "signature": {
+          "id": "signature",
+          "status": "pass",
+          "message": "Valid PS256 signature by did:web:www.delta-dao.com:notary:v2."
+        },
+        "validity": {
+          "id": "validity",
+          "status": "pass",
+          "message": "Valid until 2026-10-22T23:59:59.000+00:00."
+        },
+        "digest": "sha256-5aa167f2115528afdc97b1597ad730e62f21165c833549d8533ea67139cf2309",
+        "payload": {},
+        "jwt": "<omitted>"
+      }
+    ],
+    "issuer": "did:web:delta-dao.com",
+    "validFrom": "2026-10-12T19:28:37.020+00:00",
+    "validUntil": "2027-01-10T19:28:37.020+00:00",
+    "jwt": "<omitted>",
+    "payload": {
+      "@context": [
+        "https://www.w3.org/ns/credentials/v2",
+        "https://www.w3.org/ns/credentials/examples/v2"
+      ],
+      "type": "VerifiablePresentation",
+      "verifiableCredential": [
+        {
+          "@context": "https://www.w3.org/ns/credentials/v2",
+          "id": "data:application/vc+jwt,eyJhbGciOiJSUzI1NiIsInR5cCI6InZjK2p3dCIsImN0eSI6InZjIiwiaXNzIjoiZGlkOndlYjpkZWx0YS1kYW8uY29tIiwia2lkIjoiZGlkOndlYjpkZWx0YS1kYW8uY29tI0pXSzIwMjAtUlNBIn0.eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvdjIiLCJodHRwczovL3czaWQub3JnL2dhaWEteC9kZXZlbG9wbWVudCMiXSwidHlwZSI6WyJWZXJpZmlhYmxlQ3JlZGVudGlhbCIsImd4Oklzc3VlciJdLCJpc3N1ZXIiOiJkaWQ6d2ViOmRlbHRhLWRhby5jb20iLCJAaWQiOiJodHRwczovL2RlbHRhLWRhby5jb20vLndlbGwta25vd24vNDBfZ3hfaXNzdWVyX2RlbHRhREFPLmpzb24iLCJ2YWxpZFVudGlsIjoiMjAyNi0xMi0yN1QxOTo1Njo0Mi40NzUrMDA6MDAiLCJ2YWxpZEZyb20iOiIyMDI2LTA5LTI4VDE5OjU2OjQyLjQ3NSswMDowMCIsImNyZWRlbnRpYWxTdWJqZWN0Ijp7IkBpZCI6Imh0dHBzOi8vZGVsdGEtZGFvLmNvbS8ud2VsbC1rbm93bi80MF9neF9pc3N1ZXJfZGVsdGFEQU8uanNvbiIsImdhaWF4VGVybXNBbmRDb25kaXRpb25zIjoiMDY3ZGNhYzVlZmQxOGMxOTI3ZGViMWZmZWQzZmVhYjZkMGFkMDQ0YzBhOWEyNjNlNmQ1ZDhiZGM0MzIyNDUxNSJ9fQ.Ig9QdILChgSYail74mB8y2kRYN52nWZLAJc-Uo-68lR_AL-0V_vvTGeZRLqaCMZ9O_cuC8OF5dC6pzYtcYQUxtSiKMC7ghAZf14b8WEMACCEN9KMBjmzjvcDtL570OQSjDU1yBccPbFeYNoP5NxvQMxpyYSVwouvJOVbHfJM-UnLb7B_Cti1zFL86T_MQ6MW-khRZ7TDsPQTL-26i4L2Ff71LWAQXoL-dOOVcaimEtp8j717Bk58D-GC1c8eiNPBeP_kU0lJAbIVmIRx2wTzgUA4B0mHJoBvTQS6eRYE-_NZhP3pR2n_2H_bcAH7YRNT-R4pWRQQ8RMCh9VOSnt-fbrkE1sRtnITUa0AFCkvY4tzCK_9Bqzgv06_1uUi94tFywH4wrcn2W_TnFjZ0t8mBB1LEcQR9sU-0rrQmOuPvrr4vMBmqQm6CA1rShfiLvxTfm1UmYsDea91L8jDzVIbTAnePZrQSXedKXvByzaCFZ3yNpSKPgLD2OfmaNhGnEX8SSAB5Z2ksyG0VFf8_pF7_q8IkhUzErut2er3WelyGdF4f0L7J6tmpeCSFNBHgGezpf64-KO_kXp542Z2F0rNA7dQezuyTLHC0P1mxjfqasPaylMm0F0M0i5LJHJu1qvMX6xqJJZOJ5QKheYsGgJZPGLjoHzm1AmOVPky3rqgVSo",
+          "type": "EnvelopedVerifiableCredential"
+        },
+        {
+          "@context": "https://www.w3.org/ns/credentials/v2",
+          "id": "data:application/vc+jwt,eyJhbGciOiJSUzI1NiIsInR5cCI6InZjK2p3dCIsImN0eSI6InZjIiwiaXNzIjoiZGlkOndlYjpkZWx0YS1kYW8uY29tIiwia2lkIjoiZGlkOndlYjpkZWx0YS1kYW8uY29tI0pXSzIwMjAtUlNBIn0.eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvdjIiLCJodHRwczovL3czaWQub3JnL2dhaWEteC9kZXZlbG9wbWVudCMiLHsidmNhcmQiOiJodHRwOi8vd3d3LnczLm9yZy8yMDA2L3ZjYXJkL25zIyIsInNjaGVtYSI6Imh0dHBzOi8vc2NoZW1hLm9yZy8ifV0sIkBpZCI6Imh0dHBzOi8vZGVsdGEtZGFvLmNvbS8ud2VsbC1rbm93bi80MF9neF9sZWdhbHBlcnNvbl9kZWx0YURBTy5qd3QiLCJ0eXBlIjpbIlZlcmlmaWFibGVDcmVkZW50aWFsIiwiZ3g6TGVnYWxQZXJzb24iXSwiaXNzdWVyIjoiZGlkOndlYjpkZWx0YS1kYW8uY29tIiwidmFsaWRGcm9tIjoiMjAyNi0wOS0yOFQyMDoyNjowNC44NTcrMDA6MDAiLCJ2YWxpZFVudGlsIjoiMjAyNi0xMi0yN1QyMDoyNjowNC44NTcrMDA6MDAiLCJjcmVkZW50aWFsU3ViamVjdCI6eyJzY2hlbWE6bmFtZSI6ImRlbHRhREFPIEFHIiwiZ3g6cmVnaXN0cmF0aW9uTnVtYmVyIjpbeyJAaWQiOiJodHRwczovL2RlbHRhLWRhby5jb20vLndlbGwta25vd24vNDBfZ3hfdmF0aWRfZGVsdGFEQU8uanNvbiNjcyJ9LHsiQGlkIjoiaHR0cHM6Ly9kZWx0YS1kYW8uY29tLy53ZWxsLWtub3duLzQwX2d4X2VvcmlfZGVsdGFEQU8uanNvbiNjcyJ9LHsiQGlkIjoiaHR0cHM6Ly9kZWx0YS1kYW8uY29tLy53ZWxsLWtub3duLzQwX2d4X2xlaWNvZGVfZGVsdGFEQU8uanNvbiNjcyJ9XSwiZ3g6aGVhZHF1YXJ0ZXJzQWRkcmVzcyI6eyJ0eXBlIjoiZ3g6QWRkcmVzcyIsImd4OmNvdW50cnlDb2RlIjoiREUiLCJ2Y2FyZDpzdHJlZXQtYWRkcmVzcyI6IkthdGhhcmluZW5zdHJhw59lIDMwYSIsInZjYXJkOmxvY2FsaXR5IjoiSGFtYnVyZyIsInZjYXJkOnBvc3RhbC1jb2RlIjoiMjA0NTcifSwiZ3g6bGVnYWxBZGRyZXNzIjp7InR5cGUiOiJneDpBZGRyZXNzIiwiZ3g6Y291bnRyeUNvZGUiOiJERSIsInZjYXJkOnN0cmVldC1hZGRyZXNzIjoiS2F0aGFyaW5lbnN0cmHDn2UgMzBhIiwidmNhcmQ6bG9jYWxpdHkiOiJIYW1idXJnIiwidmNhcmQ6cG9zdGFsLWNvZGUiOiIyMDQ1NyJ9LCJAaWQiOiJodHRwczovL2RlbHRhLWRhby5jb20vLndlbGwta25vd24vNDBfZ3hfbGVnYWxwZXJzb25fZGVsdGFEQU8uand0I2NzIn19.SBihMHoowTTxIigfwbrFKUBaZgC_ofPNjevv0mIihxadiAobLhMjPIcTcHpsSgAhmp6g3A3f1DvRuJiY8hawihVXZKVD_DBWm2nfsL3UyaC_KtT818eq6iBgto399she2DyQ4YdKKQ7OTtsplQOmfmPgEy8P0E--sRculN00lqCytw-_31N3DD0CO9dwajRmrtBNhSYFPF548ezxRnr8fKnBX9UItWyWz2MnXs6u3GT1kpykmzuUOO90H8DkDgxnlBnlLvxd1cxM6OquYAmhkJXGdtJPIqmjj-ZOH1hnBMoN8G7zk7NaEutLtkLUN8kLo2-SVdoOTxXcF81AojAlQQ4f9D-vQ2d4c4bToba3Jzhl3hmrIVIobfRDF53S-7NPVTCylANu-3z0tOihNCPdBLVaBZz7D_DrGnTLJprqSdUIQCe2Ovj9_sWTqSo6eGtVWBkKmCw7ZFIrR65wprq_omKi6g8zIMvnthg9--ES-XJRCKCmPaB7rfCxMRtG79ZlcNl1UaFVRsGsy4x9X7QvfbD_eXdVQnU__IIeIP39avo8svpEmjRdhIn2ZQsqcOH8j0LUQi0CwsEt6dPMGrsCn9GxUTwg8DLYOfgcfSwZ-Nko8ubtisuLf3sZx58JfsPlA6Wp_gd1Z1Y8KIWathAJaQcmuCw2xQYHAGqiDA2TbCE",
+          "type": "EnvelopedVerifiableCredential"
+        },
+        {
+          "@context": "https://www.w3.org/ns/credentials/v2",
+          "id": "data:application/vc+jwt,eyJhbGciOiJQUzI1NiIsImlzcyI6ImRpZDp3ZWI6d3d3LmRlbHRhLWRhby5jb206bm90YXJ5OnYyIiwia2lkIjoiZGlkOndlYjp3d3cuZGVsdGEtZGFvLmNvbTpub3Rhcnk6djIjWDUwOS1KV0siLCJpYXQiOjE3OTE4MzIyODI2MDIsImV4cCI6MTc5MjcxMzU5OTAwMCwiY3R5IjoidmMrbGQiLCJ0eXAiOiJ2YytsZCtqd3QifQ.eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvdjIiLCJodHRwczovL3czaWQub3JnL2dhaWEteC9kZXZlbG9wbWVudCMiXSwidHlwZSI6WyJWZXJpZmlhYmxlQ3JlZGVudGlhbCIsImd4OkxlaUNvZGUiXSwiaWQiOiJodHRwczovL2RlbHRhLWRhby5jb20vLndlbGwta25vd24vNDBfZ3hfbGVpY29kZV9kZWx0YURBTy5qc29uIiwibmFtZSI6IkxFSSBDb2RlIiwiZGVzY3JpcHRpb24iOiJMZWdhbCBFbnRpdHkgSWRlbnRpZmllciIsImlzc3VlciI6ImRpZDp3ZWI6d3d3LmRlbHRhLWRhby5jb206bm90YXJ5OnYyIiwidmFsaWRGcm9tIjoiMjAyNi0xMC0xMlQxOToxMToyMi42MDIrMDA6MDAiLCJ2YWxpZFVudGlsIjoiMjAyNi0xMC0yMlQyMzo1OTo1OS4wMDArMDA6MDAiLCJjcmVkZW50aWFsU3ViamVjdCI6eyJAY29udGV4dCI6eyJzY2hlbWEiOiJodHRwczovL3NjaGVtYS5vcmcvIn0sImlkIjoiaHR0cHM6Ly9kZWx0YS1kYW8uY29tLy53ZWxsLWtub3duLzQwX2d4X2xlaWNvZGVfZGVsdGFEQU8uanNvbiNjcyIsInNjaGVtYTpsZWlDb2RlIjoiMzkxMjAwRkpCTlUwWVc5ODdMMjYiLCJneDpjb3VudHJ5Q29kZSI6IkRFIiwiZ3g6c3ViZGl2aXNpb25Db3VudHJ5Q29kZSI6bnVsbH0sImV2aWRlbmNlIjp7Imd4OmV2aWRlbmNlT2YiOiJneDpMZWlDb2RlIiwiZ3g6ZXZpZGVuY2VVUkwiOiJodHRwczovL2FwaS5nbGVpZi5vcmcvYXBpL3YxL2xlaS1yZWNvcmRzLzM5MTIwMEZKQk5VMFlXOTg3TDI2IiwiZ3g6ZXhlY3V0aW9uRGF0ZSI6IjIwMjYtMTAtMTJUMTk6MTE6MjIuNjAyKzAwOjAwIn19.l-80EFbmBWp3BqwwLqdxcnSdPABtHhjn4fUFjkp6uElBNkj7RWZ3OStPFXm5_c5YxygbEpo4G5G3_3YGsuKepq37ccV7XNEtqBXckbu_KQMQRO7ZOIABlIMh4ojLbeXdxvcDeplWjpDp2bT98KXBuynRNvxp19l0jJKTBpgAtRsskrYp6RuPKU2wq2whvvEgapDMBPvVU9cyL6zrK3LRDyGZOaYwI7NMD82Piu0NBZMyUUifUAVCWe6s4uh0XccZ2YUf4TC-pcO1f55g48G8WCYJD_Ra3ioTYwcBke9chq7qDa_aa6_VEJkIWLCdS8lRwXBOoXVPOFxC4N1IvlIpsdGTSAbfEleNnCBOzBOAZ2lzcbbWVj5xC5GPcm4UcMFujJIfy7gZPJUfgo8ah7X26Y-I1MIqCEDLp8c-Znz3fGK5JmgKeULTCM1-Ig5lZvK4jpz6JPDiuPfiV6CDeQV6eRujREHfL3475WmZFVcLaOjChOSNd-q6DbD84iak3bJsdl3Su6ISkEiMoZhBZEsBPI-c8y0hmbBqz-GtXHTYPsL7SJ2sRXAzs48G2nayVtZQpCffzC9iM2A6HEKQWO4u_eQ3vzpjkX8rGZG3kfOl8NCNgxqnrJ6gAVHktVPOCl5JlnX2aenpLUrRuFbWJJLg7AxtV2shrV6uz4Rwjc8Y7Zk",
+          "type": "EnvelopedVerifiableCredential"
+        },
+        {
+          "@context": "https://www.w3.org/ns/credentials/v2",
+          "id": "data:application/vc+jwt,eyJhbGciOiJQUzI1NiIsImlzcyI6ImRpZDp3ZWI6d3d3LmRlbHRhLWRhby5jb206bm90YXJ5OnYyIiwia2lkIjoiZGlkOndlYjp3d3cuZGVsdGEtZGFvLmNvbTpub3Rhcnk6djIjWDUwOS1KV0siLCJpYXQiOjE3OTE4MzIyMjc2MzcsImV4cCI6MTc5MjcxMzU5OTAwMCwiY3R5IjoidmMrbGQiLCJ0eXAiOiJ2YytsZCtqd3QifQ.eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvdjIiLCJodHRwczovL3czaWQub3JnL2dhaWEteC9kZXZlbG9wbWVudCMiXSwidHlwZSI6WyJWZXJpZmlhYmxlQ3JlZGVudGlhbCIsImd4OlZhdElEIl0sImlkIjoiaHR0cHM6Ly9kZWx0YS1kYW8uY29tLy53ZWxsLWtub3duLzQwX2d4X3ZhdGlkX2RlbHRhREFPLmpzb24iLCJuYW1lIjoiVkFUIElEIiwiZGVzY3JpcHRpb24iOiJWYWx1ZSBBZGRlZCBUYXggSWRlbnRpZmllciIsImlzc3VlciI6ImRpZDp3ZWI6d3d3LmRlbHRhLWRhby5jb206bm90YXJ5OnYyIiwidmFsaWRGcm9tIjoiMjAyNi0xMC0xMlQxOToxMDoyNy42MzcrMDA6MDAiLCJ2YWxpZFVudGlsIjoiMjAyNi0xMC0yMlQyMzo1OTo1OS4wMDArMDA6MDAiLCJjcmVkZW50aWFsU3ViamVjdCI6eyJpZCI6Imh0dHBzOi8vZGVsdGEtZGFvLmNvbS8ud2VsbC1rbm93bi80MF9neF92YXRpZF9kZWx0YURBTy5qc29uI2NzIiwiZ3g6dmF0SUQiOiJERTM0NjAxMzUzMiIsImd4OmNvdW50cnlDb2RlIjoiREUifSwiZXZpZGVuY2UiOnsiZ3g6ZXZpZGVuY2VPZiI6Imd4OlZhdElEIiwiZ3g6ZXZpZGVuY2VVUkwiOiJodHRwOi8vZWMuZXVyb3BhLmV1L3RheGF0aW9uX2N1c3RvbXMvdmllcy9zZXJ2aWNlcy9jaGVja1ZhdFNlcnZpY2UiLCJneDpleGVjdXRpb25EYXRlIjoiMjAyNi0xMC0xMlQxOToxMDoyNy42MzcrMDA6MDAifX0.cHHxficnY6G7eCmj_28BRgK5Eh7EMjdSiuDmm_gtSYCqBOp93SA8iqYt8jlEYcZHPIIqrUOLRQc1DeoAj1ZhmHN_-yXdw0LCcao-jA5WS6kX9AGTSmmyMW0mywHm5xswpvPagZrs3jWXZhiRihCk9JcHXvNbaDHzzwxIl1J97ugwqCgJM_gPe3_8s64yBKIVOKQmrUtSQ6bX9uZoCKZQPclq5I9V_JVwHhy20E6zGQjQ9P8S5oLXRsFSdR8gcM3vDjlBmzvsJ7IgOudBjDLxjiOYQNUxl4UyWdgvJ6zcUDS6lgisuMv9kZoRyl_iBna_j6bAJp9tgW1XaOhi6kHDIPhBnNy3_oZzsP8i2XyE5CCy9v_U7eLGAqh8zNkDHUMyOFp4JnplyFxLhENC6mL1bM3-JV0yiZq03mCy2KZeLI0y_U_T9l7jBZVt_C-cn-hncwVsTtKt1R_0FC3bLdZGQKNTiCSt442Oa0gA_-4sdesQdHlDsToMbD7AkcISB55r1pMoMM0zGhLwPY3Nn9dcewn-av4UyQS2LqE1D-66r-5LJOytD5M0ANKKDWFBlJE4xxTe_0TfhqGRRl0dlRhDY32UIerXQxJm1Ncr36onsu6Gx_syvAgGzvBD0z7R9MlOIFtk55dKF-Ovn7zZrBGH_YEcXIMV82ez8C9p7EJ-jEk",
+          "type": "EnvelopedVerifiableCredential"
+        },
+        {
+          "@context": "https://www.w3.org/ns/credentials/v2",
+          "id": "data:application/vc+jwt,eyJhbGciOiJQUzI1NiIsImlzcyI6ImRpZDp3ZWI6d3d3LmRlbHRhLWRhby5jb206bm90YXJ5OnYyIiwia2lkIjoiZGlkOndlYjp3d3cuZGVsdGEtZGFvLmNvbTpub3Rhcnk6djIjWDUwOS1KV0siLCJpYXQiOjE3OTE4MzIzMjE4MzEsImV4cCI6MTc5MjcxMzU5OTAwMCwiY3R5IjoidmMrbGQiLCJ0eXAiOiJ2YytsZCtqd3QifQ.eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvdjIiLCJodHRwczovL3czaWQub3JnL2dhaWEteC9kZXZlbG9wbWVudCMiXSwidHlwZSI6WyJWZXJpZmlhYmxlQ3JlZGVudGlhbCIsImd4OkVPUkkiXSwiaWQiOiJodHRwczovL2RlbHRhLWRhby5jb20vLndlbGwta25vd24vNDBfZ3hfZW9yaV9kZWx0YURBTy5qc29uIiwibmFtZSI6IkVPUkkgUmVnaXN0cmF0aW9uIE51bWJlciIsImRlc2NyaXB0aW9uIjoiRWNvbm9taWMgT3BlcmF0b3JzIFJlZ2lzdHJhdGlvbiBhbmQgSWRlbnRpZmljYXRpb24gcmVnaXN0cmF0aW9uIG51bWJlciIsImlzc3VlciI6ImRpZDp3ZWI6d3d3LmRlbHRhLWRhby5jb206bm90YXJ5OnYyIiwidmFsaWRGcm9tIjoiMjAyNi0xMC0xMlQxOToxMjowMS44MzErMDA6MDAiLCJ2YWxpZFVudGlsIjoiMjAyNi0xMC0yMlQyMzo1OTo1OS4wMDArMDA6MDAiLCJjcmVkZW50aWFsU3ViamVjdCI6eyJpZCI6Imh0dHBzOi8vZGVsdGEtZGFvLmNvbS8ud2VsbC1rbm93bi80MF9neF9lb3JpX2RlbHRhREFPLmpzb24jY3MiLCJneDplb3JpIjoiREUzOTA3MjYxNzUwNzY3NjYiLCJneDpjb3VudHJ5IjoiR2VybWFueSJ9LCJldmlkZW5jZSI6eyJneDpldmlkZW5jZU9mIjoiZ3g6RU9SSSIsImd4OmV2aWRlbmNlVVJMIjoiaHR0cHM6Ly9lYy5ldXJvcGEuZXUvdGF4YXRpb25fY3VzdG9tcy9kZHMyL2Vvcy92YWxpZGF0aW9uL3NlcnZpY2VzL3ZhbGlkYXRpb24iLCJneDpleGVjdXRpb25EYXRlIjoiMjAyNi0xMC0xMlQxOToxMjowMS44MzErMDA6MDAifX0.Vs_jlUq3LvdSITdT2MvR5j4A1_uliwXb1BWalS9Y51xzOZbgAjdW1HMu6yD6JCdfTU46RBD1oAf6tnQ0aFwxW0dDTpdwOPiJyYNM4ZLfYAoKxX7UaL-6V8M8UT7gOA3W7ubUJ3JEmOtPyeAg4q3LYn3xTz3LNFbQow26RtcaJUQ5Zjfo4inBXrMYRQvNCQqJmOecRuZ8InVG5gWsT_HNxNEm39ZlL5aLHrw0JMQE7Qt1uVM-GBFQEJjrD-LzW31ENnv8vV486VJmJ9t2uB0ySCefpoRzBfwz4EPp1XsKq6QaP2lu7ijyPEQ34UeZLgODpMwI8Iasgijgq-dpVWQgDcCydMK4LID1id6aRUkkng5baGeKDSqJinZ-rRmN62uOtTExtz12HcWi-ZElnpogHMf_ZtxyvkGCQARzJ8Ha26MSewBF_uOAatd1SK0WeSM-i0664u5eukGInyYynZ59o3JJhzK11jURc87xNgnhi8dNsFSLdM-6iaTbmHv9G6j3E2T_diPGmlBR3EvPl_7XOcH2fpvjSg-Vb-_EtqPt44TEcgTLnY5J7Z9gzzVk1MavIbNNUN8efYZv4H_KDWKP83-dfmClY92NgtZOUnsfDF6CIHiTpusYwDDSumqbSAzlDwoSFUtNEudGQFrLrCv5kWMIV2ub5rxb4f-5a1Rod5c",
+          "type": "EnvelopedVerifiableCredential"
+        }
+      ],
+      "issuer": "did:web:delta-dao.com",
+      "validFrom": "2026-10-12T19:28:37.020+00:00",
+      "validUntil": "2027-01-10T19:28:37.020+00:00"
+    },
+    "subject": {
+      "schema:name": "deltaDAO AG",
+      "gx:registrationNumber": [
+        {
+          "id": "https://delta-dao.com/.well-known/40_gx_vatid_deltaDAO.json#cs",
+          "gx:vatID": "DE346013532",
+          "gx:countryCode": "DE",
+          "$credential": {
+            "id": "https://delta-dao.com/.well-known/40_gx_vatid_deltaDAO.json",
+            "types": ["VerifiableCredential", "gx:VatID"],
+            "issuer": "did:web:www.delta-dao.com:notary:v2",
+            "validFrom": "2026-10-12T19:10:27.637+00:00",
+            "validUntil": "2026-10-22T23:59:59.000+00:00",
+            "evidence": {
+              "gx:evidenceOf": "gx:VatID",
+              "gx:evidenceURL": "http://ec.europa.eu/taxation_customs/vies/services/checkVatService",
+              "gx:executionDate": "2026-10-12T19:10:27.637+00:00"
+            }
+          }
+        },
+        {
+          "id": "https://delta-dao.com/.well-known/40_gx_eori_deltaDAO.json#cs",
+          "gx:eori": "DE390726175076766",
+          "gx:country": "Germany",
+          "$credential": {
+            "id": "https://delta-dao.com/.well-known/40_gx_eori_deltaDAO.json",
+            "types": ["VerifiableCredential", "gx:EORI"],
+            "issuer": "did:web:www.delta-dao.com:notary:v2",
+            "validFrom": "2026-10-12T19:12:01.831+00:00",
+            "validUntil": "2026-10-22T23:59:59.000+00:00",
+            "evidence": {
+              "gx:evidenceOf": "gx:EORI",
+              "gx:evidenceURL": "https://ec.europa.eu/taxation_customs/dds2/eos/validation/services/validation",
+              "gx:executionDate": "2026-10-12T19:12:01.831+00:00"
+            }
+          }
+        },
+        {
+          "@context": {
+            "schema": "https://schema.org/"
+          },
+          "id": "https://delta-dao.com/.well-known/40_gx_leicode_deltaDAO.json#cs",
+          "schema:leiCode": "391200FJBNU0YW987L26",
+          "gx:countryCode": "DE",
+          "gx:subdivisionCountryCode": null,
+          "$credential": {
+            "id": "https://delta-dao.com/.well-known/40_gx_leicode_deltaDAO.json",
+            "types": ["VerifiableCredential", "gx:LeiCode"],
+            "issuer": "did:web:www.delta-dao.com:notary:v2",
+            "validFrom": "2026-10-12T19:11:22.602+00:00",
+            "validUntil": "2026-10-22T23:59:59.000+00:00",
+            "evidence": {
+              "gx:evidenceOf": "gx:LeiCode",
+              "gx:evidenceURL": "https://api.gleif.org/api/v1/lei-records/391200FJBNU0YW987L26",
+              "gx:executionDate": "2026-10-12T19:11:22.602+00:00"
+            }
+          }
+        }
+      ],
+      "gx:headquartersAddress": {
+        "type": "gx:Address",
+        "gx:countryCode": "DE",
+        "vcard:street-address": "Katharinenstraße 30a",
+        "vcard:locality": "Hamburg",
+        "vcard:postal-code": "20457"
+      },
+      "gx:legalAddress": {
+        "type": "gx:Address",
+        "gx:countryCode": "DE",
+        "vcard:street-address": "Katharinenstraße 30a",
+        "vcard:locality": "Hamburg",
+        "vcard:postal-code": "20457"
+      },
+      "@id": "https://delta-dao.com/.well-known/40_gx_legalperson_deltaDAO.jwt#cs"
+    },
+    "source": {
+      "id": "https://delta-dao.com/.well-known/40_gx_legalperson_deltaDAO.jwt",
+      "types": ["VerifiableCredential", "gx:LegalPerson"],
+      "issuer": "did:web:delta-dao.com",
+      "validFrom": "2026-09-28T20:26:04.857+00:00",
+      "validUntil": "2026-12-27T20:26:04.857+00:00"
+    }
+  },
+  "serviceOffering": {
+    "url": "https://delta-dao.com/.well-known/40_gx_digitalserviceoffering_noise_levels.jwt",
+    "expectedType": "gx:DigitalServiceOffering",
+    "checks": [
+      {
+        "id": "vp-signature",
+        "status": "pass",
+        "message": "Valid RS256 signature by did:web:delta-dao.com."
+      },
+      {
+        "id": "vp-validity",
+        "status": "pass",
+        "message": "Valid until 2027-01-10T19:14:34.874+00:00."
+      },
+      {
+        "id": "vc-signatures",
+        "status": "pass",
+        "message": "All 13 credential signatures are valid."
+      },
+      {
+        "id": "vc-validity",
+        "status": "pass",
+        "message": "All 13 credentials are within their validity period."
+      }
+    ],
+    "credentials": [
+      {
+        "id": "https://delta-dao.com/.well-known/40_gx_address_deltaDAO.json",
+        "types": ["VerifiableCredential", "gx:Address"],
+        "issuer": "did:web:delta-dao.com",
+        "validFrom": "2026-09-28T20:17:13.573+00:00",
+        "validUntil": "2026-12-27T20:17:13.573+00:00",
+        "signature": {
+          "id": "signature",
+          "status": "pass",
+          "message": "Valid RS256 signature by did:web:delta-dao.com."
+        },
+        "validity": {
+          "id": "validity",
+          "status": "pass",
+          "message": "Valid until 2026-12-27T20:17:13.573+00:00."
+        },
+        "digest": "sha256-423af17af67abbd82eb435393900329026efcc54bfdca044add4be2412be3948",
+        "payload": {},
+        "jwt": "<omitted>"
+      },
+      {
+        "id": "https://delta-dao.com/.well-known/40_gx_contactinformation_deltaDAO.json",
+        "types": ["VerifiableCredential", "gx:ContactInformation"],
+        "issuer": "did:web:delta-dao.com",
+        "validFrom": "2026-09-28T19:55:12.995+00:00",
+        "validUntil": "2026-12-27T19:55:12.995+00:00",
+        "signature": {
+          "id": "signature",
+          "status": "pass",
+          "message": "Valid RS256 signature by did:web:delta-dao.com."
+        },
+        "validity": {
+          "id": "validity",
+          "status": "pass",
+          "message": "Valid until 2026-12-27T19:55:12.995+00:00."
+        },
+        "digest": "sha256-982887360a1b5709da88549c70e5b7c5beac9bcb854adc83480211b0b9410963",
+        "payload": {},
+        "jwt": "<omitted>"
+      },
+      {
+        "id": "https://delta-dao.com/.well-known/40_gx_dataaccountexport_noise_levels.json",
+        "types": ["VerifiableCredential", "gx:DataAccountExport"],
+        "issuer": "did:web:delta-dao.com",
+        "validFrom": "2026-09-28T19:55:35.943+00:00",
+        "validUntil": "2026-12-27T19:55:35.943+00:00",
+        "signature": {
+          "id": "signature",
+          "status": "pass",
+          "message": "Valid RS256 signature by did:web:delta-dao.com."
+        },
+        "validity": {
+          "id": "validity",
+          "status": "pass",
+          "message": "Valid until 2026-12-27T19:55:35.943+00:00."
+        },
+        "digest": "sha256-a964d0befa8dba9badba226d4ed2e7f1452b4e2534e2db1c515aabc3880ad1d9",
+        "payload": {},
+        "jwt": "<omitted>"
+      },
+      {
+        "id": "https://delta-dao.com/.well-known/40_gx_dataportability_noise_levels.json",
+        "types": ["VerifiableCredential", "gx:DataPortability"],
+        "issuer": "did:web:delta-dao.com",
+        "validFrom": "2026-09-28T20:12:24.741+00:00",
+        "validUntil": "2026-12-27T20:12:24.741+00:00",
+        "signature": {
+          "id": "signature",
+          "status": "pass",
+          "message": "Valid RS256 signature by did:web:delta-dao.com."
+        },
+        "validity": {
+          "id": "validity",
+          "status": "pass",
+          "message": "Valid until 2026-12-27T20:12:24.741+00:00."
+        },
+        "digest": "sha256-5cf199d1d511dc2a4a9e35288700ba257317ffc9f139918490850b426959259f",
+        "payload": {},
+        "jwt": "<omitted>"
+      },
+      {
+        "id": "https://delta-dao.com/.well-known/40_gx_dataprotectionregulationmeasures_deltaDAO.json",
+        "types": [
+          "VerifiableCredential",
+          "gx:DataProtectionRegulationMeasures"
+        ],
+        "issuer": "did:web:delta-dao.com",
+        "validFrom": "2026-09-28T19:55:55.306+00:00",
+        "validUntil": "2026-12-27T19:55:55.306+00:00",
+        "signature": {
+          "id": "signature",
+          "status": "pass",
+          "message": "Valid RS256 signature by did:web:delta-dao.com."
+        },
+        "validity": {
+          "id": "validity",
+          "status": "pass",
+          "message": "Valid until 2026-12-27T19:55:55.306+00:00."
+        },
+        "digest": "sha256-c6059b65286e8deaed5832a1500406a9bd35cceb050486c70aaf3aab09760202",
+        "payload": {},
+        "jwt": "<omitted>"
+      },
+      {
+        "id": "https://delta-dao.com/.well-known/40_gx_eori_deltaDAO.json",
+        "types": ["VerifiableCredential", "gx:EORI"],
+        "issuer": "did:web:www.delta-dao.com:notary:v2",
+        "validFrom": "2026-10-12T19:12:01.831+00:00",
+        "validUntil": "2026-10-22T23:59:59.000+00:00",
+        "signature": {
+          "id": "signature",
+          "status": "pass",
+          "message": "Valid PS256 signature by did:web:www.delta-dao.com:notary:v2."
+        },
+        "validity": {
+          "id": "validity",
+          "status": "pass",
+          "message": "Valid until 2026-10-22T23:59:59.000+00:00."
+        },
+        "digest": "sha256-5aa167f2115528afdc97b1597ad730e62f21165c833549d8533ea67139cf2309",
+        "payload": {},
+        "jwt": "<omitted>"
+      },
+      {
+        "id": "https://delta-dao.com/.well-known/40_gx_issuer_deltaDAO.json",
+        "types": ["VerifiableCredential", "gx:Issuer"],
+        "issuer": "did:web:delta-dao.com",
+        "validFrom": "2026-09-28T19:56:42.475+00:00",
+        "validUntil": "2026-12-27T19:56:42.475+00:00",
+        "signature": {
+          "id": "signature",
+          "status": "pass",
+          "message": "Valid RS256 signature by did:web:delta-dao.com."
+        },
+        "validity": {
+          "id": "validity",
+          "status": "pass",
+          "message": "Valid until 2026-12-27T19:56:42.475+00:00."
+        },
+        "digest": "sha256-1aef7686bfdeec30b8629026ef72ca0bbc8f8f1e68afbafd4d257495fc4f6e94",
+        "payload": {},
+        "jwt": "<omitted>"
+      },
+      {
+        "id": "https://delta-dao.com/.well-known/40_gx_legaldocument_noise_levels.json",
+        "types": ["VerifiableCredential", "gx:LegalDocument"],
+        "issuer": "did:web:delta-dao.com",
+        "validFrom": "2026-09-28T19:57:01.266+00:00",
+        "validUntil": "2026-12-27T19:57:01.266+00:00",
+        "signature": {
+          "id": "signature",
+          "status": "pass",
+          "message": "Valid RS256 signature by did:web:delta-dao.com."
+        },
+        "validity": {
+          "id": "validity",
+          "status": "pass",
+          "message": "Valid until 2026-12-27T19:57:01.266+00:00."
+        },
+        "digest": "sha256-cc36dffddaed36366fd6a4805dba096ddccac9213acae7951b34bf7bfafccbbe",
+        "payload": {},
+        "jwt": "<omitted>"
+      },
+      {
+        "id": "https://delta-dao.com/.well-known/40_gx_legalperson_deltaDAO.jwt",
+        "types": ["VerifiableCredential", "gx:LegalPerson"],
+        "issuer": "did:web:delta-dao.com",
+        "validFrom": "2026-09-28T20:26:04.857+00:00",
+        "validUntil": "2026-12-27T20:26:04.857+00:00",
+        "signature": {
+          "id": "signature",
+          "status": "pass",
+          "message": "Valid RS256 signature by did:web:delta-dao.com."
+        },
+        "validity": {
+          "id": "validity",
+          "status": "pass",
+          "message": "Valid until 2026-12-27T20:26:04.857+00:00."
+        },
+        "digest": "sha256-8b2509e7e5a3057db9a05abcc969936716835b6c25f1aff0799353d078077b14",
+        "payload": {},
+        "jwt": "<omitted>"
+      },
+      {
+        "id": "https://delta-dao.com/.well-known/40_gx_leicode_deltaDAO.json",
+        "types": ["VerifiableCredential", "gx:LeiCode"],
+        "issuer": "did:web:www.delta-dao.com:notary:v2",
+        "validFrom": "2026-10-12T19:11:22.602+00:00",
+        "validUntil": "2026-10-22T23:59:59.000+00:00",
+        "signature": {
+          "id": "signature",
+          "status": "pass",
+          "message": "Valid PS256 signature by did:web:www.delta-dao.com:notary:v2."
+        },
+        "validity": {
+          "id": "validity",
+          "status": "pass",
+          "message": "Valid until 2026-10-22T23:59:59.000+00:00."
+        },
+        "digest": "sha256-e34fd40d7dfdb4d223c3e1830ec2b6b01528e4816779f5abc945ba986fe9fbdf",
+        "payload": {},
+        "jwt": "<omitted>"
+      },
+      {
+        "id": "https://delta-dao.com/.well-known/40_gx_termsandconditions_noise_levels.json",
+        "types": ["VerifiableCredential", "gx:TermsAndConditions"],
+        "issuer": "did:web:delta-dao.com",
+        "validFrom": "2026-09-28T19:57:51.234+00:00",
+        "validUntil": "2026-12-27T19:57:51.234+00:00",
+        "signature": {
+          "id": "signature",
+          "status": "pass",
+          "message": "Valid RS256 signature by did:web:delta-dao.com."
+        },
+        "validity": {
+          "id": "validity",
+          "status": "pass",
+          "message": "Valid until 2026-12-27T19:57:51.234+00:00."
+        },
+        "digest": "sha256-e31ef6bee7711090f4f7a2e5990bb03258fc7fcbc0f35e15f582cbbc56cd3eb1",
+        "payload": {},
+        "jwt": "<omitted>"
+      },
+      {
+        "id": "https://delta-dao.com/.well-known/40_gx_usagetermsandconditions_noise_levels.json",
+        "types": ["VerifiableCredential", "gx:UsageTermsAndConditions"],
+        "issuer": "did:web:delta-dao.com",
+        "validFrom": "2026-09-28T19:58:03.218+00:00",
+        "validUntil": "2026-12-27T19:58:03.218+00:00",
+        "signature": {
+          "id": "signature",
+          "status": "pass",
+          "message": "Valid RS256 signature by did:web:delta-dao.com."
+        },
+        "validity": {
+          "id": "validity",
+          "status": "pass",
+          "message": "Valid until 2026-12-27T19:58:03.218+00:00."
+        },
+        "digest": "sha256-68e6c90c896c204331c4626b1459c8887db322be29c24eeb807b7a226016ec21",
+        "payload": {},
+        "jwt": "<omitted>"
+      },
+      {
+        "id": "https://delta-dao.com/.well-known/40_gx_vatid_deltaDAO.json",
+        "types": ["VerifiableCredential", "gx:VatID"],
+        "issuer": "did:web:www.delta-dao.com:notary:v2",
+        "validFrom": "2026-10-12T19:10:27.637+00:00",
+        "validUntil": "2026-10-22T23:59:59.000+00:00",
+        "signature": {
+          "id": "signature",
+          "status": "pass",
+          "message": "Valid PS256 signature by did:web:www.delta-dao.com:notary:v2."
+        },
+        "validity": {
+          "id": "validity",
+          "status": "pass",
+          "message": "Valid until 2026-10-22T23:59:59.000+00:00."
+        },
+        "digest": "sha256-f40bc218a1a4fa69383464ffe5c32f399bac8c7b25e125639fa1aaa5fea5cb9c",
+        "payload": {},
+        "jwt": "<omitted>"
+      }
+    ],
+    "issuer": "did:web:delta-dao.com",
+    "validFrom": "2026-10-12T19:14:34.873+00:00",
+    "validUntil": "2027-01-10T19:14:34.874+00:00",
+    "jwt": "<omitted>",
+    "payload": {
+      "@context": [
+        "https://www.w3.org/ns/credentials/v2",
+        "https://www.w3.org/ns/credentials/examples/v2"
+      ],
+      "type": "VerifiablePresentation",
+      "verifiableCredential": [
+        {
+          "@context": "https://www.w3.org/ns/credentials/v2",
+          "id": "data:application/vc+jwt,eyJhbGciOiJSUzI1NiIsInR5cCI6InZjK2p3dCIsImN0eSI6InZjIiwiaXNzIjoiZGlkOndlYjpkZWx0YS1kYW8uY29tIiwia2lkIjoiZGlkOndlYjpkZWx0YS1kYW8uY29tI0pXSzIwMjAtUlNBIn0.eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvdjIiLCJodHRwczovL3czaWQub3JnL2dhaWEteC9kZXZlbG9wbWVudCMiLHsiZ3giOiJodHRwczovL3czaWQub3JnL2dhaWEteC9kZXZlbG9wbWVudCMiLCJzY2hlbWEiOiJodHRwczovL3NjaGVtYS5vcmcvIiwidmNhcmQiOiJodHRwOi8vd3d3LnczLm9yZy8yMDA2L3ZjYXJkL25zIyJ9XSwidHlwZSI6WyJWZXJpZmlhYmxlQ3JlZGVudGlhbCIsImd4OkFkZHJlc3MiXSwiQGlkIjoiaHR0cHM6Ly9kZWx0YS1kYW8uY29tLy53ZWxsLWtub3duLzQwX2d4X2FkZHJlc3NfZGVsdGFEQU8uanNvbiIsImlzc3VlciI6ImRpZDp3ZWI6ZGVsdGEtZGFvLmNvbSIsInZhbGlkRnJvbSI6IjIwMjYtMDktMjhUMjA6MTc6MTMuNTczKzAwOjAwIiwidmFsaWRVbnRpbCI6IjIwMjYtMTItMjdUMjA6MTc6MTMuNTczKzAwOjAwIiwiY3JlZGVudGlhbFN1YmplY3QiOnsiQGlkIjoiaHR0cHM6Ly9kZWx0YS1kYW8uY29tLy53ZWxsLWtub3duLzQwX2d4X2FkZHJlc3NfZGVsdGFEQU8uanNvbiNjcyIsInR5cGUiOiJneDpBZGRyZXNzIiwiZ3g6Y291bnRyeUNvZGUiOiJERSIsImd4OmNvdW50cnlOYW1lIjoiR2VybWFueSIsInZjYXJkOnN0cmVldC1hZGRyZXNzIjoiS2F0aGFyaW5lbnN0cmHDn2UgMzBhIiwidmNhcmQ6cG9zdGFsLWNvZGUiOiIyMDQ1NyIsInZjYXJkOmxvY2FsaXR5IjoiSGFtYnVyZyIsInZjYXJkOnJlZ2lvbiI6IkRFNjAifX0.h9rAKo0AEc2G2T-jXejnMyuoolQk12V_eAQCtyai48T9oCYhb0EbtXgsklhcKFmp1rY1rU-IRwedcQp5R56tJeC5LNlztnqMtEQEGWclORikgJqxsltL9QSA_ctkVwIzQUPBj6wmD9LB0-eSLn3K5qM8apEo8vCwcQrWOTPZyKcAV5MYoDOveVLKP1txTYCAPWDeSgGp7J0zVJ62EBwm0j-eRx-2JipWCnnlrNUb3qJza9bSRdgYcuIhwuKPM4s77Ste77za9dY74k5ZOxsaXO3_WQQyA01lGdqmCHWURKo2qtEG8IA5brHtzf_OkA1tRj_0Ew80tK7mVtsWgicKPRfRFGsxu1o3I5uf9_AKODlA30QNJBN93m-WTHI7N-lFHD5NtCwshc1ikO_2ztoyauL9By8k63SVOzA_3Ga-d2SsqWeb9pFex5dKU0YDw180KpAUbw3uNqtMTcr7enxPdypxWiH_LcDQ6nSnYEyAMvYUDpdqyZBK4s3eurLxCxF8WIRHAPZ_fr_e2Kyo3wiWEoH9DYA5EQEWGJbfb1zxkDhh1EHW9V2GSgklvOcjxie6B5BLkPbApgVLTvNDDWM81RGdjFqDep7sR8EFWleJFPzw4_9KJbBYhM-mf-hG7d2wpgb-f6wx2EVsse518uXimIzmHDVbK3WALv6dVflr3us",
+          "type": "EnvelopedVerifiableCredential"
+        },
+        {
+          "@context": "https://www.w3.org/ns/credentials/v2",
+          "id": "data:application/vc+jwt,eyJhbGciOiJSUzI1NiIsInR5cCI6InZjK2p3dCIsImN0eSI6InZjIiwiaXNzIjoiZGlkOndlYjpkZWx0YS1kYW8uY29tIiwia2lkIjoiZGlkOndlYjpkZWx0YS1kYW8uY29tI0pXSzIwMjAtUlNBIn0.eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvdjIiLCJodHRwczovL3czaWQub3JnL2dhaWEteC9kZXZlbG9wbWVudCMiLHsiZ3giOiJodHRwczovL3czaWQub3JnL2dhaWEteC9kZXZlbG9wbWVudCMiLCJzY2hlbWEiOiJodHRwczovL3NjaGVtYS5vcmcvIiwidmNhcmQiOiJodHRwOi8vd3d3LnczLm9yZy8yMDA2L3ZjYXJkL25zIyJ9XSwidHlwZSI6WyJWZXJpZmlhYmxlQ3JlZGVudGlhbCIsImd4OkNvbnRhY3RJbmZvcm1hdGlvbiJdLCJAaWQiOiJodHRwczovL2RlbHRhLWRhby5jb20vLndlbGwta25vd24vNDBfZ3hfY29udGFjdGluZm9ybWF0aW9uX2RlbHRhREFPLmpzb24iLCJpc3N1ZXIiOiJkaWQ6d2ViOmRlbHRhLWRhby5jb20iLCJ2YWxpZEZyb20iOiIyMDI2LTA5LTI4VDE5OjU1OjEyLjk5NSswMDowMCIsInZhbGlkVW50aWwiOiIyMDI2LTEyLTI3VDE5OjU1OjEyLjk5NSswMDowMCIsImNyZWRlbnRpYWxTdWJqZWN0Ijp7IkBpZCI6Imh0dHBzOi8vZGVsdGEtZGFvLmNvbS8ud2VsbC1rbm93bi80MF9neF9jb250YWN0aW5mb3JtYXRpb25fZGVsdGFEQU8uanNvbiNjcyIsInR5cGUiOiJneDpDb250YWN0SW5mb3JtYXRpb24iLCJneDp1cmwiOnsiQGlkIjoiaHR0cHM6Ly93d3cuZGVsdGEtZGFvLmNvbS9jb250YWN0In0sImd4OmVtYWlsIjoiY29udGFjdEBkZWx0YS1kYW8uY29tIiwiZ3g6cGhvbmVOdW1iZXIiOiIrNDk0MDQzMjgxOTA0IiwiZ3g6cG9zdGFsQWRkcmVzcyI6eyJAaWQiOiJodHRwczovL2RlbHRhLWRhby5jb20vLndlbGwta25vd24vNDBfZ3hfYWRkcmVzc19kZWx0YURBTy5qc29uI2NzIn19fQ.tg0V510LKbGDAU1MZlTek8yyotVjGI_60hZ-817LIXib7pAbS9MCxPDjY50c2d1a9xKLv_nJSxN9EmS5BVBF-1zs1xZacEXSRWghVivQ9IEC6nC51eQF-Td1H-eJExWS5XNQcb4N9n8zKs51aWLREvgbL-uWlNUe9NhDCOm0c73KA7DsTsWBiyIq9XsWSAX_GkT38wT_x0SRps7aYGUcz5gSZ1OxKzLs2CDMB2Oa05RDbuBe0uFRmmJ_EtRmiYGF8pMVfVOd2SJ0zWfUwGSiupqK6MIl4pAEtRBUooXMYlGceDoX7v-fzfCape8gcyZ9Jz_ojabla7paCp2s4fWPqRJKIKlxQo8g4p0halTKOtoFuLpIZKP353c9kApmFBYwnBubGsNJQR-YGSpgLrXQQB45Zr9-fDeFkDnOdamQogZAqcuHQIM1FRxn3YkLWyU7iCJXd6k7tp7vyCTnUVAcLBV2R0XIntkQd49DiEj8fsm_ZdxCimhtEvp9lEDzbDZrjjdHJddN8HuAU68_9ws3ICQ7e4H0TI4F0lrYaN8G3i8HTdV5sPutg0IA-2kREwlT7B5j_we-xK9Dlq3FpFxYZBuDjbD9A_kldymDI2hJ64GJBYD_KdNtH3nc0eyp-bCvtqYz1TzTCkaup7E5Td4IxHM1XfZEQywzYv-4k8wrMn8",
+          "type": "EnvelopedVerifiableCredential"
+        },
+        {
+          "@context": "https://www.w3.org/ns/credentials/v2",
+          "id": "data:application/vc+jwt,eyJhbGciOiJSUzI1NiIsInR5cCI6InZjK2p3dCIsImN0eSI6InZjIiwiaXNzIjoiZGlkOndlYjpkZWx0YS1kYW8uY29tIiwia2lkIjoiZGlkOndlYjpkZWx0YS1kYW8uY29tI0pXSzIwMjAtUlNBIn0.eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvdjIiLCJodHRwczovL3czaWQub3JnL2dhaWEteC9kZXZlbG9wbWVudCMiLHsiZ3giOiJodHRwczovL3czaWQub3JnL2dhaWEteC9kZXZlbG9wbWVudCMiLCJzY2hlbWEiOiJodHRwczovL3NjaGVtYS5vcmcvIiwidmNhcmQiOiJodHRwOi8vd3d3LnczLm9yZy8yMDA2L3ZjYXJkL25zIyJ9XSwidHlwZSI6WyJWZXJpZmlhYmxlQ3JlZGVudGlhbCIsImd4OkRhdGFBY2NvdW50RXhwb3J0Il0sIkBpZCI6Imh0dHBzOi8vZGVsdGEtZGFvLmNvbS8ud2VsbC1rbm93bi80MF9neF9kYXRhYWNjb3VudGV4cG9ydF9ub2lzZV9sZXZlbHMuanNvbiIsImlzc3VlciI6ImRpZDp3ZWI6ZGVsdGEtZGFvLmNvbSIsInZhbGlkRnJvbSI6IjIwMjYtMDktMjhUMTk6NTU6MzUuOTQzKzAwOjAwIiwidmFsaWRVbnRpbCI6IjIwMjYtMTItMjdUMTk6NTU6MzUuOTQzKzAwOjAwIiwiY3JlZGVudGlhbFN1YmplY3QiOnsiQGlkIjoiaHR0cHM6Ly9kZWx0YS1kYW8uY29tLy53ZWxsLWtub3duLzQwX2d4X2RhdGFhY2NvdW50ZXhwb3J0X25vaXNlX2xldmVscy5qc29uI2NzIiwidHlwZSI6Imd4OkRhdGFBY2NvdW50RXhwb3J0IiwiZ3g6cmVxdWVzdFR5cGUiOiJlbWFpbCIsImd4OmFjY2Vzc1R5cGUiOiJkaWdpdGFsIiwiZ3g6Zm9ybWF0VHlwZSI6ImFwcGxpY2F0aW9uL2pzb24ifX0.NYGzG3H71VhCPAY3pSFUf_zO91urZIaGj-itooSSb2dOIU74dNgbpcklybe5RP24r9uv7YnvV4oW3PQm9qC1N0zwi5Djw5YYEjDcfUMfuo0ILn1bJPOKwWLW5yrBorD4zs0ZLYXQNUX0fqUdU0V3ExV_Zz-Mgey_UkJs7EiqmjH_xyCAjXzaLHEh3UEWigYoBk40kCwKsWYJsEG01ZZYfaB7RVfjvfYTXqv0oESuRMiDFXLlsv8dXRKpu3TVX63BZ5AKIPSv7NB_rHt1HTn_dmDAlirB2D_ysnOrFLLD5gXVrYCYrfYBGZcNs8AGH9pOd7i6AdgF4b2OcJ7boH9cbL8TOExF8MMeAI3XI0UfgebJPhQBO_9VI0l-FqDAwwHJZAlLteALF9LW2mgx8PFYMKHJ6251rxUBAdsSQdBa_PfyU_jrKsuQDDxM40HMuxZ7td0owUs3Ppnmc_RXBBSNZHmS48CRo7LTsyvsZfopprruonQjh16-skE2csg-vvocHl2HRrxWt19SJR6C5UWLsgkM25j8flwAVC6oR_78y9p8rooCOHKxvDVKse3zd0gy-_hidlmkByOg4Zfw4vt8Rxhvtpknrkredb68_lE34ZIi7Wreq5R8D9hKESMnzAinW74pxNcSDRBRKyq8FdIGaO_JsZvqh2t2vO9mJrCj1ZM",
+          "type": "EnvelopedVerifiableCredential"
+        },
+        {
+          "@context": "https://www.w3.org/ns/credentials/v2",
+          "id": "data:application/vc+jwt,eyJhbGciOiJSUzI1NiIsInR5cCI6InZjK2p3dCIsImN0eSI6InZjIiwiaXNzIjoiZGlkOndlYjpkZWx0YS1kYW8uY29tIiwia2lkIjoiZGlkOndlYjpkZWx0YS1kYW8uY29tI0pXSzIwMjAtUlNBIn0.eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvdjIiLCJodHRwczovL3czaWQub3JnL2dhaWEteC9kZXZlbG9wbWVudCMiLHsiZ3giOiJodHRwczovL3czaWQub3JnL2dhaWEteC9kZXZlbG9wbWVudCMiLCJzY2hlbWEiOiJodHRwczovL3NjaGVtYS5vcmcvIiwidmNhcmQiOiJodHRwOi8vd3d3LnczLm9yZy8yMDA2L3ZjYXJkL25zIyJ9XSwidHlwZSI6WyJWZXJpZmlhYmxlQ3JlZGVudGlhbCIsImd4OkRhdGFQb3J0YWJpbGl0eSJdLCJAaWQiOiJodHRwczovL2RlbHRhLWRhby5jb20vLndlbGwta25vd24vNDBfZ3hfZGF0YXBvcnRhYmlsaXR5X25vaXNlX2xldmVscy5qc29uIiwiaXNzdWVyIjoiZGlkOndlYjpkZWx0YS1kYW8uY29tIiwidmFsaWRGcm9tIjoiMjAyNi0wOS0yOFQyMDoxMjoyNC43NDErMDA6MDAiLCJ2YWxpZFVudGlsIjoiMjAyNi0xMi0yN1QyMDoxMjoyNC43NDErMDA6MDAiLCJjcmVkZW50aWFsU3ViamVjdCI6eyJAaWQiOiJodHRwczovL2RlbHRhLWRhby5jb20vLndlbGwta25vd24vNDBfZ3hfZGF0YXBvcnRhYmlsaXR5X25vaXNlX2xldmVscy5qc29uI2NzIiwidHlwZSI6Imd4OkRhdGFQb3J0YWJpbGl0eSIsImd4OnJlc291cmNlIjoiQ29uc3VtZXItYWNjZXNzaWJsZSBub2lzZSBsZXZlbCBkYXRhc2V0cyBhbmQgY29tcHV0ZSBqb2IgcmVzdWx0cyBvZiB0aGUgc2VydmljZSIsImd4Om1lYW5zIjpbIkRvd25sb2FkIHZpYSBQb250dXMtWCBwb3J0YWwiLCJQcm9ncmFtbWF0aWMgZXhwb3J0IHZpYSBQb250dXMtWCAvIE9jZWFuIEVudGVycHJpc2UgQ29ubmVjdG9yIEFQSSJdLCJneDpkb2N1bWVudGF0aW9ucyI6W3siQGlkIjoiaHR0cHM6Ly9kb2NzLnBvbnR1cy14LmV1In1dLCJneDpsZWdhbERvY3VtZW50Ijp7IkBpZCI6Imh0dHBzOi8vZGVsdGEtZGFvLmNvbS8ud2VsbC1rbm93bi80MF9neF9sZWdhbGRvY3VtZW50X25vaXNlX2xldmVscy5qc29uI2NzIn0sImd4OmRlbGV0aW9uTWV0aG9kcyI6WyJEZWxldGlvbiBvZiBvZmYtY2hhaW4gc3RvcmVkIGRhdGEgdXBvbiB3cml0dGVuIHJlcXVlc3QgdG8gdGhlIHByb3ZpZGVyIl0sImd4OmRlbGV0aW9uVGltZWZyYW1lIjoiMzAgZGF5cyBhZnRlciB0ZXJtaW5hdGlvbiBvZiB0aGUgY29udHJhY3QiLCJneDpmb3JtYXRzIjpbIkpTT04iLCJDU1YiXSwiZ3g6cHJpY2luZyI6eyJAaWQiOiJodHRwczovL2RlbHRhLWRhby5jb20vYXNzZXRzL3Rlcm1zXzk5ZDk2YzYwZDQ1NzE0ZGYxZTMzM2ZjY2MwMTlhYTc1OTJlMTExMDEzZGI4MGEzMDMwNmJjYTlmNTBlOGNhYWRfZGVsdGFEQU8ucGRmIn0sImd4OmNvbnRhY3RJbmZvcm1hdGlvbiI6eyJAaWQiOiJodHRwczovL2RlbHRhLWRhby5jb20vLndlbGwta25vd24vNDBfZ3hfY29udGFjdGluZm9ybWF0aW9uX2RlbHRhREFPLmpzb24jY3MifX19.TiRy3UUNHD4R-90qAvVdJSz_yAl__tRRVXgS-OhpzSDG77s0YIYLj_XZEWpCEd9SvG1mtMoOrjru91VT9blPpQZ8oaVqcStIw644N6NqfHgKFx7wd7bB3u4y9ZlK59Xieo3Xak4rkCQAQpK_msvOdW6TTpKIeZtuH8N8t_UFEl1Cj1Kk3F8lGa6lCpI24fLrAyyHqJsFLV3M_-K50sTEHn2C8M1Wno6FB1INKQU7Eb8c0x5PPCqueLPHfPvQ6UGYE_TJTvfqYYHJclNuo7JXXPfy7cRKQbRMdnbwFu5UUwkSYhlS5q2PfAKJZufirnbI1xkgLpZ8TGU1u2dC2EZPe1XzQocUhLtN45VGJjGx4Z-o-yQdk5FY7ko1n2slQXmB6dI0MKUZazi5SbxddZ89nRe5L_GX4FZn5oQCffFN8z8x3W2C1mJquTUE4DC7oeEM3eMhC1F__E1-Bj6nfZFzM88Dfb0nsT98qG22aXTj3678C58GiMnNy7uqOrIQwiA2TxM-czEHTa8IrRsMA-699N9TPNu6OGOMUucSPlzwwVRamSTJNXyFzeOIkbI1M77cn3HdRvxc4EQdnOQPuzVLMZXOBHPn_nX52FL1nLPqAF1VhzFlEh8MFhLB9QgD_0y9v_zos0GMcY1Tibv16Vp7V2wpUMeoRIEI8bf1SpgPohw",
+          "type": "EnvelopedVerifiableCredential"
+        },
+        {
+          "@context": "https://www.w3.org/ns/credentials/v2",
+          "id": "data:application/vc+jwt,eyJhbGciOiJSUzI1NiIsInR5cCI6InZjK2p3dCIsImN0eSI6InZjIiwiaXNzIjoiZGlkOndlYjpkZWx0YS1kYW8uY29tIiwia2lkIjoiZGlkOndlYjpkZWx0YS1kYW8uY29tI0pXSzIwMjAtUlNBIn0.eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvdjIiLCJodHRwczovL3czaWQub3JnL2dhaWEteC9kZXZlbG9wbWVudCMiLHsiZ3giOiJodHRwczovL3czaWQub3JnL2dhaWEteC9kZXZlbG9wbWVudCMiLCJzY2hlbWEiOiJodHRwczovL3NjaGVtYS5vcmcvIiwidmNhcmQiOiJodHRwOi8vd3d3LnczLm9yZy8yMDA2L3ZjYXJkL25zIyJ9XSwidHlwZSI6WyJWZXJpZmlhYmxlQ3JlZGVudGlhbCIsImd4OkRhdGFQcm90ZWN0aW9uUmVndWxhdGlvbk1lYXN1cmVzIl0sIkBpZCI6Imh0dHBzOi8vZGVsdGEtZGFvLmNvbS8ud2VsbC1rbm93bi80MF9neF9kYXRhcHJvdGVjdGlvbnJlZ3VsYXRpb25tZWFzdXJlc19kZWx0YURBTy5qc29uIiwiaXNzdWVyIjoiZGlkOndlYjpkZWx0YS1kYW8uY29tIiwidmFsaWRGcm9tIjoiMjAyNi0wOS0yOFQxOTo1NTo1NS4zMDYrMDA6MDAiLCJ2YWxpZFVudGlsIjoiMjAyNi0xMi0yN1QxOTo1NTo1NS4zMDYrMDA6MDAiLCJjcmVkZW50aWFsU3ViamVjdCI6eyJAaWQiOiJodHRwczovL2RlbHRhLWRhby5jb20vLndlbGwta25vd24vNDBfZ3hfZGF0YXByb3RlY3Rpb25yZWd1bGF0aW9ubWVhc3VyZXNfZGVsdGFEQU8uanNvbiNjcyIsInR5cGUiOiJneDpEYXRhUHJvdGVjdGlvblJlZ3VsYXRpb25NZWFzdXJlcyIsImd4OnVybCI6eyJAaWQiOiJodHRwczovL21hcmtldC5kZWx0YS1kYW8uY29tL3ByaXZhY3kvcHJpdmFjeS1wb2xpY3kifSwiZ3g6bWltZVR5cGVzIjpbInRleHQvaHRtbCJdLCJneDpnb3Zlcm5pbmdMYXdDb3VudHJpZXMiOlsiREUiXSwiZ3g6aW52b2x2ZWRQYXJ0aWVzIjpbeyJAaWQiOiJodHRwczovL2RlbHRhLWRhby5jb20vLndlbGwta25vd24vNDBfZ3hfbGVnYWxwZXJzb25fZGVsdGFEQU8uand0I2NzIn1dfX0.KjafhCrTXqS9YEaAd9EoDblOZ6F1cW4h3RbM8fYhU9o4OSvO-ZqKZ5DxFSqluLko219xDtnvsz1Way9UIBfuDDKHHbg4vIOtTC5XCpOPJU00Rra239R9khr1NcJxXs2YDsyrTmmYsM9cB-qOIHCeDpP52bTQyIO7VRhz04fmNOoFdUE9jfilJt-lBeNdh7frQOHwbqbHD4Ik3De9sMUmhLCvN3ckzbJAQIkgrAKA2JZ2YaoYcMq98NV-PeuVKWLPh_IKdI4gOOTCh8Z8btG8f8a8ehrcbLKbeBnnyH6ywNjE0UPLGAZ_prmVtm4cE-RAtzhxlpDXkMdMO7ZrmBZyWprIXIUWoiHmy4_myg_jVekRFpanwH_GiVXxAbNJZv9i5Ve7E3D1oZQ1NEGK4L-QNz9bRTiUL6yrMNlsQLnJmoKnxK9tp9pb-WOGfpeVmF3tv5T9lJCY0ebqpB_5GoT8hPY3AzV0zHIWYvz2ORtZT7--nJD__5rXRqbA0igZ_GU3EYbSVrw5Frc2119rDZP-4Qoclty8pr9AbSei33MT-0I5z4_1p4snMzUzsNLPfR7h6pkAyxWWH-_igFjeRrRQz4HlTQBTTZscVA-JtS4IpkHAreE25DQK91tOTfOg2juHU_oLsjurBRYEy6ViyjvP0AueAh0rT1QEVMq9uMaSxRk",
+          "type": "EnvelopedVerifiableCredential"
+        },
+        {
+          "@context": "https://www.w3.org/ns/credentials/v2",
+          "id": "data:application/vc+jwt,eyJhbGciOiJQUzI1NiIsImlzcyI6ImRpZDp3ZWI6d3d3LmRlbHRhLWRhby5jb206bm90YXJ5OnYyIiwia2lkIjoiZGlkOndlYjp3d3cuZGVsdGEtZGFvLmNvbTpub3Rhcnk6djIjWDUwOS1KV0siLCJpYXQiOjE3OTE4MzIzMjE4MzEsImV4cCI6MTc5MjcxMzU5OTAwMCwiY3R5IjoidmMrbGQiLCJ0eXAiOiJ2YytsZCtqd3QifQ.eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvdjIiLCJodHRwczovL3czaWQub3JnL2dhaWEteC9kZXZlbG9wbWVudCMiXSwidHlwZSI6WyJWZXJpZmlhYmxlQ3JlZGVudGlhbCIsImd4OkVPUkkiXSwiaWQiOiJodHRwczovL2RlbHRhLWRhby5jb20vLndlbGwta25vd24vNDBfZ3hfZW9yaV9kZWx0YURBTy5qc29uIiwibmFtZSI6IkVPUkkgUmVnaXN0cmF0aW9uIE51bWJlciIsImRlc2NyaXB0aW9uIjoiRWNvbm9taWMgT3BlcmF0b3JzIFJlZ2lzdHJhdGlvbiBhbmQgSWRlbnRpZmljYXRpb24gcmVnaXN0cmF0aW9uIG51bWJlciIsImlzc3VlciI6ImRpZDp3ZWI6d3d3LmRlbHRhLWRhby5jb206bm90YXJ5OnYyIiwidmFsaWRGcm9tIjoiMjAyNi0xMC0xMlQxOToxMjowMS44MzErMDA6MDAiLCJ2YWxpZFVudGlsIjoiMjAyNi0xMC0yMlQyMzo1OTo1OS4wMDArMDA6MDAiLCJjcmVkZW50aWFsU3ViamVjdCI6eyJpZCI6Imh0dHBzOi8vZGVsdGEtZGFvLmNvbS8ud2VsbC1rbm93bi80MF9neF9lb3JpX2RlbHRhREFPLmpzb24jY3MiLCJneDplb3JpIjoiREUzOTA3MjYxNzUwNzY3NjYiLCJneDpjb3VudHJ5IjoiR2VybWFueSJ9LCJldmlkZW5jZSI6eyJneDpldmlkZW5jZU9mIjoiZ3g6RU9SSSIsImd4OmV2aWRlbmNlVVJMIjoiaHR0cHM6Ly9lYy5ldXJvcGEuZXUvdGF4YXRpb25fY3VzdG9tcy9kZHMyL2Vvcy92YWxpZGF0aW9uL3NlcnZpY2VzL3ZhbGlkYXRpb24iLCJneDpleGVjdXRpb25EYXRlIjoiMjAyNi0xMC0xMlQxOToxMjowMS44MzErMDA6MDAifX0.Vs_jlUq3LvdSITdT2MvR5j4A1_uliwXb1BWalS9Y51xzOZbgAjdW1HMu6yD6JCdfTU46RBD1oAf6tnQ0aFwxW0dDTpdwOPiJyYNM4ZLfYAoKxX7UaL-6V8M8UT7gOA3W7ubUJ3JEmOtPyeAg4q3LYn3xTz3LNFbQow26RtcaJUQ5Zjfo4inBXrMYRQvNCQqJmOecRuZ8InVG5gWsT_HNxNEm39ZlL5aLHrw0JMQE7Qt1uVM-GBFQEJjrD-LzW31ENnv8vV486VJmJ9t2uB0ySCefpoRzBfwz4EPp1XsKq6QaP2lu7ijyPEQ34UeZLgODpMwI8Iasgijgq-dpVWQgDcCydMK4LID1id6aRUkkng5baGeKDSqJinZ-rRmN62uOtTExtz12HcWi-ZElnpogHMf_ZtxyvkGCQARzJ8Ha26MSewBF_uOAatd1SK0WeSM-i0664u5eukGInyYynZ59o3JJhzK11jURc87xNgnhi8dNsFSLdM-6iaTbmHv9G6j3E2T_diPGmlBR3EvPl_7XOcH2fpvjSg-Vb-_EtqPt44TEcgTLnY5J7Z9gzzVk1MavIbNNUN8efYZv4H_KDWKP83-dfmClY92NgtZOUnsfDF6CIHiTpusYwDDSumqbSAzlDwoSFUtNEudGQFrLrCv5kWMIV2ub5rxb4f-5a1Rod5c",
+          "type": "EnvelopedVerifiableCredential"
+        },
+        {
+          "@context": "https://www.w3.org/ns/credentials/v2",
+          "id": "data:application/vc+jwt,eyJhbGciOiJSUzI1NiIsInR5cCI6InZjK2p3dCIsImN0eSI6InZjIiwiaXNzIjoiZGlkOndlYjpkZWx0YS1kYW8uY29tIiwia2lkIjoiZGlkOndlYjpkZWx0YS1kYW8uY29tI0pXSzIwMjAtUlNBIn0.eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvdjIiLCJodHRwczovL3czaWQub3JnL2dhaWEteC9kZXZlbG9wbWVudCMiXSwidHlwZSI6WyJWZXJpZmlhYmxlQ3JlZGVudGlhbCIsImd4Oklzc3VlciJdLCJpc3N1ZXIiOiJkaWQ6d2ViOmRlbHRhLWRhby5jb20iLCJAaWQiOiJodHRwczovL2RlbHRhLWRhby5jb20vLndlbGwta25vd24vNDBfZ3hfaXNzdWVyX2RlbHRhREFPLmpzb24iLCJ2YWxpZFVudGlsIjoiMjAyNi0xMi0yN1QxOTo1Njo0Mi40NzUrMDA6MDAiLCJ2YWxpZEZyb20iOiIyMDI2LTA5LTI4VDE5OjU2OjQyLjQ3NSswMDowMCIsImNyZWRlbnRpYWxTdWJqZWN0Ijp7IkBpZCI6Imh0dHBzOi8vZGVsdGEtZGFvLmNvbS8ud2VsbC1rbm93bi80MF9neF9pc3N1ZXJfZGVsdGFEQU8uanNvbiIsImdhaWF4VGVybXNBbmRDb25kaXRpb25zIjoiMDY3ZGNhYzVlZmQxOGMxOTI3ZGViMWZmZWQzZmVhYjZkMGFkMDQ0YzBhOWEyNjNlNmQ1ZDhiZGM0MzIyNDUxNSJ9fQ.Ig9QdILChgSYail74mB8y2kRYN52nWZLAJc-Uo-68lR_AL-0V_vvTGeZRLqaCMZ9O_cuC8OF5dC6pzYtcYQUxtSiKMC7ghAZf14b8WEMACCEN9KMBjmzjvcDtL570OQSjDU1yBccPbFeYNoP5NxvQMxpyYSVwouvJOVbHfJM-UnLb7B_Cti1zFL86T_MQ6MW-khRZ7TDsPQTL-26i4L2Ff71LWAQXoL-dOOVcaimEtp8j717Bk58D-GC1c8eiNPBeP_kU0lJAbIVmIRx2wTzgUA4B0mHJoBvTQS6eRYE-_NZhP3pR2n_2H_bcAH7YRNT-R4pWRQQ8RMCh9VOSnt-fbrkE1sRtnITUa0AFCkvY4tzCK_9Bqzgv06_1uUi94tFywH4wrcn2W_TnFjZ0t8mBB1LEcQR9sU-0rrQmOuPvrr4vMBmqQm6CA1rShfiLvxTfm1UmYsDea91L8jDzVIbTAnePZrQSXedKXvByzaCFZ3yNpSKPgLD2OfmaNhGnEX8SSAB5Z2ksyG0VFf8_pF7_q8IkhUzErut2er3WelyGdF4f0L7J6tmpeCSFNBHgGezpf64-KO_kXp542Z2F0rNA7dQezuyTLHC0P1mxjfqasPaylMm0F0M0i5LJHJu1qvMX6xqJJZOJ5QKheYsGgJZPGLjoHzm1AmOVPky3rqgVSo",
+          "type": "EnvelopedVerifiableCredential"
+        },
+        {
+          "@context": "https://www.w3.org/ns/credentials/v2",
+          "id": "data:application/vc+jwt,eyJhbGciOiJSUzI1NiIsInR5cCI6InZjK2p3dCIsImN0eSI6InZjIiwiaXNzIjoiZGlkOndlYjpkZWx0YS1kYW8uY29tIiwia2lkIjoiZGlkOndlYjpkZWx0YS1kYW8uY29tI0pXSzIwMjAtUlNBIn0.eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvdjIiLCJodHRwczovL3czaWQub3JnL2dhaWEteC9kZXZlbG9wbWVudCMiLHsiZ3giOiJodHRwczovL3czaWQub3JnL2dhaWEteC9kZXZlbG9wbWVudCMiLCJzY2hlbWEiOiJodHRwczovL3NjaGVtYS5vcmcvIiwidmNhcmQiOiJodHRwOi8vd3d3LnczLm9yZy8yMDA2L3ZjYXJkL25zIyJ9XSwidHlwZSI6WyJWZXJpZmlhYmxlQ3JlZGVudGlhbCIsImd4OkxlZ2FsRG9jdW1lbnQiXSwiQGlkIjoiaHR0cHM6Ly9kZWx0YS1kYW8uY29tLy53ZWxsLWtub3duLzQwX2d4X2xlZ2FsZG9jdW1lbnRfbm9pc2VfbGV2ZWxzLmpzb24iLCJpc3N1ZXIiOiJkaWQ6d2ViOmRlbHRhLWRhby5jb20iLCJ2YWxpZEZyb20iOiIyMDI2LTA5LTI4VDE5OjU3OjAxLjI2NiswMDowMCIsInZhbGlkVW50aWwiOiIyMDI2LTEyLTI3VDE5OjU3OjAxLjI2NiswMDowMCIsImNyZWRlbnRpYWxTdWJqZWN0Ijp7IkBpZCI6Imh0dHBzOi8vZGVsdGEtZGFvLmNvbS8ud2VsbC1rbm93bi80MF9neF9sZWdhbGRvY3VtZW50X25vaXNlX2xldmVscy5qc29uI2NzIiwidHlwZSI6Imd4OkxlZ2FsRG9jdW1lbnQiLCJneDp1cmwiOnsiQGlkIjoiaHR0cHM6Ly9tYXJrZXQuZGVsdGEtZGFvLmNvbS9wcml2YWN5L3ByaXZhY3ktcG9saWN5In0sImd4Om1pbWVUeXBlcyI6WyJ0ZXh0L2h0bWwiXSwiZ3g6Z292ZXJuaW5nTGF3Q291bnRyaWVzIjpbIkRFIl0sImd4Omludm9sdmVkUGFydGllcyI6W3siQGlkIjoiaHR0cHM6Ly9kZWx0YS1kYW8uY29tLy53ZWxsLWtub3duLzQwX2d4X2xlZ2FscGVyc29uX2RlbHRhREFPLmp3dCNjcyJ9XX19.dhaVWB7Zk4S78gjqftM1GIqGQ9jkaPwLKzT1uRxOhYtJtsHkF53ux4X4yNaRwWSUp5ExXO9t0SbBwyJ2sPuuoQ2IxT5vqg6zFDJ85EA8dHsIOxqdgtY61SQfVjafw1R5pg2Ws_80tpRtjFm6VvFvJt6ZqQJM5K6P3ga_XLM4-irAcgvmS8pxSpK8wwgVhgZZjCNguLHSN2LqSQL-MMbvrn1im6Vj0yQkdCbLcJjX19xuJRmgR5zOPNUuslX7arxyC6EAuAY5VcwfFI6E36sDvPoadY4DFoLUy9009ohpxyCiN_97-Qoy9SQWR6s8xkZ78BLn85xCYZZLvshHhAqaF7peHOmlJ_3n2tBTNptCmOBSHoAvv3kL3PuqMBhBaN849T49DFn7sQoG0-el1yVfAQcUh6YUus0KeiWwhQLdFqBP5cldJWEqk4zKSdEk3RwOQFhZMLaN1ViOOlXv86HerQw6ZZHZaDx9xQhP7kdwzm0B0H1zx--X5j6DO6nUTQiNZUtwfrO8a5fUAqvOLeGRAyF9dDkby7-KGkp-e9UYWerjoX_lsC0P1DNKKqA9RPmlOckD-LIJH6ADLGHxcsRz9_FaNISu1nLd8_-XQgbCTiuV-77usMThQhdYYJl6oPnTW2wkd3bk6aUPqt4VRSTroZYHisAbiLN8EcuSkLr8X_Y",
+          "type": "EnvelopedVerifiableCredential"
+        },
+        {
+          "@context": "https://www.w3.org/ns/credentials/v2",
+          "id": "data:application/vc+jwt,eyJhbGciOiJSUzI1NiIsInR5cCI6InZjK2p3dCIsImN0eSI6InZjIiwiaXNzIjoiZGlkOndlYjpkZWx0YS1kYW8uY29tIiwia2lkIjoiZGlkOndlYjpkZWx0YS1kYW8uY29tI0pXSzIwMjAtUlNBIn0.eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvdjIiLCJodHRwczovL3czaWQub3JnL2dhaWEteC9kZXZlbG9wbWVudCMiLHsidmNhcmQiOiJodHRwOi8vd3d3LnczLm9yZy8yMDA2L3ZjYXJkL25zIyIsInNjaGVtYSI6Imh0dHBzOi8vc2NoZW1hLm9yZy8ifV0sIkBpZCI6Imh0dHBzOi8vZGVsdGEtZGFvLmNvbS8ud2VsbC1rbm93bi80MF9neF9sZWdhbHBlcnNvbl9kZWx0YURBTy5qd3QiLCJ0eXBlIjpbIlZlcmlmaWFibGVDcmVkZW50aWFsIiwiZ3g6TGVnYWxQZXJzb24iXSwiaXNzdWVyIjoiZGlkOndlYjpkZWx0YS1kYW8uY29tIiwidmFsaWRGcm9tIjoiMjAyNi0wOS0yOFQyMDoyNjowNC44NTcrMDA6MDAiLCJ2YWxpZFVudGlsIjoiMjAyNi0xMi0yN1QyMDoyNjowNC44NTcrMDA6MDAiLCJjcmVkZW50aWFsU3ViamVjdCI6eyJzY2hlbWE6bmFtZSI6ImRlbHRhREFPIEFHIiwiZ3g6cmVnaXN0cmF0aW9uTnVtYmVyIjpbeyJAaWQiOiJodHRwczovL2RlbHRhLWRhby5jb20vLndlbGwta25vd24vNDBfZ3hfdmF0aWRfZGVsdGFEQU8uanNvbiNjcyJ9LHsiQGlkIjoiaHR0cHM6Ly9kZWx0YS1kYW8uY29tLy53ZWxsLWtub3duLzQwX2d4X2VvcmlfZGVsdGFEQU8uanNvbiNjcyJ9LHsiQGlkIjoiaHR0cHM6Ly9kZWx0YS1kYW8uY29tLy53ZWxsLWtub3duLzQwX2d4X2xlaWNvZGVfZGVsdGFEQU8uanNvbiNjcyJ9XSwiZ3g6aGVhZHF1YXJ0ZXJzQWRkcmVzcyI6eyJ0eXBlIjoiZ3g6QWRkcmVzcyIsImd4OmNvdW50cnlDb2RlIjoiREUiLCJ2Y2FyZDpzdHJlZXQtYWRkcmVzcyI6IkthdGhhcmluZW5zdHJhw59lIDMwYSIsInZjYXJkOmxvY2FsaXR5IjoiSGFtYnVyZyIsInZjYXJkOnBvc3RhbC1jb2RlIjoiMjA0NTcifSwiZ3g6bGVnYWxBZGRyZXNzIjp7InR5cGUiOiJneDpBZGRyZXNzIiwiZ3g6Y291bnRyeUNvZGUiOiJERSIsInZjYXJkOnN0cmVldC1hZGRyZXNzIjoiS2F0aGFyaW5lbnN0cmHDn2UgMzBhIiwidmNhcmQ6bG9jYWxpdHkiOiJIYW1idXJnIiwidmNhcmQ6cG9zdGFsLWNvZGUiOiIyMDQ1NyJ9LCJAaWQiOiJodHRwczovL2RlbHRhLWRhby5jb20vLndlbGwta25vd24vNDBfZ3hfbGVnYWxwZXJzb25fZGVsdGFEQU8uand0I2NzIn19.SBihMHoowTTxIigfwbrFKUBaZgC_ofPNjevv0mIihxadiAobLhMjPIcTcHpsSgAhmp6g3A3f1DvRuJiY8hawihVXZKVD_DBWm2nfsL3UyaC_KtT818eq6iBgto399she2DyQ4YdKKQ7OTtsplQOmfmPgEy8P0E--sRculN00lqCytw-_31N3DD0CO9dwajRmrtBNhSYFPF548ezxRnr8fKnBX9UItWyWz2MnXs6u3GT1kpykmzuUOO90H8DkDgxnlBnlLvxd1cxM6OquYAmhkJXGdtJPIqmjj-ZOH1hnBMoN8G7zk7NaEutLtkLUN8kLo2-SVdoOTxXcF81AojAlQQ4f9D-vQ2d4c4bToba3Jzhl3hmrIVIobfRDF53S-7NPVTCylANu-3z0tOihNCPdBLVaBZz7D_DrGnTLJprqSdUIQCe2Ovj9_sWTqSo6eGtVWBkKmCw7ZFIrR65wprq_omKi6g8zIMvnthg9--ES-XJRCKCmPaB7rfCxMRtG79ZlcNl1UaFVRsGsy4x9X7QvfbD_eXdVQnU__IIeIP39avo8svpEmjRdhIn2ZQsqcOH8j0LUQi0CwsEt6dPMGrsCn9GxUTwg8DLYOfgcfSwZ-Nko8ubtisuLf3sZx58JfsPlA6Wp_gd1Z1Y8KIWathAJaQcmuCw2xQYHAGqiDA2TbCE",
+          "type": "EnvelopedVerifiableCredential"
+        },
+        {
+          "@context": "https://www.w3.org/ns/credentials/v2",
+          "id": "data:application/vc+jwt,eyJhbGciOiJQUzI1NiIsImlzcyI6ImRpZDp3ZWI6d3d3LmRlbHRhLWRhby5jb206bm90YXJ5OnYyIiwia2lkIjoiZGlkOndlYjp3d3cuZGVsdGEtZGFvLmNvbTpub3Rhcnk6djIjWDUwOS1KV0siLCJpYXQiOjE3OTE4MzIyODI2MDIsImV4cCI6MTc5MjcxMzU5OTAwMCwiY3R5IjoidmMrbGQiLCJ0eXAiOiJ2YytsZCtqd3QifQ.eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvdjIiLCJodHRwczovL3czaWQub3JnL2dhaWEteC9kZXZlbG9wbWVudCMiXSwidHlwZSI6WyJWZXJpZmlhYmxlQ3JlZGVudGlhbCIsImd4OkxlaUNvZGUiXSwiaWQiOiJodHRwczovL2RlbHRhLWRhby5jb20vLndlbGwta25vd24vNDBfZ3hfbGVpY29kZV9kZWx0YURBTy5qc29uIiwibmFtZSI6IkxFSSBDb2RlIiwiZGVzY3JpcHRpb24iOiJMZWdhbCBFbnRpdHkgSWRlbnRpZmllciIsImlzc3VlciI6ImRpZDp3ZWI6d3d3LmRlbHRhLWRhby5jb206bm90YXJ5OnYyIiwidmFsaWRGcm9tIjoiMjAyNi0xMC0xMlQxOToxMToyMi42MDIrMDA6MDAiLCJ2YWxpZFVudGlsIjoiMjAyNi0xMC0yMlQyMzo1OTo1OS4wMDArMDA6MDAiLCJjcmVkZW50aWFsU3ViamVjdCI6eyJAY29udGV4dCI6eyJzY2hlbWEiOiJodHRwczovL3NjaGVtYS5vcmcvIn0sImlkIjoiaHR0cHM6Ly9kZWx0YS1kYW8uY29tLy53ZWxsLWtub3duLzQwX2d4X2xlaWNvZGVfZGVsdGFEQU8uanNvbiNjcyIsInNjaGVtYTpsZWlDb2RlIjoiMzkxMjAwRkpCTlUwWVc5ODdMMjYiLCJneDpjb3VudHJ5Q29kZSI6IkRFIiwiZ3g6c3ViZGl2aXNpb25Db3VudHJ5Q29kZSI6bnVsbH0sImV2aWRlbmNlIjp7Imd4OmV2aWRlbmNlT2YiOiJneDpMZWlDb2RlIiwiZ3g6ZXZpZGVuY2VVUkwiOiJodHRwczovL2FwaS5nbGVpZi5vcmcvYXBpL3YxL2xlaS1yZWNvcmRzLzM5MTIwMEZKQk5VMFlXOTg3TDI2IiwiZ3g6ZXhlY3V0aW9uRGF0ZSI6IjIwMjYtMTAtMTJUMTk6MTE6MjIuNjAyKzAwOjAwIn19.l-80EFbmBWp3BqwwLqdxcnSdPABtHhjn4fUFjkp6uElBNkj7RWZ3OStPFXm5_c5YxygbEpo4G5G3_3YGsuKepq37ccV7XNEtqBXckbu_KQMQRO7ZOIABlIMh4ojLbeXdxvcDeplWjpDp2bT98KXBuynRNvxp19l0jJKTBpgAtRsskrYp6RuPKU2wq2whvvEgapDMBPvVU9cyL6zrK3LRDyGZOaYwI7NMD82Piu0NBZMyUUifUAVCWe6s4uh0XccZ2YUf4TC-pcO1f55g48G8WCYJD_Ra3ioTYwcBke9chq7qDa_aa6_VEJkIWLCdS8lRwXBOoXVPOFxC4N1IvlIpsdGTSAbfEleNnCBOzBOAZ2lzcbbWVj5xC5GPcm4UcMFujJIfy7gZPJUfgo8ah7X26Y-I1MIqCEDLp8c-Znz3fGK5JmgKeULTCM1-Ig5lZvK4jpz6JPDiuPfiV6CDeQV6eRujREHfL3475WmZFVcLaOjChOSNd-q6DbD84iak3bJsdl3Su6ISkEiMoZhBZEsBPI-c8y0hmbBqz-GtXHTYPsL7SJ2sRXAzs48G2nayVtZQpCffzC9iM2A6HEKQWO4u_eQ3vzpjkX8rGZG3kfOl8NCNgxqnrJ6gAVHktVPOCl5JlnX2aenpLUrRuFbWJJLg7AxtV2shrV6uz4Rwjc8Y7Zk",
+          "type": "EnvelopedVerifiableCredential"
+        },
+        {
+          "@context": "https://www.w3.org/ns/credentials/v2",
+          "id": "data:application/vc+jwt,eyJhbGciOiJSUzI1NiIsInR5cCI6InZjK2p3dCIsImN0eSI6InZjIiwiaXNzIjoiZGlkOndlYjpkZWx0YS1kYW8uY29tIiwia2lkIjoiZGlkOndlYjpkZWx0YS1kYW8uY29tI0pXSzIwMjAtUlNBIn0.eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvdjIiLCJodHRwczovL3czaWQub3JnL2dhaWEteC9kZXZlbG9wbWVudCMiLHsiZ3giOiJodHRwczovL3czaWQub3JnL2dhaWEteC9kZXZlbG9wbWVudCMiLCJzY2hlbWEiOiJodHRwczovL3NjaGVtYS5vcmcvIiwidmNhcmQiOiJodHRwOi8vd3d3LnczLm9yZy8yMDA2L3ZjYXJkL25zIyJ9XSwidHlwZSI6WyJWZXJpZmlhYmxlQ3JlZGVudGlhbCIsImd4OlRlcm1zQW5kQ29uZGl0aW9ucyJdLCJAaWQiOiJodHRwczovL2RlbHRhLWRhby5jb20vLndlbGwta25vd24vNDBfZ3hfdGVybXNhbmRjb25kaXRpb25zX25vaXNlX2xldmVscy5qc29uIiwiaXNzdWVyIjoiZGlkOndlYjpkZWx0YS1kYW8uY29tIiwidmFsaWRGcm9tIjoiMjAyNi0wOS0yOFQxOTo1Nzo1MS4yMzQrMDA6MDAiLCJ2YWxpZFVudGlsIjoiMjAyNi0xMi0yN1QxOTo1Nzo1MS4yMzQrMDA6MDAiLCJjcmVkZW50aWFsU3ViamVjdCI6eyJAaWQiOiJodHRwczovL2RlbHRhLWRhby5jb20vLndlbGwta25vd24vNDBfZ3hfdGVybXNhbmRjb25kaXRpb25zX25vaXNlX2xldmVscy5qc29uI2NzIiwidHlwZSI6Imd4OlRlcm1zQW5kQ29uZGl0aW9ucyIsImd4OnVybCI6eyJAaWQiOiJodHRwczovL2RlbHRhLWRhby5jb20vYXNzZXRzL3Rlcm1zXzk5ZDk2YzYwZDQ1NzE0ZGYxZTMzM2ZjY2MwMTlhYTc1OTJlMTExMDEzZGI4MGEzMDMwNmJjYTlmNTBlOGNhYWRfZGVsdGFEQU8ucGRmIn0sImd4Omhhc2giOiIzOWJiM2RjNzc4N2E4MTJhMDA4MjI1Zjg3MWYyYTczNjhjYjM3OTQ0MTJiMWI3NjQwNjFjMmZjNDRmOTA1ZGE3In19.FmSyZRo4cP3QISRyv7EpaArXirrL7tmh9x7DK80YoX-F4jDwFOVf1RMg6xXGbXpb3h7SS4Y3iQbnfl3eXvcOKTWLw0S834q2IZETlO-l3LP1TimJ7WxcHt1-0A-CEL0v0_MyphFyfo1QtQ06d3gujFuVR1WCUIFdnsrwOFhh8zjYy-ymLN9N1LGpnFwwkuoz5yUjJrmvCUdCQWp6L_xtYhjR02UqQZCvsNAlZqWOMttPkEwq3MZruoihBOalq4U3P36mASc4-S_L3eZVGIctgjtElGUZlSUDQZEQXONlUJY0s9g4kMjiiJO19pwbRt-FXRVUuxBP6I4BvqTpU2DAEnrp_pq6YcjeixUxXfy1KZJVJbo9PrCXwZFDLlI_xCCGfwC8OaZofcs6r-tZF3NyLXRpguYGyY59AqYnuuOFwawdr9HmZpEQAcw1kdOZtz-Ko9amT1jVFqzAsRkDjJZYUh_XmIfl7-3lxoM32DrHsSOHpvS3yhwUAbb-_R8CF2yAr1H20AzIVZCmqLiLcPXk8xWsIm3HEUoxchbFlQgjpJH_US2GVVtMT13bZWuHVpkQ2r3axiDVLG3f49o_KFl8b_WrapTaOOqplZRkFH7WzyDM9gv5twX0145XXzbtvczIbwLn0aIiuHnSpuvALJQ1rUzMw5oXRfEo9Aj7cD0rdFY",
+          "type": "EnvelopedVerifiableCredential"
+        },
+        {
+          "@context": "https://www.w3.org/ns/credentials/v2",
+          "id": "data:application/vc+jwt,eyJhbGciOiJSUzI1NiIsInR5cCI6InZjK2p3dCIsImN0eSI6InZjIiwiaXNzIjoiZGlkOndlYjpkZWx0YS1kYW8uY29tIiwia2lkIjoiZGlkOndlYjpkZWx0YS1kYW8uY29tI0pXSzIwMjAtUlNBIn0.eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvdjIiLCJodHRwczovL3czaWQub3JnL2dhaWEteC9kZXZlbG9wbWVudCMiLHsiZ3giOiJodHRwczovL3czaWQub3JnL2dhaWEteC9kZXZlbG9wbWVudCMiLCJzY2hlbWEiOiJodHRwczovL3NjaGVtYS5vcmcvIiwidmNhcmQiOiJodHRwOi8vd3d3LnczLm9yZy8yMDA2L3ZjYXJkL25zIyJ9XSwidHlwZSI6WyJWZXJpZmlhYmxlQ3JlZGVudGlhbCIsImd4OlVzYWdlVGVybXNBbmRDb25kaXRpb25zIl0sIkBpZCI6Imh0dHBzOi8vZGVsdGEtZGFvLmNvbS8ud2VsbC1rbm93bi80MF9neF91c2FnZXRlcm1zYW5kY29uZGl0aW9uc19ub2lzZV9sZXZlbHMuanNvbiIsImlzc3VlciI6ImRpZDp3ZWI6ZGVsdGEtZGFvLmNvbSIsInZhbGlkRnJvbSI6IjIwMjYtMDktMjhUMTk6NTg6MDMuMjE4KzAwOjAwIiwidmFsaWRVbnRpbCI6IjIwMjYtMTItMjdUMTk6NTg6MDMuMjE4KzAwOjAwIiwiY3JlZGVudGlhbFN1YmplY3QiOnsiQGlkIjoiaHR0cHM6Ly9kZWx0YS1kYW8uY29tLy53ZWxsLWtub3duLzQwX2d4X3VzYWdldGVybXNhbmRjb25kaXRpb25zX25vaXNlX2xldmVscy5qc29uI2NzIiwidHlwZSI6Imd4OlVzYWdlVGVybXNBbmRDb25kaXRpb25zIiwiZ3g6dXJsIjp7IkBpZCI6Imh0dHBzOi8vZGVsdGEtZGFvLmNvbS9hc3NldHMvdGVybXNfOTlkOTZjNjBkNDU3MTRkZjFlMzMzZmNjYzAxOWFhNzU5MmUxMTEwMTNkYjgwYTMwMzA2YmNhOWY1MGU4Y2FhZF9kZWx0YURBTy5wZGYifSwiZ3g6aGFzaCI6IjM5YmIzZGM3Nzg3YTgxMmEwMDgyMjVmODcxZjJhNzM2OGNiMzc5NDQxMmIxYjc2NDA2MWMyZmM0NGY5MDVkYTcifX0.nLKQfgbVrhJclOnirvyabWK_8RkF1DENjdtVlp3ADdEPjfCQZGcRbAkX2wtX5ebrbaNmt9x5W6XGP3A-DMfewvegm5FJ5Q8JaJN-r2fJuLg1xKxv2IplSIwo9e8LtmwvKI1Oj4VMv27p2IQLEBwaWg5qziRitkYYb-3dMgt5XWL3lIxyiVI28DUe7h6V4mzc9WHjO35skY4HuVnlsnmQfLTJd-XE836O2O7yNpdHexlxeUeOvcoVtyG2QDPd71ATQsoydDKeCAUQ9remtbqehDGjJ6xKzvPZNNZ3737aKUDQpecOEWkwaFThjF_9F_YLA3HgNp66GDMbAmjD9zZVxJTbx4Rh6OtI0SvL4bfwxO4KbRDEt3N5SmrSBZRg6H_04DbL929NPIY5jCnWpktNcnNcekyjcShSfj5ciSXp4yy3KeK0sl4A1IrnEC7SLxY0K5aYDzYC9AAV-mZvB3egr7LAt3PbmpmCf3iU5-W7arX16gz6bayLoK6tphrVul3nYfj6LtRPjFfdzm13bL-l6scMcEcuwGNAVThblOCrw4Pud7wW4mVPkMTSWLcnt2JRfNrY5lvzxPqMlAaxK1StktWw3R3lV_lUq7RY40lNb8ylTrH9eOkM2TKLrAB4uGILkU5GAjgzknqZ0sjpoaBkDYcbiayeR5UwwcoC4Xt9pZ0",
+          "type": "EnvelopedVerifiableCredential"
+        },
+        {
+          "@context": "https://www.w3.org/ns/credentials/v2",
+          "id": "data:application/vc+jwt,eyJhbGciOiJQUzI1NiIsImlzcyI6ImRpZDp3ZWI6d3d3LmRlbHRhLWRhby5jb206bm90YXJ5OnYyIiwia2lkIjoiZGlkOndlYjp3d3cuZGVsdGEtZGFvLmNvbTpub3Rhcnk6djIjWDUwOS1KV0siLCJpYXQiOjE3OTE4MzIyMjc2MzcsImV4cCI6MTc5MjcxMzU5OTAwMCwiY3R5IjoidmMrbGQiLCJ0eXAiOiJ2YytsZCtqd3QifQ.eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvdjIiLCJodHRwczovL3czaWQub3JnL2dhaWEteC9kZXZlbG9wbWVudCMiXSwidHlwZSI6WyJWZXJpZmlhYmxlQ3JlZGVudGlhbCIsImd4OlZhdElEIl0sImlkIjoiaHR0cHM6Ly9kZWx0YS1kYW8uY29tLy53ZWxsLWtub3duLzQwX2d4X3ZhdGlkX2RlbHRhREFPLmpzb24iLCJuYW1lIjoiVkFUIElEIiwiZGVzY3JpcHRpb24iOiJWYWx1ZSBBZGRlZCBUYXggSWRlbnRpZmllciIsImlzc3VlciI6ImRpZDp3ZWI6d3d3LmRlbHRhLWRhby5jb206bm90YXJ5OnYyIiwidmFsaWRGcm9tIjoiMjAyNi0xMC0xMlQxOToxMDoyNy42MzcrMDA6MDAiLCJ2YWxpZFVudGlsIjoiMjAyNi0xMC0yMlQyMzo1OTo1OS4wMDArMDA6MDAiLCJjcmVkZW50aWFsU3ViamVjdCI6eyJpZCI6Imh0dHBzOi8vZGVsdGEtZGFvLmNvbS8ud2VsbC1rbm93bi80MF9neF92YXRpZF9kZWx0YURBTy5qc29uI2NzIiwiZ3g6dmF0SUQiOiJERTM0NjAxMzUzMiIsImd4OmNvdW50cnlDb2RlIjoiREUifSwiZXZpZGVuY2UiOnsiZ3g6ZXZpZGVuY2VPZiI6Imd4OlZhdElEIiwiZ3g6ZXZpZGVuY2VVUkwiOiJodHRwOi8vZWMuZXVyb3BhLmV1L3RheGF0aW9uX2N1c3RvbXMvdmllcy9zZXJ2aWNlcy9jaGVja1ZhdFNlcnZpY2UiLCJneDpleGVjdXRpb25EYXRlIjoiMjAyNi0xMC0xMlQxOToxMDoyNy42MzcrMDA6MDAifX0.cHHxficnY6G7eCmj_28BRgK5Eh7EMjdSiuDmm_gtSYCqBOp93SA8iqYt8jlEYcZHPIIqrUOLRQc1DeoAj1ZhmHN_-yXdw0LCcao-jA5WS6kX9AGTSmmyMW0mywHm5xswpvPagZrs3jWXZhiRihCk9JcHXvNbaDHzzwxIl1J97ugwqCgJM_gPe3_8s64yBKIVOKQmrUtSQ6bX9uZoCKZQPclq5I9V_JVwHhy20E6zGQjQ9P8S5oLXRsFSdR8gcM3vDjlBmzvsJ7IgOudBjDLxjiOYQNUxl4UyWdgvJ6zcUDS6lgisuMv9kZoRyl_iBna_j6bAJp9tgW1XaOhi6kHDIPhBnNy3_oZzsP8i2XyE5CCy9v_U7eLGAqh8zNkDHUMyOFp4JnplyFxLhENC6mL1bM3-JV0yiZq03mCy2KZeLI0y_U_T9l7jBZVt_C-cn-hncwVsTtKt1R_0FC3bLdZGQKNTiCSt442Oa0gA_-4sdesQdHlDsToMbD7AkcISB55r1pMoMM0zGhLwPY3Nn9dcewn-av4UyQS2LqE1D-66r-5LJOytD5M0ANKKDWFBlJE4xxTe_0TfhqGRRl0dlRhDY32UIerXQxJm1Ncr36onsu6Gx_syvAgGzvBD0z7R9MlOIFtk55dKF-Ovn7zZrBGH_YEcXIMV82ez8C9p7EJ-jEk",
+          "type": "EnvelopedVerifiableCredential"
+        }
+      ],
+      "issuer": "did:web:delta-dao.com",
+      "validFrom": "2026-10-12T19:14:34.873+00:00",
+      "validUntil": "2027-01-10T19:14:34.874+00:00"
+    },
+    "error": {
+      "code": "WRONG_TYPE",
+      "message": "The presentation does not contain a service offering credential (gx:DigitalServiceOffering)."
+    }
+  },
+  "binding": [
+    {
+      "id": "Participant-vp-issuer",
+      "status": "pass",
+      "message": "Participant presentation issued by the publisher (did:web:delta-dao.com)."
+    },
+    {
+      "id": "Participant-vc-issuers",
+      "status": "pass",
+      "message": "All participant credentials issued by the publisher (notary registration numbers excepted)."
+    }
+  ],
+  "compliance": {
+    "status": "pass",
+    "message": "Compliant with the Gaia-X Trust Framework.",
+    "endpoint": "https://www.delta-dao.com/compliance/v2/api/credential-offers/standard-compliance",
+    "checkedAt": "2026-10-22T16:00:00.000Z",
+    "issuer": "did:web:www.delta-dao.com:compliance:v2",
+    "expectedIssuer": "did:web:www.delta-dao.com:compliance:v2",
+    "labelLevel": "SC",
+    "engineVersion": "2.15.0",
+    "rulesVersion": "CD4.0.0",
+    "issuedAt": "2026-10-22T15:10:54.610Z",
+    "validUntil": "2027-01-20T15:10:54.608Z",
+    "validatedCriteria": [
+      "https://docs.gaia-x.eu/policy-rules-committee/compliance-document/4.0.0/criteria_participant/#PA1.1"
+    ],
+    "compliantCredentials": [
+      {
+        "id": "https://delta-dao.com/.well-known/40_gx_issuer_deltaDAO.json",
+        "type": "gx:Issuer",
+        "digestSRI": "sha256-1aef7686bfdeec30b8629026ef72ca0bbc8f8f1e68afbafd4d257495fc4f6e94",
+        "matched": true
+      },
+      {
+        "id": "https://delta-dao.com/.well-known/40_gx_legalperson_deltaDAO.jwt",
+        "type": "gx:LegalPerson",
+        "digestSRI": "sha256-8b2509e7e5a3057db9a05abcc969936716835b6c25f1aff0799353d078077b14",
+        "matched": true
+      },
+      {
+        "id": "https://delta-dao.com/.well-known/40_gx_leicode_deltaDAO.json",
+        "type": "gx:LeiCode",
+        "digestSRI": "sha256-e34fd40d7dfdb4d223c3e1830ec2b6b01528e4816779f5abc945ba986fe9fbdf",
+        "matched": true
+      },
+      {
+        "id": "https://delta-dao.com/.well-known/40_gx_vatid_deltaDAO.json",
+        "type": "gx:VatID",
+        "digestSRI": "sha256-f40bc218a1a4fa69383464ffe5c32f399bac8c7b25e125639fa1aaa5fea5cb9c",
+        "matched": true
+      },
+      {
+        "id": "https://delta-dao.com/.well-known/40_gx_eori_deltaDAO.json",
+        "type": "gx:EORI",
+        "digestSRI": "sha256-5aa167f2115528afdc97b1597ad730e62f21165c833549d8533ea67139cf2309",
+        "matched": true
+      }
+    ],
+    "checks": [
+      {
+        "id": "compliance-issuer",
+        "status": "pass",
+        "message": "Issued by the configured clearing house did:web:www.delta-dao.com:compliance:v2."
+      },
+      {
+        "id": "compliance-signature",
+        "status": "pass",
+        "message": "Valid PS256 signature by did:web:www.delta-dao.com:compliance:v2."
+      },
+      {
+        "id": "compliance-type",
+        "status": "pass",
+        "message": "gx:LabelCredential"
+      },
+      {
+        "id": "compliance-id",
+        "status": "pass",
+        "message": "Issued for urn:uuid:3b1f0c2e-ddao-906-spike-participant."
+      },
+      {
+        "id": "compliance-validity",
+        "status": "pass",
+        "message": "Valid until 2027-01-20T15:10:54.608Z."
+      },
+      {
+        "id": "compliance-digests",
+        "status": "pass",
+        "message": "All 5 credential digests match."
+      }
+    ],
+    "jwt": "<omitted>",
+    "payload": {
+      "@context": [
+        "https://www.w3.org/ns/credentials/v2",
+        "https://w3id.org/gaia-x/development#"
+      ],
+      "type": ["VerifiableCredential", "gx:LabelCredential"],
+      "id": "urn:uuid:3b1f0c2e-ddao-906-spike-participant",
+      "issuer": "did:web:www.delta-dao.com:compliance:v2",
+      "validFrom": "2026-10-22T15:10:54.610Z",
+      "validUntil": "2027-01-20T15:10:54.608Z",
+      "credentialSubject": {
+        "id": "urn:uuid:3b1f0c2e-ddao-906-spike-participant#cs",
+        "gx:labelLevel": "SC",
+        "gx:engineVersion": "2.15.0",
+        "gx:rulesVersion": "CD4.0.0",
+        "gx:compliantCredentials": [
+          {
+            "id": "https://delta-dao.com/.well-known/40_gx_issuer_deltaDAO.json",
+            "gx:credentialType": "gx:Issuer",
+            "digestSRI": "sha256-1aef7686bfdeec30b8629026ef72ca0bbc8f8f1e68afbafd4d257495fc4f6e94"
+          },
+          {
+            "id": "https://delta-dao.com/.well-known/40_gx_legalperson_deltaDAO.jwt",
+            "gx:credentialType": "gx:LegalPerson",
+            "digestSRI": "sha256-8b2509e7e5a3057db9a05abcc969936716835b6c25f1aff0799353d078077b14"
+          },
+          {
+            "id": "https://delta-dao.com/.well-known/40_gx_leicode_deltaDAO.json",
+            "gx:credentialType": "gx:LeiCode",
+            "digestSRI": "sha256-e34fd40d7dfdb4d223c3e1830ec2b6b01528e4816779f5abc945ba986fe9fbdf"
+          },
+          {
+            "id": "https://delta-dao.com/.well-known/40_gx_vatid_deltaDAO.json",
+            "gx:credentialType": "gx:VatID",
+            "digestSRI": "sha256-f40bc218a1a4fa69383464ffe5c32f399bac8c7b25e125639fa1aaa5fea5cb9c"
+          },
+          {
+            "id": "https://delta-dao.com/.well-known/40_gx_eori_deltaDAO.json",
+            "gx:credentialType": "gx:EORI",
+            "digestSRI": "sha256-5aa167f2115528afdc97b1597ad730e62f21165c833549d8533ea67139cf2309"
+          }
+        ],
+        "gx:validatedCriteria": [
+          "https://docs.gaia-x.eu/policy-rules-committee/compliance-document/4.0.0/criteria_participant/#PA1.1"
+        ]
+      }
+    }
+  }
+}

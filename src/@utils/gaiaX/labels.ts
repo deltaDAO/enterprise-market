@@ -102,6 +102,71 @@ export function getTypeLabel(type?: string | string[]): string | undefined {
   return gx ? humanize(gx) : undefined
 }
 
+const SUMMARY_KEYS = [
+  'schema:name',
+  'gx:legalName',
+  'gx:vatID',
+  'gx:eori',
+  'schema:leiCode',
+  'gx:email'
+]
+const ADDRESS_KEYS = [
+  'vcard:street-address',
+  'vcard:postal-code',
+  'vcard:locality',
+  'gx:countryCode'
+]
+const MAX_SUMMARY_LENGTH = 80
+
+/**
+ * One-line summary of a nested node for its collapsed state, e.g.
+ * "deltaDAO AG", "DE346013532" or "Katharinenstraße 30a, 20457 Hamburg, DE".
+ */
+export function getNodeSummary(node: Record<string, unknown>): string {
+  const scalar = (key: string) =>
+    typeof node[key] === 'string' || typeof node[key] === 'number'
+      ? String(node[key])
+      : undefined
+
+  const named = SUMMARY_KEYS.map(scalar).find(Boolean)
+  if (named) return named
+
+  // Documents (T&C, legal documents): show where they live, not their hash
+  const url = node['gx:url']
+  const urlId =
+    typeof url === 'string'
+      ? url
+      : typeof (url as Record<string, unknown>)?.['@id'] === 'string'
+      ? ((url as Record<string, unknown>)['@id'] as string)
+      : undefined
+  if (urlId) {
+    try {
+      const { host, pathname } = new URL(urlId)
+      const file = pathname.split('/').filter(Boolean).pop()
+      return file ? `${host} · ${file}` : host
+    } catch {
+      return urlId
+    }
+  }
+
+  const address = ADDRESS_KEYS.map(scalar).filter(Boolean)
+  if (address.length > 1) {
+    const [street, postalCode, locality, country] = ADDRESS_KEYS.map(scalar)
+    return [street, [postalCode, locality].filter(Boolean).join(' '), country]
+      .filter(Boolean)
+      .join(', ')
+  }
+
+  const first = Object.keys(node)
+    .filter((key) => !HIDDEN_KEYS.includes(key) && !key.startsWith('$'))
+    .map(scalar)
+    .find(Boolean)
+  if (!first) return ''
+  return first.length > MAX_SUMMARY_LENGTH
+    ? `${first.slice(0, MAX_SUMMARY_LENGTH - 1)}…`
+    : first
+}
+
 // Field order within a card: known fields in label order, then the rest
 const FIELD_ORDER = Object.keys(FIELD_LABELS)
 
