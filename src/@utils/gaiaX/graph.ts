@@ -7,6 +7,22 @@ export interface CredentialGraph {
   subjects: Map<string, { subject: JsonObject; vc: ParsedVc }>
 }
 
+const EVIDENCE_FIELDS = ['gx:evidenceURL', 'gx:evidenceOf', 'gx:executionDate']
+const MAX_EVIDENCE_FIELD_LENGTH = 512
+
+// Only the short, displayed evidence fields: arbitrary evidence payloads would
+// otherwise be copied into every resolved reference
+function getEvidence(evidence: unknown): JsonObject | undefined {
+  if (!isObject(evidence)) return undefined
+  const fields = EVIDENCE_FIELDS.filter(
+    (field) => typeof evidence[field] === 'string'
+  ).map((field) => [
+    field,
+    (evidence[field] as string).slice(0, MAX_EVIDENCE_FIELD_LENGTH)
+  ])
+  return fields.length ? Object.fromEntries(fields) : undefined
+}
+
 export function getCredentialSource(vc: ParsedVc): CredentialSource {
   return {
     id: vc.id,
@@ -14,7 +30,7 @@ export function getCredentialSource(vc: ParsedVc): CredentialSource {
     issuer: vc.issuer,
     validFrom: vc.validFrom,
     validUntil: vc.validUntil,
-    evidence: vc.payload.evidence
+    evidence: getEvidence(vc.payload.evidence)
   }
 }
 
@@ -49,13 +65,13 @@ interface ResolveState {
   expanded: Set<string>
 }
 
-// Scalar fields only, used for repeated references (no further expansion)
-function shallow(subject: JsonObject): JsonObject {
-  return Object.fromEntries(
-    Object.entries(subject).filter(
-      ([, child]) => !isObject(child) && !Array.isArray(child)
-    )
-  )
+// Constant-size marker for a subject that is already expanded elsewhere: no
+// field values, so repeating a reference can't multiply the response size
+function repeatedReference(id: string, vc: ParsedVc): JsonObject {
+  return {
+    id,
+    [SOURCE_KEY]: { id: vc.id, types: vc.types.slice(-1), repeated: true }
+  }
 }
 
 function resolve(
@@ -76,16 +92,13 @@ function resolve(
   if (id && isReference(value)) {
     const target = graph.subjects.get(id)
     if (!target) return value
-    const source = { [SOURCE_KEY]: getCredentialSource(target.vc) }
-    // Each subject is expanded once; later references (and cycles) only get
-    // its scalar fields, which keeps the output linear in the input size
-    if (state.expanded.has(id)) {
-      return { ...shallow(target.subject), ...source }
-    }
+    // Each subject is expanded once; later references (and cycles) become a
+    // constant-size marker, which keeps the output linear in the input size
+    if (state.expanded.has(id)) return repeatedReference(id, target.vc)
     state.expanded.add(id)
     return {
       ...(resolve(target.subject, graph, state, depth + 1) as JsonObject),
-      ...source
+      [SOURCE_KEY]: getCredentialSource(target.vc)
     }
   }
 

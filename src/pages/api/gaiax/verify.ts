@@ -11,6 +11,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 const DID_PATTERN = /^did:[a-z0-9]+:[A-Za-z0-9._:%-]+$/
 const MAX_URL_LENGTH = 2048
 const MAX_DID_LENGTH = 512
+const MAX_RESPONSE_BYTES = 5 * 1024 * 1024
 // An asset page verifies about every 10 minutes and the publish form is
 // debounced, so this only limits automated use
 const RATE_LIMIT = { limit: 30, windowMs: 60_000 }
@@ -50,12 +51,35 @@ function readDid(value: unknown): string | undefined | null {
   return null
 }
 
-function getClient(req: NextApiRequest): string {
-  const forwarded = req.headers['x-forwarded-for']
-  const first = (Array.isArray(forwarded) ? forwarded[0] : forwarded)
-    ?.split(',')[0]
-    ?.trim()
-  return first || req.socket?.remoteAddress || 'unknown'
+function header(req: NextApiRequest, name: string): string | undefined {
+  const value = req.headers[name]
+  return (Array.isArray(value) ? value[0] : value)?.trim() || undefined
+}
+
+/**
+ * Client address for rate limiting. Forwarded headers are client-controlled
+ * unless set by a trusted proxy: on Vercel the platform sets
+ * x-vercel-forwarded-for; behind other proxies GAIAX_TRUSTED_PROXY_HOPS
+ * selects the X-Forwarded-For entry added by the outermost trusted proxy.
+ * Otherwise only the socket address is used.
+ */
+export function getClient(
+  req: NextApiRequest,
+  trustedProxyHops: number
+): string {
+  if (process.env.VERCEL) {
+    const vercel = header(req, 'x-vercel-forwarded-for')?.split(',')[0]?.trim()
+    if (vercel) return vercel
+  }
+  if (trustedProxyHops > 0) {
+    const chain = (header(req, 'x-forwarded-for') ?? '')
+      .split(',')
+      .map((entry) => entry.trim())
+      .filter(Boolean)
+    const client = chain[chain.length - trustedProxyHops]
+    if (client) return client
+  }
+  return req.socket?.remoteAddress || 'unknown'
 }
 
 export default async function handler(
@@ -69,7 +93,12 @@ export default async function handler(
     return res.status(405).json({ success: false, error: 'Method not allowed' })
   }
 
-  const { allowed, retryAfterSeconds } = rateLimit(getClient(req))
+  const { compliance, maxAgeSeconds, trustedNotaries, trustedProxyHops } =
+    getGaiaXServerConfig()
+
+  const { allowed, retryAfterSeconds } = rateLimit(
+    getClient(req, trustedProxyHops)
+  )
   if (!allowed) {
     res.setHeader('Retry-After', String(retryAfterSeconds))
     return res
@@ -103,8 +132,6 @@ export default async function handler(
       .json({ success: false, error: 'No credential URL given.' })
   }
 
-  const { compliance, maxAgeSeconds, trustedNotaries } = getGaiaXServerConfig()
-
   try {
     const result = await verifyGaiaXCredentials(input, {
       fetchText,
@@ -118,7 +145,18 @@ export default async function handler(
       trustedNotaries,
       cache
     })
-    return res.status(200).json({ success: true, result })
+    // Second line of defense against amplified responses: real results are
+    // well below 1 MB
+    const json = JSON.stringify({ success: true, result })
+    if (json.length > MAX_RESPONSE_BYTES) {
+      LoggerInstance.error('[gaiax] verification result too large', json.length)
+      return res.status(502).json({
+        success: false,
+        error: 'Gaia-X credentials could not be verified.'
+      })
+    }
+    res.setHeader('Content-Type', 'application/json; charset=utf-8')
+    return res.status(200).send(json)
   } catch (error) {
     LoggerInstance.error('[gaiax] verification failed', error)
     return res.status(500).json({

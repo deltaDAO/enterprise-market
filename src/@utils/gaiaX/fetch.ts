@@ -8,6 +8,7 @@ const TIMEOUT_MS = 10_000
 const MAX_REDIRECTS = 2
 export const MAX_CREDENTIAL_BYTES = 2 * 1024 * 1024
 export const MAX_DOCUMENT_BYTES = 5 * 1024 * 1024
+export const MAX_DID_DOCUMENT_BYTES = 256 * 1024
 
 // Messages are generic on purpose: connection details of internal hosts
 // must not leak to the client
@@ -242,8 +243,13 @@ export async function fetchText(url: string): Promise<string> {
   return decoder.decode(bytes)
 }
 
+// Only used for DID documents, which are a few KB in practice
 export async function fetchJson(url: string): Promise<unknown> {
-  return JSON.parse(await fetchText(url))
+  const { status, bytes } = await safeFetch(url, {
+    maxBytes: MAX_DID_DOCUMENT_BYTES
+  })
+  if (status !== 200) throw new FetchError(`HTTP ${status}`)
+  return JSON.parse(decoder.decode(bytes))
 }
 
 export async function fetchBytes(url: string): Promise<Uint8Array> {

@@ -6,6 +6,10 @@ function toTime(value?: string): number | undefined {
   return Number.isNaN(time) ? undefined : time
 }
 
+// Issuers' clocks run slightly ahead or behind: a credential issued a moment
+// ago (e.g. the GXDCH response) must not be "not yet valid". Expiry is strict.
+export const CLOCK_TOLERANCE_MS = 5 * 60 * 1000
+
 export function checkValidity(
   id: string,
   validFrom: string | undefined,
@@ -16,7 +20,7 @@ export function checkValidity(
   const until = toTime(validUntil)
   const current = now.getTime()
 
-  if (from !== undefined && current < from) {
+  if (from !== undefined && current + CLOCK_TOLERANCE_MS < from) {
     return { id, status: 'fail', message: `Not valid before ${validFrom}.` }
   }
   if (until !== undefined && current > until) {

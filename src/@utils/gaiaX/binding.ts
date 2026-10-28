@@ -107,12 +107,13 @@ function checkIssuers(
   return results
 }
 
-function hasNotaryCredentials(vp?: ParsedVp): boolean {
-  return Boolean(
-    vp?.credentials.some((vc) =>
+function getNotaryIssuers(vp?: ParsedVp): string[] {
+  return (vp?.credentials ?? [])
+    .filter((vc) =>
       vc.types.some((type) => NOTARY_CREDENTIAL_TYPES.includes(type))
     )
-  )
+    .map((vc) => vc.issuer)
+    .filter(Boolean)
 }
 
 /**
@@ -158,16 +159,19 @@ export function checkBinding({
         )
       )
     }
-    if (
-      trustedNotaries.length === 0 &&
-      (hasNotaryCredentials(participant) ||
-        hasNotaryCredentials(serviceOffering))
-    ) {
+    const notaries = Array.from(
+      new Set([
+        ...getNotaryIssuers(participant),
+        ...getNotaryIssuers(serviceOffering)
+      ])
+    )
+    if (trustedNotaries.length === 0 && notaries.length > 0) {
       results.push({
         id: 'notary-allowlist',
         status: 'warn',
-        message:
-          'No trusted notaries configured: registration number issuers are not checked against an allowlist.'
+        message: `Registration numbers issued by ${notaries.join(
+          ', '
+        )}. No notary allowlist is configured for this portal.`
       })
     }
   }

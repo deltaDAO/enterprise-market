@@ -9,7 +9,7 @@ import {
   getCredentialSource,
   resolveReferences
 } from './graph'
-import { parseVp } from './jwt'
+import { asArray, isObject, parseVp } from './jwt'
 import { verifyJwtSignature } from './signature'
 import { checkTermsHashes } from './termsHash'
 import {
@@ -54,6 +54,23 @@ const TYPE_LABELS: Record<string, string> = {
   [SERVICE_OFFERING]: 'service offering credential (gx:DigitalServiceOffering)'
 }
 
+const MAX_VERIFICATION_METHODS = 20
+
+// The parts of a DID document needed to resolve signing keys
+export function minimizeDidDocument(document: unknown): JsonObject {
+  if (!isObject(document)) return {}
+  return {
+    id: document.id,
+    verificationMethod: asArray(document.verificationMethod)
+      .filter(isObject)
+      .slice(0, MAX_VERIFICATION_METHODS)
+      .map((method) => ({
+        id: method.id,
+        publicKeyJwk: method.publicKeyJwk
+      }))
+  }
+}
+
 /**
  * DID document resolution for one verification: shared across requests via
  * the cache (successes only) and limited to MAX_DIDS_PER_VERIFICATION
@@ -67,9 +84,11 @@ function createDidResolver(deps: VerifyDeps, cache: MemoCache): FetchJson {
     if (requested.size >= MAX_DIDS_PER_VERIFICATION) {
       return Promise.reject(new Error('Too many DID documents to resolve.'))
     }
+    // Only the verification keys are kept, never the whole (attacker-chosen)
+    // document
     const document = cache.memo(
       `did:${url}`,
-      () => deps.fetchJson(url),
+      async () => minimizeDidDocument(await deps.fetchJson(url)),
       () => ttl
     )
     requested.set(url, document)
@@ -421,6 +440,8 @@ export async function verifyGaiaXCredentials(
       ? { ...status, status: participantStatus.status }
       : status),
     checkedAt: checkedAt ?? deps.now().toISOString(),
+    // Lets clients measure the age of checkedAt despite clock skew
+    serverTime: deps.now().toISOString(),
     lastSuccessfulCheckAt,
     participantCompliance,
     maxAgeSeconds: deps.maxAgeSeconds,

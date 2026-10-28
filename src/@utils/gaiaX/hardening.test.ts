@@ -13,6 +13,7 @@ import {
 import { SignJWT } from 'jose'
 import { checkBinding } from './binding'
 import { createMemoCache } from './cache'
+import { requestCompliance } from './compliance'
 import { digestSri } from './digest'
 import { buildGraph, MAX_RESOLVED_NODES, resolveReferences } from './graph'
 import { MAX_CREDENTIALS_PER_VP, parseVc, parseVp } from './jwt'
@@ -20,6 +21,7 @@ import { MAX_TERMS_DOCUMENTS } from './termsHash'
 import { JsonObject, ParsedVc } from './types'
 import {
   isCovered,
+  minimizeDidDocument,
   MAX_DIDS_PER_VERIFICATION,
   verifyGaiaXCredentials
 } from './verify'
@@ -64,7 +66,7 @@ describe('resolveReferences', () => {
     expect(size).toBeLessThan(MAX_RESOLVED_NODES * 1000)
   })
 
-  it('expands each subject once and repeats only its scalar fields', () => {
+  it('expands each subject once and marks repeated references', () => {
     const credentials = subjects(3)
     const resolved = resolveReferences(
       {
@@ -75,8 +77,39 @@ describe('resolveReferences', () => {
     ) as Record<string, JsonObject>
 
     expect(Array.isArray(resolved.first['gx:links'])).toBe(true)
-    expect(resolved.again['schema:name']).toBe('Subject 1')
-    expect(resolved.again['gx:links']).toBeUndefined()
+    expect(resolved.again).toEqual({
+      id: credentials[1].subjectId,
+      $credential: { id: undefined, types: ['gx:Thing'], repeated: true }
+    })
+  })
+
+  // Review PoC: one large subject + large evidence referenced ~500 times
+  it('keeps the serialized result proportional to the input', () => {
+    const big = 'x'.repeat(200_000)
+    const target: ParsedVc = {
+      jwt: '',
+      header: {},
+      payload: {
+        evidence: { 'gx:evidenceURL': 'https://e.example', blob: big }
+      },
+      types: ['VerifiableCredential', 'gx:LeiCode'],
+      subject: { id: 'https://example.com/big#cs', 'schema:leiCode': big },
+      subjectId: 'https://example.com/big#cs'
+    }
+    const legalPerson = {
+      id: 'https://example.com/lp#cs',
+      'gx:registrationNumber': Array.from({ length: 500 }, () => ({
+        id: target.subjectId
+      }))
+    }
+    const inputSize = JSON.stringify([target, legalPerson]).length
+
+    const output = JSON.stringify(
+      resolveReferences(legalPerson, buildGraph([target]))
+    )
+
+    expect(output.length).toBeLessThan(inputSize * 2)
+    expect(output).not.toContain('"blob"')
   })
 })
 
@@ -173,17 +206,127 @@ describe('notary exemption', () => {
     ).toBe('fail')
   })
 
-  it('warns when no trusted notaries are configured', async () => {
+  it('accepts any notary with a warning when no allowlist is configured', async () => {
+    // e.g. the Gaia-X lab notary from the ticket's example data
+    const labNotary = await createIssuer(
+      'registrationnumber.notary.lab.gaia-x.eu',
+      ['development']
+    )
     const results = checkBinding({
       publisherDid: publisher.did,
-      participant: await participantVp(),
+      participant: await participantVp({ notaryIssuer: labNotary }),
       trustedNotaries: []
     })
+
+    expect(
+      results.find((check) => check.id === 'Participant-vc-issuers')?.status
+    ).toBe('pass')
     expect(
       results.find((check) => check.id === 'notary-allowlist')
     ).toMatchObject({
-      status: 'warn'
+      status: 'warn',
+      message: expect.stringContaining(labNotary.did)
     })
+    expect(results.some((check) => check.blocking)).toBe(false)
+  })
+})
+
+describe('compliance rules version', () => {
+  it('passes or fails against GAIAX_MIN_RULES_VERSION', async () => {
+    const publisher = await createIssuer('provider.example')
+    const gxdch = await createIssuer('gxdch.example', ['v2'])
+    const vpJwt = await vp(publisher, [
+      await sign(
+        vc(
+          'https://provider.example/lp.json',
+          'gx:LegalPerson',
+          publisher.did,
+          {}
+        ),
+        publisher
+      )
+    ])
+    const label = await sign(
+      {
+        type: ['VerifiableCredential', 'gx:LabelCredential'],
+        id: 'urn:uuid:test-id',
+        issuer: gxdch.did,
+        validFrom: '2026-10-22T15:59:00Z',
+        validUntil: '2027-01-20T00:00:00Z',
+        credentialSubject: {
+          id: 'urn:uuid:test-id#cs',
+          'gx:rulesVersion': 'CD4.0.0',
+          'gx:compliantCredentials': await Promise.all(
+            parseVp(vpJwt).credentials.map(async (credential) => ({
+              id: credential.id,
+              digestSRI: await digestSri(credential.payload)
+            }))
+          )
+        }
+      },
+      gxdch
+    )
+    const run = (minRulesVersion: string) =>
+      requestCompliance(
+        vpJwt,
+        parseVp(vpJwt).credentials,
+        {
+          baseUrl: 'https://gxdch.example/v2',
+          label: 'standard-compliance',
+          minRulesVersion
+        },
+        {
+          postVp: async () => ({ status: 201, body: label }),
+          fetchJson: async () => gxdch.didDocument,
+          randomId: () => 'test-id',
+          now: () => new Date('2026-10-22T16:00:00Z')
+        }
+      )
+
+    const sufficient = await run('CD4.0.0')
+    expect(sufficient.status).toBe('pass')
+    expect(
+      sufficient.checks.find((check) => check.id === 'compliance-rules-version')
+        ?.status
+    ).toBe('pass')
+
+    const tooOld = await run('CD5.0.0')
+    expect(tooOld.status).toBe('fail')
+    expect(
+      tooOld.checks.find((check) => check.id === 'compliance-rules-version')
+    ).toMatchObject({
+      status: 'fail',
+      message: 'Rules CD4.0.0 older than required CD5.0.0.'
+    })
+  })
+})
+
+describe('minimizeDidDocument', () => {
+  it('keeps only the verification keys', () => {
+    expect(
+      minimizeDidDocument({
+        id: 'did:web:example.com',
+        service: [{ blob: 'x'.repeat(10_000) }],
+        verificationMethod: [
+          {
+            id: 'did:web:example.com#key-1',
+            type: 'JsonWebKey2020',
+            controller: 'did:web:example.com',
+            publicKeyJwk: { kty: 'RSA', n: 'abc', e: 'AQAB' },
+            junk: 'x'.repeat(10_000)
+          }
+        ]
+      })
+    ).toEqual({
+      id: 'did:web:example.com',
+      verificationMethod: [
+        {
+          id: 'did:web:example.com#key-1',
+          publicKeyJwk: { kty: 'RSA', n: 'abc', e: 'AQAB' }
+        }
+      ]
+    })
+    expect(minimizeDidDocument('nope')).toEqual({})
   })
 })
 
