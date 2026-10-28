@@ -35,6 +35,10 @@ import {
   normalizeDockerImageReference
 } from '@utils/docker'
 import DockerRegistryChecksum from '@shared/DockerRegistryChecksum'
+import GaiaXCredentialPreview from '@shared/GaiaXCredentialPreview'
+import { getPublisherDid } from '@utils/gaiaX/publisher'
+import { useSsiWallet } from '@context/SsiWallet'
+import { useAccount } from 'wagmi'
 
 const { data } = content.form
 const assetTypeOptionsTitles = getFieldContent('type', data).options
@@ -43,6 +47,15 @@ export default function FormEditMetadata(): ReactElement {
   const { asset } = useAsset()
   const { values, setFieldTouched, setFieldValue } =
     useFormikContext<MetadataEditForm>()
+  const { address: walletAddress } = useAccount()
+  const { selectedDid } = useSsiWallet()
+  // Saving re-signs the DDO with the current signer, which becomes the new
+  // issuer; check the credentials against that DID, not the old issuer
+  const publisherDid = getPublisherDid({
+    ssiEnabled: appConfig.ssiEnabled,
+    selectedDid,
+    walletAddress
+  })
   const firstPageLoad = useRef<boolean>(true)
   const previousContainerReference = useRef({
     image: values.containerImage,
@@ -202,6 +215,7 @@ export default function FormEditMetadata(): ReactElement {
   const primaryUploadedLicenseDocument =
     values.uploadedLicense?.licenseDocuments?.[0]
   const linksFieldContent = getFieldContent('links', data)
+  const gaiaXFieldContent = getFieldContent('gaiaXCredentials', data)
 
   return (
     <Form>
@@ -255,11 +269,29 @@ export default function FormEditMetadata(): ReactElement {
           component={Input}
           name="copyrightHolder"
         />
-        <Field
-          {...getFieldContent('providedBy', data)}
-          component={Input}
-          name="providedBy"
-        />
+        <SectionContainer
+          title={gaiaXFieldContent.label}
+          help={gaiaXFieldContent.help}
+        >
+          <Field
+            {...getFieldContent('providedBy', data)}
+            component={Input}
+            name="providedBy"
+          />
+          <Field
+            {...getFieldContent('gaiaXServiceOfferingCredential', data)}
+            component={Input}
+            name="gaiaXServiceOfferingCredential"
+          />
+          <GaiaXCredentialPreview
+            participantUrl={values.providedBy}
+            serviceOfferingUrl={values.gaiaXServiceOfferingCredential}
+            publisherDid={publisherDid}
+            assetDid={asset?.id}
+            blockingFieldName="gaiaXBlocking"
+            action="Saving"
+          />
+        </SectionContainer>
         {Boolean(
           asset?.credentialSubject?.metadata?.additionalInformation?.saas
         ) && (

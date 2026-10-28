@@ -65,10 +65,21 @@
         "help": "The entity holding the legal copyright for this asset."
       },
       {
+        "name": "gaiaXCredentials",
+        "label": "Gaia-X Credentials",
+        "help": "Link your Gaia-X credentials (VP-JWT) to show who provides this asset. They are verified live against a Gaia-X Digital Clearing House and must be issued by the DID you publish with."
+      },
+      {
         "name": "providedBy",
-        "label": "Provided By",
-        "placeholder": "e.g. https://delta-dao.com/vc.json",
-        "help": "URL where the Verifiable Credential of the entity offering this asset resides."
+        "label": "Participant credential (gx:LegalPerson)",
+        "placeholder": "e.g. https://delta-dao.com/.well-known/participant.jwt",
+        "help": "URL of the Gaia-X participant credential of the entity offering this asset. Shown as \"Provided By\" on the asset page."
+      },
+      {
+        "name": "gaiaXServiceOfferingCredential",
+        "label": "Service offering credential (gx:DigitalServiceOffering)",
+        "placeholder": "e.g. https://delta-dao.com/.well-known/service-offering.jwt",
+        "help": "Optional. URL of the Gaia-X Digital Service Offering credential describing this asset."
       },
       {
         "name": "links",

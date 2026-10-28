@@ -27,6 +27,7 @@ import { AdditionalVerifiableCredentials } from 'src/@types/ddo/AdditionalVerifi
 import { State } from 'src/@types/ddo/State'
 import { recordToKeyValuePairs } from '@utils/links'
 import { normalizeDockerImageReference } from '@utils/docker'
+import { getServiceOfferingCredentialUrl } from '@utils/gaiaX/metadata'
 
 export const defaultServiceComputeOptions: Compute = {
   allowRawAlgorithm: false,
@@ -346,6 +347,9 @@ export function getInitialValues(
     links: recordToKeyValuePairs(metadata?.links),
     author: metadata?.author,
     providedBy: metadata?.providedBy || '',
+    gaiaXServiceOfferingCredential:
+      getServiceOfferingCredentialUrl(metadata) || '',
+    gaiaXBlocking: false,
     copyrightHolder: metadata?.copyrightHolder || '',
     tags: metadata?.tags,
     containerImage,

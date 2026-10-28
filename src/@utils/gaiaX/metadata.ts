@@ -1,5 +1,5 @@
 import { Asset } from 'src/@types/Asset'
-import { Metadata } from 'src/@types/ddo/Metadata'
+import { AdditionalInformation, Metadata } from 'src/@types/ddo/Metadata'
 import { isObject } from './jwt'
 import { GaiaXVerifyRequest } from './types'
 
@@ -20,6 +20,34 @@ export function getServiceOfferingCredentialUrl(
   return isObject(gaiaX)
     ? asHttpsUrl(gaiaX.serviceOfferingCredential)
     : undefined
+}
+
+/**
+ * Sets the service offering credential URL in additionalInformation, or
+ * removes it when the URL is cleared (a plain spread of the existing metadata
+ * would otherwise keep the old value). Other keys under `gaiaX` (from later
+ * versions or other tools) are kept; `gaiaX` is dropped only when empty.
+ */
+export function withServiceOfferingCredential(
+  additionalInformation: AdditionalInformation | undefined,
+  url: string | undefined
+): AdditionalInformation {
+  const { [GAIAX_METADATA_KEY]: previous, ...rest } =
+    additionalInformation ?? {}
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { serviceOfferingCredential: _old, ...otherGaiaXKeys } = isObject(
+    previous
+  )
+    ? previous
+    : {}
+  const trimmed = url?.trim()
+  const gaiaX = trimmed
+    ? { ...otherGaiaXKeys, serviceOfferingCredential: trimmed }
+    : otherGaiaXKeys
+
+  return Object.keys(gaiaX).length > 0
+    ? { ...rest, [GAIAX_METADATA_KEY]: gaiaX as AdditionalInformation[string] }
+    : rest
 }
 
 /**

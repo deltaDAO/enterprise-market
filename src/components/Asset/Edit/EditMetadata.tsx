@@ -23,7 +23,10 @@ import {
 import { Metadata } from 'src/@types/ddo/Metadata'
 import { Asset, AssetNft } from 'src/@types/Asset'
 import { AssetExtended } from 'src/@types/AssetExtended'
-import { customProviderUrl, encryptAsset } from '../../../../app.config.cjs'
+import appConfig, {
+  customProviderUrl,
+  encryptAsset
+} from '../../../../app.config.cjs'
 import { isAddress, Signer, toBeHex } from 'ethers'
 import { keyValuePairsToRecord } from '@utils/links'
 import { AdditionalVerifiableCredentials } from 'src/@types/ddo/AdditionalVerifiableCredentials'
@@ -32,6 +35,8 @@ import { State } from 'src/@types/ddo/State'
 import { useEthersSigner } from '@hooks/useEthersSigner'
 import { getOpaServerUrl } from '@utils/wallet/policyServer'
 import { useOpaServerChangeNotification } from './useOpaServerChangeNotification'
+import { withServiceOfferingCredential } from '@utils/gaiaX/metadata'
+import { getGaiaXBlockingReason, getPublisherDid } from '@utils/gaiaX/publisher'
 
 export default function Edit({
   asset
@@ -59,6 +64,24 @@ export default function Edit({
 
   async function handleSubmit(values: MetadataEditForm, resetForm: () => void) {
     try {
+      // Re-check with the DID the DDO is about to be signed with
+      const gaiaXBlockingReason = await getGaiaXBlockingReason({
+        participantUrl: values.providedBy?.trim().startsWith('https://')
+          ? values.providedBy.trim()
+          : undefined,
+        serviceOfferingUrl:
+          values.gaiaXServiceOfferingCredential?.trim() || undefined,
+        publisherDid: getPublisherDid({
+          ssiEnabled: appConfig.ssiEnabled,
+          selectedDid: ssiWalletContext?.selectedDid,
+          walletAddress: accountId
+        }),
+        assetDid: asset.id
+      })
+      if (gaiaXBlockingReason) {
+        throw new Error(`Gaia-X credentials: ${gaiaXBlockingReason}`)
+      }
+
       const updatedAt = new Date().toISOString()
       const processAddress = (
         inputValue: string,
@@ -132,16 +155,20 @@ export default function Edit({
         copyrightHolder: values.copyrightHolder || '',
         tags: values.tags,
         license,
-        additionalInformation: {
-          ...asset.credentialSubject?.metadata?.additionalInformation,
-          ...(asset.credentialSubject?.metadata?.additionalInformation?.saas &&
-            values.saas?.redirectUrl && {
-              saas: {
-                redirectUrl: values.saas.redirectUrl,
-                paymentMode: 'Subscription' as const
-              }
-            })
-        }
+        additionalInformation: withServiceOfferingCredential(
+          {
+            ...asset.credentialSubject?.metadata?.additionalInformation,
+            ...(asset.credentialSubject?.metadata?.additionalInformation
+              ?.saas &&
+              values.saas?.redirectUrl && {
+                saas: {
+                  redirectUrl: values.saas.redirectUrl,
+                  paymentMode: 'Subscription' as const
+                }
+              })
+          },
+          values.gaiaXServiceOfferingCredential
+        )
       }
 
       if (asset.credentialSubject?.metadata.type === 'algorithm') {

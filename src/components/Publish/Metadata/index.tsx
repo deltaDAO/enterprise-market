@@ -12,9 +12,15 @@ import SectionContainer from '../../@shared/SectionContainer/SectionContainer'
 import styles from './index.module.css'
 import DockerRegistryChecksum from '@shared/DockerRegistryChecksum'
 import { FormPublishData } from '../_types'
+import GaiaXCredentialPreview from '@shared/GaiaXCredentialPreview'
+import { getPublisherDid } from '@utils/gaiaX/publisher'
+import { useMarketMetadata } from '@context/MarketMetadata'
+import { useSsiWallet } from '@context/SsiWallet'
 
 export default function MetadataFields(): ReactElement {
   const { setFieldTouched, setFieldValue } = useFormikContext<FormPublishData>()
+  const { appConfig } = useMarketMetadata()
+  const { selectedDid } = useSsiWallet()
   const {
     values,
     assetTypeOptions,
@@ -39,6 +45,16 @@ export default function MetadataFields(): ReactElement {
   const primaryUploadedLicenseDocument =
     values.metadata.uploadedLicense?.licenseDocuments?.[0]
   const linksFieldContent = getFieldContent('links', content.metadata.fields)
+  const gaiaXFieldContent = getFieldContent(
+    'gaiaXCredentials',
+    content.metadata.fields
+  )
+  // The DDO is issued by the selected SSI DID, otherwise by the wallet
+  const publisherDid = getPublisherDid({
+    ssiEnabled: appConfig.ssiEnabled,
+    selectedDid,
+    walletAddress: values.user?.accountId
+  })
 
   return (
     <>
@@ -89,11 +105,30 @@ export default function MetadataFields(): ReactElement {
         component={Input}
         name="metadata.copyrightHolder"
       />
-      <Field
-        {...getFieldContent('providedBy', content.metadata.fields)}
-        component={Input}
-        name="metadata.providedBy"
-      />
+      <SectionContainer
+        title={gaiaXFieldContent.label}
+        help={gaiaXFieldContent.help}
+      >
+        <Field
+          {...getFieldContent('providedBy', content.metadata.fields)}
+          component={Input}
+          name="metadata.providedBy"
+        />
+        <Field
+          {...getFieldContent(
+            'gaiaXServiceOfferingCredential',
+            content.metadata.fields
+          )}
+          component={Input}
+          name="metadata.gaiaXServiceOfferingCredential"
+        />
+        <GaiaXCredentialPreview
+          participantUrl={values.metadata.providedBy}
+          serviceOfferingUrl={values.metadata.gaiaXServiceOfferingCredential}
+          publisherDid={publisherDid}
+          blockingFieldName="metadata.gaiaXBlocking"
+        />
+      </SectionContainer>
       <SectionContainer
         title={linksFieldContent.label}
         help={linksFieldContent.help}

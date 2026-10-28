@@ -2,7 +2,12 @@ import { FileInfo } from '@oceanprotocol/lib'
 import { MAX_DECIMALS } from '@utils/constants'
 import { getMaxDecimalsValidation } from '@utils/numbers'
 import * as Yup from 'yup'
-import { getOriginalValue, testLinks, testOptionalUrl } from '@utils/yup'
+import {
+  getOriginalValue,
+  testLinks,
+  testOptionalHttpsUrl,
+  testOptionalUrl
+} from '@utils/yup'
 import { validationConsumerParameters } from '@components/@shared/FormInput/InputElement/ConsumerParameters/_validation'
 import { FormUrlFileInfo } from './_types'
 import { additionalLicenseSourceOptions } from './_license'
@@ -185,7 +190,15 @@ const validationMetadata = {
   descriptionLanguage: Yup.string(),
   descriptionDirection: Yup.string(),
   copyrightHolder: Yup.string().nullable(),
-  providedBy: testOptionalUrl('Provided By must be a valid URL.'),
+  providedBy: testOptionalUrl('Participant credential must be a valid URL.'),
+  gaiaXServiceOfferingCredential: testOptionalHttpsUrl(
+    'Service offering credential must be an https URL.'
+  ),
+  gaiaXBlocking: Yup.boolean().test(
+    'gaiaX-not-blocking',
+    'Fix the Gaia-X credentials before publishing.',
+    (value) => value !== true
+  ),
   links: Yup.array()
     .of(
       Yup.object().shape({

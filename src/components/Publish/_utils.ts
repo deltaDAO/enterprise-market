@@ -80,6 +80,8 @@ import { getOceanConfig } from '@utils/ocean'
 import { getDummySigner, getTokenInfo } from '@utils/wallet'
 import { inferNameFromUrl } from './_license'
 import { getOpaServerUrl } from '@utils/wallet/policyServer'
+import { withServiceOfferingCredential } from '@utils/gaiaX/metadata'
+import { getPublisherDid } from '@utils/gaiaX/publisher'
 
 function cleanupVpPolicies(value: any): void {
   if (!value.vp_policies || value.vp_policies.length === 0) {
@@ -712,15 +714,18 @@ export async function transformPublishFormToDdo(
     author,
     links: keyValuePairsToRecord(metadata.links),
     license,
-    additionalInformation: {
-      termsAndConditions,
-      ...(isSaas && {
-        saas: {
-          redirectUrl: sanitizeUrl(files[0].url || ''),
-          paymentMode: 'Subscription' as const
-        }
-      })
-    },
+    additionalInformation: withServiceOfferingCredential(
+      {
+        termsAndConditions,
+        ...(isSaas && {
+          saas: {
+            redirectUrl: sanitizeUrl(files[0].url || ''),
+            paymentMode: 'Subscription' as const
+          }
+        })
+      },
+      metadata.gaiaXServiceOfferingCredential
+    ),
     ...(type === 'algorithm' &&
       dockerImage !== '' && {
         algorithm: {
@@ -990,7 +995,10 @@ export async function signAssetAndUploadToIpfs(
       valid = await isSessionValid(ssiWalletContext.sessionToken.token)
     }
     if (valid) {
-      credential.issuer = ssiWalletContext?.selectedDid
+      credential.issuer = getPublisherDid({
+        ssiEnabled: true,
+        selectedDid: ssiWalletContext?.selectedDid
+      })
       jwtVerifiableCredential = await signMessage(
         ssiWalletContext?.selectedWallet?.id,
         ssiWalletContext?.selectedKey.keyId?.id,
@@ -1002,7 +1010,10 @@ export async function signAssetAndUploadToIpfs(
       throw new Error('Invalid SSI Wallet session')
     }
   } else {
-    credential.issuer = `${await owner.getAddress()}`
+    credential.issuer = getPublisherDid({
+      ssiEnabled: false,
+      walletAddress: await owner.getAddress()
+    })
     jwtVerifiableCredential = await createJwtVerifiableCredential(
       credential as VCDataModel.Credential,
       owner

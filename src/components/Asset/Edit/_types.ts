@@ -28,6 +28,9 @@ export interface MetadataEditForm {
   links?: KeyValuePair[]
   author?: string
   providedBy?: string
+  gaiaXServiceOfferingCredential?: string
+  // Set by the Gaia-X credential preview, never persisted
+  gaiaXBlocking?: boolean
   copyrightHolder?: string
   tags?: string[]
   containerImage?: string
