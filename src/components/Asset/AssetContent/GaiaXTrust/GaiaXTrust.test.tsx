@@ -185,6 +185,40 @@ describe('ProvidedBy', () => {
     expect(screen.getByText(url)).toBeInTheDocument()
     expect(screen.getByLabelText('Failed')).toBeInTheDocument()
   })
+
+  it.each([
+    ['a website', 'NOT_JWT', 'https://www.example.com'],
+    ['a dead link', 'UNREACHABLE', 'https://gone.example.com/vc.json']
+  ])('keeps a plain link without icon for %s', (_, code, legacyUrl) => {
+    mockHook.mockReturnValue({
+      data: {
+        ...result,
+        serviceOffering: undefined,
+        participant: {
+          url: legacyUrl,
+          expectedType: 'gx:LegalPerson',
+          checks: [],
+          credentials: [],
+          error: { code, message: 'Could not load the credential.' }
+        }
+      },
+      freshness: 'fresh'
+    })
+    render(
+      <ProvidedBy
+        ddo={
+          {
+            ...ddo,
+            credentialSubject: { metadata: { providedBy: legacyUrl } }
+          } as unknown as Asset
+        }
+      />
+    )
+
+    expect(screen.getByText(legacyUrl)).toHaveAttribute('href', legacyUrl)
+    expect(screen.queryByLabelText('Failed')).not.toBeInTheDocument()
+    expect(screen.queryByLabelText('Not verified')).not.toBeInTheDocument()
+  })
 })
 
 describe('GaiaXTrustView review fixes', () => {

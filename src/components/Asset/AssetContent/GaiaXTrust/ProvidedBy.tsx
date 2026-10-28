@@ -4,6 +4,7 @@ import { getGaiaXVerifyRequest } from '@utils/gaiaX/metadata'
 import { getCredentialTrust } from '@utils/gaiaX/trust'
 import { safeExternalWebUrl } from '@utils/url'
 import { Asset } from 'src/@types/Asset'
+import { isLegacyProvidedBy } from './GaiaXTrustView'
 import TrustIcon from './TrustIcon'
 import styles from './index.module.css'
 
@@ -27,7 +28,9 @@ export default function ProvidedBy({ ddo }: { ddo: Asset }): ReactElement {
     </a>
   )
 
-  if (!report) return link(url)
+  // Older assets link a website (or a dead link) here, not a credential:
+  // keep the plain link without any trust icon, like before Gaia-X support
+  if (!report || isLegacyProvidedBy(data)) return link(url)
 
   const trust = getCredentialTrust(data, report, freshness === 'stale')
   const label =

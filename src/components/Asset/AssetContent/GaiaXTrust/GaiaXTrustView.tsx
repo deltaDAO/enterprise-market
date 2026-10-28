@@ -70,6 +70,14 @@ export default function GaiaXTrustView({
           trusted={isBoundToPublisher(result)}
           staleMessage={stale ? getUnverifiedReason(result, true) : undefined}
         />
+        {result.participantCompliance && (
+          <ComplianceCard
+            title="Gaia-X Compliance (participant credential)"
+            compliance={result.participantCompliance}
+            trusted={isBoundToPublisher(result)}
+            staleMessage={stale ? getUnverifiedReason(result, true) : undefined}
+          />
+        )}
         <BindingChecks checks={result.binding} />
       </div>
     </section>

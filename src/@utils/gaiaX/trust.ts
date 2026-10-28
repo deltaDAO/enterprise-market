@@ -27,7 +27,8 @@ export function isBoundToPublisher(result: GaiaXVerification): boolean {
 
 export function getUnverifiedReason(
   result: GaiaXVerification,
-  stale: boolean
+  stale: boolean,
+  compliance: ComplianceReport = result.compliance
 ): string | undefined {
   const lastSuccess = formatTime(result.lastSuccessfulCheckAt)
   const lastSuccessText = lastSuccess
@@ -39,8 +40,8 @@ export function getUnverifiedReason(
       result.maxAgeSeconds / 60
     )} minutes.${lastSuccessText}`
   }
-  if (result.compliance.status !== 'pass') {
-    return `Not verified: ${result.compliance.message}${lastSuccessText}`
+  if (compliance.status !== 'pass') {
+    return `Not verified: ${compliance.message}${lastSuccessText}`
   }
   const publisherWarning = result.binding.find(
     (check) => check.id === 'publisher-did' && check.status === 'warn'
@@ -102,37 +103,32 @@ export function getCredentialTrust(
     ...(report.terms ?? []).map((terms) => terms.result)
   ].find((check) => check.status === 'fail')
   if (failure) return { state: 'failed', message: failure.message }
-  if (!stale && result.compliance.status === 'fail') {
-    return { state: 'failed', message: result.compliance.message }
+
+  // The participant is judged by its own GXDCH check when there is one (the
+  // service offering result covered other versions of its credentials, or
+  // failed); everything else by the main result
+  const own =
+    report === result.participant ? result.participantCompliance : undefined
+  const compliance = own ?? result.compliance
+
+  if (!stale && compliance.status === 'fail') {
+    return { state: 'failed', message: `Not verified: ${compliance.message}` }
   }
 
-  const reason = getUnverifiedReason(result, stale)
+  const reason = getUnverifiedReason(result, stale, compliance)
   if (reason) return { state: 'unverified', message: reason }
 
-  // The participant may be certified by its own GXDCH check, when the
-  // service offering result covers other versions of its credentials
-  const certifiedBy = [
-    result.compliance,
-    report === result.participant ? result.participantCompliance : undefined
-  ].find((compliance) => isCoveredBy(compliance, report))
-  if (!certifiedBy) {
-    const own =
-      report === result.participant ? result.participantCompliance : undefined
-    return own && own.status !== 'pass'
-      ? {
-          state: own.status === 'fail' ? 'failed' : 'unverified',
-          message: `Not verified: ${own.message}`
-        }
-      : {
-          state: 'unverified',
-          message:
-            'Not verified: credential is not covered by the compliance result.'
-        }
+  if (!isCoveredBy(compliance, report)) {
+    return {
+      state: 'unverified',
+      message:
+        'Not verified: credential is not covered by the compliance result.'
+    }
   }
 
   return {
     state: 'verified',
-    message: `Verified by the Gaia-X Digital Clearing House (${certifiedBy.rulesVersion}).`
+    message: `Verified by the Gaia-X Digital Clearing House (${compliance.rulesVersion}).`
   }
 }
 

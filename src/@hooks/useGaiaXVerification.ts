@@ -7,8 +7,26 @@ const DEFAULT_MAX_AGE_MS = 10 * 60 * 1000
 // results for max age minus 60 s, so this refresh always gets a new check.
 const REFRESH_MARGIN_MS = 30 * 1000
 // Lower bound between refetches, e.g. while a result is already stale
-const MIN_REFETCH_MS = 5 * 1000
+const MIN_REFETCH_MS = 30 * 1000
+// Back-off while the route fails (incl. 429), so open pages don't poll it
+const ERROR_REFETCH_MS = 60 * 1000
 const CLOCK_INTERVAL_MS = 15 * 1000
+
+/**
+ * The server's clock at client time `now`, derived from the `serverTime` of
+ * a result received at client time `receivedAt`. Ages are measured on the
+ * server clock, so a client clock running ahead or behind doesn't make
+ * fresh results look stale (or the other way round).
+ */
+export function getServerNow(
+  result: GaiaXVerification | undefined,
+  receivedAt: number,
+  now: number
+): number {
+  const serverTime = result?.serverTime ? Date.parse(result.serverTime) : NaN
+  if (Number.isNaN(serverTime) || !receivedAt) return now
+  return now + (serverTime - receivedAt)
+}
 
 export type GaiaXFreshness = 'fresh' | 'stale'
 
@@ -48,8 +66,10 @@ export function getStaleTime(
 // turns stale, so a visible checkmark never outlives its max age
 export function getRefetchInterval(
   result: GaiaXVerification | undefined,
-  now: number
+  now: number,
+  failed = false
 ): number {
+  if (failed) return ERROR_REFETCH_MS
   return Math.max(
     getMsUntilStale(result, now) - REFRESH_MARGIN_MS,
     MIN_REFETCH_MS
@@ -99,15 +119,29 @@ export function useGaiaXVerification(request?: GaiaXVerifyRequest) {
     queryFn: () => fetchVerification(request),
     enabled: Boolean(request),
     retry: 1,
-    staleTime: (query) =>
-      getStaleTime(query.state.data as GaiaXVerification, Date.now()),
-    refetchInterval: (query) =>
-      getRefetchInterval(query.state.data as GaiaXVerification, Date.now()),
+    staleTime: ({ state }) => {
+      const data = state.data as GaiaXVerification
+      return getStaleTime(
+        data,
+        getServerNow(data, state.dataUpdatedAt, Date.now())
+      )
+    },
+    refetchInterval: ({ state }) => {
+      const data = state.data as GaiaXVerification
+      return getRefetchInterval(
+        data,
+        getServerNow(data, state.dataUpdatedAt, Date.now()),
+        state.status === 'error'
+      )
+    },
     refetchOnWindowFocus: true
   })
 
   return {
     ...query,
-    freshness: getFreshness(query.data, now)
+    freshness: getFreshness(
+      query.data,
+      getServerNow(query.data, query.dataUpdatedAt, now)
+    )
   }
 }

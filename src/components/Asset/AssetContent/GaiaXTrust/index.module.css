@@ -276,3 +276,7 @@ a.chip:hover {
     margin-bottom: 4px;
   }
 }
+
+.repeated {
+  color: var(--muted-foreground);
+}

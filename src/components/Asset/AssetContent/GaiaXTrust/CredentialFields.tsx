@@ -118,6 +118,15 @@ function renderValue(value: unknown, depth: number): ReactNode {
       (key) => !HIDDEN_KEYS.includes(key) && key !== SOURCE_KEY
     )
     const id = getNodeId(value)
+    const source = value[SOURCE_KEY] as CredentialSource | undefined
+    // A subject that is already shown in full elsewhere in this card
+    if (source?.repeated) {
+      return (
+        <span className={styles.repeated}>
+          {getTypeLabel(source.types) ?? 'Credential'} (shown above)
+        </span>
+      )
+    }
     // An unresolved reference, e.g. a link to a document or website
     if (keys.length === 0) return id ? <ExternalLink href={id} /> : '—'
     return <NestedNode node={value} depth={depth} />

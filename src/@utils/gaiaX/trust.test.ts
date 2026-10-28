@@ -71,6 +71,21 @@ describe('trust review fixes', () => {
     })
   })
 
+  it('verifies the participant by its own check when the DSO check fails', () => {
+    const dsoFailed: GaiaXVerification = {
+      ...result,
+      compliance: {
+        status: 'fail',
+        message: 'Not compliant: DSO rejected',
+        checks: []
+      },
+      participantCompliance: result.compliance
+    }
+    expect(
+      getCredentialTrust(dsoFailed, dsoFailed.participant, false).state
+    ).toBe('verified')
+  })
+
   it('never trusts credentials of a publisher without did:web', () => {
     const unbound: GaiaXVerification = {
       ...result,

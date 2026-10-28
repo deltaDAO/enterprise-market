@@ -20,9 +20,11 @@ export const NOT_BOUND_MESSAGE =
 export default function ComplianceCard({
   compliance,
   trusted,
-  staleMessage
+  staleMessage,
+  title = 'Gaia-X Compliance'
 }: {
   compliance: ComplianceReport
+  title?: string
   // False on a DID mismatch or for publishers without did:web: then no trust
   // badge, label or certification detail is shown, whatever the GXDCH said
   trusted: boolean
@@ -46,7 +48,7 @@ export default function ComplianceCard({
       <header className={styles.cardHeader}>
         <TrustIcon state={state} size={20} />
         <div>
-          <h4 className={styles.cardTitle}>Gaia-X Compliance</h4>
+          <h4 className={styles.cardTitle}>{title}</h4>
           <span className={styles.cardType}>
             Live check by the Gaia-X Digital Clearing House
           </span>
