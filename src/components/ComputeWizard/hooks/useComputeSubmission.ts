@@ -415,15 +415,18 @@ export function useComputeSubmission() {
           const algorithm: ComputeAlgorithm = {
             documentId: algorithmAsset.id,
             serviceId: algorithmService.id,
-            meta: algorithmAsset.credentialSubject?.metadata?.algorithm as any
+            meta: algorithmAsset.credentialSubject?.metadata?.algorithm as any,
+            algocustomdata: computeAlgorithm.algocustomdata,
+            userdata: computeAlgorithm.userdata
           }
           response = await ProviderInstance.freeComputeStart(
             providerEndpoint,
             signer,
             selectedComputeEnv.id,
-            datasetInputs.map(({ documentId, serviceId }) => ({
+            datasetInputs.map(({ documentId, serviceId, userdata }) => ({
               documentId,
-              serviceId
+              serviceId,
+              userdata
             })),
             algorithm,
             resourceRequests,
