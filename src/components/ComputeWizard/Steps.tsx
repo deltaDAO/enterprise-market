@@ -19,6 +19,7 @@ import SelectServicesStep from './SelectServicesStep'
 import PreviewSelectionStep from './PreviewSelectionStep'
 import { getOceanConfig } from '@utils/ocean'
 import { getTokenInfo } from '@utils/wallet'
+import { getServiceConsumerParameters } from '@utils/ddo'
 
 type SetState<T> = React.Dispatch<React.SetStateAction<T>>
 
@@ -171,7 +172,8 @@ export default function Steps({
   useEffect(() => {
     if (!asset || !service) return
 
-    const hasParams = Boolean(service.consumerParameters?.length)
+    const consumerParameters = getServiceConsumerParameters(asset, service)
+    const hasParams = consumerParameters.length > 0
 
     if (flow === 'dataset') {
       setFieldValue('dataset', [`${asset.id}|${service.id}`])
@@ -181,7 +183,7 @@ export default function Steps({
         return
       }
 
-      const entries = service.consumerParameters.map(
+      const entries = consumerParameters.map(
         (param: ConsumerParameter): WizardUserParameter => ({
           name: param.name,
           label: param.label ?? param.name,
@@ -211,7 +213,7 @@ export default function Steps({
       return
     }
 
-    const entries = service.consumerParameters.map(
+    const entries = consumerParameters.map(
       (param: ConsumerParameter): WizardUserParameter => ({
         name: param.name,
         label: param.label ?? param.name,

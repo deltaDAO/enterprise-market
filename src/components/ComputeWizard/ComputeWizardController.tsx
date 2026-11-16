@@ -39,7 +39,7 @@ import { CredentialDialogProvider } from '../Asset/AssetActions/Compute/Credenti
 import { useAsset } from '@context/Asset'
 import { useUserPreferences } from '@context/UserPreferences'
 import { useSsiWallet } from '@context/SsiWallet'
-import { formatServiceTimeout } from '@utils/ddo'
+import { formatServiceTimeout, getServiceConsumerParameters } from '@utils/ddo'
 import {
   getAlgorithmAssetSelectionListForComputeWizard,
   getAlgorithmsForAsset
@@ -338,7 +338,7 @@ export default function ComputeWizardController({
     const rerunDatasets = rerunConfig.datasets || []
     const withoutDataset = rerunDatasets.length === 0
     const stepNumbers = getComputeWizardStepNumbers(
-      Boolean(service.consumerParameters?.length),
+      getServiceConsumerParameters(asset, service).length > 0,
       withoutDataset
     )
     const { datasetPairs, datasets } =
@@ -359,7 +359,7 @@ export default function ComputeWizardController({
       step3Completed: true,
       step4Completed: true
     }
-  }, [baseInitialFormValues, isAlgorithmFlow, rerunConfig, service])
+  }, [asset, baseInitialFormValues, isAlgorithmFlow, rerunConfig, service])
   const formikRef = useRef<FormikProps<FormComputeData>>(null)
   const hasAppliedRerunConfigRef = useRef(false)
   const tokenSymbolMap = useMemo(() => {
@@ -1310,12 +1310,9 @@ export default function ComputeWizardController({
             entry.userParameters?.some(
               (param) =>
                 param.required &&
-                (param.default === null ||
-                  param.default === undefined ||
-                  param.default === '' ||
-                  param.value === null ||
+                (param.value === null ||
                   param.value === undefined ||
-                  param.value === '')
+                  String(param.value).trim() === '')
             )
           )
         const outputStorageError = getOutputStorageValidationMessage(

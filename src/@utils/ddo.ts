@@ -55,6 +55,35 @@ export function getServiceById(ddo: Asset, serviceId: string): Service {
   return service
 }
 
+type ConsumerParameterDefinition = NonNullable<
+  Service['consumerParameters']
+>[number]
+
+/**
+ * Consumer parameters a consumer must fill in for a service.
+ *
+ * Algorithms can declare parameters on the service or, as Edit Metadata
+ * stores them, on `metadata.algorithm.consumerParameters`. Both are
+ * returned; a service parameter wins over a metadata one of the same name.
+ */
+export function getServiceConsumerParameters(
+  asset: Pick<Asset, 'credentialSubject'> | undefined,
+  service: Pick<Service, 'consumerParameters'> | undefined
+): ConsumerParameterDefinition[] {
+  const serviceParams = service?.consumerParameters ?? []
+  const metadata = asset?.credentialSubject?.metadata
+  const algorithmParams =
+    metadata?.type === 'algorithm'
+      ? metadata.algorithm?.consumerParameters ?? []
+      : []
+
+  const serviceNames = new Set(serviceParams.map((param) => param?.name))
+  return [
+    ...serviceParams,
+    ...algorithmParams.filter((param) => !serviceNames.has(param?.name))
+  ]
+}
+
 export function getSaasMetadata(asset: Asset): SaasMetadata | undefined {
   return asset?.credentialSubject?.metadata?.additionalInformation?.saas
 }
