@@ -2,7 +2,11 @@ import {
   AssetSelectionAsset,
   PublisherTrustedAlgorithmService
 } from '@shared/FormInput/InputElement/AssetSelection'
-import { getServiceByName, isAddressWhitelisted } from './ddo'
+import {
+  getServiceByName,
+  getServiceConsumerParameters,
+  isAddressWhitelisted
+} from './ddo'
 import normalizeUrl from 'normalize-url'
 import { Asset } from 'src/@types/Asset'
 import { Service } from 'src/@types/ddo/Service'
@@ -213,7 +217,7 @@ export async function transformAssetToAssetSelectionDataset(
             ? isAddressWhitelisted(asset, accountId, service)
             : true,
           datetime: asset.indexedMetadata.event.datetime,
-          userParameters: service.consumerParameters
+          userParameters: getServiceConsumerParameters(asset, service)
         }
         // put selected ones up front
         algorithmList.unshift(assetEntry)

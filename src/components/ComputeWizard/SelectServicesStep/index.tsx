@@ -11,7 +11,7 @@ import External from '@images/external.svg'
 import { CopyToClipboard } from '@shared/CopyToClipboard'
 import Link from 'next/link'
 import { getBaseTokenSymbol } from '@utils/getBaseTokenSymbol'
-import { formatServiceTimeout } from '@utils/ddo'
+import { formatServiceTimeout, getServiceConsumerParameters } from '@utils/ddo'
 import { useMarketMetadata } from '@context/MarketMetadata'
 import { resolveServiceTokenSymbol } from '@utils/priceToken'
 import Tooltip from '@shared/atoms/Tooltip'
@@ -565,7 +565,7 @@ export default function SelectServicesStep({
               : serviceId != null
               ? svc.id === serviceId
               : idx === 0,
-          userParameters: svc.consumerParameters
+          userParameters: getServiceConsumerParameters(assetDdo, svc)
         }))
 
         const normalized: NormalizedAsset = {
